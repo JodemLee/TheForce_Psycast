@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Defs>
+	<HediffDef>
+		<defName>Force_Darkside</defName>
+		<label>Darkside Corruption</label>
+		<description>How much the darkside has corrupted the pawn.</description>
+		<isBad>false</isBad>
+		<defaultLabelColor>(0.5,0,0)</defaultLabelColor>
+		<initialSeverity>0.01</initialSeverity>
+		<maxSeverity>1</maxSeverity>
+		<stages>
+		<li>
+		<socialFightChanceFactor>3.0</socialFightChanceFactor>
+		<multiplyStatChangesBySeverity>true</multiplyStatChangesBySeverity>
+		<statOffsets>
+          <Force_Darkside_Attunement>2.5</Force_Darkside_Attunement>
+		  <ArmorRating_Sharp>0.05</ArmorRating_Sharp>
+          <ArmorRating_Blunt>0.01</ArmorRating_Blunt>
+          <ArmorRating_Heat>0.03</ArmorRating_Heat>
+		  <MentalBreakThreshold>0.01</MentalBreakThreshold>
+          <PsychicEntropyRecoveryRate>0.05</PsychicEntropyRecoveryRate>
+        </statOffsets>
+		</li>
+		</stages>
+	</HediffDef>
+	
+	
+	<HediffDef>
+		<defName>Force_Lightside</defName>
+		<label>Lightside Attunement</label>
+		<description>The level of attunement a pawn has for the lightside</description>
+		<isBad>false</isBad>
+		<defaultLabelColor>(0,0,0.5)</defaultLabelColor>
+		<initialSeverity>0.1</initialSeverity>
+		<maxSeverity>10</maxSeverity>
+		<stages>
+		<li>
+		<multiplyStatChangesBySeverity>true</multiplyStatChangesBySeverity>
+		<statOffsets>
+			<Force_Lightside_Attunement>2.5</Force_Lightside_Attunement>
+			<MeditationFocusGain>0.05</MeditationFocusGain>
+			<MentalBreakThreshold>-0.01</MentalBreakThreshold>
+			<GlobalLearningFactor>0.2</GlobalLearningFactor>
+		</statOffsets>	
+		</li>
+		</stages>
+	</HediffDef>
+</Defs>	

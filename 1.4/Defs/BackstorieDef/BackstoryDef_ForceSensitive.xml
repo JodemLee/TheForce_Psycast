@@ -1,0 +1,454 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Defs>
+
+<!-- Sith -->
+
+	<BackstoryDef>
+		<defName>Force_SithApprentice</defName>
+		<title>Sith Apprentice</title>
+		<titleShort>Sith Apprentice</titleShort>
+		<baseDesc>Abandoned in the perilous outer rim, [PAWN_nameDef] developed a unique connection to the Force. Discovered by a wandering Sith, [PAWN_pronoun] became an apprentice, mastering the dark side through survival and combat.</baseDesc>
+		<slot>Childhood</slot>
+		<skillGains>
+			<li>
+				<key>Melee</key>
+				<value>3</value>
+			</li>
+			<li>
+				<key>Shooting</key>
+				<value>2</value>
+			</li>
+			<li>
+				<key>Social</key>
+				<value>-1</value>
+			</li>
+
+		</skillGains>
+		<spawnCategories>
+			<li>Sith</li>
+			<li>SithChildhood</li>
+		</spawnCategories>
+		<bodyTypeMale>Male</bodyTypeMale>
+		<bodyTypeFemale>Female</bodyTypeFemale>
+		<workDisables>Caring</workDisables>
+	</BackstoryDef>
+
+	<BackstoryDef>
+		<defName>Force_SithAcolyte</defName>
+		<title>Sith Acolyte</title>
+		<titleShort>Sith Acolyte</titleShort>
+		<baseDesc>Raised in the shadowed alleys of a Sith-controlled city, [PAWN_nameDef] grew up amidst deception and intrigue. Recognized for [PAWN_possessive] latent Force sensitivity, [PAWN_pronoun] was selected as an acolyte in the Sith Academy.</baseDesc>
+		<slot>Childhood</slot>
+		<skillGains>
+			<li>
+				<key>Melee</key>
+				<value>2</value>
+			</li>
+			<li>
+				<key>Intellectual</key>
+				<value>1</value>
+			</li>
+			<li>
+				<key>Social</key>
+				<value>1</value>
+			</li>
+
+		</skillGains>
+		<spawnCategories>
+			<li>Sith</li>
+			<li>SithChildhood</li>
+		</spawnCategories>
+		<bodyTypeMale>Male</bodyTypeMale>
+		<bodyTypeFemale>Female</bodyTypeFemale>
+	</BackstoryDef>
+	
+	<BackstoryDef>
+		<defName>Force_SithSlave</defName>
+		<title>Freed Acolyte</title>
+		<titleShort>Freed Acolyte</titleShort>
+		<baseDesc>Born into slavery on a desolate world, [PAWN_nameDef] endured a life of oppression until discovered by a Sith Lord seeking potential acolytes. Gifted with latent Force sensitivity, [PAWN_pronoun] was taken from the chains of servitude and introduced to the ways of the dark side.</baseDesc>
+		<slot>Childhood</slot>
+		<skillGains>
+			<li>
+				<key>Plants</key>      
+				<value>3</value>
+			</li> 
+			<li>
+				<key>Crafting</key>      
+				<value>2</value>
+			</li>
+			<li>
+				<key>Social</key>
+				<value>-1</value>
+			</li>
+
+		</skillGains>
+		<spawnCategories>
+			<li>Sith</li>
+			<li>SithChildhood</li>
+		</spawnCategories>
+		<bodyTypeMale>Male</bodyTypeMale>
+		<bodyTypeFemale>Female</bodyTypeFemale>
+	</BackstoryDef>
+	
+	<BackstoryDef>
+		<defName>Force_SithWarrior</defName>
+		<title>Sith Warrior</title>
+		<titleShort>Sith Warrior</titleShort>
+		<baseDesc>[PAWN_nameDef], once a formidable warrior on a distant Sith-controlled planet, rose through the ranks with unmatched ferocity. [PAWN_possessive] prowess in combat and unwavering loyalty caught the attention of Sith overlords, earning [PAWN_possessive] the title of Sith Warrior.</baseDesc>
+		<slot>Adulthood</slot>
+		<skillGains>
+			<li>
+				<key>Melee</key>
+				<value>6</value>
+			</li>
+			<li>
+				<key>Shooting</key>
+				<value>4</value>
+			</li>
+		</skillGains>
+		<spawnCategories>
+			<li>Sith</li>
+			<li>SithWarrior</li>
+		</spawnCategories>
+		<bodyTypeMale>Male</bodyTypeMale>
+		<bodyTypeFemale>Female</bodyTypeFemale>
+	</BackstoryDef>
+	
+	<BackstoryDef>
+		<defName>Force_SithSorcerer</defName>
+		<title>Sith Sorcerer</title>
+		<titleShort>Sith Warrior</titleShort>
+		<baseDesc>[PAWN_nameDef], once a scholar on distant Sith-controlled planet, delved into the forbidden arts of Sith sorcery. [PAWN_possessive] innate connection to the Force led [PAWN_possessive] to become a formidable Sith Sorcerer, mastering the esoteric and dark aspects of the ancient Sith traditions.</baseDesc>
+		<slot>Adulthood</slot>
+		<skillGains>
+			<li>
+				<key>Intellectual</key>
+				<value>6</value>
+			</li>
+			<li>
+				<key>Melee</key>
+				<value>4</value>
+			</li>
+		</skillGains>
+		<spawnCategories>
+			<li>Sith</li>
+			<li>SithSorcerer</li>
+		</spawnCategories>
+		<bodyTypeMale>Male</bodyTypeMale>
+		<bodyTypeFemale>Female</bodyTypeFemale>
+	</BackstoryDef>
+	
+	<BackstoryDef>
+		<defName>Force_SithAssassin</defName>
+		<title>Sith Assassin</title>
+		<titleShort>Sith Assassin</titleShort>
+		<baseDesc>Trained in the deadly arts of assassination from a young age, [PAWN_nameDef] emerged as a silent and lethal force within the Sith Order. [PAWN_pronoun] mastered the art of stealth, infiltration, and the swift execution of targets, making [PAWN_possessive] a feared Sith Assassin.</baseDesc>
+		<slot>Adulthood</slot>
+		<skillGains>
+			<li>
+				<key>Shooting</key>
+				<value>6</value>
+			</li>
+			<li>
+				<key>Melee</key>
+				<value>4</value>
+			</li>
+		</skillGains>
+		<spawnCategories>
+			<li>Sith</li>
+			<li>SithAssassin</li>
+		</spawnCategories>
+		<bodyTypeMale>Male</bodyTypeMale>
+		<bodyTypeFemale>Female</bodyTypeFemale>
+	</BackstoryDef>
+	
+	
+
+	<BackstoryDef>
+		<defName>Force_SithLord</defName>
+		<title>Sith Lord</title>
+		<titleShort>Sith Lord</titleShort>
+		<baseDesc>[PAWN_nameDef] was the most fearsome of the Sith as they were the keepers of the Sith's greatest secrets and wielders of its most potent sorceries.</baseDesc>
+		<slot>Adulthood</slot>
+		<skillGains>
+			<li>
+				<key>Melee</key>
+				<value>6</value>
+			</li>
+			<li>
+				<key>Shooting</key>
+				<value>5</value>
+			</li>
+			<li>
+				<key>Intellectual</key>
+				<value>8</value>
+			</li>
+		</skillGains>
+		<spawnCategories>
+			<li>Sith</li>
+		</spawnCategories>
+		<bodyTypeMale>Male</bodyTypeMale>
+		<bodyTypeFemale>Female</bodyTypeFemale>
+	</BackstoryDef>
+
+	
+<!-- Jedi -->
+
+	<BackstoryDef>
+		<defName>TheForce_JediLonePadawan</defName>
+		<title>Lone Padawan</title>
+		<titleShort>Lone Padawan</titleShort>
+		<baseDesc>[PAWN_nameDef] was once a young Jedi Padawan, trained in the Jedi Temple on Coruscant.[PAWN_nameDef]'s master was slain by a Sith Lord, and [PAWN_pronoun] barely escaped with [PAWN_possessive] life. Now, [PAWN_pronoun] roams the rimworld, haunted by the memory of [PAWN_possessive] master's death. [PAWN_pronoun] seeks to complete [PAWN_possessive] training, mastering the ways of the Force and seeking vengeance against the Sith who took everything away.</baseDesc>
+		<slot>Childhood</slot>
+		<skillGains>
+			<li>
+				<key>Melee</key>
+				<value>3</value>
+			</li>
+			<li>
+				<key>Shooting</key>
+				<value>2</value>
+			</li>
+			<li>
+				<key>Social</key>
+				<value>-1</value>
+			</li>
+		</skillGains>
+		<spawnCategories>
+			<li>JediChildhood</li>
+			<li>Jedi</li>
+		</spawnCategories>
+		<bodyTypeMale>Male</bodyTypeMale>
+		<bodyTypeFemale>Female</bodyTypeFemale>
+	</BackstoryDef>
+	
+	<BackstoryDef>
+		<defName>TheForce_JediPromisingPadawan</defName>
+		<title>Promising Padawan</title>
+		<titleShort>Padawan</titleShort>
+		<baseDesc>Trained as a Jedi Padawan on the serene world of Coruscant, [PAWN_nameDef] embodied the principles of peace and harmony. [PAWN_possessive] connection to the Force marked [PAWN_possessive] as a promising student.</baseDesc>
+		<slot>Childhood</slot>
+		<skillGains>
+			<li>
+				<key>Melee</key>
+				<value>3</value>
+			</li>
+			<li>
+				<key>Shooting</key>
+				<value>2</value>
+			</li>
+		</skillGains>
+		<spawnCategories>
+			<li>JediChildhood</li>
+			<li>Jedi</li>
+		</spawnCategories>
+		<bodyTypeMale>Male</bodyTypeMale>
+		<bodyTypeFemale>Female</bodyTypeFemale>
+	</BackstoryDef>
+	
+	<BackstoryDef>
+		<defName>TheForce_JediPadawan</defName>
+		<title>Jedi Padawan</title>
+		<titleShort>Jedi Padawan</titleShort>
+		<baseDesc>Hailing from the serene world of Naboo, [PAWN_nameDef] was identified as a Force-sensitive child and taken into the Jedi Order. Trained as a Jedi Padawan, [PAWN_pronoun] excelled in the arts of diplomacy and healing, embodying the Jedi ideals of compassion and serenity.</baseDesc>
+		<slot>Childhood</slot>
+		<skillGains>
+			<li>
+				<key>Melee</key>
+				<value>3</value>
+			</li>
+			<li>
+				<key>Shooting</key>
+				<value>2</value>
+			</li>
+		</skillGains>
+		<spawnCategories>
+			<li>JediChildhood</li>
+			<li>Jedi</li>
+		</spawnCategories>
+		<bodyTypeMale>Male</bodyTypeMale>
+		<bodyTypeFemale>Female</bodyTypeFemale>
+	</BackstoryDef>
+	
+	<BackstoryDef>
+		<defName>JediKnight</defName>
+		<title>Jedi Knight</title>
+		<titleShort>Jedi Knight</titleShort>
+		<baseDesc>[PAWN_nameDef] had completed their Jedi training as a student in the Jedi academy, in addition to one-on-one training as a Padawan and the completion of the Jedi Trials.</baseDesc>
+		<slot>Adulthood</slot>
+		<skillGains>
+			<li>
+				<key>Melee</key>
+				<value>6</value>
+			</li>
+			<li>
+				<key>Shooting</key>
+				<value>4</value>
+			</li>
+		</skillGains>
+		<spawnCategories>
+			<li>Jedi</li>
+		</spawnCategories>
+		<bodyTypeMale>Male</bodyTypeMale>
+		<bodyTypeFemale>Female</bodyTypeFemale>
+	</BackstoryDef>
+	
+	<BackstoryDef>
+		<defName>JediSentinel</defName>
+		<title>Jedi Sentinel</title>
+		<titleShort>Sentinel</titleShort>
+		<baseDesc>Trained as a Jedi Sentinel on the distant world of Dantooine, Arius Shadewalker honed his skills in the delicate balance between combat and diplomacy. His mastery of the Force and proficiency with a lightsaber marked him as a versatile and formidable Jedi</baseDesc>
+		<slot>Adulthood</slot>
+		<skillGains>
+			<li>
+				<key>Melee</key>
+				<value>6</value>
+			</li>
+			<li>
+				<key>Shooting</key>
+				<value>4</value>
+			</li>
+		</skillGains>
+		<spawnCategories>
+			<li>JediSentinel</li>
+			<li>Jedi</li>
+		</spawnCategories>
+		<bodyTypeMale>Male</bodyTypeMale>
+		<bodyTypeFemale>Female</bodyTypeFemale>
+	</BackstoryDef>
+	
+	<BackstoryDef>
+		<defName>JediGuardian</defName>
+		<title>Jedi Guardian</title>
+		<titleShort>Guardian</titleShort>
+		<baseDesc>[PAWN_nameDef] had completed their Jedi training as a student in the Jedi academy, in addition to one-on-one training as a Padawan and the completion of the Jedi Trials.</baseDesc>
+		<slot>Adulthood</slot>
+		<skillGains>
+			<li>
+				<key>Melee</key>
+				<value>6</value>
+			</li>
+			<li>
+				<key>Shooting</key>
+				<value>4</value>
+			</li>
+		</skillGains>
+		<spawnCategories>
+			<li>JediGuardian</li>
+			<li>Jedi</li>
+		</spawnCategories>
+		<bodyTypeMale>Male</bodyTypeMale>
+		<bodyTypeFemale>Female</bodyTypeFemale>
+	</BackstoryDef>
+	
+	<BackstoryDef>
+		<defName>JediConsular</defName>
+		<title>Jedi Consular</title>
+		<titleShort>Consular</titleShort>
+		<baseDesc>[PAWN_nameDef] had completed their Jedi training as a student in the Jedi academy, in addition to one-on-one training as a Padawan and the completion of the Jedi Trials.</baseDesc>
+		<slot>Adulthood</slot>
+		<skillGains>
+			<li>
+				<key>Melee</key>
+				<value>6</value>
+			</li>
+			<li>
+				<key>Shooting</key>
+				<value>4</value>
+			</li>
+		</skillGains>
+		<spawnCategories>
+			<li>JediConsular</li>
+			<li>Jedi</li>
+		</spawnCategories>
+		<bodyTypeMale>Male</bodyTypeMale>
+		<bodyTypeFemale>Female</bodyTypeFemale>
+	</BackstoryDef>
+
+	<BackstoryDef>
+		<defName>Force_JediMaster</defName>
+		<title>Jedi Master</title>
+		<titleShort>Jedi Master</titleShort>
+		<baseDesc>[PAWN_nameDef]showed great understanding of the Force and managed to instruct a Padawan and train them successfully to the level of a Jedi Knight</baseDesc>
+		<slot>Adulthood</slot>
+		<skillGains>
+			<li>
+				<key>Melee</key>
+				<value>8</value>
+			</li>
+			<li>
+				<key>Shooting</key>
+				<value>6</value>
+			</li>
+			<li>
+				<key>Intellectual</key>
+				<value>5</value>
+			</li>
+		</skillGains>
+		<spawnCategories>
+			<li>Jedi</li>
+		</spawnCategories>
+		<bodyTypeMale>Male</bodyTypeMale>
+		<bodyTypeFemale>Female</bodyTypeFemale>
+	</BackstoryDef>
+	
+	
+	<!-- Misc -->
+
+	<BackstoryDef>
+		<defName>Redeem_Sith</defName>
+		<title>Redeemed Sith</title>
+		<titleShort>Redeemed</titleShort>
+		<baseDesc>[PAWN_nameDef], once an unwavering follower of the dark side, found redemption after witnessing the devastating consequences of [PAWN_possessive] actions. Formerly known as Darth [PAWN_nameDef], [PAWN_pronoun] abandoned the Sith Order and sought to make amends for the pain [PAWN_pronoun] had inflicted.</baseDesc>
+		<slot>Adulthood</slot>
+		<skillGains>
+			<li>
+				<key>Melee</key>
+				<value>8</value>
+			</li>
+			<li>
+				<key>Shooting</key>
+				<value>6</value>
+			</li>
+			<li>
+				<key>Social</key>
+				<value>5</value>
+			</li>
+		</skillGains>
+		<spawnCategories>
+			<li>Misc_Force</li>
+		</spawnCategories>
+		<bodyTypeMale>Male</bodyTypeMale>
+		<bodyTypeFemale>Female</bodyTypeFemale>
+	</BackstoryDef>
+	
+	<BackstoryDef>
+		<defName>Fallen_Jedi</defName>
+		<title>Fallen Jedi</title>
+		<titleShort>Fallen</titleShort>
+		<baseDesc>Once a noble Jedi Knight, [PAWN_nameDef] succumbed to the allure of the dark side, forsaking the Jedi Code. Betrayed by [PAWN_possessive] own inner struggles, [PAWN_pronoun] became a fallen Jedi, embracing the power of the Sith to satisfy [PAWN_possessive] newfound desires for strength and dominance.</baseDesc>
+		<slot>Adulthood</slot>
+		<skillGains>
+			<li>
+				<key>Melee</key>
+				<value>8</value>
+			</li>
+			<li>
+				<key>Shooting</key>
+				<value>6</value>
+			</li>
+			<li>
+				<key>Social</key>
+				<value>5</value>
+			</li>
+		</skillGains>
+		<spawnCategories>
+			<li>Misc_Force</li>
+		</spawnCategories>
+		<bodyTypeMale>Male</bodyTypeMale>
+		<bodyTypeFemale>Female</bodyTypeFemale>
+	</BackstoryDef>
+
+
+</Defs>

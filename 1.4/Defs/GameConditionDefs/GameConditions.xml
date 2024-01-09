@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Defs>
+    <GameConditionDef>
+        <defName>Force_ForceStormCondition</defName>
+        <conditionClass>GameCondition_ForceWeather</conditionClass>
+        <label>forced hurricane</label>
+        <description>A darkside user is conjuring an Force Storm.</description>
+        <letterDef>NegativeEvent</letterDef>
+        <canBePermanent>false</canBePermanent>
+        <weatherDef>Force_ForceStorm</weatherDef>
+    </GameConditionDef>
+</Defs>

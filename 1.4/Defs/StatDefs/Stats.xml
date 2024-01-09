@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Defs>
+    <StatDef>
+        <defName>Force_Darkside_Attunement</defName>
+        <label>Darkside Corruption</label>
+        <description>The influence of the darkside on the pawn.</description>
+        <category>BasicsPawn</category>
+        <minValue>0</minValue>
+        <defaultBaseValue>1</defaultBaseValue>
+        <toStringStyle>PercentZero</toStringStyle>
+        <showOnAnimals>true</showOnAnimals>
+        <showOnMechanoids>false</showOnMechanoids>
+        <displayPriorityInCategory>20</displayPriorityInCategory>
+    </StatDef>
+	
+	<StatDef>
+        <defName>Force_Lightside_Attunement</defName>
+        <label>Lightside Attunement</label>
+        <description>The influence of the lightside on the pawn.</description>
+        <category>BasicsPawn</category>
+        <minValue>0</minValue>
+        <defaultBaseValue>1</defaultBaseValue>
+        <toStringStyle>PercentZero</toStringStyle>
+        <showOnAnimals>true</showOnAnimals>
+        <showOnMechanoids>false</showOnMechanoids>
+        <displayPriorityInCategory>20</displayPriorityInCategory>
+    </StatDef>
+</Defs>

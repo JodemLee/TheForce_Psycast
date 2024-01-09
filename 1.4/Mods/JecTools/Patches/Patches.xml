@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+  <Patch>
+  <Operation Class="PatchOperationFindMod">
+  <mods>
+    <li>Star Wars KotOR Weapons and Armor</li>
+  </mods>
+  <match Class="PatchOperationAdd">
+		<xpath>Defs/ThingDef[defName="guy762_kotorlightsaber" or defName="guy762_kotorshortsaber" or defName="guy762_kotordualsaber" or defName="guy762_kotordualsaber" or defName="guy762_kotocurvesaber" or defName="guy762_kotorcrosssaber" ]</xpath>
+		<value>
+		  <thingClass>TheForce_Psycast.LightsaberPatch</thingClass>
+		</value>
+  </match>
+</Operation>
+</Patch>

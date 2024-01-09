@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Defs>
+	<ThingDef ParentName="BaseBullet">
+		<defName>LightsaberThrow</defName>
+		<label>Weapon Throw</label>
+		<thingClass>TheForce_Psycast.LightSaberProjectile</thingClass>
+		<drawOffscreen>true</drawOffscreen>
+		<graphicData Class="VanillaPsycastsExpanded.Graphics.GraphicData_Animated">
+			<texPath>Effects/Blue</texPath>
+			<ticksPerFrame>0</ticksPerFrame>
+			<graphicClass>VanillaPsycastsExpanded.Graphics.Graphic_Animated</graphicClass>
+			<shaderType>TransparentPostLight</shaderType>
+		</graphicData>
+		<projectile>
+			<damageDef>Cut</damageDef>
+			<damageAmountBase>8</damageAmountBase>
+			<speed>25</speed>
+		</projectile>
+		<comps>
+			<li><compClass>VFECore.Abilities.CompAbilityProjectile</compClass></li>
+		</comps>
+	</ThingDef>
+	
+	<ThingDef ParentName="EtherealThingBase">
+        <defName>Force_ForceStormMaker</defName>
+        <label>Force Storm maker</label>
+        <thingClass>TheForce_Psycast.Abilities.ForceStormMaker</thingClass>
+        <tickerType>Normal</tickerType>
+    </ThingDef>
+	
+	<ThingDef ParentName="BaseBullet">
+		<defName>Force_HatredBolt</defName>
+		<label>bolt of hatred</label>
+		<thingClass>VanillaPsycastsExpanded.Staticlord.ChainBolt</thingClass>
+		<drawOffscreen>true</drawOffscreen>
+		<graphicData Class="VanillaPsycastsExpanded.Graphics.GraphicData_Animated">
+			<texPath>Effects/BoltofHatred</texPath>
+			<ticksPerFrame>3</ticksPerFrame>
+			<graphicClass>VanillaPsycastsExpanded.Graphics.Graphic_Animated</graphicClass>
+			<shaderType>TransparentPostLight</shaderType>
+			<drawSize>(2, 2)</drawSize>
+		</graphicData>
+		<projectile>
+			<damageDef>Stun</damageDef>
+			<damageAmountBase>7</damageAmountBase>
+			<speed>140</speed>
+		</projectile>
+		<comps>
+			<li><compClass>VFECore.Abilities.CompAbilityProjectile</compClass></li>
+		</comps>
+		<modExtensions>
+			<li Class="VFEMech.TeslaChainingProps">
+				<maxBounceCount>4</maxBounceCount>
+				<damageDef>Crush</damageDef>
+				<explosionDamageDef>EMP</explosionDamageDef>
+				<impactRadius>1.9</impactRadius>
+				<targetFriendly>false</targetFriendly>
+				<addFire>true</addFire>
+				<bounceRange>9</bounceRange>
+				<maxLifetime>50</maxLifetime>
+				<impactSound>VPE_ChainBolt_Impact</impactSound>
+			</li>
+		</modExtensions>
+	</ThingDef>
+</Defs>

@@ -1,0 +1,472 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="ResourceBase" Name="Jedi Holocron" Abstract="True">
+    <thingClass>ThingWithComps</thingClass>
+    <resourceReadoutPriority>Middle</resourceReadoutPriority>
+    <useHitPoints>true</useHitPoints>
+    <statBases Inherit="False">
+      <MaxHitPoints>80</MaxHitPoints>
+      <Mass>0.2</Mass>
+      <MarketValue>1750</MarketValue>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Flammability>0</Flammability>
+      <Beauty>5</Beauty>
+    </statBases>
+	<graphicData>
+      <texPath>Things/Item/Special/Holocron</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+	  <shaderType>TransparentPostLight</shaderType>
+    </graphicData>
+    <techLevel>Ultra</techLevel>
+    <tradeTags>
+      <li>ExoticMisc</li>
+	  <li>Holocron</li>
+    </tradeTags>
+    <stackLimit>1</stackLimit>
+	<tradeNeverStack>true</tradeNeverStack>
+    <drawGUIOverlay>true</drawGUIOverlay>
+    <comps>
+        <li Class="CompProperties_UseEffectPlaySound">
+            <soundOnUsed>MechSerumUsed</soundOnUsed>
+        </li>
+        <li Class="CompProperties_UseEffectDestroySelf"/>
+    </comps>
+    <thingSetMakerTags>
+      <li>RewardStandardLowFreq</li>
+    </thingSetMakerTags>
+    <thingCategories Inherit="True">
+      <li>Holocron</li>
+    </thingCategories>
+  </ThingDef>
+
+<ThingDef ParentName="ResourceBase" Name="Sith Holocron" Abstract="True">
+    <thingClass>ThingWithComps</thingClass>
+    <resourceReadoutPriority>Middle</resourceReadoutPriority>
+    <useHitPoints>true</useHitPoints>
+    <statBases Inherit="False">
+      <MaxHitPoints>80</MaxHitPoints>
+      <Mass>0.2</Mass>
+      <MarketValue>1750</MarketValue>
+      <DeteriorationRate>0</DeteriorationRate>
+      <Flammability>0</Flammability>
+      <Beauty>5</Beauty>
+    </statBases>
+	<graphicData>
+      <texPath>Things/Item/Special/SithHolocron</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+	  <shaderType>TransparentPostLight</shaderType>
+    </graphicData>
+    <techLevel>Ultra</techLevel>
+    <tradeTags>
+      <li>ExoticMisc</li>
+	  <li>SithHolocron</li>
+    </tradeTags>
+    <stackLimit>1</stackLimit>
+	<tradeNeverStack>true</tradeNeverStack>
+    <drawGUIOverlay>true</drawGUIOverlay>
+    <comps>
+        <li Class="CompProperties_UseEffectPlaySound">
+            <soundOnUsed>MechSerumUsed</soundOnUsed>
+        </li>
+        <li Class="CompProperties_UseEffectDestroySelf"/>
+    </comps>
+    <thingSetMakerTags>
+      <li>RewardStandardLowFreq</li>
+    </thingSetMakerTags>
+    <thingCategories Inherit="True">
+      <li>SithHolocron</li>
+    </thingCategories>
+  </ThingDef>
+
+<!-- ================================= Jedi Holocrons ==================================== -->
+
+  <ThingDef ParentName="Jedi Holocron">
+    <defName>Holocron_ForceHeal</defName>
+    <label>Force Heal Holocron</label>
+    <description>An force Holocron meant to teach new force sensitives how to access the force in specific ways.</description>
+    <comps>
+		<li Class="TheForce_Psycast.CompProperties_UseEffect_Psytrainer">
+					<ability>Force_Healing</ability>
+		</li>
+		<li Class="CompProperties_Usable">
+					<compClass>CompUsable</compClass>
+					<useJob>UseItem</useJob>
+					<useLabel>Use the holocron to learn the power</useLabel>
+		</li>
+	</comps>
+  </ThingDef>
+  
+  <ThingDef ParentName="Jedi Holocron">
+    <defName>Holocron_ForceStabilize</defName>
+    <label>Force Stabilize Holocron</label>
+    <description>An force Holocron meant to teach new force sensitives how to access the force in specific ways.</description>
+    <comps>
+		<li Class="TheForce_Psycast.CompProperties_UseEffect_Psytrainer">
+					<ability>Force_Stabilize</ability>
+		</li>
+		<li Class="CompProperties_Usable">
+					<compClass>CompUsable</compClass>
+					<useJob>UseItem</useJob>
+					<useLabel>Use the holocron to learn the power</useLabel>
+		</li>
+	</comps>
+  </ThingDef>
+  
+  <ThingDef ParentName="Jedi Holocron">
+    <defName>Holocron_ForceRevitalize</defName>
+    <label>Force Revitalize Holocron</label>
+    <description>An force Holocron meant to teach new force sensitives how to access the force in specific ways.</description>
+    <comps>
+		<li Class="TheForce_Psycast.CompProperties_UseEffect_Psytrainer">
+					<ability>Force_Revitalize</ability>
+		</li>
+		<li Class="CompProperties_Usable">
+					<compClass>CompUsable</compClass>
+					<useJob>UseItem</useJob>
+					<useLabel>Use the holocron to learn the power</useLabel>
+		</li>
+	</comps>
+  </ThingDef>
+  
+  <ThingDef ParentName="Jedi Holocron">
+    <defName>Holocron_ForceHealthSwap</defName>
+    <label>Force HealthSwap Holocron</label>
+    <description>An force Holocron meant to teach new force sensitives how to access the force in specific ways.</description>
+    <comps>
+		<li Class="TheForce_Psycast.CompProperties_UseEffect_Psytrainer">
+					<ability>Force_HealthSwap</ability>
+		</li>
+		<li Class="CompProperties_Usable">
+					<compClass>CompUsable</compClass>
+					<useJob>UseItem</useJob>
+					<useLabel>Use the holocron to learn the power</useLabel>
+		</li>
+	</comps>
+  </ThingDef>
+  
+  <ThingDef ParentName="Jedi Holocron">
+    <defName>Holocron_ForceStun</defName>
+    <label>Force Stun Holocron</label>
+    <description>An force Holocron meant to teach new force sensitives how to access the force in specific ways.</description>
+    <comps>
+		<li Class="TheForce_Psycast.CompProperties_UseEffect_Psytrainer">
+					<ability>Force_Stun</ability>
+		</li>
+		<li Class="CompProperties_Usable">
+					<compClass>CompUsable</compClass>
+					<useJob>UseItem</useJob>
+					<useLabel>Use the holocron to learn the power</useLabel>
+		</li>
+	</comps>
+  </ThingDef>
+  
+  <ThingDef ParentName="Jedi Holocron">
+    <defName>Holocron_ForceBarrier</defName>
+    <label>Force Barrier Holocron</label>
+    <description>An force Holocron meant to teach new force sensitives how to access the force in specific ways.</description>
+    <comps>
+		<li Class="TheForce_Psycast.CompProperties_UseEffect_Psytrainer">
+					<ability>Force_Barrier</ability>
+		</li>
+		<li Class="CompProperties_Usable">
+					<compClass>CompUsable</compClass>
+					<useJob>UseItem</useJob>
+					<useLabel>Use the holocron to learn the power</useLabel>
+		</li>
+	</comps>
+  </ThingDef>
+  
+  <ThingDef ParentName="Jedi Holocron">
+    <defName>Holocron_ForceIonize</defName>
+    <label>Force Ionize Holocron</label>
+    <description>An force Holocron meant to teach new force sensitives how to access the force in specific ways.</description>
+    <comps>
+		<li Class="TheForce_Psycast.CompProperties_UseEffect_Psytrainer">
+					<ability>Force_Ionize</ability>
+		</li>
+		<li Class="CompProperties_Usable">
+					<compClass>CompUsable</compClass>
+					<useJob>UseItem</useJob>
+					<useLabel>Use the holocron to learn the power</useLabel>
+		</li>
+	</comps>
+  </ThingDef>
+  
+  <ThingDef ParentName="Jedi Holocron">
+    <defName>Holocron_ForceCombustion</defName>
+    <label>Force Combustion Holocron</label>
+    <description>An force Holocron meant to teach new force sensitives how to access the force in specific ways.</description>
+    <comps>
+		<li Class="TheForce_Psycast.CompProperties_UseEffect_Psytrainer">
+					<ability>Force_Combustion</ability>
+		</li>
+		<li Class="CompProperties_Usable">
+					<compClass>CompUsable</compClass>
+					<useJob>UseItem</useJob>
+					<useLabel>Use the holocron to learn the power</useLabel>
+		</li>
+	</comps>
+  </ThingDef>
+  
+  <ThingDef ParentName="Jedi Holocron">
+    <defName>Holocron_ForceSurge</defName>
+    <label>Force Surge Holocron</label>
+    <description>An force Holocron meant to teach new force sensitives how to access the force in specific ways.</description>
+    <comps>
+		<li Class="TheForce_Psycast.CompProperties_UseEffect_Psytrainer">
+					<ability>Force_Surge</ability>
+		</li>
+		<li Class="CompProperties_Usable">
+					<compClass>CompUsable</compClass>
+					<useJob>UseItem</useJob>
+					<useLabel>Use the holocron to learn the power</useLabel>
+		</li>
+	</comps>
+  </ThingDef>
+  
+  <ThingDef ParentName="Jedi Holocron">
+    <defName>Holocron_ForceBond</defName>
+    <label>Force Bond Holocron</label>
+    <description>An force Holocron meant to teach new force sensitives how to access the force in specific ways.</description>
+    <comps>
+		<li Class="TheForce_Psycast.CompProperties_UseEffect_Psytrainer">
+					<ability>Force_Bond</ability>
+		</li>
+		<li Class="CompProperties_Usable">
+					<compClass>CompUsable</compClass>
+					<useJob>UseItem</useJob>
+					<useLabel>Use the holocron to learn the power</useLabel>
+		</li>
+	</comps>
+  </ThingDef>
+  
+  <ThingDef ParentName="Jedi Holocron">
+    <defName>Holocron_ForceEnlightenment</defName>
+    <label>Force Enlightenment Holocron</label>
+    <description>An force Holocron meant to teach new force sensitives how to access the force in specific ways.</description>
+    <comps>
+		<li Class="TheForce_Psycast.CompProperties_UseEffect_Psytrainer">
+					<ability>Force_Enlightment</ability>
+		</li>
+		<li Class="CompProperties_Usable">
+					<compClass>CompUsable</compClass>
+					<useJob>UseItem</useJob>
+					<useLabel>Use the holocron to learn the power</useLabel>
+		</li>
+	</comps>
+  </ThingDef>
+  
+  <ThingDef ParentName="Jedi Holocron">
+    <defName>Holocron_ForceMeld</defName>
+    <label>Force Meld Holocron</label>
+    <description>An force Holocron meant to teach new force sensitives how to access the force in specific ways.</description>
+    <comps>
+		<li Class="TheForce_Psycast.CompProperties_UseEffect_Psytrainer">
+					<ability>Force_Meld</ability>
+		</li>
+		<li Class="CompProperties_Usable">
+					<compClass>CompUsable</compClass>
+					<useJob>UseItem</useJob>
+					<useLabel>Use the holocron to learn the power</useLabel>
+		</li>
+	</comps>
+  </ThingDef>
+  
+  
+  <!-- ================================= Sith Holocrons ==================================== -->
+  
+  <ThingDef ParentName="Sith Holocron">
+    <defName>Holocron_ForceRage</defName>
+    <label>Force Rage Holocron</label>
+    <description>An force Holocron meant to teach new force sensitives how to access the force in specific ways.</description>
+    <comps>
+		<li Class="TheForce_Psycast.CompProperties_UseEffect_Psytrainer">
+					<ability>Force_Rage</ability>
+		</li>
+		<li Class="CompProperties_Usable">
+					<compClass>CompUsable</compClass>
+					<useJob>UseItem</useJob>
+					<useLabel>Use the holocron to learn the power</useLabel>
+		</li>
+	</comps>
+  </ThingDef>
+  
+  <ThingDef ParentName="Sith Holocron">
+    <defName>Holocron_ForceLightning</defName>
+    <label>Force Lightning Holocron</label>
+    <description>An force Holocron meant to teach new force sensitives how to access the force in specific ways.</description>
+    <comps>
+		<li Class="TheForce_Psycast.CompProperties_UseEffect_Psytrainer">
+					<ability>Force_Lightning</ability>
+		</li>
+		<li Class="CompProperties_Usable">
+					<compClass>CompUsable</compClass>
+					<useJob>UseItem</useJob>
+					<useLabel>Use the holocron to learn the power</useLabel>
+		</li>
+	</comps>
+  </ThingDef>
+  
+  <ThingDef ParentName="Sith Holocron">
+    <defName>Holocron_ForceInsanity</defName>
+    <label>Force Insanity Holocron</label>
+    <description>An force Holocron meant to teach new force sensitives how to access the force in specific ways.</description>
+    <comps>
+		<li Class="TheForce_Psycast.CompProperties_UseEffect_Psytrainer">
+					<ability>Force_Insanity</ability>
+		</li>
+		<li Class="CompProperties_Usable">
+					<compClass>CompUsable</compClass>
+					<useJob>UseItem</useJob>
+					<useLabel>Use the holocron to learn the power</useLabel>
+		</li>
+	</comps>
+  </ThingDef>
+  
+  <ThingDef ParentName="Sith Holocron">
+    <defName>Holocron_ForceDestruction</defName>
+    <label>Force Destruction Holocron</label>
+    <description>An force Holocron meant to teach new force sensitives how to access the force in specific ways.</description>
+    <comps>
+		<li Class="TheForce_Psycast.CompProperties_UseEffect_Psytrainer">
+					<ability>Force_Destruction</ability>
+		</li>
+		<li Class="CompProperties_Usable">
+					<compClass>CompUsable</compClass>
+					<useJob>UseItem</useJob>
+					<useLabel>Use the holocron to learn the power</useLabel>
+		</li>
+	</comps>
+  </ThingDef>
+  
+  <ThingDef ParentName="Sith Holocron">
+    <defName>Holocron_ForceFear</defName>
+    <label>Force Fear Holocron</label>
+    <description>An force Holocron meant to teach new force sensitives how to access the force in specific ways.</description>
+    <comps>
+		<li Class="TheForce_Psycast.CompProperties_UseEffect_Psytrainer">
+					<ability>Force_Fear</ability>
+		</li>
+		<li Class="CompProperties_Usable">
+					<compClass>CompUsable</compClass>
+					<useJob>UseItem</useJob>
+					<useLabel>Use the holocron to learn the power</useLabel>
+		</li>
+	</comps>
+  </ThingDef>
+  
+  <ThingDef ParentName="Sith Holocron">
+    <defName>Holocron_ForceMindControl</defName>
+    <label>Force Mind Control Holocron</label>
+    <description>An force Holocron meant to teach new force sensitives how to access the force in specific ways.</description>
+    <comps>
+		<li Class="TheForce_Psycast.CompProperties_UseEffect_Psytrainer">
+					<ability>Mind_Control</ability>
+		</li>
+		<li Class="CompProperties_Usable">
+					<compClass>CompUsable</compClass>
+					<useJob>UseItem</useJob>
+					<useLabel>Use the holocron to learn the power</useLabel>
+		</li>
+	</comps>
+  </ThingDef>
+  
+  <ThingDef ParentName="Sith Holocron">
+    <defName>Holocron_ForceIllusion</defName>
+    <label>Force Illusion Holocron</label>
+    <description>An force Holocron meant to teach new force sensitives how to access the force in specific ways.</description>
+    <comps>
+		<li Class="TheForce_Psycast.CompProperties_UseEffect_Psytrainer">
+					<ability>Force_Illusion</ability>
+		</li>
+		<li Class="CompProperties_Usable">
+					<compClass>CompUsable</compClass>
+					<useJob>UseItem</useJob>
+					<useLabel>Use the holocron to learn the power</useLabel>
+		</li>
+	</comps>
+  </ThingDef>
+  
+  <ThingDef ParentName="Sith Holocron">
+    <defName>Holocron_ForceHatred</defName>
+    <label>Force Hatred Holocron</label>
+    <description>An force Holocron meant to teach new force sensitives how to access the force in specific ways.</description>
+    <comps>
+		<li Class="TheForce_Psycast.CompProperties_UseEffect_Psytrainer">
+					<ability>Force_Hatred</ability>
+		</li>
+		<li Class="CompProperties_Usable">
+					<compClass>CompUsable</compClass>
+					<useJob>UseItem</useJob>
+					<useLabel>Use the holocron to learn the power</useLabel>
+		</li>
+	</comps>
+  </ThingDef>
+  
+  <ThingDef ParentName="Sith Holocron">
+    <defName>Holocron_ForceDrainVitality</defName>
+    <label>Force Drain Vitality Holocron</label>
+    <description>An force Holocron meant to teach new force sensitives how to access the force in specific ways.</description>
+    <comps>
+		<li Class="TheForce_Psycast.CompProperties_UseEffect_Psytrainer">
+					<ability>Force_Drain_Vitality</ability>
+		</li>
+		<li Class="CompProperties_Usable">
+					<compClass>CompUsable</compClass>
+					<useJob>UseItem</useJob>
+					<useLabel>Use the holocron to learn the power</useLabel>
+		</li>
+	</comps>
+  </ThingDef>
+  
+  <ThingDef ParentName="Sith Holocron">
+    <defName>Holocron_ForceMindTwist</defName>
+    <label>Force Mind Twist Holocron</label>
+    <description>An force Holocron meant to teach new force sensitives how to access the force in specific ways.</description>
+    <comps>
+		<li Class="TheForce_Psycast.CompProperties_UseEffect_Psytrainer">
+					<ability>Force_Mind_Twist</ability>
+		</li>
+		<li Class="CompProperties_Usable">
+					<compClass>CompUsable</compClass>
+					<useJob>UseItem</useJob>
+					<useLabel>Use the holocron to learn the power</useLabel>
+		</li>
+	</comps>
+  </ThingDef>
+  
+  <ThingDef ParentName="Sith Holocron">
+    <defName>Holocron_ForceCorrupt</defName>
+    <label>Force Corruption Holocron</label>
+    <description>An force Holocron meant to teach new force sensitives how to access the force in specific ways.</description>
+    <comps>
+		<li Class="TheForce_Psycast.CompProperties_UseEffect_Psytrainer">
+					<ability>Force_Corrupt</ability>
+		</li>
+		<li Class="CompProperties_Usable">
+					<compClass>CompUsable</compClass>
+					<useJob>UseItem</useJob>
+					<useLabel>Use the holocron to learn the power</useLabel>
+		</li>
+	</comps>
+  </ThingDef>
+  
+  <ThingDef ParentName="Sith Holocron">
+    <defName>Holocron_ForceTransferEssence</defName>
+    <label>Force Transfer Holocron</label>
+    <description>An force Holocron meant to teach new force sensitives how to access the force in specific ways.</description>
+    <comps>
+		<li Class="TheForce_Psycast.CompProperties_UseEffect_Psytrainer">
+					<ability>Force_TransferEssence</ability>
+		</li>
+		<li Class="CompProperties_Usable">
+					<compClass>CompUsable</compClass>
+					<useJob>UseItem</useJob>
+					<useLabel>Use the holocron to learn the power</useLabel>
+		</li>
+	</comps>
+  </ThingDef>
+  
+  
+</Defs>

@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+	<GeneDef Name="ForceSensitive" Abstract="True">
+		<displayCategory>Psychic</displayCategory>
+		<biostatCpx>0</biostatCpx>
+		<selectionWeight>0</selectionWeight>
+		<exclusionTags>
+		  <li>Force</li>
+		</exclusionTags>
+		<randomChosen>true</randomChosen>
+		<graphicData>
+		  <color>(255, 255, 255)</color>
+		  <visibleNorth>false</visibleNorth>
+		  <drawOnEyes>true</drawOnEyes>
+		  <layer>PostTattoo</layer>
+		</graphicData>
+		<modExtensions>
+			<li Class="VanillaGenesExpanded.GeneExtension">
+				<hediffsToBodyParts>
+					<li>
+						<hediff>VPE_PsycastAbilityImplant</hediff>
+						<bodyparts>
+							<li>Brain</li>
+						</bodyparts>
+					</li>
+				</hediffsToBodyParts>
+			</li>
+		</modExtensions>
+	</GeneDef>
+
+	<GeneDef ParentName="ForceSensitive">
+		<defName>Minor_Force_Sensitive</defName>
+		<label>Minor Force Sensitivity</label>
+		<labelShortAdj>Sensitive</labelShortAdj>
+		<description>Carriers of this gene have a weaker sensitivty to the Force, A metaphysical, spiritual, binding, and ubiquitous power that held enormous importance for both the Jedi and Sith monastic orders.</description>
+		<iconPath>UI/Icons/Genes/Gene_ForceSensitive</iconPath>
+		<displayCategory>Psychic</displayCategory>
+		<selectionWeight>0.1</selectionWeight>
+		<displayOrderInCategory>1000</displayOrderInCategory>
+		<statOffsets>
+			<Force_Lightside_Attunement>0.10</Force_Lightside_Attunement>
+			<PsychicSensitivity>0.10</PsychicSensitivity>
+			<PsychicEntropyRecoveryRate>0.05</PsychicEntropyRecoveryRate>
+		</statOffsets>
+		<biostatMet>-1</biostatMet>
+	</GeneDef>
+
+	<GeneDef ParentName="ForceSensitive">
+		<defName>Force_Sensitive</defName>
+		<label>Force Sensitivity</label>
+		<labelShortAdj>Sensitive</labelShortAdj>
+		<description>Carriers of this gene have a sensitivty to the Force, A metaphysical, spiritual, binding, and ubiquitous power that held enormous importance for both the Jedi and Sith monastic orders.</description>
+		<iconPath>UI/Icons/Genes/Gene_ForceSensitive</iconPath>
+		<displayCategory>Psychic</displayCategory>
+		<selectionWeight>0.3</selectionWeight>
+		<displayOrderInCategory>1000</displayOrderInCategory>
+		<statOffsets>
+			<Force_Lightside_Attunement>0.25</Force_Lightside_Attunement>
+			<PsychicSensitivity>0.25</PsychicSensitivity>
+			<PsychicEntropyRecoveryRate>0.10</PsychicEntropyRecoveryRate>
+		</statOffsets>
+		<biostatMet>-2</biostatMet>
+	</GeneDef>
+  
+  <GeneDef ParentName="ForceSensitive">
+    <defName>Major_Force_Sensitive</defName>
+    <label>Major Force Sensitivity</label>
+    <labelShortAdj>Sensitive</labelShortAdj>
+    <description>Carriers of this gene have a greater sensitivty to the Force, A metaphysical, spiritual, binding, and ubiquitous power that held enormous importance for both the Jedi and Sith monastic orders.</description>
+    <iconPath>UI/Icons/Genes/Gene_ForceSensitive</iconPath>
+    <displayCategory>Psychic</displayCategory>
+	<selectionWeight>0.1</selectionWeight>
+    <displayOrderInCategory>1000</displayOrderInCategory>
+	<statOffsets>
+		<Force_Lightside_Attunement>0.5</Force_Lightside_Attunement>
+		<PsychicSensitivity>0.50</PsychicSensitivity>
+		<PsychicEntropyRecoveryRate>0.25</PsychicEntropyRecoveryRate>
+	</statOffsets>
+    <biostatMet>-3</biostatMet>
+  </GeneDef>
+  
+  <GeneDef ParentName="ForceSensitive">
+  <defName>VPE_ForceW_Corruption</defName>
+    <label> Minor Darkside Corruption</label>
+    <labelShortAdj>Sensitive</labelShortAdj>
+    <description>Carriers of this gene have a sensitivty to the Force, A metaphysical, spiritual, binding, and ubiquitous power that held enormous importance for both the Jedi and Sith monastic orders.</description>
+    <iconPath>UI/Icons/Genes/Gene_ForceCorruption</iconPath>
+    <displayCategory>Psychic</displayCategory>
+	<selectionWeight>0.3</selectionWeight>
+    <displayOrderInCategory>1000</displayOrderInCategory>
+	<graphicData>
+      <drawScale>0.28</drawScale>
+      <graphicPath>Things/Pawn/Humanlike/SithEyes/Male/RedEyes_Male</graphicPath>
+      <graphicPathFemale>Things/Pawn/Humanlike/SithEyes/Female/RedEyes_Female</graphicPathFemale>
+    </graphicData>
+	<statOffsets>
+		<Force_Darkside_Attunement>0.10</Force_Darkside_Attunement>
+		<PsychicSensitivity>0.10</PsychicSensitivity>
+		<PsychicEntropyRecoveryRate>0.05</PsychicEntropyRecoveryRate>
+	</statOffsets>
+    <biostatMet>-1</biostatMet>
+  </GeneDef>
+  
+  <GeneDef ParentName="ForceSensitive">
+  <defName>VPE_ForceN_Corruption</defName>
+    <label>Darkside Corruption</label>
+    <labelShortAdj>Sensitive</labelShortAdj>
+    <description>Carriers of this gene have a sensitivty to the Force, A metaphysical, spiritual, binding, and ubiquitous power that held enormous importance for both the Jedi and Sith monastic orders.</description>
+    <iconPath>UI/Icons/Genes/Gene_ForceCorruption</iconPath>
+    <displayCategory>Psychic</displayCategory>
+	<selectionWeight>0.3</selectionWeight>
+    <displayOrderInCategory>1000</displayOrderInCategory>
+	<graphicData>
+      <drawScale>0.28</drawScale>
+      <graphicPath>Things/Pawn/Humanlike/SithEyes/Male/RedEyes_Male</graphicPath>
+      <graphicPathFemale>Things/Pawn/Humanlike/SithEyes/Female/RedEyes_Female</graphicPathFemale>
+    </graphicData>
+	<statOffsets>
+		<Force_Darkside_Attunement>0.25</Force_Darkside_Attunement>
+		<PsychicSensitivity>0.25</PsychicSensitivity>
+		<PsychicEntropyRecoveryRate>0.10</PsychicEntropyRecoveryRate>
+	</statOffsets>
+    <biostatMet>-2</biostatMet>
+  </GeneDef>
+ 
+ <GeneDef ParentName="ForceSensitive">
+  <defName>VPE_ForceM_Corruption</defName>
+    <label>Major Darkside Corruption</label>
+    <labelShortAdj>Sensitive</labelShortAdj>
+    <description>Carriers of this gene have a sensitivty to the Force, A metaphysical, spiritual, binding, and ubiquitous power that held enormous importance for both the Jedi and Sith monastic orders.</description>
+    <iconPath>UI/Icons/Genes/Gene_ForceCorruption</iconPath>
+    <displayCategory>Psychic</displayCategory>
+	<selectionWeight>0.1</selectionWeight>
+    <displayOrderInCategory>1000</displayOrderInCategory>
+	<graphicData>
+      <drawScale>0.28</drawScale>
+      <graphicPath>Things/Pawn/Humanlike/SithEyes/Male/RedEyes_Male</graphicPath>
+      <graphicPathFemale>Things/Pawn/Humanlike/SithEyes/Female/RedEyes_Female</graphicPathFemale>
+    </graphicData>
+	<statOffsets>
+		<Force_Darkside_Attunement>0.5</Force_Darkside_Attunement>
+		<PsychicSensitivity>0.50</PsychicSensitivity>
+		<PsychicEntropyRecoveryRate>0.25</PsychicEntropyRecoveryRate>
+	</statOffsets>
+    <biostatMet>-3</biostatMet>
+  </GeneDef>
+  
+  <GeneDef Name="GeneWingBase" Abstract="True">
+	    <displayCategory>Miscellaneous</displayCategory>
+	    <randomChosen>true</randomChosen>
+	    <exclusionTags>
+	      <li>Wing</li>
+	    </exclusionTags>
+	    <graphicData>
+	      <drawLoc>Tailbone</drawLoc>
+	    </graphicData>
+	</GeneDef>
+
+	<GeneDef ParentName="GeneWingBase">
+    <defName>Wing_Leather</defName>
+    <label>leather wing</label>
+    <description>Great leather wings.</description>
+    <iconPath>UI/Icons/Genes/Gene_ForceCorruption</iconPath>
+    <iconColor>(0.5, 0.5, 0.5)</iconColor>
+    <displayOrderInCategory>1000</displayOrderInCategory>
+    <biostatCpx>1</biostatCpx>
+    <biostatMet>-1</biostatMet>
+    <statOffsets>
+      <ComfyTemperatureMax>5</ComfyTemperatureMax>
+    </statOffsets>
+    <graphicData>
+      <graphicPath>Things/Pawn/Humanlike/BodyAttachments/Wings/MetallicWings</graphicPath>
+	  <colorType>Hair</colorType>
+	  <drawScale>2</drawScale>
+			<drawOffsetNorth>(0, 0.19, 0)</drawOffsetNorth>
+			<drawOffsetSouth>(0, 0, 0)</drawOffsetSouth>
+			<drawOffsetEast>(0, 0.19, -0.1)</drawOffsetEast>
+    </graphicData>
+ 
+  </GeneDef>
+ 
+ </Defs>

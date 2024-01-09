@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+	<ThingCategoryDef>
+		<defName>Holocron</defName>
+		<label>Jedi Holocron</label>
+		<parent>Items</parent>
+		<resourceReadoutRoot>false</resourceReadoutRoot>
+		<iconPath>UI/Icons/ThingCategories/Drugs</iconPath>
+	</ThingCategoryDef>
+	<ThingCategoryDef>
+		<defName>SithHolocron</defName>
+		<label>Sith Holocron</label>
+		<parent>Items</parent>
+		<resourceReadoutRoot>false</resourceReadoutRoot>
+		<iconPath>UI/Icons/ThingCategories/Drugs</iconPath>
+	</ThingCategoryDef>
+
+</Defs>

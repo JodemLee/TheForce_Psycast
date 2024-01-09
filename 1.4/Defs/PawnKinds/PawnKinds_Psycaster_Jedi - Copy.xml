@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Defs>
+<PawnKindDef Name="Master_Force" Abstract="True">
+    <race>Human</race>
+    <defaultFactionType>Force_Jedi_Remnant</defaultFactionType>
+    <maxGenerationAge>80</maxGenerationAge>
+    <backstoryCryptosleepCommonality>0.00</backstoryCryptosleepCommonality>
+    <backstoryFiltersOverride>
+      <li>
+        <categories>
+          <li>Jedi</li>
+        </categories>
+      </li>
+    </backstoryFiltersOverride>
+    <royalTitleChance>0</royalTitleChance>
+    <chemicalAddictionChance>0.00</chemicalAddictionChance>
+    <itemQuality>Normal</itemQuality>
+    <combatPower>130</combatPower>
+    <weaponMoney>2000~20000</weaponMoney>
+    <weaponTags>
+     <li>UltratechMelee</li> 
+    </weaponTags>
+	<apparelRequired Inherit="False">
+			<li>Apparel_HatHood</li>
+		</apparelRequired>
+    <apparelAllowHeadgearChance>0.2</apparelAllowHeadgearChance>
+    <apparelMoney>1000~1500</apparelMoney>
+    <apparelIgnoreSeasons>true</apparelIgnoreSeasons>
+    <apparelTags>
+      <li>IndustrialBasic</li>
+    </apparelTags>
+    <techHediffsChance>0.15</techHediffsChance>
+    <techHediffsMoney>500~1500</techHediffsMoney>
+  </PawnKindDef>
+
+	<PawnKindDef ParentName="Master_Force">
+    <defaultFactionType>Force_Sith_Order</defaultFactionType>
+     <defName>Force_Sith_Ael</defName>
+      <label>Aela</label>
+	  <factionLeader>true</factionLeader>
+      <combatPower>150</combatPower>
+      <weaponMoney>99999</weaponMoney>
+		<apparelRequired Inherit="False">
+			<li>Apparel_HatHood</li>
+		</apparelRequired>
+      <techHediffsMoney>1000~4000</techHediffsMoney>
+      <weaponTags Inherit="False">
+         <li>UltratechMelee</li>
+      </weaponTags>
+      <requiredWorkTags>
+         <li>Violent</li>
+      </requiredWorkTags>
+      <minGenerationAge>20</minGenerationAge>
+      <techHediffsMaxAmount>3</techHediffsMaxAmount>
+      <initialWillRange>6~8</initialWillRange>
+      <initialResistanceRange>30~46</initialResistanceRange>
+      <modExtensions>
+         <li Class="VanillaPsycastsExpanded.PawnKindAbilityExtension_Psycasts">
+            <implantDef>VPE_PsycastAbilityImplant</implantDef>
+            <initialLevel>12</initialLevel>
+            <statUpgradePoints>2~4</statUpgradePoints>
+            <unlockedPaths>
+               <VPE_Darkside>1~4|2~3</VPE_Darkside>
+				<VPE_Force>1~5|3~6</VPE_Force>			   
+            </unlockedPaths>
+         </li>
+      </modExtensions>
+   </PawnKindDef>
+	
+   <PawnKindDef ParentName="Master_Force">
+   <defaultFactionType>Force_Jedi_Remnant</defaultFactionType>
+      <defName>Force_Jedi_Phoenix</defName>
+      <label>Phoenix</label>
+      <combatPower>300</combatPower>
+      <weaponMoney>99999</weaponMoney>
+		<apparelRequired Inherit="False">
+			<li>Apparel_HatHood</li>
+		</apparelRequired>
+      <techHediffsMoney>1000~4000</techHediffsMoney>
+      <weaponTags Inherit="False">
+         <li>UltratechMelee</li>
+      </weaponTags>
+      <requiredWorkTags>
+         <li>Violent</li>
+      </requiredWorkTags>
+      <minGenerationAge>20</minGenerationAge>
+      <techHediffsMaxAmount>3</techHediffsMaxAmount>
+      <initialWillRange>6~8</initialWillRange>
+      <initialResistanceRange>30~46</initialResistanceRange>
+      <modExtensions>
+         <li Class="VanillaPsycastsExpanded.PawnKindAbilityExtension_Psycasts">
+            <implantDef>VPE_PsycastAbilityImplant</implantDef>
+            <initialLevel>12</initialLevel>
+            <statUpgradePoints>2~4</statUpgradePoints>
+            <unlockedPaths>
+               <VPE_LightSide>1~4|2~3</VPE_LightSide>
+				<VPE_Force>1~5|3~6</VPE_Force>			   
+            </unlockedPaths>
+         </li>
+      </modExtensions>
+   </PawnKindDef>
+ 
+    
+</Defs>

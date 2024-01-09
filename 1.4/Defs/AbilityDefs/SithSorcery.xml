@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Defs>
+	<VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
+    <defName>Force_CreateScrollofHatred</defName>
+    <label>Create Sith Scroll of Hatred</label>
+    <description>Using the caster's darkside connection, offer up a portion of the connection to revitalize an ancient scroll. This will unlock the bolt of hatred scroll.</description>
+    <iconPath>Abilities/SithSorcery/SithCrafting</iconPath>
+    <abilityClass>TheForce_Psycast.BoltofHatred</abilityClass>
+    <requireLineOfSight>false</requireLineOfSight>
+    <range>999999</range>
+	<distanceToTarget>1.9</distanceToTarget>
+    <castTime>1800</castTime>
+	<showUndrafted>true</showUndrafted>
+    <castSound>VPE_ConjureHeatPearls_Cast</castSound>
+	<chance>0</chance>
+    <targetMode>Pawn</targetMode>
+	 <targetingParameters>
+      <canTargetItems>true</canTargetItems>
+      <mapObjectTargetsMustBeAutoAttackable>false</mapObjectTargetsMustBeAutoAttackable>
+      <thingCategory>Item</thingCategory>
+      <canTargetLocations>false</canTargetLocations>
+      <canTargetPawns>false</canTargetPawns>
+      <canTargetBuildings>false</canTargetBuildings>
+    </targetingParameters>
+    <warmupSound>VPE_Psyring_Warmup</warmupSound>
+    <modExtensions>
+      <li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
+        <path>VPE_SithSorcery</path>
+        <level>1</level>
+        <order>3</order>
+        <psyfocusCost>0.2</psyfocusCost>
+        <entropyGain>0</entropyGain>
+      </li>
+    </modExtensions>
+  </VFECore.Abilities.AbilityDef>
+  
+  <VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
+    <defName>Force_CreateScrollofSuppression</defName>
+    <label>Create Sith Scroll of Suppress Thoughts</label>
+    <description>Using the caster's darkside connection, offer up a portion of the connection to revitalize an ancient scroll. This will unlock the Suppress Thoughts scroll.</description>
+    <iconPath>Abilities/SithSorcery/SithCrafting</iconPath>
+    <abilityClass>TheForce_Psycast.SuppressedThoughts</abilityClass>
+    <requireLineOfSight>false</requireLineOfSight>
+    <range>999999</range>
+	<distanceToTarget>1.9</distanceToTarget>
+    <castTime>1800</castTime>
+	<showUndrafted>true</showUndrafted>
+    <castSound>VPE_ConjureHeatPearls_Cast</castSound>
+	<chance>0</chance>
+    <targetMode>Pawn</targetMode>
+	 <targetingParameters>
+      <canTargetItems>true</canTargetItems>
+      <mapObjectTargetsMustBeAutoAttackable>false</mapObjectTargetsMustBeAutoAttackable>
+      <thingCategory>Item</thingCategory>
+      <canTargetLocations>false</canTargetLocations>
+      <canTargetPawns>false</canTargetPawns>
+      <canTargetBuildings>false</canTargetBuildings>
+    </targetingParameters>
+    <warmupSound>VPE_Psyring_Warmup</warmupSound>
+    <modExtensions>
+      <li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
+        <path>VPE_SithSorcery</path>
+        <level>1</level>
+        <order>1</order>
+        <psyfocusCost>0.2</psyfocusCost>
+        <entropyGain>0</entropyGain>
+      </li>
+    </modExtensions>
+  </VFECore.Abilities.AbilityDef>
+  
+  <VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
+    <defName>Force_CreateScrollofDarksideWeb</defName>
+    <label>Create Sith Scroll of Darkside Web</label>
+    <description>Using the caster's darkside connection, offer up a portion of the connection to revitalize an ancient scroll. This will unlock the Darkside Web scroll.</description>
+    <iconPath>Abilities/SithSorcery/SithCrafting</iconPath>
+    <abilityClass>TheForce_Psycast.DarksideWeb</abilityClass>
+    <requireLineOfSight>false</requireLineOfSight>
+    <range>999999</range>
+	<distanceToTarget>1.9</distanceToTarget>
+    <castTime>1800</castTime>
+	<showUndrafted>true</showUndrafted>
+    <castSound>VPE_ConjureHeatPearls_Cast</castSound>
+	<chance>0</chance>
+    <targetMode>Pawn</targetMode>
+	 <targetingParameters>
+      <canTargetItems>true</canTargetItems>
+      <mapObjectTargetsMustBeAutoAttackable>false</mapObjectTargetsMustBeAutoAttackable>
+      <thingCategory>Item</thingCategory>
+      <canTargetLocations>false</canTargetLocations>
+      <canTargetPawns>false</canTargetPawns>
+      <canTargetBuildings>false</canTargetBuildings>
+    </targetingParameters>
+    <warmupSound>VPE_Psyring_Warmup</warmupSound>
+    <modExtensions>
+      <li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
+        <path>VPE_SithSorcery</path>
+        <level>1</level>
+        <order>2</order>
+        <psyfocusCost>0.2</psyfocusCost>
+        <entropyGain>0</entropyGain>
+      </li>
+    </modExtensions>
+  </VFECore.Abilities.AbilityDef>
+	
+	<VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
+    <defName>Force_CreateSithCrystal</defName>
+    <label>Create Sith Crystal</label>
+    <description>Using the caster's darkside connection, offer up a portion of the connection to create a sith crystal, capable of healing a target.</description>
+    <iconPath>Abilities/SithSorcery/SithCrystal</iconPath>
+	<showUndrafted>true</showUndrafted>
+    <abilityClass>TheForce_Psycast.Craft_SithCrystal</abilityClass>
+    <castTime>240</castTime>
+    <castSound>VPE_ConjureHeatPearls_Cast</castSound>
+    <targetMode>Self</targetMode>
+    <modExtensions>
+      <li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
+        <path>VPE_SithSorcery</path>
+        <level>2</level>
+        <order>2</order>
+        <psyfocusCost>0.2</psyfocusCost>
+        <entropyGain>0</entropyGain>
+		<prerequisites>
+		<li>Force_CreateScrollofDarksideWeb</li>
+		<li>Force_CreateScrollofSuppression</li>
+		<li>Force_CreateScrollofHatred</li>
+		</prerequisites>
+      </li>
+    </modExtensions>
+  </VFECore.Abilities.AbilityDef>
+  
+  <VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
+    <defName>Force_CreateAncientScroll</defName>
+    <label>Create Sith Scroll of Resurrection</label>
+    <description>Give up your connection to the darkside in order to revitalize an ancient sith scroll capable of returning the dead.</description>
+    <iconPath>Abilities/SithSorcery/SithCrafting</iconPath>
+    <abilityClass>TheForce_Psycast.Craft_AncientSithScrollResurrection</abilityClass>
+    <requireLineOfSight>false</requireLineOfSight>
+    <range>999999</range>
+	<distanceToTarget>1.9</distanceToTarget>
+    <castTime>1800</castTime>
+	<showUndrafted>true</showUndrafted>
+    <castSound>VPE_ConjureHeatPearls_Cast</castSound>
+	<chance>0</chance>
+    <targetMode>Pawn</targetMode>
+	 <targetingParameters>
+      <canTargetItems>true</canTargetItems>
+      <mapObjectTargetsMustBeAutoAttackable>false</mapObjectTargetsMustBeAutoAttackable>
+      <thingCategory>Item</thingCategory>
+      <canTargetLocations>false</canTargetLocations>
+      <canTargetPawns>false</canTargetPawns>
+      <canTargetBuildings>false</canTargetBuildings>
+    </targetingParameters>
+    <warmupSound>VPE_Psyring_Warmup</warmupSound>
+    <modExtensions>
+      <li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
+        <path>VPE_SithSorcery</path>
+        <level>4</level>
+        <order>2</order>
+        <psyfocusCost>0.2</psyfocusCost>
+        <entropyGain>0</entropyGain>
+		<prerequisites>
+		<li>Force_CreateSithCrystal</li>
+		</prerequisites>
+      </li>
+    </modExtensions>
+  </VFECore.Abilities.AbilityDef>
+  
+  
+  <VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
+		<defName>Force_SithRitual</defName>
+		<label>Sith Ritual</label>
+		<description>An Ancient Sith Ritual that absorbs the life energy from fresh corpses. This ceremony not only bestows the caster with a rejuvenated youth but also imparts a neural heat buff, enhancing their mental acuity with the remnants of the absorbed vitality..</description>
+		<iconPath>Abilities/SithSorcery/SithRitual</iconPath>
+		<abilityClass>TheForce_Psycast.Abilities.Ability_SithRitual</abilityClass>
+		<castTime>600</castTime>
+		<targetMode>Self</targetMode>
+		<hasAoE>true</hasAoE>
+		<radius>3.9</radius>
+		<needsTicking>true</needsTicking>
+		<targetingParametersForAoE>
+			<canTargetLocations>False</canTargetLocations>
+			<canTargetSelf>False</canTargetSelf>
+			<canTargetAnimals>False</canTargetAnimals>
+			<canTargetPawns>False</canTargetPawns>
+			<canTargetHumans>False</canTargetHumans>
+			<canTargetItems>true</canTargetItems>
+			<thingCategory>Item</thingCategory>
+			<mapObjectTargetsMustBeAutoAttackable>False</mapObjectTargetsMustBeAutoAttackable>
+		</targetingParametersForAoE>
+		<reserveTargets>true</reserveTargets>
+		<castSound>VPE_ConsumeBodies_Cast</castSound>
+		<modExtensions>
+			<li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
+				<path>VPE_SithSorcery</path>
+				<level>5</level>
+				<order>2</order>
+				<psyfocusCost>0.8</psyfocusCost>
+				<entropyGain>0</entropyGain>
+				<prerequisites>
+				<li>Force_CreateAncientScroll</li>
+				</prerequisites>
+			</li>
+			<li Class="TheForce_Psycast.Abilities.AbilityExtension_Age">
+			<casterYears>-15</casterYears>
+			</li>
+		</modExtensions>
+	</VFECore.Abilities.AbilityDef>
+  
+  <VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
+    <defName>Force_ForceStorm</defName>
+    <label>Force Storm</label>
+    <description>Acting against the force itself, the caster manipulates the nearby atmospheric conditions to whip the weather around the user into a frenzy. A skilled user could create storm conditions in areas up to several kilometers in diameter, lasting for hours at a time.</description>
+   <iconPath>Abilities/SithSorcery/ForceStorm</iconPath>
+    <abilityClass>TheForce_Psycast.Abilities.Ability_ForceStorm</abilityClass>
+    <castTime>360</castTime>
+	<radius>25.9</radius>
+	<durationTime>2400</durationTime>
+    <targetMode>Self</targetMode>
+    <castSound>VPE_Hurricane_Cast</castSound>
+    <modExtensions>
+      <li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
+        <path>VPE_SithSorcery</path>
+        <level>5</level>
+        <order>1</order>
+        <psyfocusCost>0.5</psyfocusCost>
+        <entropyGain>0</entropyGain>
+		<prerequisites>
+		<li>Force_CreateAncientScroll</li>
+		</prerequisites>
+      </li>
+	   <li Class="VFECore.Abilities.AbilityExtension_Hediff">
+        <hediff>VPE_PsychicDrone</hediff>
+        <durationMultiplier>Force_Darkside_Attunement</durationMultiplier>
+      </li>
+    </modExtensions>
+  </VFECore.Abilities.AbilityDef>
+</Defs>
+	
+
+  
+
+  
+	
+

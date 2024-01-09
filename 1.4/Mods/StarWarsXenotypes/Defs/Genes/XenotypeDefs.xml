@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <XenotypeDef>
+		<defName>xenotype_force_sensitive</defName>
+		<label>Force Sensitive</label>
+		<description>Force Sensitives were sentient or non-sentient lifeforms that possessed a strong connection to the mystical energy field known as the Force</description>
+		<descriptionShort>Connection to Force</descriptionShort>
+		<inheritable>true</inheritable>
+		<iconPath>UI/Icons/Xenotypes/Baseliner</iconPath>
+		<doubleXenotypeChances>
+		  <Pigskin>0.02</Pigskin>
+		  <Impid>0.02</Impid>
+		  <Yttakin>0.02</Yttakin>
+		  <Neanderthal>0.02</Neanderthal>
+		  <Waster>0.02</Waster>
+		  <Dirtmole>0.02</Dirtmole>
+		  <guy762_xenotype_arkanian>0.02</guy762_xenotype_arkanian>
+		  <guy762_xenotype_cathar>0.02</guy762_xenotype_cathar>
+		  <guy762_xenotype_chadrafan>0.02</guy762_xenotype_chadrafan>
+		  <guy762_xenotype_devaronian>0.02</guy762_xenotype_devaronian>
+		  <guy762_xenotype_duros>0.02</guy762_xenotype_duros>
+		  <guy762_xenotype_echani>0.02</guy762_xenotype_echani>
+		  <guy762_xenotype_falleen>0.02</guy762_xenotype_falleen>
+		  <guy762_xenotype_feeorin>0.02</guy762_xenotype_feeorin>
+		  <guy762_xenotype_iridonian>0.02</guy762_xenotype_iridonian>
+		  <guy762_xenotype_klatoonian>0.02</guy762_xenotype_klatoonian>
+		  <guy762_xenotype_miraluka>0.02</guy762_xenotype_miraluka>
+		  <guy762_xenotype_mirialan>0.02</guy762_xenotype_mirialan>
+		  <guy762_xenotype_nagai>0.02</guy762_xenotype_nagai>
+		  <guy762_xenotype_nautolan>0.02</guy762_xenotype_nautolan>
+		  <guy762_xenotype_nemoidian>0.02</guy762_xenotype_nemoidian>
+		  <guy762_xenotype_rodian>0.02</guy762_xenotype_rodian>
+		  <guy762_xenotype_snivvian>0.02</guy762_xenotype_snivvian>
+		  <guy762_xenotype_sullustan>0.02</guy762_xenotype_sullustan>
+		  <guy762_xenotype_togruta>0.02</guy762_xenotype_togruta>
+		  <guy762_xenotype_twilek>0.02</guy762_xenotype_twilek>
+		  <guy762_xenotype_umbaran>0.02</guy762_xenotype_umbaran>
+		  <guy762_xenotype_weequay>0.02</guy762_xenotype_weequay>
+		  <guy762_xenotype_yoder>0.02</guy762_xenotype_yoder>
+		  <guy762_xenotype_zabrak>0.02</guy762_xenotype_zabrak>
+		  <guy762_xenotype_zeltron>0.02</guy762_xenotype_zeltron>
+		  <guy762_xenotype_zygerrian>0.02</guy762_xenotype_zygerrian>
+		</doubleXenotypeChances>
+		<genes>
+			<li>Minor_Force_Sensitive</li>
+			<li>Force_Sensitive</li>
+			<li>Major_Force_Sensitive</li>
+		</genes>
+	</XenotypeDef>
+
+	<XenotypeDef>
+		<defName>xenotype_force_Darkside</defName>
+		<label>Corrupted Force Sensitive</label>
+		<description>Force Sensitives were sentient or non-sentient lifeforms that possessed a strong connection to the mystical energy field known as the Force, however this person has started to be corrupted by the darkside of the force.</description>
+		<descriptionShort>Connection to the Darkside of the Force</descriptionShort>
+		<inheritable>true</inheritable>
+		<iconPath>UI/Icons/Xenotypes/Baseliner</iconPath>
+		<doubleXenotypeChances>
+		  <Pigskin>0.02</Pigskin>
+		  <Impid>0.02</Impid>
+		  <Yttakin>0.02</Yttakin>
+		  <Neanderthal>0.02</Neanderthal>
+		  <Waster>0.02</Waster>
+		  <Dirtmole>0.02</Dirtmole>
+		  <PureBlood>0.5</PureBlood>
+		</doubleXenotypeChances>
+		<genes>
+			<li>VPE_ForceW_Corruption</li>
+			<li>VPE_ForceN_Corruption</li>
+			<li>VPE_ForceM_Corruption</li>
+		</genes>
+	</XenotypeDef>
+
+</Defs>
