@@ -1,21 +1,8 @@
 ﻿using HarmonyLib;
-using System;
+using RimWorld;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Emit;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using TheForce_Psycast;
-using UnityEngine;
 using Verse;
-using VFECore;
-using RimWorld;
-using System.Runtime;
-using Verse.Sound;
-using VFECore.Abilities;
-using AbilityDef = VFECore.Abilities.AbilityDef;
-using VanillaPsycastsExpanded;
 
 
 namespace TheForce_Psycast
@@ -26,8 +13,50 @@ namespace TheForce_Psycast
     {
         static HarmonyPatches()
         {
-            Harmony harmony = new("Psycast_ForceThe");
-            harmony.PatchAll();
+            Harmony harmonyPatch = new("Psycast_ForceThe");
+            harmonyPatch.PatchAll();
+        }
+
+        public static Harmony harmonyPatch;
+
+    }
+
+    [HarmonyPatch(typeof(Ideo), "SetIcon")]
+    public static class Patch_Ideo_SetIcon
+    {
+        [HarmonyPostfix]
+        public static void PostFix(Ideo __instance)
+        {
+            if (__instance.culture != null && __instance.culture.HasModExtension<DefCultureExtension>())
+            {
+                DefCultureExtension ext = __instance.culture.GetModExtension<DefCultureExtension>();
+
+                if (ext.ideoIconDef != null)
+                {
+                    __instance.iconDef = ext.ideoIconDef;
+                }
+                if (ext.ideoIconColor != null)
+                {
+                    __instance.colorDef = ext.ideoIconColor;
+                }
+            }
+        }
+    }
+
+
+    [HarmonyPatch(typeof(GenRecipe), "MakeRecipeProducts")]
+    public static class GenRecipe_MakeRecipeProducts_Patch
+    {
+        public static IEnumerable<Thing> Postfix(IEnumerable<Thing> __result, RecipeDef recipeDef)
+        {
+            if (recipeDef == ForceDefOf.Make_StoneBlocksAny && Rand.Chance(0.1f))
+            {
+                ThingDef extraMaterialDef = ForceDefOf.Force_KyberCrystal;
+                Thing extraMaterial = ThingMaker.MakeThing(extraMaterialDef);
+                extraMaterial.stackCount = 1;
+                __result = __result.Append(extraMaterial);
+            }
+            return __result;
         }
     }
 }

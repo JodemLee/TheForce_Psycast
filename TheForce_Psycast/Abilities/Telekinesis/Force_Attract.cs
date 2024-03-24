@@ -32,9 +32,9 @@ namespace TheForce_Psycast
                 IntVec3 pullPosition = this.pawn.Position + new IntVec3(Mathf.RoundToInt(direction.x * maxPullDistance), Mathf.RoundToInt(direction.y * maxPullDistance), Mathf.RoundToInt(direction.z * maxPullDistance));
 
                 // Ensure the pull position does not go beyond the caster
-                pullPosition.x = Mathf.Clamp(pullPosition.x, this.pawn.Position.x - 1, this.pawn.Position.x + 1);
-                pullPosition.y = Mathf.Clamp(pullPosition.y, this.pawn.Position.y - 1, this.pawn.Position.y + 1);
-                pullPosition.z = Mathf.Clamp(pullPosition.z, this.pawn.Position.z - 1, this.pawn.Position.z + 1);
+                pullPosition.x = Mathf.Clamp(pullPosition.x, this.pawn.Position.x , this.pawn.Position.x );
+                pullPosition.y = Mathf.Clamp(pullPosition.y, this.pawn.Position.y , this.pawn.Position.y );
+                pullPosition.z = Mathf.Clamp(pullPosition.z, this.pawn.Position.z , this.pawn.Position.z );
 
                 if (target.Thing is Pawn)
                 {
@@ -50,23 +50,6 @@ namespace TheForce_Psycast
 
                 base.Cast(targets);
             }
-        }
-
-
-        public override float GetPowerForPawn() => def.power + Mathf.FloorToInt((pawn.GetStatValue(StatDefOf.PsychicSensitivity) * 2));
-
-        // Custom method to normalize IntVec3
-        private IntVec3 NormalizeIntVec3(IntVec3 vector)
-        {
-            float magnitude = Mathf.Sqrt(vector.x * vector.x + vector.y * vector.y + vector.z * vector.z);
-
-            if (magnitude > 0)
-            {
-                float scaleFactor = 1f / magnitude;
-                return new IntVec3(Mathf.RoundToInt(vector.x * scaleFactor), Mathf.RoundToInt(vector.y * scaleFactor), Mathf.RoundToInt(vector.z * scaleFactor));
-            }
-
-            return vector; // Avoid division by zero
         }
     }
 }

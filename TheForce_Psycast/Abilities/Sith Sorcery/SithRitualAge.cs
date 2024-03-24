@@ -58,6 +58,7 @@ namespace TheForce_Psycast.Abilities
         public override void Cast(params GlobalTargetInfo[] targets)
         {
             base.Cast(targets);
+            this.pawn.health.hediffSet.GetFirstHediffOfDef(ForceDefOf.Force_Darkside).Severity -= 1f;
             if (!pawn.health.hediffSet.HasHediff(VPE_DefOf.VPE_BodiesConsumed))
             {
                 pawn.health.AddHediff(VPE_DefOf.VPE_BodiesConsumed);

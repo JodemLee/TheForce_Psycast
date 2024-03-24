@@ -21,7 +21,7 @@ namespace TheForce_Psycast
         public override bool IsEnabledForPawn(out string reason)
         {
             if (!base.IsEnabledForPawn(out reason)) return false;
-            if (DarksideConnection > 2f) return true;
+            if (DarksideConnection >= 2f) return true;
             reason = "Force.NotEnoughAttunement".Translate();
             return false;
         }
@@ -56,6 +56,7 @@ namespace TheForce_Psycast
     internal class BoltofHatred : Ability
     {
         public float DarksideConnection => pawn.GetStatValue(ForceDefOf.Force_Darkside_Attunement);
+
 
         public override bool IsEnabledForPawn(out string reason)
         {

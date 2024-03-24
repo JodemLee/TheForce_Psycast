@@ -31,7 +31,7 @@ namespace TheForce_Psycast
                     if (neckPart != null)
                     {
                         // Deal damage to the target's neck
-                        float damageAmount = 5f; // You can adjust the damage amount as needed
+                        float damageAmount = GetPowerForPawn();
                         damageAmount =  pawn.GetStatValue(StatDefOf.PsychicSensitivity)*damageAmount;
 
                         // Create a damage info object

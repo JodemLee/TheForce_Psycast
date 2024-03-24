@@ -81,6 +81,7 @@ namespace TheForce_Psycast.Abilities
         public override void Cast(params GlobalTargetInfo[] targets)
         {
             base.Cast(targets);
+            this.pawn.health.hediffSet.GetFirstHediffOfDef(ForceDefOf.Force_Darkside).Severity -= 1f;
             this.maker = (ForceStormMaker)ThingMaker.MakeThing(ForceDefOf.Force_ForceStormMaker);
             this.maker.Pawn = this.pawn;
             GenSpawn.Spawn(this.maker, this.pawn.Position, this.pawn.Map);

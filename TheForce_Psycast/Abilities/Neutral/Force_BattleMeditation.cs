@@ -22,7 +22,7 @@ namespace TheForce_Psycast
                 {
                     if (!targets.Any(x => x.Thing == linkedPawn))
                     {
-                        base.Cast(new GlobalTargetInfo[] { linkedPawn });
+                        base.Cast([linkedPawn]);
                     }
                 }
             }

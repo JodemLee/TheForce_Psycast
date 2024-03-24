@@ -19,7 +19,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\..\..\The Force- Psycast\1.4\Assemblies\</OutputPath>
+    <OutputPath>L:\SteamLibrary\steamapps\common\RimWorld\Mods\The Force- Psycast\1.4\Assemblies\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -34,18 +34,19 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="0Harmony">
-      <HintPath>..\..\..\..\..\..\..\workshop\content\294100\2009463077\Current\Assemblies\0Harmony.dll</HintPath>
+      <HintPath>L:\SteamLibrary\steamapps\workshop\content\294100\2009463077\Current\Assemblies\0Harmony.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Assembly-CSharp">
-      <HintPath>..\..\..\..\..\RimWorldWin64_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <HintPath>L:\SteamLibrary\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\Assembly-CSharp.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="GraphicCustomization">
-      <HintPath>..\..\..\..\..\..\..\workshop\content\294100\2023507013\1.4\Assemblies\GraphicCustomization.dll</HintPath>
+      <HintPath>L:\SteamLibrary\steamapps\workshop\content\294100\2023507013\1.4\Assemblies\GraphicCustomization.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="HarmonyMod">
-      <HintPath>..\..\..\..\..\..\..\workshop\content\294100\2009463077\Current\Assemblies\HarmonyMod.dll</HintPath>
+      <HintPath>L:\SteamLibrary\steamapps\workshop\content\294100\2009463077\Current\Assemblies\HarmonyMod.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System">
@@ -73,63 +74,99 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine">
-      <HintPath>..\..\..\..\..\RimWorldWin64_Data\Managed\UnityEngine.dll</HintPath>
+      <HintPath>L:\SteamLibrary\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
-      <HintPath>..\..\..\..\..\RimWorldWin64_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+      <HintPath>L:\SteamLibrary\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.IMGUIModule">
-      <HintPath>..\..\..\..\..\RimWorldWin64_Data\Managed\UnityEngine.IMGUIModule.dll</HintPath>
+      <HintPath>L:\SteamLibrary\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.IMGUIModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.Physics2DModule">
+      <HintPath>L:\SteamLibrary\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.Physics2DModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.PhysicsModule">
+      <HintPath>L:\SteamLibrary\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.PhysicsModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.TextRenderingModule">
-      <HintPath>..\..\..\..\..\RimWorldWin64_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
+      <HintPath>L:\SteamLibrary\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="VanillaPsycastsExpanded">
-      <HintPath>..\..\..\..\..\..\..\workshop\content\294100\2842502659\1.4\Assemblies\VanillaPsycastsExpanded.dll</HintPath>
+      <HintPath>L:\SteamLibrary\steamapps\workshop\content\294100\2842502659\1.4\Assemblies\VanillaPsycastsExpanded.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="VFECore">
-      <HintPath>..\..\..\..\..\..\..\workshop\content\294100\2023507013\1.4\Assemblies\VFECore.dll</HintPath>
+      <HintPath>L:\SteamLibrary\steamapps\workshop\content\294100\2023507013\1.4\Assemblies\VFECore.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="VPEPuppeteer">
+      <HintPath>L:\SteamLibrary\steamapps\workshop\content\294100\3033779606\1.4\Assemblies\VPEPuppeteer.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Abilities\LightsaberPatch.cs" />
-    <Compile Include="Abilities\ForceStorm.cs" />
-    <Compile Include="Abilities\SithRitualAge.cs" />
+    <Compile Include="Abilities\Darkside\Force_Lightning.cs" />
+    <Compile Include="Abilities\Darkside\Force_Rage.cs" />
+    <Compile Include="Abilities\NightSisterMagick\Ability_Summon_InvisibilityPotion.cs" />
+    <Compile Include="Abilities\NightSisterMagick\Force_GeneMagick.cs" />
+    <Compile Include="Abilities\NightSisterMagick\GeneGizmo_ResourceIchor.cs" />
+    <Compile Include="Abilities\NightSisterMagick\IchorResourceDrainUtility.cs" />
+    <Compile Include="Abilities\NightSisterMagick\IngestionOutcomeDoer_OffsetIchor.cs" />
+    <Compile Include="Abilities\NightSisterMagick\Nightsister_TeleportAbility.cs" />
+    <Compile Include="Abilities\NightSisterMagick\RestoreIchor_Ability.cs" />
+    <Compile Include="Abilities\NightSisterMagick\Summon_Object.cs" />
+    <Compile Include="Abilities\Telekinesis\ForceDrop.cs" />
+    <Compile Include="Comps\CompUse_AddEffect_Invisibility.cs" />
+    <Compile Include="Comps\DeflectionComp.cs" />
+    <Compile Include="Hediffs\ForceAttunement.cs" />
+    <Compile Include="LightsaberStanceGizmo.cs" />
+    <Compile Include="Lightsabers\LightsaberBladeGraphic.cs" />
+    <Compile Include="Lightsabers\LightsaberPatch.cs" />
+    <Compile Include="Abilities\Neutral\LightsaberCrafting.cs" />
+    <Compile Include="Abilities\Sith Sorcery\ForceStorm.cs" />
+    <Compile Include="Abilities\Jedi Training\Master_Apprentice.cs" />
+    <Compile Include="Abilities\Sith Sorcery\SithLightningStrike.cs" />
+    <Compile Include="Abilities\Sith Sorcery\SithRitualAge.cs" />
+    <Compile Include="AbilityExtensionForce.cs" />
     <Compile Include="Comps\CompUse_AddEffectSithHealing.cs" />
-    <Compile Include="Abilities\Craft_AncientSithScroll.cs" />
-    <Compile Include="Abilities\Craft_SithCrystal.cs" />
-    <Compile Include="Abilities\Force Offense.cs" />
-    <Compile Include="Abilities\ForcePull.cs" />
-    <Compile Include="Abilities\ForcePush.cs" />
-    <Compile Include="Abilities\ForceThrow.cs" />
-    <Compile Include="Abilities\Force_Attract.cs" />
-    <Compile Include="Abilities\Force_BattleMeditation.cs" />
-    <Compile Include="Abilities\Force_Choke.cs" />
-    <Compile Include="Abilities\Force_Repulsion.cs" />
+    <Compile Include="Abilities\Sith Sorcery\Craft_AncientSithScroll.cs" />
+    <Compile Include="Abilities\Sith Sorcery\Craft_SithCrystal.cs" />
+    <Compile Include="Abilities\Telekinesis\ForcePull.cs" />
+    <Compile Include="Abilities\Telekinesis\ForcePush.cs" />
+    <Compile Include="Abilities\Telekinesis\ForceThrow.cs" />
+    <Compile Include="Abilities\Telekinesis\Force_Attract.cs" />
+    <Compile Include="Abilities\Neutral\Force_BattleMeditation.cs" />
+    <Compile Include="Abilities\Telekinesis\Force_Choke.cs" />
+    <Compile Include="Abilities\Telekinesis\Force_Repulsion.cs" />
+    <Compile Include="DefCultureExtension.cs" />
     <Compile Include="Hediffs\Hediff_BattleMeditation.cs" />
     <Compile Include="Hediffs\Hediff_DefensiveStance.cs" />
+    <Compile Include="Abilities\Jedi Training\EnhanceForce.cs" />
     <Compile Include="Hediffs\Hediff_ForceDefense.cs" />
     <Compile Include="HarmonyPatch.cs" />
     <Compile Include="Hediffs\Hediff_Force_SithHeal.cs" />
     <Compile Include="Comps\LearnForceAbility.cs" />
-    <Compile Include="Abilities\LightsaberProjectile.cs" />
+    <Compile Include="Lightsabers\LightsaberProjectile.cs" />
     <Compile Include="NonPublic Fields.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Abilities\ForceDefenseAbility.cs" />
+    <Compile Include="Abilities\Neutral\ForceDefenseAbility.cs" />
     <Compile Include="Abilities\Sustained Ability.cs" />
     <Compile Include="TheForce_DefOf.cs" />
-    <Compile Include="Abilities\ThrowLightsaber.cs" />
+    <Compile Include="Abilities\Telekinesis\ThrowLightsaber.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.editorconfig">
       <Link>.editorconfig</Link>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Abilities\Lightside\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
