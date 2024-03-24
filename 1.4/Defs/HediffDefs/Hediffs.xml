@@ -2,7 +2,7 @@
 <Defs>
 
 	<HediffDef ParentName="PsycastHediffBase">
-		<defName>VPE_Malacia</defName>
+		<defName>Force_Malacia</defName>
 		<label>Malacia</label>
 		<description>Force Sickness.</description>
 		 <initialSeverity>0.2</initialSeverity>
@@ -102,58 +102,6 @@
     </stages>
 	</HediffDef>
 
-	<HediffDef ParentName="PsycastHediffBase">
-		<defName>VPE_PsychicDrone</defName>
-		<label>Force Hatred</label>
-		<description>A strong force of hatred affecting every enemy humanlike in the area, making them feel more disturbed, terrified, and paranoid.</description>
-		<hediffClass>VanillaPsycastsExpanded.Hediff_PsychicDrone</hediffClass>
-		<comps>
-			<li Class="VanillaPsycastsExpanded.HediffCompProperties_PlaySound">
-				<endSound>VPE_PsychicDrone_End</endSound>
-				<sustainer>VPE_PsychicDrone_Sustainer</sustainer>
-			</li>
-			<li Class="VanillaPsycastsExpanded.HediffCompProperties_DisappearsOnDowned"/>
-			<li Class="VanillaPsycastsExpanded.HediffCompProperties_DisappearsOnDespawn"/>
-		</comps>
-	</HediffDef>
-
-	<HediffDef ParentName="PsycastHediffBase">
-		<defName>VPE_Haywire</defName>
-		<label>haywire</label>
-		<description>Psychically hacked programming that disrupts the IFF operations.</description>
-		<comps>
-			<li Class="HediffCompProperties_Effecter">
-				<stateEffecter>VPE_Haywire</stateEffecter>
-			</li>
-			<li>
-				<compClass>VanillaPsycastsExpanded.Technomancer.HediffComp_Haywire</compClass>
-			</li>
-		</comps>
-	</HediffDef>
-
-	<HediffDef>
-		<defName>VPE_Essence</defName>
-		<label>Essence of</label>
-		<description>Psychically-split fragment of someone's personality imbued in this very being.</description>
-		<hediffClass>VanillaPsycastsExpanded.Wildspeaker.Hediff_Essence</hediffClass>
-		<isBad>false</isBad>
-		<comps>
-			<li Class="HediffCompProperties_DisappearsOnDeath" />
-		</comps>
-	</HediffDef>
-
-	<HediffDef>
-		<defName>VPE_GroupLink</defName>
-		<label>Force Meld</label>
-		<description>Psychically link between several entities using the force. Any 'word of' psycast will resonate between all linked individuals.</description>
-		<hediffClass>VanillaPsycastsExpanded.Hediff_GroupLink</hediffClass>
-		<isBad>false</isBad>
-		<comps>
-			<li Class="VanillaPsycastsExpanded.HediffCompProperties_DisappearsOnDowned"/>
-			<li Class="VanillaPsycastsExpanded.HediffCompProperties_DisappearsOnDespawn"/>
-		</comps>
-	</HediffDef>
-	
 	<HediffDef>
 		<defName>Hediff_BattleMeditation</defName>
 		<label>Battle Meditation</label>
@@ -165,210 +113,41 @@
 			<li Class="VanillaPsycastsExpanded.HediffCompProperties_DisappearsOnDespawn"/>
 		</comps>
 	</HediffDef>
-	
-	<HediffDef ParentName="PsycastHediffBase">
-		<defName>VPE_GainedVitality</defName>
-		<label>psychic vitality</label>
-		<description>Psychically-induced vitality stolen from another person.</description>
-		<stages>
-			<li>
-				<restFallFactor>0.5</restFallFactor>
-				<naturalHealingFactor>1.2</naturalHealingFactor>
-				<capMods>
-					<li>
-						<capacity>Moving</capacity>
-						<postFactor>1.2</postFactor>
-					</li>
-					<li>
-						<capacity>Consciousness</capacity>
-						<postFactor>1.3</postFactor>
-					</li>
-				</capMods>
-			</li>
-		</stages>
-	</HediffDef>
 
-	<HediffDef ParentName="PsycastHediffBase">
-		<defName>VPE_LostVitality</defName>
-		<label>psychic weakness</label>
-		<description>Psychically-induced weakness caused by vitality being stolen by another person.</description>
+	<HediffDef ParentName = "PsycastHediffBase">
+		<defName>Force_Stasis</defName>
+		<label>Force Stasis</label>
+		<description>Psychically-induced difficulty in locomotion.</description>
+		<isBad>true</isBad>
 		<stages>
-			<li>
-				<restFallFactor>2</restFallFactor>
-				<naturalHealingFactor>0.8</naturalHealingFactor>
-				<capMods>
-					<li>
-						<capacity>Moving</capacity>
-						<postFactor>0.8</postFactor>
-					</li>
-					<li>
-						<capacity>Consciousness</capacity>
-						<setMax>0.70</setMax>
-					</li>
-				</capMods>
-			</li>
+		  <li>
+			<capMods>
+			  <li>
+				<capacity>Moving</capacity>
+				<setMax>0.4</setMax>
+			  </li>
+			</capMods>
+			<capacityFactorEffectMultiplier>PsychicSensitivity</capacityFactorEffectMultiplier>
+		  </li>
 		</stages>
-	</HediffDef>
-	
+	  </HediffDef>
+
 	<HediffDef>
-		<defName>VPE_BodiesConsumed</defName>
-		<label>bodies consumed</label>
-		<description>The amount of bodies that were consumed using the Consume Bodies psycast. Each body consumed increases a maximum neural heat by 1.</description>
-		<hediffClass>VanillaPsycastsExpanded.Hediff_BodiesConsumed</hediffClass>
+		<defName>Magick_Invisibility</defName>
+		<label>Invisibility</label>
+		<description>Psychically-induced invisibility. This actually affects others nearby, making their brains unable to perceive the sight of this individual, even if the eyes are unaffected.</description>
 		<isBad>false</isBad>
-	</HediffDef>
-
-	<HediffDef ParentName="PsycastHediffBase">
-		<defName>VPE_DeathShield</defName>
-		<label>death shield</label>
-		<description>Psychically-induced immortality that lasts for one day.</description>
-		<hediffClass>VanillaPsycastsExpanded.Hediff_Deathshield</hediffClass>
+		<hediffClass>HediffWithComps</hediffClass>
 		<comps>
-			<li Class="HediffCompProperties_Effecter">
-				<stateEffecter>VPE_BlackSmoke</stateEffecter>
-			</li>
+		  <li Class="HediffCompProperties">
+			<compClass>HediffComp_Invisibility</compClass>
+		  </li>
+			<li Class="VanillaPsycastsExpanded.HediffCompProperties_DisappearsOnDowned"/>
+			<li Class="VanillaPsycastsExpanded.HediffCompProperties_DisappearsOnDespawn"/>
+			<li Class="HediffCompProperties_Disappears">
+				<disappearsAfterTicks>18000</disappearsAfterTicks> <!-- 3 hours -->
+				<showRemainingTime>true</showRemainingTime>
+			  </li>
 		</comps>
-	</HediffDef>
-	
-	<HediffDef>
-		<defName>VPEP_BrainLeech</defName>
-		<label>Mind Twist</label>
-		<description>The force leeches consciousness of the victim and gives a fraction of that consciousness to the psycaster that cast it.</description>
-		<hediffClass>VPEPuppeteer.Hediff_BrainLeech</hediffClass>
-		<initialSeverity>0</initialSeverity>
-		<stages>
-			<li>
-				<minSeverity>0</minSeverity>
-				<capMods>
-					<li>
-						<capacity>Consciousness</capacity>
-						<offset>-0.1</offset>
-					</li>
-				</capMods>
-			</li>
-			<li>
-				<minSeverity>0.1</minSeverity>
-				<capMods>
-					<li>
-						<capacity>Consciousness</capacity>
-						<offset>-0.2</offset>
-					</li>
-				</capMods>
-			</li>
-			<li>
-				<minSeverity>0.2</minSeverity>
-				<capMods>
-					<li>
-						<capacity>Consciousness</capacity>
-						<offset>-0.3</offset>
-					</li>
-				</capMods>
-			</li>
-			<li>
-				<minSeverity>0.3</minSeverity>
-				<capMods>
-					<li>
-						<capacity>Consciousness</capacity>
-						<offset>-0.4</offset>
-					</li>
-				</capMods>
-			</li>
-			<li>
-				<minSeverity>0.4</minSeverity>
-				<capMods>
-					<li>
-						<capacity>Consciousness</capacity>
-						<offset>-0.5</offset>
-					</li>
-				</capMods>
-			</li>
-		</stages>
-	</HediffDef>
-
-	<HediffDef>
-		<defName>VPEP_Leeching</defName>
-		<label>Absorption</label>
-		<description>A psychic consciousness boost provided by the mind twist on another person.</description>
-		<hediffClass>VPEPuppeteer.Hediff_BrainLeech</hediffClass>
-		<initialSeverity>0</initialSeverity>
-		<stages>
-			<li>
-				<minSeverity>0</minSeverity>
-				<capMods>
-					<li>
-						<capacity>Consciousness</capacity>
-						<offset>0.05</offset>
-					</li>
-				</capMods>
-			</li>
-			<li>
-				<minSeverity>0.1</minSeverity>
-				<capMods>
-					<li>
-						<capacity>Consciousness</capacity>
-						<offset>0.1</offset>
-					</li>
-				</capMods>
-			</li>
-			<li>
-				<minSeverity>0.2</minSeverity>
-				<capMods>
-					<li>
-						<capacity>Consciousness</capacity>
-						<offset>0.15</offset>
-					</li>
-				</capMods>
-			</li>
-			<li>
-				<minSeverity>0.3</minSeverity>
-				<capMods>
-					<li>
-						<capacity>Consciousness</capacity>
-						<offset>0.2</offset>
-					</li>
-				</capMods>
-			</li>
-			<li>
-				<minSeverity>0.4</minSeverity>
-				<capMods>
-					<li>
-						<capacity>Consciousness</capacity>
-						<offset>0.25</offset>
-					</li>
-				</capMods>
-			</li>
-		</stages>
-	</HediffDef>
-
-	<HediffDef>
-		<defName>VPEP_Puppeteer</defName>
-		<label>Corrupter</label>
-		<description>This individual is a puppeteer and uses psychic influence to control puppets. Puppets share their experience gain with the puppeteer. If the puppeteer dies, a psychic shockwave will knock all puppets into paralytic abasia.</description>
-		<hediffClass>VPEPuppeteer.Hediff_Puppeteer</hediffClass>
-		<isBad>False</isBad>
-	</HediffDef>
-
-	<HediffDef>
-		<defName>VPEP_Puppet</defName>
-		<label>Corrupted</label>
-		<description>This individual has been corrupted by a darkside user.They lose all sense of self and have been reduced to a mere puppet. They inherit their backstories and traits from their puppetmaster, however they have no needs other than food and rest. They have lowered consiousness and have their experience gain greatly reduced. They will enter the same mental state as their puppeteer.</description>
-		<hediffClass>VPEPuppeteer.Hediff_Puppet</hediffClass>
-		<isBad>False</isBad>
-		<stages>
-			<li>
-				<capMods>
-					<li>
-						<capacity>Consciousness</capacity>
-						<offset>-0.3</offset>
-					</li>
-				</capMods>
-			</li>
-		</stages>
-		<comps>
-			<li Class="VanillaPsycastsExpanded.Graphics.HediffCompProperties_Mote">
-				<compClass>VanillaPsycastsExpanded.Graphics.HediffComp_MoteOverHead</compClass>
-				<mote>VPEP_PsycastCastPurple</mote>
-			</li>
-		</comps>
-	</HediffDef>
+	  </HediffDef>
 </Defs>

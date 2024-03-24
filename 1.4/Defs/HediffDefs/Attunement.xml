@@ -25,15 +25,14 @@
 		</stages>
 	</HediffDef>
 	
-	
 	<HediffDef>
 		<defName>Force_Lightside</defName>
 		<label>Lightside Attunement</label>
 		<description>The level of attunement a pawn has for the lightside</description>
 		<isBad>false</isBad>
 		<defaultLabelColor>(0,0,0.5)</defaultLabelColor>
-		<initialSeverity>0.1</initialSeverity>
-		<maxSeverity>10</maxSeverity>
+		<initialSeverity>0.01</initialSeverity>
+		<maxSeverity>1</maxSeverity>
 		<stages>
 		<li>
 		<multiplyStatChangesBySeverity>true</multiplyStatChangesBySeverity>
@@ -45,5 +44,104 @@
 		</statOffsets>	
 		</li>
 		</stages>
+	</HediffDef>
+
+	<HediffDef>
+		<defName>Lightsaber_Stance</defName>
+		<label>Lightsaber Form</label>
+		<description>Lightsaber forms are combat techniques developed by Jedi and Sith to wield their iconic weapons with precision and effectiveness. Each form emphasizes different aspects of combat, from defense and agility to offense and finesse, allowing Force users to adapt to various opponents and situations in battle.</description>
+		<hediffClass>TheForce_Psycast.Hediff_LightsaberDeflection</hediffClass>
+		<initialSeverity>1</initialSeverity>
+		<maxSeverity>7</maxSeverity>
+		<stages>
+			<li>
+			<label>Form I: Shii-Cho</label>
+				<minSeverity>1</minSeverity>  
+					<statOffsets>
+						<MeleeDPS>0.10</MeleeDPS>
+						<MeleeHitChance>0.05</MeleeHitChance>
+						<MeleeDodgeChance>-0.05</MeleeDodgeChance>
+					</statOffsets>
+					<capMods>
+						<li>
+							<capacity>Consciousness</capacity>
+							<offset>0.15</offset>
+						</li>
+						<li>
+							<capacity>Sight</capacity>
+							<offset>0.15</offset>
+						</li>
+					</capMods>
+			</li>
+			<li>
+				<label>Form II: Makashi</label>
+					<minSeverity>2</minSeverity>  
+						<statOffsets>
+							<MeleeArmorPenetration>0.15</MeleeArmorPenetration>
+							<MeleeHitChance>0.08</MeleeHitChance>
+							<MeleeDodgeChance>0.05</MeleeDodgeChance> 
+						</statOffsets>
+						<capMods>
+							<li>
+								<capacity>Manipulation</capacity>
+								<offset>0.15</offset>
+							</li>
+						</capMods>	
+			</li>
+			<li>
+				<label>Form III: Soresu</label>
+					<minSeverity>3</minSeverity>  
+						<statOffsets>
+							<MeleeDPS>-0.05</MeleeDPS>
+							<MeleeDodgeChance>0.1</MeleeDodgeChance>
+							<Force_Lightsaber_Deflection>0.20</Force_Lightsaber_Deflection>
+						</statOffsets>	
+			</li>
+			<li>
+				<label>Form IV: Ataru</label>
+					<minSeverity>4</minSeverity>  
+						<statOffsets>
+							<MeleeDPS>0.15</MeleeDPS>
+							<PsychicEntropyRecoveryRate>0.05</PsychicEntropyRecoveryRate>
+						</statOffsets>	
+							<capMods>
+								<li>
+									<capacity>Moving</capacity>
+									<postFactor>1.15</postFactor>
+								</li>
+							</capMods>
+						
+			</li>
+			<li>
+				<label>Form V: Shien/Djem So</label>
+					<minSeverity>5</minSeverity>  
+						<statOffsets>
+							<MeleeArmorPenetration>0.1</MeleeArmorPenetration>
+							<MeleeHitChance>0.05</MeleeHitChance>
+							<Force_Lightsaber_Deflection>0.07</Force_Lightsaber_Deflection>
+						</statOffsets>	
+			</li>
+			<li>
+				<label>Form VI: Niman</label>
+					<minSeverity>6</minSeverity>  
+						<statOffsets>
+							<MeleeDPS>.05</MeleeDPS>
+							<MeleeHitChance>.05</MeleeHitChance>
+							<MeleeDodgeChance>0.05</MeleeDodgeChance>
+							<PsychicSensitivityOffset>0.15</PsychicSensitivityOffset>
+      						<PsychicEntropyRecoveryRate>0.066</PsychicEntropyRecoveryRate>
+						</statOffsets>	
+			</li>
+			<li>
+				<label>Form VII: Juyo/Vaapad</label>
+					<minSeverity>7</minSeverity>  
+						<statOffsets>
+							<MeleeDPS>0.2</MeleeDPS>
+							<MeleeHitChance>0.15</MeleeHitChance>
+							<MeleeDodgeChance>-0.10</MeleeDodgeChance>
+							<Force_Darkside_Attunement>0.2</Force_Darkside_Attunement>
+						</statOffsets>	
+			</li>
+		  </stages>
 	</HediffDef>
 </Defs>	
