@@ -13,7 +13,7 @@
 		</graphicData>
 		<projectile>
 			<damageDef>Cut</damageDef>
-			<damageAmountBase>8</damageAmountBase>
+			<damageAmountBase>10</damageAmountBase>
 			<speed>25</speed>
 		</projectile>
 		<comps>
@@ -62,4 +62,62 @@
 			</li>
 		</modExtensions>
 	</ThingDef>
+
+
+	<ThingDef ParentName="BaseBullet">
+		<defName>Force_LightsaberBolt</defName>
+		<label>bolt of hatred</label>
+		<thingClass>VanillaPsycastsExpanded.Staticlord.ChainBolt</thingClass>
+		<drawOffscreen>true</drawOffscreen>
+		<graphicData Class="VanillaPsycastsExpanded.Graphics.GraphicData_Animated">
+			<texPath>Effects/BoltofHatred/BoltA</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+			<shaderType>TransparentPostLight</shaderType>
+			<drawSize>(2, 2)</drawSize>
+		</graphicData>
+		<projectile>
+			<damageDef>Stun</damageDef>
+			<damageAmountBase>7</damageAmountBase>
+			<speed>140</speed>
+		</projectile>
+		<modExtensions>
+			<li Class="VFEMech.TeslaChainingProps">
+				<maxBounceCount>4</maxBounceCount>
+				<damageDef>Crush</damageDef>
+				<explosionDamageDef>Blunt</explosionDamageDef>
+				<impactRadius>1.9</impactRadius>
+				<targetFriendly>false</targetFriendly>
+				<addFire>true</addFire>
+				<bounceRange>9</bounceRange>
+				<maxLifetime>50</maxLifetime>
+				<impactSound>VPE_ChainBolt_Impact</impactSound>
+			</li>
+		</modExtensions>
+	</ThingDef>
+
+	<ThingDef ParentName="BaseBullet">
+		<defName>Force_Lightning</defName>
+		<label>Force Lightning</label>
+		<thingClass>VanillaPsycastsExpanded.Projectile_FrostRay</thingClass>
+		<altitudeLayer>VisEffects</altitudeLayer>
+		<drawOffscreen>true</drawOffscreen>
+		<graphicData Class="VanillaPsycastsExpanded.Graphics.GraphicData_Animated">
+			<texPath>Effects/ForceLightning</texPath>
+			<graphicClass>VanillaPsycastsExpanded.Graphics.Graphic_Animated</graphicClass>
+			<ticksPerFrame>3</ticksPerFrame>
+		</graphicData>
+		<projectile>
+			<speed>75</speed>
+			<damageDef>Cut</damageDef>
+			<damageAmountBase>12</damageAmountBase>
+		</projectile>
+		<comps>
+			<li Class="VanillaPsycastsExpanded.CompProperties_FleckEmitter">
+				<fleck>VPE_ColdGlowBehindProjectile</fleck>
+				<emissionInterval>1</emissionInterval>
+				<scale>2.3</scale>
+			</li>
+		</comps>
+	</ThingDef>
+	
 </Defs>

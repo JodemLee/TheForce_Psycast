@@ -31,17 +31,28 @@
 		<backstoryFilters>
 			<li>
 				<categories>
-					<li>Jedi</li>
+					<li>Sith</li>
 				</categories>
 			</li>
 		</backstoryFilters>
 		<factionIconPath>World/WorldObjects/Jedi/SithOrder</factionIconPath>
 		<settlementTexturePath>World/WorldObjects/DefaultSettlement</settlementTexturePath>
+		<requiredMemes>
+			<li MayRequire="Ludeon.RimWorld.Ideology">Structure_Ideological</li>
+			<li MayRequire="Ludeon.RimWorld.Ideology">Raider</li>
+			<li MayRequire="Ludeon.RimWorld.Ideology">PainIsVirtue</li>
+			<li MayRequire="Ludeon.RimWorld.Ideology">Supremacist</li>
+			<li MayRequire="Ludeon.RimWorld.Ideology">HumanPrimacy</li>
+			<li MayRequire="VanillaExpanded.VMemesE">VME_BloodCourt</li>
+		</requiredMemes>
+		<disallowedMemes>
+			<li MayRequire="Ludeon.RimWorld.Ideology">Nudism</li>
+		</disallowedMemes>
 		<xenotypeSet Inherit="False">
-		<xenotypeChances>
-        <xenotype_force_Darkside>999</xenotype_force_Darkside>
-		</xenotypeChances>
-		</xenotypeSet>
+			<xenotypeChances>
+				
+			</xenotypeChances>
+			</xenotypeSet>
 		
     <caravanTraderKinds>
       <li>Caravan_Force_BulkGoods</li>
@@ -107,7 +118,7 @@
       <li>
         <kindDef>Settlement</kindDef>
         <options>
-			<Force_Sith_Apprentice>10</Force_Sith_Apprentice>
+			<Force_Sith_Apprentice>18</Force_Sith_Apprentice>
 			<Force_Sith_Warrior>4</Force_Sith_Warrior>
 			<Force_Sith_Sorcerer>4</Force_Sith_Sorcerer>
 			<Force_Sith_Assassin>4</Force_Sith_Assassin>
@@ -117,5 +128,6 @@
       </li>
 	  </pawnGroupMakers>
 	</FactionDef>
+
 
 </Defs>

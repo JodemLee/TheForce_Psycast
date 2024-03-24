@@ -6,7 +6,7 @@
 		<defName>Force_SpeedBoost</defName>
 		<label>Force Speedboost</label>
 		<description>Use the Force to augment the muscle fibers, ligaments and joints in the caster’s legs, tripling their movement speed for roughly two minutes depending on their psychic sensitivity.</description>
-		<iconPath>Abilities/Neutral/SpeedBoost</iconPath>
+		<iconPath>Abilities/Neutral/Force_ForceSpeed</iconPath>
 		<targetMode>Self</targetMode>
 		<castTime>5</castTime>
 		<durationTime>2400</durationTime>
@@ -59,14 +59,11 @@
     <defName>TheForce_Defense</defName>
     <label>Force Defense</label>
     <description>Use the force to go into a defensive stance, the duration scaling with the target’s psychic sensitivity. People and items are not affected.</description>
-    <iconPath>Abilities/Neutral/LightsaberDefense</iconPath>
+    <iconPath>Abilities/Neutral/Force_ForceDefense</iconPath>
     <abilityClass>TheForce_Psycast.Ability_ForceDefense</abilityClass>
     <castTime>60</castTime>
     <range>1</range>
-	<durationTime>500</durationTime>
-	<durationTimeStatFactors>
-	<PsychicSensitivity>1.5</PsychicSensitivity>
-	</durationTimeStatFactors>
+	<durationTime>500000</durationTime>
     <castSound>VPE_Overshield_Cast</castSound>
     <targetMode>Self</targetMode>
     <modExtensions>
@@ -83,16 +80,46 @@
       </li>
       <li Class="VFECore.Abilities.AbilityExtension_Hediff">
         <hediff>ForceDefense</hediff>
+		<durationMultiplier>PsychicSensitivity</durationMultiplier>
       </li>
     </modExtensions>
   </VFECore.Abilities.AbilityDef>
 	  
+	  <VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
+		<defName>Force_AwakenPsycasting</defName>
+		<label>Awaken Force</label>
+		<description>Mastering the force has led you to be able to awaken non-sensitive pawns to the force. Use this ability to give psycasting to normal pawns</description>
+		<iconPath>Abilities/Neutral/Force_AwakenPsycast</iconPath>
+		<targetMode>Pawn</targetMode>
+		<castTime>24000</castTime>
+		<range>2.9</range>
+		<abilityClass>VFECore.Abilities.Ability_Blank</abilityClass>
+		<castSound>VPE_Speedboost_Cast</castSound>
+		<modExtensions>
+			<li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
+				<path>VPE_Force</path>
+				<level>5</level>
+				<order>2</order>
+				<psyfocusCost>0.12</psyfocusCost>
+				<entropyGain>12</entropyGain>
+				<psychic>true</psychic>
+				<prerequisites>
+				<li>Force_Leap</li>
+				</prerequisites>
+			</li>
+      <li Class="VFECore.Abilities.AbilityExtension_Hediff">
+        <hediff>PsychicAmplifier</hediff>
+		<bodyPartToApply>Brain</bodyPartToApply>
+		<severity>1</severity>
+      </li>
+    </modExtensions>
+	</VFECore.Abilities.AbilityDef>
 	  
 	<VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
 		<defName>TheForce_Offense</defName>
 		<label>Force Offense</label>
 		<description>Use the force to enhance your combat abilities. Duration scales with psychic sensitivity of the caster.</description>
-		<iconPath>Abilities/Neutral/LightsaberOffense</iconPath>
+		<iconPath>Abilities/Neutral/Force_ForceOffense</iconPath>
 		<targetMode>Self</targetMode>
 		<castSound>VPE_GuidedShot_Cast</castSound>
 		<castTime>30</castTime>
@@ -145,7 +172,7 @@
     <defName>Force_Cloak</defName>
     <label>Force Cloak</label>
     <description>Call upon their mastery of the Force to photo-kinetically bend light and sound waves around themselves, rendering them invisible to visual and audio detection.</description>
-    <iconPath>Abilities/Neutral/Invisibility</iconPath>
+    <iconPath>Abilities/Neutral/Force_ForceCloak</iconPath>
     <abilityClass>VFECore.Abilities.Ability_Blank</abilityClass>
     <targetMode>Humanlike</targetMode>
     <targetingParameters>
@@ -180,7 +207,7 @@
     <defName>Force_Battle_Meditation</defName>
     <label>Battle Meditation</label>
     <description>Use the Force to focus the pawn's around you for a minute, boosting their sight, hearing and moving capacities.</description>
-    <iconPath>Abilities/Neutral/Focus</iconPath>
+    <iconPath>Abilities/Neutral/Force_BattleMeditation</iconPath>
     <abilityClass>VFECore.Abilities.Ability_Blank</abilityClass>
 	<targetMode>Self</targetMode>
     <castSound>VPE_PsychicDrone_Cast</castSound>
@@ -252,9 +279,9 @@
 
 <VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
     <defName>Force_Telekinesis</defName>
-    <label>Telekinesis</label>
+    <label>Force Barrier</label>
     <description>Use the force to send all incoming and outgoing ground-level projectiles to some distant place. People and items are not affected. Duration scales with psychic sensitivity of the caster.</description>
-    <iconPath>Abilities/Neutral/Skipshield</iconPath>
+    <iconPath>Abilities/Neutral/Force_TelekineticBarrier</iconPath>
     <castTime>60</castTime>
     <durationTime>900</durationTime>
     <durationTimeStatFactors>
@@ -287,9 +314,9 @@
 
 <VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
     <defName>Force_Burden</defName>
-    <label> Force burden</label>
+    <label> Force Stasis</label>
     <description>Slow the target for a short time by suppressing motor activity in the brain. Considered a hostile action and affected by the target’s psychic sensitivity.</description>
-    <iconPath>Abilities/Neutral/Burden</iconPath>
+    <iconPath>Abilities/Neutral/Force_ForceSlow</iconPath>
     <targetMode>Pawn</targetMode>
     <abilityClass>VFECore.Abilities.Ability_Blank</abilityClass>
     <castTime>15</castTime>
@@ -310,7 +337,10 @@
 		</prerequisites>
       </li>
       <li Class="VFECore.Abilities.AbilityExtension_Hediff">
-        <hediff>PsychicBurden</hediff>
+        <hediff>Force_Stasis</hediff>
+        <durationMultiplier>PsychicSensitivity</durationMultiplier>
+      </li>
+      <li Class="VFECore.Abilities.AbilityExtension_Stun">
         <durationMultiplier>PsychicSensitivity</durationMultiplier>
       </li>
     </modExtensions>
@@ -320,7 +350,7 @@
 		<defName>Force_Malacia</defName>
 		<label>Malacia</label>
 		<description>Force technique used to induce a powerful dizziness and nausea in enemies by turning their equilibrium against them, scaling with their psychic sensitivity.</description>
-		<iconPath>Abilities/Neutral/WordofPain</iconPath>
+		<iconPath>Abilities/Neutral/Force_ForceMalacia</iconPath>
 		<durationTime>1440</durationTime>
 		<castSound>PsychicShockLanceCast</castSound>
 		<castTime>30</castTime>
@@ -338,7 +368,7 @@
 				<spaceAfter>true</spaceAfter>
 			</li>
 			<li Class="VFECore.Abilities.AbilityExtension_Hediff">
-				<hediff>VPE_Malacia</hediff>
+				<hediff>Force_Malacia</hediff>
 			</li>
 		</modExtensions>
 	</VFECore.Abilities.AbilityDef>  
@@ -384,8 +414,3 @@
   </VFECore.Abilities.AbilityDef>
   
 </Defs>
-
-
-
-
-

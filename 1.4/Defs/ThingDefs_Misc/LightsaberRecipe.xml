@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <RecipeDef Name="Lightsaber_Crafting" Abstract="True">
+    <jobString>Crafting lightsaber.</jobString>
+    <description>Craft a Lightsaber.</description>
+    <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+    <effectWorking>Smith</effectWorking>
+    <soundWorking>Recipe_Machining</soundWorking>
+    <workAmount>3000</workAmount>
+    <researchPrerequisite>MicroelectronicsBasics</researchPrerequisite>
+    <recipeUsers>
+      <li>ElectricSmithy</li>
+	    <li>FueledSmithy</li>
+      <li>TableMachining</li>
+    </recipeUsers>
+          <ingredients>
+            <li>
+              <filter>
+                <thingDefs>
+                  <li>Plasteel</li>
+                </thingDefs>
+              </filter>
+              <count>150</count>
+            </li>
+            <li>
+              <filter>
+                <thingDefs>
+                  <li>ComponentIndustrial</li>
+                </thingDefs>
+              </filter>
+              <count>25</count>
+            </li>
+            <li>
+            <filter>
+            <thingDefs>
+              <li>ComponentSpacer</li>
+            </thingDefs>
+            </filter>
+            <count>1</count>
+            </li>
+            <li>
+              <filter>
+                <thingDefs>
+                  <li>Force_KyberCrystal</li>
+                </thingDefs>
+              </filter>
+              <count>1</count>
+            </li>
+          </ingredients>
+    <workSkill>Crafting</workSkill>
+  </RecipeDef>
+
+  <RecipeDef  ParentName="Lightsaber_Crafting">
+    <defName>Force_CraftLightsaberSingle</defName>
+    <label>Craft lightsaber (Single)</label>
+    <products>
+      <Force_Lightsaber_Custom>1</Force_Lightsaber_Custom>
+    </products>
+  </RecipeDef>
+
+  <RecipeDef  ParentName="Lightsaber_Crafting">
+    <defName>Force_CraftLightsaberCurved</defName>
+    <label>Craft lightsaber (Curved)</label>
+    <products>
+      <Force_Lightsaber_Curved>1</Force_Lightsaber_Curved>
+    </products>
+  </RecipeDef>
+
+  <RecipeDef  ParentName="Lightsaber_Crafting">
+    <defName>Force_CraftLightsaberShoto</defName>
+    <label>Craft lightsaber (Shoto)</label>
+    <products>
+      <Force_Lightsaber_Shoto>1</Force_Lightsaber_Shoto>
+    </products>
+  </RecipeDef>
+
+  <RecipeDef  ParentName="Lightsaber_Crafting">
+    <defName>Force_CraftLightsaberDual</defName>
+    <label>Craft lightsaber (Dual)</label>
+    <products>
+      <Force_Lightsaber_Dual>1</Force_Lightsaber_Dual>
+    </products>
+  </RecipeDef>
+
+  <!---Kyber Crystals-->
+
+  <!--================== Base ==================-->
+  <ThingDef Name="KyberCrystalBase" Abstract="False">
+    <defName>Force_KyberCrystal</defName>
+    <thingClass>ThingWithComps</thingClass>
+    <category>Item</category>
+    <label>Kyber Crystal</label>
+    <description>The kyber crystal is a rare force attuned prism that makes up the core of lightsabers and other objects. Kyber Crystals are found when cutting stones into blocks.</description>
+    <soundInteract>Silver_Drop</soundInteract>
+    <graphicData>
+      <texPath>Things/Item/Resource/Kyber_Crystal2</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>TransparentPostLight</shaderType>
+      <drawSize>.5</drawSize>
+    </graphicData>
+    <soundDrop>Silver_Drop</soundDrop>
+    <resourceReadoutPriority>Middle</resourceReadoutPriority>
+    <useHitPoints>false</useHitPoints>
+    <selectable>true</selectable>
+    <altitudeLayer>Item</altitudeLayer>
+    <stackLimit>1</stackLimit>
+    <tradeNeverStack>True</tradeNeverStack>
+    <descriptionHyperlinks>
+      <RecipeDef>Make_StoneBlocksAny</RecipeDef>
+    </descriptionHyperlinks>
+    <statBases>
+      <Beauty>5</Beauty>
+      <MarketValue>200</MarketValue>
+      <Mass>0.3</Mass>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Forbiddable" />
+      <li>
+        <compClass>CompColorable</compClass>
+      </li>
+    </comps>
+    <alwaysHaulable>true</alwaysHaulable>
+    <drawGUIOverlay>true</drawGUIOverlay>
+    <rotatable>true</rotatable>
+    <pathCost>15</pathCost>
+    <thingCategories>
+      <li>ResourcesRaw</li>
+    </thingCategories>
+    <colorGenerator Class="ColorGenerator_Options">
+      <options>
+        <li>
+          <only>(153, 102, 204)</only>  <!--Amethyst-->
+        </li>
+        <li>
+          <only>(10, 10, 10)</only>     <!--Black-->
+        </li>
+        <li>
+          <only>(135,206,250)</only>    <!--Blue-->
+        </li>
+        <li>
+          <only>(220,20,60)</only>      <!--Red-->
+        </li>
+        <li>
+          <only>(0, 255, 255)</only>    <!--Cyan-->
+        </li>
+        <li>
+          <only>(0, 255, 0)</only>      <!--Green-->
+        </li>
+        <li>
+          <only>(75, 0, 130)</only>     <!--Indigo-->
+        </li>
+        <li>
+          <only>(255, 0, 255)</only>    <!--Magenta-->
+        </li>
+        <li>
+          <only>(255, 165, 0)</only>    <!--Orange-->
+        </li>
+        <li>
+          <only>(255, 192, 203)</only>   <!--Pink-->
+        </li>
+        <li>
+          <only>(255, 255, 255)</only>    <!--White-->
+        </li>
+        <li>
+          <only>(255, 255, 0)</only>      <!--Yellow-->
+        </li>
+      </options>
+    </colorGenerator>
+  </ThingDef>
+
+</Defs>

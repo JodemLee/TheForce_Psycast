@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+  <Patch>
+  <Operation Class="PatchOperationFindMod">
+  <mods>
+    <li>Star Wars Xenotypes</li>
+  </mods>
+  <match Class="PatchOperationAdd">
+    <xpath>Defs/FactionDef[defName="Force_Jedi_Remnant"]/xenotypeSet/xenotypeChances</xpath>
+    <value>
+          <guy762_xenotype_arkanian >0.002</guy762_xenotype_arkanian>
+          <guy762_xenotype_cathar >0.002</guy762_xenotype_cathar>
+          <guy762_xenotype_chadrafan >0.002</guy762_xenotype_chadrafan>
+          <guy762_xenotype_devaronian >0.002</guy762_xenotype_devaronian>
+          <guy762_xenotype_duros >0.002</guy762_xenotype_duros>
+          <guy762_xenotype_echani >0.002</guy762_xenotype_echani>
+          <guy762_xenotype_falleen >0.002</guy762_xenotype_falleen>
+          <guy762_xenotype_feeorin >0.002</guy762_xenotype_feeorin>
+          <guy762_xenotype_iridonian >0.002</guy762_xenotype_iridonian>
+          <guy762_xenotype_klatoonian >0.002</guy762_xenotype_klatoonian>
+          <guy762_xenotype_miraluka >0.002</guy762_xenotype_miraluka>
+          <guy762_xenotype_mirialan >0.002</guy762_xenotype_mirialan>
+          <guy762_xenotype_nagai >0.002</guy762_xenotype_nagai>
+          <guy762_xenotype_nautolan >0.002</guy762_xenotype_nautolan>
+          <guy762_xenotype_nemoidian >0.002</guy762_xenotype_nemoidian>
+          <guy762_xenotype_rodian >0.002</guy762_xenotype_rodian>
+          <guy762_xenotype_snivvian >0.002</guy762_xenotype_snivvian>
+          <guy762_xenotype_sullustan >0.002</guy762_xenotype_sullustan>
+          <guy762_xenotype_togruta >0.002</guy762_xenotype_togruta>
+          <guy762_xenotype_twilek >0.002</guy762_xenotype_twilek>
+          <guy762_xenotype_umbaran >0.002</guy762_xenotype_umbaran>
+          <guy762_xenotype_weequay >0.002</guy762_xenotype_weequay>
+          <guy762_xenotype_yoder >0.002</guy762_xenotype_yoder>
+          <guy762_xenotype_zabrak >0.002</guy762_xenotype_zabrak>
+          <guy762_xenotype_zeltron >0.002</guy762_xenotype_zeltron>
+          <guy762_xenotype_zygerrian >0.002</guy762_xenotype_zygerrian>
+    </value>
+  </match>
+</Operation>
+
+<Operation Class="PatchOperationFindMod">
+  <mods>
+    <li>Outer Rim - Galactic Diversity</li>
+  </mods>
+  <match Class="PatchOperationAdd">
+    <xpath>Defs/FactionDef[defName="Force_Jedi_Remnant"]/xenotypeSet/xenotypeChances</xpath>
+    <value>
+      <OuterRim_Abednedo MayRequire="Neronix17.OuterRim.GalacticDiversity">0.001</OuterRim_Abednedo>
+		  <OuterRim_Aqualish MayRequire="Neronix17.OuterRim.GalacticDiversity">0.001</OuterRim_Aqualish>
+		  <OuterRim_Bith MayRequire="Neronix17.OuterRim.GalacticDiversity">0.001</OuterRim_Bith>
+		  <OuterRim_Cerean MayRequire="Neronix17.OuterRim.GalacticDiversity">0.001</OuterRim_Cerean>
+		  <OuterRim_Duros MayRequire="Neronix17.OuterRim.GalacticDiversity">0.001</OuterRim_Duros>
+		  <OuterRim_Gungan MayRequire="Neronix17.OuterRim.GalacticDiversity">0.05</OuterRim_Gungan>
+		  <OuterRim_Herglic MayRequire="Neronix17.OuterRim.GalacticDiversity">0.01</OuterRim_Herglic>
+		  <OuterRim_Iktotchi MayRequire="Neronix17.OuterRim.GalacticDiversity">0.001</OuterRim_Iktotchi>
+		  <OuterRim_Iridonian MayRequire="Neronix17.OuterRim.GalacticDiversity">0.001</OuterRim_Iridonian>
+		  <OuterRim_Ithorian MayRequire="Neronix17.OuterRim.GalacticDiversity">0.001</OuterRim_Ithorian>
+		  <OuterRim_Miraluka MayRequire="Neronix17.OuterRim.GalacticDiversity">0.05</OuterRim_Miraluka>
+		  <OuterRim_Mirialan MayRequire="Neronix17.OuterRim.GalacticDiversity">0.001</OuterRim_Mirialan>
+		  <OuterRim_MonCalamari MayRequire="Neronix17.OuterRim.GalacticDiversity">0.001</OuterRim_MonCalamari>
+		  <OuterRim_Neimoidian MayRequire="Neronix17.OuterRim.GalacticDiversity">0.001</OuterRim_Neimoidian>
+		  <OuterRim_Nikto MayRequire="Neronix17.OuterRim.GalacticDiversity">0.001</OuterRim_Nikto>
+		  <OuterRim_Pantoran MayRequire="Neronix17.OuterRim.GalacticDiversity">0.001</OuterRim_Pantoran>
+		  <OuterRim_Pyke MayRequire="Neronix17.OuterRim.GalacticDiversity">0.001</OuterRim_Pyke>
+		  <OuterRim_Quarren MayRequire="Neronix17.OuterRim.GalacticDiversity">0.001</OuterRim_Quarren>
+		  <OuterRim_Selkath MayRequire="Neronix17.OuterRim.GalacticDiversity">0.001</OuterRim_Selkath>
+		  <OuterRim_Togruta MayRequire="Neronix17.OuterRim.GalacticDiversity">0.001</OuterRim_Togruta>
+		  <OuterRim_Trandoshan MayRequire="Neronix17.OuterRim.GalacticDiversity">0.001</OuterRim_Trandoshan>
+		  <OuterRim_Twilek MayRequire="Neronix17.OuterRim.GalacticDiversity">0.0015</OuterRim_Twilek>
+		  <OuterRim_Umbaran MayRequire="Neronix17.OuterRim.GalacticDiversity">0.001</OuterRim_Umbaran>
+		  <OuterRim_Wookiee MayRequire="Neronix17.OuterRim.GalacticDiversity">0.001</OuterRim_Wookiee>
+    </value>
+  </match>
+</Operation>
+
+<Operation Class="PatchOperationFindMod">
+  <mods>
+    <li>Rimwars:Pureblood Xenotype</li>
+  </mods>
+  <match Class="PatchOperationAdd">
+    <xpath>Defs/FactionDef[defName="Force_Sith_Order"]/xenotypeSet/xenotypeChances</xpath>
+    <value>
+      <PureBlood MayRequire="sov.sith">0.5</PureBlood>
+    </value>
+  </match>
+</Operation>
+
+</Patch>

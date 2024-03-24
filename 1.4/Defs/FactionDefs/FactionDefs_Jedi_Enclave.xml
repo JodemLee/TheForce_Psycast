@@ -4,7 +4,7 @@
 		<FactionDef ParentName="FactionBase">
 		<defName>Force_Jedi_Remnant</defName>
 		<label>Jedi Enclave</label>
-		<description>The Jedi Order was a noble monastic and nontheistic religious order united in their devotion to the light side of the Force, now after the great jedi purge, they are but a remnant of their former glory.</description>
+		<description>The Jedi Order was a noble monastic and nontheistic religious order united in their devotion to the light side of the Force.</description>
 		<pawnSingular>Jedi</pawnSingular>
 		<pawnsPlural>Jedi</pawnsPlural>
 		<categoryTag>Outlander</categoryTag>
@@ -19,7 +19,7 @@
 		<canMakeRandomly>true</canMakeRandomly>
 		<canSiege>true</canSiege>
 		<canStageAttacks>true</canStageAttacks>
-		<leaderTitle>Jedi Grandmaster</leaderTitle>
+		<leaderTitle>Jedi GrandMaster</leaderTitle>
 		<permanentEnemy>false</permanentEnemy>
 		<permanentEnemyToEveryoneExceptPlayer>true</permanentEnemyToEveryoneExceptPlayer>
 		<fixedName>Jedi Enclave</fixedName>
@@ -37,11 +37,28 @@
 		</backstoryFilters>
 		<factionIconPath>World/WorldObjects/Jedi/JediOrder</factionIconPath>
 		<settlementTexturePath>World/WorldObjects/DefaultSettlement</settlementTexturePath>
-	<xenotypeSet Inherit="False">
-      <xenotypeChances>
-        <xenotype_force_sensitive>999</xenotype_force_sensitive>
-      </xenotypeChances>
-    </xenotypeSet>
+		<requiredMemes>
+			<li MayRequire="Ludeon.RimWorld.Ideology">Structure_Ideological</li>
+			<li MayRequire="Ludeon.RimWorld.Ideology">FleshPurity</li>
+			<li MayRequire="Ludeon.RimWorld.Ideology">Proselytizer</li>
+			<li MayRequire="VanillaExpanded.VMemesE">VME_PsychicFocus</li>
+		</requiredMemes>
+		<disallowedMemes>
+			<li MayRequire="Ludeon.RimWorld.Ideology">Nudism</li>
+		</disallowedMemes>
+		<disallowedPrecepts>
+			<li MayRequire="Ludeon.RimWorld.Ideology">Cannibalism_RequiredRavenous</li>
+			<li MayRequire="Ludeon.RimWorld.Ideology">Cannibalism_RequiredStrong</li>
+			<li MayRequire="Ludeon.RimWorld.Ideology">Cannibalism_Preferred</li>
+			<li MayRequire="Ludeon.RimWorld.Ideology">Slavery_Acceptable</li>
+			<li MayRequire="Ludeon.RimWorld.Ideology">Slavery_Honorable</li>
+			<li MayRequire="Ludeon.RimWorld.Ideology">Slavery_Acceptable</li>
+		</disallowedPrecepts>
+		<xenotypeSet Inherit="False">
+		<xenotypeChances>
+			
+		</xenotypeChances>
+		</xenotypeSet>
 		
     <caravanTraderKinds>
       <li>Caravan_Force_BulkGoods</li>
@@ -82,7 +99,7 @@
       <li>
         <kindDef>Peaceful</kindDef>
         <options>
-			<Force_Jedi_Padawan>5</Force_Jedi_Padawan>
+			<Force_Jedi_Padawan>7</Force_Jedi_Padawan>
 			<Force_Jedi_Consular>3</Force_Jedi_Consular>
 			<Force_Jedi_Guardian>2</Force_Jedi_Guardian>
 			<Force_Jedi_Master>1</Force_Jedi_Master>

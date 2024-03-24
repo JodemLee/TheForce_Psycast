@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Defs>
+
+
+  <VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
+    <defName>Magick_RestoreIchor</defName>
+    <label>Restore Ichor</label>
+    <description>Magick enables the manipulation of the Force to call forth and materialize objects from afar, bending reality to bring desired items into the caster's presence. This summons an invisibility Potion</description>
+    <iconPath>Abilities/Nightsister/RestoreIchor</iconPath>
+	<showUndrafted>true</showUndrafted>
+    <abilityClass>TheForce_Psycast.Abilities.NightSisterMagick.Ability_RestoreIchorFromPlants</abilityClass>
+    <castTime>240</castTime>
+    <castSound>VPE_ConjureHeatPearls_Cast</castSound>
+    <targetMode>Self</targetMode>
+    <radius>2.5</radius>
+    <modExtensions>
+      <li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
+        <path>VPE_NightsisterMagick</path>
+        <level>1</level>
+        <order>1</order>
+        <psyfocusCost>0.2</psyfocusCost>
+        <entropyGain>0</entropyGain>
+      </li>
+    </modExtensions>
+  </VFECore.Abilities.AbilityDef>
+
+  <VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
+    <defName>Magick_SummonInvisibilityPotion</defName>
+    <label>Create Invisibility Potion</label>
+    <description>Magick enables the manipulation of the Force to call forth and materialize objects from afar, bending reality to bring desired items into the caster's presence. This summons an invisibility Potion</description>
+    <iconPath>Abilities/Nightsister/Invisibility_Potion</iconPath>
+	<showUndrafted>true</showUndrafted>
+    <abilityClass>TheForce_Psycast.Abilities.NightSisterMagick.Ability_Summon_InvisibilityPotion</abilityClass>
+    <castTime>240</castTime>
+    <castSound>VPE_ConjureHeatPearls_Cast</castSound>
+    <targetMode>Self</targetMode>
+    <modExtensions>
+      <li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
+        <path>VPE_NightsisterMagick</path>
+        <level>2</level>
+        <order>1</order>
+        <psyfocusCost>0.2</psyfocusCost>
+        <entropyGain>0</entropyGain>
+      </li>
+      <li Class="TheForce_Psycast.AbilityExtension_IchorCost">
+        <IchorCost>0.3</IchorCost>
+      </li>
+    </modExtensions>
+  </VFECore.Abilities.AbilityDef>
+
+  <VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
+    <defName>Nightsister_Teleport</defName>
+    <label>Teleport</label>
+    <description>Nightsister teleportation involves harnessing the dark side of the Force to swiftly traverse space and time, allowing the wielder to instantaneously transport themselves across vast distances.</description>
+    <iconPath>Abilities/Nightsister/Teleport</iconPath>
+    <abilityClass>TheForce_Psycast.Abilities.NightSisterMagick.Nightsister_TeleportAbility</abilityClass>
+    <targetCount>2</targetCount>
+    <range>28</range>
+    <rangeStatFactors>
+      <PsychicSensitivity>1</PsychicSensitivity>
+    </rangeStatFactors>
+    <castTime>30</castTime>
+    <needsTicking>true</needsTicking>
+    <targetModes>
+      <li>Self</li>
+      <li>Location</li>
+    </targetModes>
+    <targetingParametersList>
+      <li>
+        <canTargetSelf>True</canTargetSelf>
+        <canTargetPawns>false</canTargetPawns>
+        <canTargetBuildings>False</canTargetBuildings>
+        <canTargetItems>false</canTargetItems>
+        <canTargetPlants>false</canTargetPlants>
+        <thingCategory>Item</thingCategory>
+        <mustBeSelectable>true</mustBeSelectable>
+        <mapObjectTargetsMustBeAutoAttackable>false</mapObjectTargetsMustBeAutoAttackable>
+      </li>
+      <li Class="VFECore.Abilities.TargetingParametersForAoE">
+        <canTargetLocations>true</canTargetLocations>
+        <canTargetBlockedLocations>false</canTargetBlockedLocations>
+      </li>
+    </targetingParametersList>
+    <modExtensions>
+      <li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
+        <path>VPE_NightsisterMagick</path>
+        <level>2</level>
+        <order>2</order>
+        <psyfocusCost>0.02</psyfocusCost>
+        <entropyGain>20</entropyGain>
+      </li>
+      <li Class="VanillaPsycastsExpanded.Skipmaster.AbilityExtension_Clamor">
+        <clamorType>Ability</clamorType>
+        <clamorRadius>10</clamorRadius>
+      </li>
+      <li Class="VFECore.Abilities.AbilityExtension_Stun">
+        <stunTicks>7~12</stunTicks>
+      </li>
+      <li Class="TheForce_Psycast.AbilityExtension_IchorCost">
+        <IchorCost>0.02</IchorCost>
+      </li>
+    </modExtensions>
+  </VFECore.Abilities.AbilityDef>
+
+  <VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
+		<defName>NightSister_Resurrect</defName>
+		<label>Chant of Resurrection</label>
+		<description>The Chant of Resurrection is a powerful Nightsister spell that summons dark energies to raise the dead, bringing deceased beings back as skeletons to attack the caster's enemies for 24 hours.</description>
+		<iconPath>Abilities/Necropath/Enthrall</iconPath>
+		<abilityClass>VanillaPsycastsExpanded.Ability_SpawnSkeleton</abilityClass>
+		<castTime>15</castTime>
+		<range>19.9</range>
+		<reserveTargets>true</reserveTargets>
+		<targetingParameters>
+			<canTargetLocations>False</canTargetLocations>
+			<canTargetSelf>False</canTargetSelf>
+			<canTargetAnimals>False</canTargetAnimals>
+			<canTargetPawns>False</canTargetPawns>
+			<canTargetHumans>False</canTargetHumans>
+			<canTargetItems>true</canTargetItems>
+			<thingCategory>Item</thingCategory>
+			<mapObjectTargetsMustBeAutoAttackable>False</mapObjectTargetsMustBeAutoAttackable>
+		</targetingParameters>
+		<castSound>VPE_Enthrall_Cast</castSound>
+		<modExtensions>
+			<li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
+				<path>VPE_NightsisterMagick</path>
+				<level>5</level>
+				<order>1</order>
+				<psyfocusCost>0.04</psyfocusCost>
+				<entropyGain>22</entropyGain>
+			</li>
+      <li Class="TheForce_Psycast.AbilityExtension_IchorCost">
+        <IchorCost>0.8</IchorCost>
+      </li>
+		</modExtensions>
+	</VFECore.Abilities.AbilityDef>
+
+  <VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
+    <defName>Force_SummonObject</defName>
+    <label>Create Objects</label>
+    <description>Magick enables the manipulation of the Force to call forth and materialize objects from afar, bending reality to bring desired items into the caster's presence. Cast on an item to duplicate it.</description>
+    <iconPath>Abilities/Nightsister/Summon</iconPath>
+    <abilityClass>TheForce_Psycast.Abilities.NightSisterMagick.Summon_Object</abilityClass>
+    <requireLineOfSight>false</requireLineOfSight>
+    <range>999999</range>
+	<distanceToTarget>1.9</distanceToTarget>
+    <castTime>1800</castTime>
+	<showUndrafted>true</showUndrafted>
+    <castSound>VPE_ConjureHeatPearls_Cast</castSound>
+	<chance>0</chance>
+    <targetMode>Pawn</targetMode>
+	 <targetingParameters>
+      <canTargetItems>true</canTargetItems>
+      <mapObjectTargetsMustBeAutoAttackable>false</mapObjectTargetsMustBeAutoAttackable>
+      <thingCategory>Item</thingCategory>
+      <canTargetLocations>false</canTargetLocations>
+      <canTargetPawns>false</canTargetPawns>
+      <canTargetBuildings>false</canTargetBuildings>
+    </targetingParameters>
+    <warmupSound>VPE_Psyring_Warmup</warmupSound>
+    <modExtensions>
+      <li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
+        <path>VPE_NightsisterMagick</path>
+        <level>3</level>
+        <order>3</order>
+        <psyfocusCost>0.2</psyfocusCost>
+        <entropyGain>0</entropyGain>
+      </li>
+      <li Class="VFECore.Abilities.AbilityExtension_EffecterOnTarget">
+        <effecterDef>Magick_Smoke</effecterDef>
+        <maintainForDuration>true</maintainForDuration>
+      </li>
+    </modExtensions>
+  </VFECore.Abilities.AbilityDef>
+</Defs>
+	
+
+  
+
+  
+	

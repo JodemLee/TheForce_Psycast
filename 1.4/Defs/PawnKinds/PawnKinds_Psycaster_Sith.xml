@@ -20,20 +20,56 @@
     <weaponTags Inherit="True">
       <li>Force_Lightsaber</li>
     </weaponTags>
-	<apparelRequired Inherit="True">
-	<li>Apparel_HatHood</li>
-	</apparelRequired>
     <apparelAllowHeadgearChance>0.2</apparelAllowHeadgearChance>
     <apparelMoney>1000~1500</apparelMoney>
     <apparelIgnoreSeasons>true</apparelIgnoreSeasons>
     <apparelTags>
-      <li>IndustrialBasic</li>
+      <li>Force_Clothing</li>
     </apparelTags>
     <apparelDisallowTags>
       <li>Western</li>
     </apparelDisallowTags>
+    <ignoreIdeoApparelColors>true</ignoreIdeoApparelColors>
     <techHediffsChance>0.15</techHediffsChance>
     <techHediffsMoney>500~1500</techHediffsMoney>
+    <specificApparelRequirements>
+      <li>
+        <colorGenerator Class="ColorGenerator_Options">
+          <options>
+            <li>
+               <only>(77, 66, 45)</only> <!-- dark brown -->
+            </li>
+            <li>
+               <only>(12, 4, 4)</only> <!--Asphalt Black-->
+             </li>
+             <li>
+               <only>(27, 27, 27)</only> <!--Eerie Black-->
+             </li>
+             <li>
+               <only>(52, 52, 52)</only> <!--Jet-->
+             </li>
+             <li>
+               <only>(35, 31, 32)</only> <!--Ivory Black-->
+             </li>
+          </options>
+        </colorGenerator>
+      </li>
+    </specificApparelRequirements>
+    <modExtensions>
+      <li MayRequire="Ludeon.RimWorld.Biotech" Class="AddGeneForPK.PKAdditionalGenes">
+         <geneSets>
+           <li>
+             <isXenogene>true</isXenogene>
+             <chance>1</chance>
+             <geneDefs>
+               <li>VPE_ForceW_Corruption</li>
+               <li>VPE_ForceN_Corruption</li>
+               <li>VPE_ForceM_Corruption</li>
+             </geneDefs>
+           </li>
+         </geneSets>
+       </li>
+   </modExtensions>
   </PawnKindDef>
   
    <PawnKindDef ParentName="SithBase">
@@ -183,9 +219,6 @@
       <label>Sith Lord</label>
       <combatPower>150</combatPower>
       <weaponMoney>99999</weaponMoney>
-		<apparelRequired Inherit="False">
-			<li>Apparel_HatHood</li>
-		</apparelRequired>
       <techHediffsMoney>1000~4000</techHediffsMoney>
       <requiredWorkTags>
          <li>Violent</li>
@@ -214,9 +247,6 @@
 	  <factionLeader>true</factionLeader>
       <combatPower>150</combatPower>
       <weaponMoney>99999</weaponMoney>
-		<apparelRequired Inherit="False">
-			<li>Apparel_HatHood</li>
-		</apparelRequired>
       <techHediffsMoney>1000~4000</techHediffsMoney>
       <requiredWorkTags>
          <li>Violent</li>
@@ -245,9 +275,6 @@
 		<labelPlural>traders</labelPlural>
 		<isFighter>true</isFighter>
 		<trader>true</trader>
-	    <apparelRequired Inherit="False">
-			<li>Apparel_HatHood</li>
-		</apparelRequired>
 		  <minGenerationAge>20</minGenerationAge>
 		  <techHediffsMaxAmount>3</techHediffsMaxAmount>
 		  <initialWillRange>6~8</initialWillRange>

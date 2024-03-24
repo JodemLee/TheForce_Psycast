@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<Patch>
+  <Operation Class="PatchOperationFindMod">
+    <mods>
+      <li>Star Wars KotOR Weapons and Armor</li>
+    </mods>
+    <match Class="PatchOperationAdd">
+      <xpath>Defs/PawnKindDef[@Name="SithBase"]/apparelTags</xpath>
+      <value>
+        <li>SE_sithapprentice</li>
+        <li>OR_jedicloak_light</li>
+      </value>
+    </match>
+  </Operation>
+
+  <Operation Class="PatchOperationFindMod">
+    <mods>
+      <li>Star Wars KotOR Weapons and Armor</li>
+    </mods>
+    <match Class="PatchOperationAdd">
+      <xpath>Defs/PawnKindDef[@Name="Jedi_Base"]/apparelTags</xpath>
+      <value>
+        <li>OR_jedi</li>
+        <li>OR_jeditunic_light</li>
+        <li>OR_jedicloak_light</li>
+      </value>
+    </match>
+  </Operation>
+</Patch>

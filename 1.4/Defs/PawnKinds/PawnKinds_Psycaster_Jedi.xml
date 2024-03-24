@@ -8,8 +8,8 @@
     <backstoryFiltersOverride>
       <li>
         <categories>
-		<li>JediChildhood</li>
-          <li>Jedi</li>
+		      <li>JediChildhood</li>
+            <li>Jedi</li>
         </categories>
       </li>
     </backstoryFiltersOverride>
@@ -21,17 +21,53 @@
     <weaponTags  Inherit="True">
      <li>Force_Lightsaber</li> 
     </weaponTags>
-	<apparelRequired Inherit="False">
-			<li>Apparel_HatHood</li>
-		</apparelRequired>
     <apparelAllowHeadgearChance>0.2</apparelAllowHeadgearChance>
     <apparelMoney>1000~1500</apparelMoney>
     <apparelIgnoreSeasons>true</apparelIgnoreSeasons>
+    <ignoreIdeoApparelColors>true</ignoreIdeoApparelColors>
     <apparelTags>
-      <li>IndustrialBasic</li>
+      <li>Force_Clothing</li>
     </apparelTags>
     <techHediffsChance>0.15</techHediffsChance>
     <techHediffsMoney>500~1500</techHediffsMoney>
+    <specificApparelRequirements>
+      <li>
+        <colorGenerator Class="ColorGenerator_Options">
+          <options>
+            <li>
+               <only>(131,101,57)</only> <!-- dirt brown -->
+            </li>
+            <li>
+               <only>(210, 180, 140)</only> <!--Tan-->
+             </li>
+             <li>
+               <only>(0,98,111)</only> <!--Blue Lagoon-->
+             </li>
+             <li>
+               <only>(205,177,153)</only> <!--Vanilla-->
+             </li>
+             <li>
+               <only>(89,74,37)</only> <!--Brown-->
+             </li>
+          </options>
+        </colorGenerator>
+      </li>
+    </specificApparelRequirements>
+    <modExtensions>
+      <li MayRequire="Ludeon.RimWorld.Biotech" Class="AddGeneForPK.PKAdditionalGenes">
+         <geneSets>
+           <li>
+             <isXenogene>true</isXenogene>
+             <chance>1</chance>
+             <geneDefs>
+               <li>Minor_Force_Sensitive</li>
+               <li>Force_Sensitive</li>
+               <li>Major_Force_Sensitive</li>
+             </geneDefs>
+           </li>
+         </geneSets>
+       </li>
+   </modExtensions>
   </PawnKindDef>
 
 	<PawnKindDef ParentName="Jedi_Base">
@@ -44,9 +80,6 @@
       <requiredWorkTags>
          <li>Violent</li>
       </requiredWorkTags>
-	    <apparelRequired Inherit="False">
-			<li>Apparel_HatHood</li>
-		</apparelRequired>
       <minGenerationAge>9</minGenerationAge>
 	  <maxGenerationAge>16</maxGenerationAge>
       <techHediffsMaxAmount>3</techHediffsMaxAmount>
@@ -71,9 +104,6 @@
       <combatPower>150</combatPower>
       <weaponMoney>99999</weaponMoney>
       <techHediffsMoney>1000~4000</techHediffsMoney>
-	    <apparelRequired Inherit="False">
-			<li>Apparel_HatHood</li>
-		</apparelRequired>
       <requiredWorkTags>
          <li>Violent</li>
       </requiredWorkTags>
@@ -102,9 +132,6 @@
       <combatPower>160</combatPower>
       <weaponMoney>99999</weaponMoney>
       <techHediffsMoney>1000~4000</techHediffsMoney>
-	    <apparelRequired Inherit="False">
-			<li>Apparel_HatHood</li>
-		</apparelRequired>
       <requiredWorkTags>
          <li>Violent</li>
       </requiredWorkTags>
@@ -133,9 +160,6 @@
       <combatPower>140</combatPower>
       <weaponMoney>99999</weaponMoney>
       <techHediffsMoney>1000~4000</techHediffsMoney>
-	    <apparelRequired Inherit="False">
-			<li>Apparel_HatHood</li>
-		</apparelRequired>
       <requiredWorkTags>
          <li>Violent</li>
       </requiredWorkTags>
@@ -163,9 +187,6 @@
       <label>Master</label>
       <combatPower>150</combatPower>
       <weaponMoney>99999</weaponMoney>
-		<apparelRequired Inherit="False">
-			<li>Apparel_HatHood</li>
-		</apparelRequired>
       <techHediffsMoney>1000~4000</techHediffsMoney>
       <requiredWorkTags>
          <li>Violent</li>
@@ -194,9 +215,6 @@
 	  <factionLeader>true</factionLeader>
       <combatPower>150</combatPower>
       <weaponMoney>99999</weaponMoney>
-		<apparelRequired Inherit="False">
-			<li>Apparel_HatHood</li>
-		</apparelRequired>
       <techHediffsMoney>1000~4000</techHediffsMoney>
       <requiredWorkTags>
          <li>Violent</li>
@@ -225,9 +243,6 @@
 		<labelPlural>traders</labelPlural>
 		<isFighter>true</isFighter>
 		<trader>true</trader>
-	    <apparelRequired Inherit="False">
-			<li>Apparel_HatHood</li>
-		</apparelRequired>
 		  <minGenerationAge>20</minGenerationAge>
 		  <techHediffsMaxAmount>3</techHediffsMaxAmount>
 		  <initialWillRange>6~8</initialWillRange>

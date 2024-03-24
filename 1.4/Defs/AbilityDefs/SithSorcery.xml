@@ -102,6 +102,41 @@
       </li>
     </modExtensions>
   </VFECore.Abilities.AbilityDef>
+  
+  <VFECore.Abilities.AbilityDef ParentName="VPE_WordOfAbilityBase">
+		<defName>Force_Dun_Moch</defName>
+		<label>Dun Moch</label>
+		<description>Use the power of the darkside to tempt a prisoner. This ability can only reduce a prisoner's resistance, but cannot recruit him.</description>
+		<iconPath>Abilities/SithSorcery/WordofTrust</iconPath>
+		<distanceToTarget>30</distanceToTarget>
+		<castTime>120</castTime>
+		<showUndrafted>true</showUndrafted>
+		<targetingParameters>
+			<onlyTargetPrisonersOfColony>True</onlyTargetPrisonersOfColony>
+			<neverTargetIncapacitated>True</neverTargetIncapacitated>
+		</targetingParameters>
+		<chance>0</chance>
+		<modExtensions>
+			<li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
+				<path>VPE_SithSorcery</path>
+				<level>2</level>
+				<order>1</order>
+				<psyfocusCost>0.6</psyfocusCost>
+				<entropyGain>0</entropyGain>
+				<showCastBubble>false</showCastBubble>
+				<psychic>true</psychic>
+        <prerequisites>
+          <li>Force_CreateScrollofSuppression</li>
+        </prerequisites>
+			</li>
+			<li Class="VanillaPsycastsExpanded.AbilityExtension_AbilityOffsetPrisonerResistance">
+				<offset>-40</offset>
+			</li>
+			<li Class="VFECore.Abilities.AbilityExtension_SocialInteraction">
+				<interactionDef>WordOfTrust</interactionDef>
+			</li>
+		</modExtensions>
+	</VFECore.Abilities.AbilityDef>
 	
 	<VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
     <defName>Force_CreateSithCrystal</defName>
@@ -165,7 +200,6 @@
       </li>
     </modExtensions>
   </VFECore.Abilities.AbilityDef>
-  
   
   <VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
 		<defName>Force_SithRitual</defName>
@@ -235,6 +269,35 @@
       </li>
     </modExtensions>
   </VFECore.Abilities.AbilityDef>
+
+  <VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
+    <defName>Force_LightningStrike</defName>
+    <label>Lightning Strike</label>
+    <description>Summons a bolt of lightning to strike a target, inflicting burns on direct hits and a larger area EMP damage. The impact radius scales with the caster’s psychic sensitivity, up to a maximum of 12 cells.</description>
+    <iconPath>Abilities/Staticlord/Thunderbolt</iconPath>
+    <abilityClass>TheForce_Psycast.SithLightningStrike</abilityClass>
+    <castTime>3</castTime>
+    <range>22.9</range>
+    <radius>12</radius>
+    <maxRadius>24</maxRadius>
+    <radiusStatFactors>
+      <PsychicSensitivity>1</PsychicSensitivity>
+    </radiusStatFactors>
+    <castSound>VPE_Thunderbolt_Cast</castSound>
+    <targetMode>Location</targetMode>
+    <modExtensions>
+      <li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
+        <path>VPE_SithSorcery</path>
+        <level>5</level>
+        <order>3</order>
+        <psyfocusCost>0.02</psyfocusCost>
+        <entropyGain>12</entropyGain>
+        <prerequisites>
+          <li>Force_CreateAncientScroll</li>
+        </prerequisites>
+      </li>
+    </modExtensions>
+  </VFECore.Abilities.AbilityDef>
 </Defs>
 	
 
@@ -242,4 +305,3 @@
 
   
 	
-

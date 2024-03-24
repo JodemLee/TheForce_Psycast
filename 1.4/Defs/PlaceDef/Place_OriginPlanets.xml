@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+	<PlaceDef>
+		<defName>Force_Coruscant</defName>
+		<tags>
+			<li>Force_Jedi_Place</li>
+		</tags>
+		<placeRules>
+			<rulesStrings>
+				<li>place_name->Coruscant</li>
+				<li>place_adjective->Coruscanti</li>
+				<li>place_summary->a dense, planetwide multilevel urban city</li>
+				<li>place_community->City Level</li>
+				<li>place_powerCenter->jedi temple</li>
+				<li>place_job->caretaker</li>
+				<li>place_job->jedi knight</li>
+				<li>place_personalWeapon->lightsaber</li>
+				<li>place_massWeapon->Death Star</li>
+				<li>place_foeLeader->sith lord</li>
+				<li>place_foeSoldiers->stormtroopers</li>
+			</rulesStrings>
+		</placeRules>
+	</PlaceDef>
+
+<PlaceDef>
+		<defName>Force_Korriban</defName>
+		<tags>
+			<li>Force_Sith_Place</li>
+		</tags>
+		<placeRules>
+			<rulesStrings>
+				<li>place_name->Korriban</li>
+				<li>place_adjective->Korribanian</li>
+				<li>place_summary->a mountainous planet littered with dry river beds, canyons, tombs and ruins</li>
+				<li>place_community->Valley</li>
+				<li>place_powerCenter->Sith Academy</li>
+				<li>place_job->training overseers</li>
+				<li>place_job->Sith</li>
+				<li>place_personalWeapon->lightsaber</li>
+				<li>place_massWeapon->Death Star</li>
+				<li>place_foeLeader->Jedi Grandmaster</li>
+				<li>place_foeSoldiers->troopers</li>
+			</rulesStrings>
+		</placeRules>
+	</PlaceDef>
+
+</Defs>

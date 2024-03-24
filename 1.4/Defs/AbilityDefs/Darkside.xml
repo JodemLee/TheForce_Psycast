@@ -7,12 +7,12 @@
 		<defName>Force_Rage</defName>
 		<label>Force Rage</label>
 		<description>Harnesses the users inner rage, blocking all pain and augmenting their sight, hearing and movement. Lasts roughly thirty seconds depending on the user’s darkside corruption.</description>
-		<iconPath>Abilities/Darkside/AdrenalineRush</iconPath>
+		<iconPath>Abilities/Darkside/Force_Rage</iconPath>
 		<castSound>VPE_AdrenalineRush_Cast</castSound>
 		<targetMode>Self</targetMode>
 		<castTime>15</castTime>
 		<durationTime>1800</durationTime>
-		<abilityClass>VFECore.Abilities.Ability_Blank</abilityClass>
+		<abilityClass>TheForce_Psycast.Abilities.Darkside.Force_Rage</abilityClass>
 		<modExtensions>
 		  <li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
 			<path>VPE_Darkside</path>
@@ -26,10 +26,11 @@
 			<hediff>Force_Rage</hediff>
 			<durationMultiplier>Force_Darkside_Attunement</durationMultiplier>
 		  </li>
-		 <li Class="VFECore.Abilities.AbilityExtension_ExtraHediffs">
-			<onCaster>
+		 <li Class="TheForce_Psycast.AbilityExtensionForce">
+			<Attunement>
 			  <li>Force_Darkside</li>
-			</onCaster>
+			</Attunement>
+			<severity>0.01</severity>
 		  </li>
 		</modExtensions>
 	</VFECore.Abilities.AbilityDef>
@@ -38,7 +39,7 @@
     <defName>Force_Lightning</defName>
     <label>Force Lightning</label>
     <description>Fires a living bolt of electricity at a target which can leak out onto nearby targets, the amount scaling with darkside corruption. Inflicts small burns and EMP damage.</description>
-    <iconPath>Abilities/Darkside/ChainBolt</iconPath>
+    <iconPath>Abilities/Darkside/Force_Lightning</iconPath>
     <abilityClass>VanillaPsycastsExpanded.Staticlord.Ability_ChainBolt</abilityClass>
     <castTime>9</castTime>
     <range>22.9</range>
@@ -58,10 +59,11 @@
       <li Class="VFECore.Abilities.AbilityExtension_Projectile">
         <projectile>VPE_ChainBolt</projectile>
       </li>
-	  <li Class="VFECore.Abilities.AbilityExtension_ExtraHediffs">
-			<onCaster>
+	  <li Class="TheForce_Psycast.AbilityExtensionForce">
+			<Attunement>
 			  <li>Force_Darkside</li>
-			</onCaster>
+			</Attunement>
+			<severity>0.03</severity>
 		  </li>
     </modExtensions>
   </VFECore.Abilities.AbilityDef>
@@ -70,7 +72,7 @@
     <defName>Force_Insanity</defName>
     <label>Force Insanity</label>
     <description>Use the force to target the opponent's mind with chaotic images, blocking coherent perception and dropping them into a state of psychic shock. There is a risk of brain damage and is overtly hostile.</description>
-    <iconPath>Abilities/Darkside/PsychicShock</iconPath>
+    <iconPath>Abilities/Darkside/Force_Insanity</iconPath>
     <castTime>30</castTime>
     <durationTime>7500</durationTime>
     <targetMode>Pawn</targetMode>
@@ -95,19 +97,20 @@
         <hediff>VPE_PsychicShock</hediff>
         <durationMultiplier>Force_Darkside_Attunement</durationMultiplier>
       </li>
-	  <li Class="VFECore.Abilities.AbilityExtension_ExtraHediffs">
-			<onCaster>
+	  <li Class="TheForce_Psycast.AbilityExtensionForce">
+			<Attunement>
 			  <li>Force_Darkside</li>
-			</onCaster>
+			</Attunement>
+			<severity>0.05</severity>
 		  </li>
     </modExtensions>
   </VFECore.Abilities.AbilityDef>
 
 	<VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
     <defName>Force_Destruction</defName>
-    <label>Force Destruction</label>
+    <label>Force Burst</label>
     <description>Gather and release built up force energy, dealing more damage base on how much heat was used.</description>
-    <iconPath>Abilities/Darkside/NeuralHeatDetonation</iconPath>
+    <iconPath>Abilities/Darkside/Force_Destruction</iconPath>
     <targetMode>Self</targetMode>
     <abilityClass>VanillaPsycastsExpanded.Ability_NeuralHeatDetonation</abilityClass>
     <castTime>300</castTime>
@@ -124,10 +127,11 @@
           <li>Force_Insanity</li>
         </prerequisites>
       </li>
-	  <li Class="VFECore.Abilities.AbilityExtension_ExtraHediffs">
-			<onCaster>
+	  <li Class="TheForce_Psycast.AbilityExtensionForce">
+			<Attunement>
 			  <li>Force_Darkside</li>
-			</onCaster>
+			</Attunement>
+			<severity>0.07</severity>
 		  </li>
     </modExtensions>
   </VFECore.Abilities.AbilityDef>
@@ -159,10 +163,11 @@
 				<clearOthers>true</clearOthers>
 				<durationScalesWithCaster>true</durationScalesWithCaster>
 			</li>
-			<li Class="VFECore.Abilities.AbilityExtension_ExtraHediffs">
-			<onCaster>
+			<li Class="TheForce_Psycast.AbilityExtensionForce">
+			<Attunement>
 			  <li>Force_Darkside</li>
-			</onCaster>
+			</Attunement>
+			<severity>0.01</severity>
 			</li>
 		</modExtensions>
 	</VFECore.Abilities.AbilityDef>
@@ -171,7 +176,7 @@
     <defName>Mind_Control</defName>
     <label>mind control</label>
     <description>Use the force to dominate a target for a brief period, scaling with their darkside corruption, giving the caster a second body. However, it’s difficult being two people at once.</description>
-    <iconPath>Abilities/Darkside/Mindcontrol</iconPath>
+    <iconPath>Abilities/Darkside/Force_MindControl</iconPath>
     <abilityClass>VFECore.Abilities.Ability_Blank</abilityClass>
     <castTime>60</castTime>
     <castSound>VPE_MindControl_Cast</castSound>
@@ -204,10 +209,11 @@
         </onTarget>
         <durationMultiplier>Force_Darkside_Attunement</durationMultiplier>
       </li>
-	  <li Class="VFECore.Abilities.AbilityExtension_ExtraHediffs">
-			<onCaster>
+	  <li Class="TheForce_Psycast.AbilityExtensionForce">
+			<Attunement>
 			  <li>Force_Darkside</li>
-			</onCaster>
+			</Attunement>
+			<severity>0.03</severity>
 		  </li>
     </modExtensions>
   </VFECore.Abilities.AbilityDef>
@@ -216,7 +222,7 @@
     <defName>Force_Illusion</defName>
     <label>Force Illusion</label>
     <description>Project a mirror image of yourself to travel and remain in a desired location, with a duration scaling with darkside corruption. The illusion will draw the ire of all enemies.</description>
-    <iconPath>Abilities/Darkside/Decoy</iconPath>
+    <iconPath>Abilities/Darkside/Force_Illusion</iconPath>
     <abilityClass>VFECore.Abilities.Ability_Spawn</abilityClass>
     <castTime>60</castTime>
     <range>16</range>
@@ -246,10 +252,11 @@
         <effecterDef>VPE_BlackSmoke</effecterDef>
         <maintainForDuration>true</maintainForDuration>
       </li>
-	  <li Class="VFECore.Abilities.AbilityExtension_ExtraHediffs">
-			<onCaster>
+	  <li Class="TheForce_Psycast.AbilityExtensionForce">
+			<Attunement>
 			  <li>Force_Darkside</li>
-			</onCaster>
+			</Attunement>
+			<severity>0.05</severity>
 		  </li>
     </modExtensions>
   </VFECore.Abilities.AbilityDef>
@@ -258,7 +265,7 @@
     <defName>Force_Hatred</defName>
     <label>Force Hatred</label>
     <description>Let the hate flow out of you into an aura around the caster tuned to hostiles, frequently driving them insane until they overcome the break. Duration scales with the caster’s darkside corruption.</description>
-    <iconPath>Abilities/Darkside/PsychicDrone</iconPath>
+    <iconPath>Abilities/Darkside/Force_Hatred</iconPath>
     <targetMode>Self</targetMode>
     <abilityClass>VFECore.Abilities.Ability_Blank</abilityClass>
     <castSound>VPE_PsychicDrone_Cast</castSound>
@@ -281,10 +288,11 @@
         <hediff>VPE_PsychicDrone</hediff>
         <durationMultiplier>Force_Darkside_Attunement</durationMultiplier>
       </li>
-	  <li Class="VFECore.Abilities.AbilityExtension_ExtraHediffs">
-			<onCaster>
+	  <li Class="TheForce_Psycast.AbilityExtensionForce">
+			<Attunement>
 			  <li>Force_Darkside</li>
-			</onCaster>
+			</Attunement>
+			<severity>0.07</severity>
 		  </li>
     </modExtensions>
   </VFECore.Abilities.AbilityDef>
@@ -295,7 +303,7 @@
 		<defName>Force_Drain_Vitality</defName>
 		<label>Drain Vitality</label>
 		<description>Siphons vitality from a nearby source, transferring the target’s natural healing factor, movement speed, and consciousness to the caster for a full day. Considered an overtly hostile action.</description>
-		<iconPath>Abilities/Darkside/StealVitality</iconPath>
+		<iconPath>Abilities/Darkside/Force_DrainVitality</iconPath>
 		<abilityClass>VanillaPsycastsExpanded.Ability_StealVitality</abilityClass>
 		<range>3.9</range>
 		<castTime>15</castTime>
@@ -315,10 +323,11 @@
 			<li Class="VFECore.Abilities.AbilityExtension_Hediff">
 				<hediff>VPE_LostVitality</hediff>
 			</li>
-			<li Class="VFECore.Abilities.AbilityExtension_ExtraHediffs">
-			<onCaster>
+			<li Class="TheForce_Psycast.AbilityExtensionForce">
+			<Attunement>
 			  <li>Force_Darkside</li>
-			</onCaster>
+			</Attunement>
+			<severity>0.01</severity>
 		  </li>
 		</modExtensions>
 	</VFECore.Abilities.AbilityDef>
@@ -327,7 +336,7 @@
 		<defName>Force_Mind_Twist</defName>
 		<label>Mind Twist</label>
 		<description>Intrude into another's consciousness and twist their perception of Reality. Creates a psionic link on a colleague or prisoner that redirects brain processing power to the leacher. The effect is inefficient and reaches its maximum after 2 days before fading into obscurity. Only a single leech can be maintained.</description>
-		<iconPath>Abilities/Darkside/BrainLeech</iconPath>
+		<iconPath>Abilities/Darkside/Force_MindTwist</iconPath>
 		<abilityClass>VPEPuppeteer.Ability_BrainLeech</abilityClass>
 		<castSound>VPEP_Brainleech_Cast</castSound>
 		<targetMode>Pawn</targetMode>
@@ -359,10 +368,11 @@
 				<ofCasterFaction>True</ofCasterFaction>
 				<allowPrisoners>True</allowPrisoners>
 			</li>
-			<li Class="VFECore.Abilities.AbilityExtension_ExtraHediffs">
-			<onCaster>
+			<li Class="TheForce_Psycast.AbilityExtensionForce">
+			<Attunement>
 			  <li>Force_Darkside</li>
-			</onCaster>
+			</Attunement>
+			<severity>0.03</severity>
 		  </li>
 		</modExtensions>
 	</VFECore.Abilities.AbilityDef>
@@ -388,8 +398,9 @@
 		<modExtensions>
 			<li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
 				<path>VPE_Darkside</path>
-				<level>4</level>
+				<level>3</level>
 				<order>1</order>
+				<spaceAfter>true</spaceAfter>
 				<psyfocusCost>0.4</psyfocusCost>
 				<entropyGain>0</entropyGain>
 				<prerequisites>
@@ -397,11 +408,41 @@
 				</prerequisites>
 				<psychic>true</psychic>
 			</li>
-			<li Class="VFECore.Abilities.AbilityExtension_ExtraHediffs">
-			<onCaster>
+			<li Class="TheForce_Psycast.AbilityExtensionForce">
+			<Attunement>
 			  <li>Force_Darkside</li>
-			</onCaster>
+			</Attunement>
+			<severity>0.05</severity>
 		  </li>
+		</modExtensions>
+	</VFECore.Abilities.AbilityDef>
+	
+	<VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
+		<defName>Force_IncreaseCorruptors</defName>
+		<label>Increase Corruptor</label>
+		<description>Channel the power of the darkside to permanently increase the number of puppets you can control. Knocks user unconcious for a short while as they recover.</description>
+		<iconPath>Abilities/Darkside/Force_Increase Corruptor</iconPath>
+		<abilityClass>VPEPuppeteer.Ability_MindSplit</abilityClass>
+		<targetMode>Self</targetMode>
+		<castTime>600</castTime>
+		<castSound>VPEP_MindSplit_Hit</castSound>
+		<modExtensions>
+			<li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
+				<path>VPE_Darkside</path>
+				<level>4</level>
+				<order>1</order>
+				<psyfocusCost>0.8</psyfocusCost>
+				<entropyGain>0</entropyGain>
+				<prerequisites>
+					<li>Force_Corrupt</li>
+				</prerequisites>
+			</li>
+			<li Class="TheForce_Psycast.AbilityExtensionForce">
+				<Attunement>
+				  <li>Force_Darkside</li>
+				</Attunement>
+				<severity>0.06</severity>
+			  </li>
 		</modExtensions>
 	</VFECore.Abilities.AbilityDef>
 	
@@ -409,7 +450,7 @@
 		<defName>Force_TransferEssence</defName>
 		<label>Transfer Essence</label>
 		<description>Permanently swaps the caster and the targeted puppet’s bodies, with the puppet becoming the master with all of their psycasting capabilities. The sudden change in consciousness and adaptation to a new vessel locks the new master into a scaled 48-hour psychic coma.</description>
-		<iconPath>Abilities/Darkside/MindJump</iconPath>
+		<iconPath>Abilities/Darkside/Force_TransferEssence</iconPath>
 		<abilityClass>VPEPuppeteer.Ability_MindJump</abilityClass>
 		<castTime>1200</castTime>
 		<range>55</range>
@@ -429,7 +470,7 @@
 				<psyfocusCost>0.50</psyfocusCost>
 				<entropyGain>0</entropyGain>
 				<prerequisites>
-					<li>Force_Corrupt</li>
+					<li>Force_IncreaseCorruptors</li>
 				</prerequisites>
 				<psychic>true</psychic>
 			</li>
@@ -437,11 +478,12 @@
 				<projectile>VPEP_MindJump</projectile>
 				<soundOnImpact>VPEP_MindJump_Hit</soundOnImpact>
 			</li>
-			<li Class="VFECore.Abilities.AbilityExtension_ExtraHediffs">
-			<onCaster>
-			  <li>Force_Darkside</li>
-			</onCaster>
-		  </li>
+			<li Class="TheForce_Psycast.AbilityExtensionForce">
+				<Attunement>
+				  <li>Force_Darkside</li>
+				</Attunement>
+				<severity>0.07</severity>
+			</li>
 		</modExtensions>
 	</VFECore.Abilities.AbilityDef>
 </Defs>
@@ -451,4 +493,3 @@
 
   
 	
-

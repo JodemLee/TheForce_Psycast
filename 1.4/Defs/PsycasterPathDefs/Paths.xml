@@ -35,8 +35,8 @@
     <defName>VPE_SithSorcery</defName>
     <label>Sith Sorcery</label>
     <description>An arcane expression of Force ability first developed and practiced by the original Sith species through which they manipulated the power of the dark side.</description>
-    <background>UI/Backgrounds/Darkside</background>
-    <altBackground>UI/AlternativeBackgrounds/PathBG_Darkside</altBackground>
+    <background>UI/Backgrounds/SithSorcerer</background>
+    <altBackground>UI/AlternativeBackgrounds/PathBG_SithSorcery</altBackground>
     <tab>Force Powers</tab>
     <tooltip>Through the recitation of spells, execution of hand gestures, and/or the handling of various artifacts, darksiders were able to channel the raw power of the Force's malignant side to warp minds, alter the environment, and obliterate whatever obstacles stood in their way.</tooltip>
   </VanillaPsycastsExpanded.PsycasterPathDef>
@@ -51,6 +51,13 @@
     <tooltip>"A Jedi traditionally uses telekinesis to move inanimate objects, but there are some occasions when one might be forced to use this ability on an enemy combatant" - Luke Skywalker</tooltip>
   </VanillaPsycastsExpanded.PsycasterPathDef>
   
-
-  
+  <VanillaPsycastsExpanded.PsycasterPathDef>
+    <defName>VPE_JediTraining</defName>
+    <label>Jedi Training</label>
+    <description>A series of training regiments meant to improve the pawn's stats for a few days</description>
+    <background>UI/Backgrounds/JediTraining</background>
+    <altBackground>UI/AlternativeBackgrounds/PathBG_JediTraining</altBackground>
+    <tab>Force Powers</tab>
+    <tooltip>Jedi training was the action of teaching an apprentice the ways of the Force in the Jedi Order. Focusing on longer casting for longer buffs, start off with improving oneself, then move on to improving others with your skills</tooltip>
+  </VanillaPsycastsExpanded.PsycasterPathDef>
 </Defs>

@@ -22,11 +22,12 @@
       <li Class="VFECore.Abilities.AbilityExtension_Hediff">
         <hediff>VPE_Healing</hediff>
       </li>
-	  <li Class="VFECore.Abilities.AbilityExtension_ExtraHediffs">
-			<onCaster>
-			  <li>Force_Lightside</li>
-			</onCaster>
-			</li>
+      <li Class="TheForce_Psycast.AbilityExtensionForce">
+        <Attunement>
+          <li>Force_Lightside</li>
+        </Attunement>
+        <severity>0.01</severity>
+        </li>
     </modExtensions>
   </VFECore.Abilities.AbilityDef>
 
@@ -57,11 +58,12 @@
       <li Class="VFECore.Abilities.AbilityExtension_Hediff">
         <hediff>VPE_BlockBleeding</hediff>
       </li>
-	  <li Class="VFECore.Abilities.AbilityExtension_ExtraHediffs">
-			<onCaster>
-			  <li>Force_Lightside</li>
-			</onCaster>
-			</li>
+      <li Class="TheForce_Psycast.AbilityExtensionForce">
+        <Attunement>
+          <li>Force_Lightside</li>
+        </Attunement>
+        <severity>0.03</severity>
+        </li>
     </modExtensions>
   </VFECore.Abilities.AbilityDef>
 	
@@ -94,11 +96,12 @@
       <li Class="VFECore.Abilities.AbilityExtension_Hediff">
         <hediff>VPE_RegrowLimbs</hediff>
       </li>
-	  <li Class="VFECore.Abilities.AbilityExtension_ExtraHediffs">
-			<onCaster>
-			  <li>Force_Lightside</li>
-			</onCaster>
-			</li>
+      <li Class="TheForce_Psycast.AbilityExtensionForce">
+        <Attunement>
+          <li>Force_Lightside</li>
+        </Attunement>
+        <severity>0.05</severity>
+        </li>
     </modExtensions>
   </VFECore.Abilities.AbilityDef>
 	
@@ -145,11 +148,12 @@
           <li>Force_Revitalize</li>
         </prerequisites>
       </li>
-	  <li Class="VFECore.Abilities.AbilityExtension_ExtraHediffs">
-			<onCaster>
-			  <li>Force_Lightside</li>
-			</onCaster>
-			</li>
+      <li Class="TheForce_Psycast.AbilityExtensionForce">
+        <Attunement>
+          <li>Force_Lightside</li>
+        </Attunement>
+        <severity>0.07</severity>
+        </li>
     </modExtensions>
   </VFECore.Abilities.AbilityDef>
 	<!-- Combat - Protection Bubble, Combustion, Ionize, Stun -->
@@ -178,17 +182,18 @@
       <li Class="VFECore.Abilities.AbilityExtension_Stun">
         <durationMultiplier>Force_Lightside_Attunement</durationMultiplier>
       </li>
-	  <li Class="VFECore.Abilities.AbilityExtension_ExtraHediffs">
-			<onCaster>
-			  <li>Force_Lightside</li>
-			</onCaster>
-			</li>
+      <li Class="TheForce_Psycast.AbilityExtensionForce">
+        <Attunement>
+          <li>Force_Lightside</li>
+        </Attunement>
+        <severity>0.01</severity>
+        </li>
     </modExtensions>
   </VFECore.Abilities.AbilityDef>
   
     <VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
     <defName>Force_Barrier</defName>
-    <label>Force Barrier</label>
+    <label>Protection Bubble</label>
     <description>Generate a barrier on a target that sends all incoming ground-level projectiles to some distant place, the duration scaling with the target’s lightside attunement. People and items are not affected.</description>
     <iconPath>Abilities/Lightside/Overshield</iconPath>
     <abilityClass>VFECore.Abilities.Ability_Blank</abilityClass>
@@ -218,11 +223,12 @@
         <hediff>VPE_Overshield</hediff>
         <durationMultiplier>Force_Lightside_Attunement</durationMultiplier>
       </li>
-	  <li Class="VFECore.Abilities.AbilityExtension_ExtraHediffs">
-			<onCaster>
-			  <li>Force_Lightside</li>
-			</onCaster>
-			</li>
+      <li Class="TheForce_Psycast.AbilityExtensionForce">
+        <Attunement>
+          <li>Force_Lightside</li>
+        </Attunement>
+        <severity>0.03</severity>
+        </li>
     </modExtensions>
   </VFECore.Abilities.AbilityDef>
   
@@ -257,11 +263,12 @@
         <onCaster>true</onCaster>
         <explosionDamageDef>EMP</explosionDamageDef>
       </li>
-	  <li Class="VFECore.Abilities.AbilityExtension_ExtraHediffs">
-			<onCaster>
-			  <li>Force_Lightside</li>
-			</onCaster>
-			</li>
+      <li Class="TheForce_Psycast.AbilityExtensionForce">
+        <Attunement>
+          <li>Force_Lightside</li>
+        </Attunement>
+        <severity>0.05</severity>
+        </li>
     </modExtensions>
 	</VFECore.Abilities.AbilityDef>
 	
@@ -296,11 +303,12 @@
         <explosionDamageDef>Flame</explosionDamageDef>
         <casterImmune>false</casterImmune>
       </li>
-		<li Class="VFECore.Abilities.AbilityExtension_ExtraHediffs">
-			<onCaster>
-			  <li>Force_Lightside</li>
-			</onCaster>
-			</li>
+      <li Class="TheForce_Psycast.AbilityExtensionForce">
+        <Attunement>
+          <li>Force_Lightside</li>
+        </Attunement>
+        <severity>0.07</severity>
+        </li>
     </modExtensions>
 	</VFECore.Abilities.AbilityDef>
 	  	
@@ -339,11 +347,12 @@
         <allTargets>false</allTargets>
         <tryCenter>true</tryCenter>
       </li>
-	  <li Class="VFECore.Abilities.AbilityExtension_ExtraHediffs">
-			<onCaster>
-			  <li>Force_Lightside</li>
-			</onCaster>
-			</li>
+      <li Class="TheForce_Psycast.AbilityExtensionForce">
+        <Attunement>
+          <li>Force_Lightside</li>
+        </Attunement>
+        <severity>0.00008849557</severity>
+        </li>
     </modExtensions>
   </VFECore.Abilities.AbilityDef>
 	
@@ -368,11 +377,12 @@
           <li>Force_Surge</li>
         </prerequisites>
       </li>
-	  <li Class="VFECore.Abilities.AbilityExtension_ExtraHediffs">
-			<onCaster>
-			  <li>Force_Lightside</li>
-			</onCaster>
-			</li>
+      <li Class="TheForce_Psycast.AbilityExtensionForce">
+        <Attunement>
+          <li>Force_Lightside</li>
+        </Attunement>
+        <severity>0.03</severity>
+        </li>
     </modExtensions>
   </VFECore.Abilities.AbilityDef>
 
@@ -399,11 +409,12 @@
       <li Class="VFECore.Abilities.AbilityExtension_SocialInteraction">
         <interactionDef>WordOfInspiration</interactionDef>
       </li>
-	  <li Class="VFECore.Abilities.AbilityExtension_ExtraHediffs">
-			<onCaster>
-			  <li>Force_Lightside</li>
-			</onCaster>
-			</li>
+      <li Class="TheForce_Psycast.AbilityExtensionForce">
+        <Attunement>
+          <li>Force_Lightside</li>
+        </Attunement>
+        <severity>0.05</severity>
+        </li>
     </modExtensions>
   </VFECore.Abilities.AbilityDef>
 
@@ -432,11 +443,12 @@
 			<li Class="VFECore.Abilities.AbilityExtension_Hediff">
 				<hediff>VPE_GroupLink</hediff>
 			</li>
-			<li Class="VFECore.Abilities.AbilityExtension_ExtraHediffs">
-			<onCaster>
-			  <li>Force_Lightside</li>
-			</onCaster>
-			</li>
+			<li Class="TheForce_Psycast.AbilityExtensionForce">
+        <Attunement>
+          <li>Force_Lightside</li>
+        </Attunement>
+        <severity>0.07</severity>
+        </li>
 		</modExtensions>
 	</VFECore.Abilities.AbilityDef>
 </Defs>
@@ -446,4 +458,3 @@
 
   
 	
-

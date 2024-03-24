@@ -17,6 +17,7 @@
       <texPath>Things/Item/Special/Holocron</texPath>
       <graphicClass>Graphic_Single</graphicClass>
 	  <shaderType>TransparentPostLight</shaderType>
+	  <drawSize>1</drawSize>
     </graphicData>
     <techLevel>Ultra</techLevel>
     <tradeTags>
@@ -31,6 +32,11 @@
             <soundOnUsed>MechSerumUsed</soundOnUsed>
         </li>
         <li Class="CompProperties_UseEffectDestroySelf"/>
+		<li Class="CompProperties_Usable">
+			<compClass>CompUsable</compClass>
+			<useJob>UseItem</useJob>
+			<useLabel>Use the holocron to learn the power</useLabel>
+		</li>
     </comps>
     <thingSetMakerTags>
       <li>RewardStandardLowFreq</li>
@@ -56,6 +62,7 @@
       <texPath>Things/Item/Special/SithHolocron</texPath>
       <graphicClass>Graphic_Single</graphicClass>
 	  <shaderType>TransparentPostLight</shaderType>
+	  <drawSize>0.7</drawSize>
     </graphicData>
     <techLevel>Ultra</techLevel>
     <tradeTags>
@@ -70,6 +77,11 @@
             <soundOnUsed>MechSerumUsed</soundOnUsed>
         </li>
         <li Class="CompProperties_UseEffectDestroySelf"/>
+		<li Class="CompProperties_Usable">
+			<compClass>CompUsable</compClass>
+			<useJob>UseItem</useJob>
+			<useLabel>Use the holocron to learn the power</useLabel>
+		</li>
     </comps>
     <thingSetMakerTags>
       <li>RewardStandardLowFreq</li>
@@ -87,12 +99,7 @@
     <description>An force Holocron meant to teach new force sensitives how to access the force in specific ways.</description>
     <comps>
 		<li Class="TheForce_Psycast.CompProperties_UseEffect_Psytrainer">
-					<ability>Force_Healing</ability>
-		</li>
-		<li Class="CompProperties_Usable">
-					<compClass>CompUsable</compClass>
-					<useJob>UseItem</useJob>
-					<useLabel>Use the holocron to learn the power</useLabel>
+			<ability>Force_Healing</ability>
 		</li>
 	</comps>
   </ThingDef>
@@ -103,12 +110,7 @@
     <description>An force Holocron meant to teach new force sensitives how to access the force in specific ways.</description>
     <comps>
 		<li Class="TheForce_Psycast.CompProperties_UseEffect_Psytrainer">
-					<ability>Force_Stabilize</ability>
-		</li>
-		<li Class="CompProperties_Usable">
-					<compClass>CompUsable</compClass>
-					<useJob>UseItem</useJob>
-					<useLabel>Use the holocron to learn the power</useLabel>
+			<ability>Force_Stabilize</ability>
 		</li>
 	</comps>
   </ThingDef>
@@ -119,12 +121,7 @@
     <description>An force Holocron meant to teach new force sensitives how to access the force in specific ways.</description>
     <comps>
 		<li Class="TheForce_Psycast.CompProperties_UseEffect_Psytrainer">
-					<ability>Force_Revitalize</ability>
-		</li>
-		<li Class="CompProperties_Usable">
-					<compClass>CompUsable</compClass>
-					<useJob>UseItem</useJob>
-					<useLabel>Use the holocron to learn the power</useLabel>
+			<ability>Force_Revitalize</ability>
 		</li>
 	</comps>
   </ThingDef>
@@ -135,12 +132,7 @@
     <description>An force Holocron meant to teach new force sensitives how to access the force in specific ways.</description>
     <comps>
 		<li Class="TheForce_Psycast.CompProperties_UseEffect_Psytrainer">
-					<ability>Force_HealthSwap</ability>
-		</li>
-		<li Class="CompProperties_Usable">
-					<compClass>CompUsable</compClass>
-					<useJob>UseItem</useJob>
-					<useLabel>Use the holocron to learn the power</useLabel>
+			<ability>Force_HealthSwap</ability>
 		</li>
 	</comps>
   </ThingDef>
@@ -151,12 +143,7 @@
     <description>An force Holocron meant to teach new force sensitives how to access the force in specific ways.</description>
     <comps>
 		<li Class="TheForce_Psycast.CompProperties_UseEffect_Psytrainer">
-					<ability>Force_Stun</ability>
-		</li>
-		<li Class="CompProperties_Usable">
-					<compClass>CompUsable</compClass>
-					<useJob>UseItem</useJob>
-					<useLabel>Use the holocron to learn the power</useLabel>
+			<ability>Force_Stun</ability>
 		</li>
 	</comps>
   </ThingDef>
@@ -167,12 +154,7 @@
     <description>An force Holocron meant to teach new force sensitives how to access the force in specific ways.</description>
     <comps>
 		<li Class="TheForce_Psycast.CompProperties_UseEffect_Psytrainer">
-					<ability>Force_Barrier</ability>
-		</li>
-		<li Class="CompProperties_Usable">
-					<compClass>CompUsable</compClass>
-					<useJob>UseItem</useJob>
-					<useLabel>Use the holocron to learn the power</useLabel>
+			<ability>Force_Barrier</ability>
 		</li>
 	</comps>
   </ThingDef>
@@ -183,12 +165,7 @@
     <description>An force Holocron meant to teach new force sensitives how to access the force in specific ways.</description>
     <comps>
 		<li Class="TheForce_Psycast.CompProperties_UseEffect_Psytrainer">
-					<ability>Force_Ionize</ability>
-		</li>
-		<li Class="CompProperties_Usable">
-					<compClass>CompUsable</compClass>
-					<useJob>UseItem</useJob>
-					<useLabel>Use the holocron to learn the power</useLabel>
+			<ability>Force_Ionize</ability>
 		</li>
 	</comps>
   </ThingDef>
@@ -199,12 +176,7 @@
     <description>An force Holocron meant to teach new force sensitives how to access the force in specific ways.</description>
     <comps>
 		<li Class="TheForce_Psycast.CompProperties_UseEffect_Psytrainer">
-					<ability>Force_Combustion</ability>
-		</li>
-		<li Class="CompProperties_Usable">
-					<compClass>CompUsable</compClass>
-					<useJob>UseItem</useJob>
-					<useLabel>Use the holocron to learn the power</useLabel>
+			<ability>Force_Combustion</ability>
 		</li>
 	</comps>
   </ThingDef>
@@ -215,12 +187,7 @@
     <description>An force Holocron meant to teach new force sensitives how to access the force in specific ways.</description>
     <comps>
 		<li Class="TheForce_Psycast.CompProperties_UseEffect_Psytrainer">
-					<ability>Force_Surge</ability>
-		</li>
-		<li Class="CompProperties_Usable">
-					<compClass>CompUsable</compClass>
-					<useJob>UseItem</useJob>
-					<useLabel>Use the holocron to learn the power</useLabel>
+			<ability>Force_Surge</ability>
 		</li>
 	</comps>
   </ThingDef>
@@ -231,12 +198,7 @@
     <description>An force Holocron meant to teach new force sensitives how to access the force in specific ways.</description>
     <comps>
 		<li Class="TheForce_Psycast.CompProperties_UseEffect_Psytrainer">
-					<ability>Force_Bond</ability>
-		</li>
-		<li Class="CompProperties_Usable">
-					<compClass>CompUsable</compClass>
-					<useJob>UseItem</useJob>
-					<useLabel>Use the holocron to learn the power</useLabel>
+			<ability>Force_Bond</ability>
 		</li>
 	</comps>
   </ThingDef>
@@ -247,12 +209,7 @@
     <description>An force Holocron meant to teach new force sensitives how to access the force in specific ways.</description>
     <comps>
 		<li Class="TheForce_Psycast.CompProperties_UseEffect_Psytrainer">
-					<ability>Force_Enlightment</ability>
-		</li>
-		<li Class="CompProperties_Usable">
-					<compClass>CompUsable</compClass>
-					<useJob>UseItem</useJob>
-					<useLabel>Use the holocron to learn the power</useLabel>
+			<ability>Force_Enlightment</ability>
 		</li>
 	</comps>
   </ThingDef>
@@ -263,12 +220,7 @@
     <description>An force Holocron meant to teach new force sensitives how to access the force in specific ways.</description>
     <comps>
 		<li Class="TheForce_Psycast.CompProperties_UseEffect_Psytrainer">
-					<ability>Force_Meld</ability>
-		</li>
-		<li Class="CompProperties_Usable">
-					<compClass>CompUsable</compClass>
-					<useJob>UseItem</useJob>
-					<useLabel>Use the holocron to learn the power</useLabel>
+			<ability>Force_Meld</ability>
 		</li>
 	</comps>
   </ThingDef>
@@ -282,12 +234,7 @@
     <description>An force Holocron meant to teach new force sensitives how to access the force in specific ways.</description>
     <comps>
 		<li Class="TheForce_Psycast.CompProperties_UseEffect_Psytrainer">
-					<ability>Force_Rage</ability>
-		</li>
-		<li Class="CompProperties_Usable">
-					<compClass>CompUsable</compClass>
-					<useJob>UseItem</useJob>
-					<useLabel>Use the holocron to learn the power</useLabel>
+			<ability>Force_Rage</ability>
 		</li>
 	</comps>
   </ThingDef>
@@ -298,12 +245,7 @@
     <description>An force Holocron meant to teach new force sensitives how to access the force in specific ways.</description>
     <comps>
 		<li Class="TheForce_Psycast.CompProperties_UseEffect_Psytrainer">
-					<ability>Force_Lightning</ability>
-		</li>
-		<li Class="CompProperties_Usable">
-					<compClass>CompUsable</compClass>
-					<useJob>UseItem</useJob>
-					<useLabel>Use the holocron to learn the power</useLabel>
+			<ability>Force_Lightning</ability>
 		</li>
 	</comps>
   </ThingDef>
@@ -314,12 +256,7 @@
     <description>An force Holocron meant to teach new force sensitives how to access the force in specific ways.</description>
     <comps>
 		<li Class="TheForce_Psycast.CompProperties_UseEffect_Psytrainer">
-					<ability>Force_Insanity</ability>
-		</li>
-		<li Class="CompProperties_Usable">
-					<compClass>CompUsable</compClass>
-					<useJob>UseItem</useJob>
-					<useLabel>Use the holocron to learn the power</useLabel>
+			<ability>Force_Insanity</ability>
 		</li>
 	</comps>
   </ThingDef>
@@ -330,12 +267,7 @@
     <description>An force Holocron meant to teach new force sensitives how to access the force in specific ways.</description>
     <comps>
 		<li Class="TheForce_Psycast.CompProperties_UseEffect_Psytrainer">
-					<ability>Force_Destruction</ability>
-		</li>
-		<li Class="CompProperties_Usable">
-					<compClass>CompUsable</compClass>
-					<useJob>UseItem</useJob>
-					<useLabel>Use the holocron to learn the power</useLabel>
+			<ability>Force_Destruction</ability>
 		</li>
 	</comps>
   </ThingDef>
@@ -346,12 +278,7 @@
     <description>An force Holocron meant to teach new force sensitives how to access the force in specific ways.</description>
     <comps>
 		<li Class="TheForce_Psycast.CompProperties_UseEffect_Psytrainer">
-					<ability>Force_Fear</ability>
-		</li>
-		<li Class="CompProperties_Usable">
-					<compClass>CompUsable</compClass>
-					<useJob>UseItem</useJob>
-					<useLabel>Use the holocron to learn the power</useLabel>
+			<ability>Force_Fear</ability>
 		</li>
 	</comps>
   </ThingDef>
@@ -362,12 +289,7 @@
     <description>An force Holocron meant to teach new force sensitives how to access the force in specific ways.</description>
     <comps>
 		<li Class="TheForce_Psycast.CompProperties_UseEffect_Psytrainer">
-					<ability>Mind_Control</ability>
-		</li>
-		<li Class="CompProperties_Usable">
-					<compClass>CompUsable</compClass>
-					<useJob>UseItem</useJob>
-					<useLabel>Use the holocron to learn the power</useLabel>
+			<ability>Mind_Control</ability>
 		</li>
 	</comps>
   </ThingDef>
@@ -378,12 +300,7 @@
     <description>An force Holocron meant to teach new force sensitives how to access the force in specific ways.</description>
     <comps>
 		<li Class="TheForce_Psycast.CompProperties_UseEffect_Psytrainer">
-					<ability>Force_Illusion</ability>
-		</li>
-		<li Class="CompProperties_Usable">
-					<compClass>CompUsable</compClass>
-					<useJob>UseItem</useJob>
-					<useLabel>Use the holocron to learn the power</useLabel>
+			<ability>Force_Illusion</ability>
 		</li>
 	</comps>
   </ThingDef>
@@ -394,12 +311,7 @@
     <description>An force Holocron meant to teach new force sensitives how to access the force in specific ways.</description>
     <comps>
 		<li Class="TheForce_Psycast.CompProperties_UseEffect_Psytrainer">
-					<ability>Force_Hatred</ability>
-		</li>
-		<li Class="CompProperties_Usable">
-					<compClass>CompUsable</compClass>
-					<useJob>UseItem</useJob>
-					<useLabel>Use the holocron to learn the power</useLabel>
+			<ability>Force_Hatred</ability>
 		</li>
 	</comps>
   </ThingDef>
@@ -410,12 +322,7 @@
     <description>An force Holocron meant to teach new force sensitives how to access the force in specific ways.</description>
     <comps>
 		<li Class="TheForce_Psycast.CompProperties_UseEffect_Psytrainer">
-					<ability>Force_Drain_Vitality</ability>
-		</li>
-		<li Class="CompProperties_Usable">
-					<compClass>CompUsable</compClass>
-					<useJob>UseItem</useJob>
-					<useLabel>Use the holocron to learn the power</useLabel>
+			<ability>Force_Drain_Vitality</ability>
 		</li>
 	</comps>
   </ThingDef>
@@ -426,12 +333,7 @@
     <description>An force Holocron meant to teach new force sensitives how to access the force in specific ways.</description>
     <comps>
 		<li Class="TheForce_Psycast.CompProperties_UseEffect_Psytrainer">
-					<ability>Force_Mind_Twist</ability>
-		</li>
-		<li Class="CompProperties_Usable">
-					<compClass>CompUsable</compClass>
-					<useJob>UseItem</useJob>
-					<useLabel>Use the holocron to learn the power</useLabel>
+			<ability>Force_Mind_Twist</ability>
 		</li>
 	</comps>
   </ThingDef>
@@ -442,12 +344,7 @@
     <description>An force Holocron meant to teach new force sensitives how to access the force in specific ways.</description>
     <comps>
 		<li Class="TheForce_Psycast.CompProperties_UseEffect_Psytrainer">
-					<ability>Force_Corrupt</ability>
-		</li>
-		<li Class="CompProperties_Usable">
-					<compClass>CompUsable</compClass>
-					<useJob>UseItem</useJob>
-					<useLabel>Use the holocron to learn the power</useLabel>
+			<ability>Force_Corrupt</ability>
 		</li>
 	</comps>
   </ThingDef>
@@ -458,15 +355,8 @@
     <description>An force Holocron meant to teach new force sensitives how to access the force in specific ways.</description>
     <comps>
 		<li Class="TheForce_Psycast.CompProperties_UseEffect_Psytrainer">
-					<ability>Force_TransferEssence</ability>
-		</li>
-		<li Class="CompProperties_Usable">
-					<compClass>CompUsable</compClass>
-					<useJob>UseItem</useJob>
-					<useLabel>Use the holocron to learn the power</useLabel>
+			<ability>Force_TransferEssence</ability>
 		</li>
 	</comps>
   </ThingDef>
-  
-  
 </Defs>

@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<Defs>
-
-
-	
-		
+<Defs>	
 	<VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
 		<defName>VPE_ForcePush</defName>
 		<label>Force Push</label>
@@ -69,7 +65,7 @@
 		<defName>VPE_ForceChoke</defName>
 		<label>Force Choke</label>
 		<description>Using the Force, crush the targets neck. Dealing damage and stunning them for a few seconds.</description>
-		<iconPath>Abilities/Telekinesis/Force Push</iconPath>
+		<iconPath>Abilities/Telekinesis/Force_Choke</iconPath>
 		<abilityClass>TheForce_Psycast.Force_Choke</abilityClass>
 		<castTime>7</castTime>
 		<power>3</power>
@@ -88,6 +84,10 @@
 			<order>2</order>
 			<psyfocusCost>0.06</psyfocusCost>
 			<entropyGain>35</entropyGain>
+		  </li>
+		  <li Class="VFECore.Abilities.AbilityExtension_Stun">
+			<stunTicks>70~120</stunTicks>
+			<durationMultiplier>PsychicSensitivity</durationMultiplier>
 		  </li>
 		</modExtensions>
 	</VFECore.Abilities.AbilityDef>
@@ -138,9 +138,40 @@
       </li>
     </modExtensions>
   </VFECore.Abilities.AbilityDef>
-  
-	  
-	  <VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
+
+	<VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
+		<defName>VPE_ForceDrop</defName>
+		<label>Force Drop</label>
+		<description>Using the Force, crush the targets neck. Dealing damage and stunning them for a few seconds.</description>
+		<iconPath>Abilities/Telekinesis/Force_Choke</iconPath>
+		<abilityClass>TheForce_Psycast.Abilities.Telekinesis.ForceDrop</abilityClass>
+		<castTime>7</castTime>
+		<power>3</power>
+		<range>10</range>
+		<targetingParameters>
+			<canTargetItems>true</canTargetItems>
+			<thingCategory>Item</thingCategory>
+			<canTargetPawns>True</canTargetPawns>
+			<canTargetBuildings>false</canTargetBuildings>
+			<canTargetLocations>True</canTargetLocations>
+		</targetingParameters>
+		<castSound>VPE_LocationSwap_Cast</castSound>
+		<modExtensions>
+		<li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
+			<path>VPE_Telekinesis</path>
+			<level>3</level>
+			<order>1</order>
+			<psyfocusCost>0.06</psyfocusCost>
+			<entropyGain>35</entropyGain>
+		</li>
+		<li Class="VFECore.Abilities.AbilityExtension_Stun">
+			<stunTicks>150</stunTicks>
+			<durationMultiplier>PsychicSensitivity</durationMultiplier>
+		</li>
+		</modExtensions>
+	</VFECore.Abilities.AbilityDef>
+    
+	<VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
     <defName>Force_Throw</defName>
     <label>Force Throw</label>
     <description>Using your mastery of the force. Throw the target to a desired position, the distance scaling with the caster’s psychic sensitivity, from his starting point. This is considered a hostile action.</description>
@@ -211,7 +242,7 @@
 			<canTargetBuildings>false</canTargetBuildings>
 		</targetingParametersForAoE>
     <abilityClass>TheForce_Psycast.Ability_ForceRepulsion</abilityClass>
-    <castTime>300</castTime>
+    <castTime>150</castTime>
     <radius>9</radius>
     <castSound>VPE_NeuralHeatDetonation_Cast</castSound>
     <modExtensions>
@@ -247,7 +278,7 @@
 			<canTargetMechs>false</canTargetMechs>
 		</targetingParametersForAoE>
     <abilityClass>TheForce_Psycast.Ability_ForceAttract</abilityClass>
-    <castTime>300</castTime>
+    <castTime>150</castTime>
     <radius>9</radius>
     <castSound>VPE_NeuralHeatDetonation_Cast</castSound>
     <modExtensions>
