@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+<TraitDef>
+    <defName>ForceSensitivty</defName>
+    <commonality>0</commonality>
+    <degreeDatas>
+      <li>
+        <label>Major Force Sensitivity</label>
+        <description>[PAWN_nameDef] has a very strong connection with the Force. [PAWN_pronoun] is extremely sensitive to psychic phenomena.</description>
+        <degree>2</degree>
+        <statOffsets>
+          <PsychicSensitivity>0.8</PsychicSensitivity>
+        </statOffsets>
+      </li>
+      <li>
+        <label>Force sensitivity</label>
+        <description>[PAWN_nameDef] has a connection with the Force. A metaphysical, spiritual, binding, and ubiquitous power that held enormous importance for both the Jedi and Sith monastic orders.</description>
+        <degree>1</degree>
+        <statOffsets>
+          <PsychicSensitivity>0.4</PsychicSensitivity>
+        </statOffsets>
+      </li>
+      <li>
+        <label>Dull Force Sensitivity</label>
+        <description>[PAWN_nameDef] has a weaker connection to the Force compared to other force sensitives. [PAWN_pronoun] isn't as affected by psychic phenomena.</description>
+        <degree>-1</degree>
+        <statOffsets>
+          <PsychicSensitivity>0.2</PsychicSensitivity>
+        </statOffsets>
+      </li>
+    </degreeDatas>
+  </TraitDef>
+  
+  <TraitDef>
+	<defName>L_ForceAffinity</defName>
+		<commonality>0</commonality>
+		<degreeDatas>
+		  <li>
+			<label>Major Lightside Affinity</label>
+			<description>[PAWN_nameDef] has a very strong affinity with the light side of the Force.</description>
+			<degree>1</degree>
+			<statOffsets>
+				<Force_Lightside_Attunement>0.8</Force_Lightside_Attunement>
+			</statOffsets>
+		  </li>
+		  <li>
+			<label>Lightside Affinity</label>
+			<description>[PAWN_nameDef] has a strong affinity with the light side of the Force.</description>
+			<degree>0</degree>
+			<statOffsets>
+				<Force_Lightside_Attunement>0.4</Force_Lightside_Attunement>
+			</statOffsets>
+		  </li>
+		  <li>
+			 <label>Minor Lightside Affinity</label>
+			<description>[PAWN_nameDef] has a weak affinity with the light side of the Force.</description>
+			<degree>-1</degree>
+			<statOffsets>
+				<Force_Lightside_Attunement>0.2</Force_Lightside_Attunement>
+			</statOffsets>
+		  </li>
+		</degreeDatas>
+  </TraitDef>
+  
+   <TraitDef>
+	<defName>D_ForceAffinity</defName>
+		<commonality>0</commonality>
+		<degreeDatas>
+		  <li>
+			<label>Major Darkside Affinity</label>
+			<description>[PAWN_nameDef] has a very strong affinity with the light side of the Force.</description>
+			<degree>1</degree>
+			<statOffsets>
+				<Force_Darkside_Attunement>0.8</Force_Darkside_Attunement>
+			</statOffsets>
+		  </li>
+		  <li>
+			<label>Darkside Affinity</label>
+			<description>[PAWN_nameDef] has a strong affinity with the light side of the Force.</description>
+			<degree>0</degree>
+			<statOffsets>
+				<Force_Darkside_Attunement>0.4</Force_Darkside_Attunement>
+			</statOffsets>
+		  </li>
+		  <li>
+			 <label>Minor Darkside Affinity</label>
+			<description>[PAWN_nameDef] has a weak affinity with the light side of the Force.</description>
+			<degree>-1</degree>
+			<statOffsets>
+				<Force_Darkside_Attunement>0.2</Force_Darkside_Attunement>
+			</statOffsets>
+		  </li>
+		</degreeDatas>
+  </TraitDef>
+  
+  
+</Defs>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Defs>
+
+	<HediffDef ParentName="PsycastHediffBase">
+		<defName>Force_Rage</defName>
+		<label>Force Rage</label>
+		<hediffClass>TheForce_Psycast.Abilities.Darkside.Hediff_ForceRage</hediffClass>
+		<description>Channel your rage to reinforce your body, increasing sight, hearing and movement capabilities.</description>
+		<stages>
+			<li>
+				<painFactor>0</painFactor>
+				<capMods>
+					<li>
+						<capacity>Sight</capacity>
+						<postFactor>1.5</postFactor>
+					</li>
+					<li>
+						<capacity>Hearing</capacity>
+						<postFactor>1.5</postFactor>
+					</li>
+					<li>
+						<capacity>Moving</capacity>
+						<postFactor>1.5</postFactor>
+					</li>
+				</capMods>
+			</li>
+		</stages>
+	</HediffDef>
+
+	
+
+
+</Defs>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <XenotypeDef>
+		<defName>xenotype_force_sensitive</defName>
+		<label>Force Sensitive</label>
+		<description>Force Sensitives were sentient or non-sentient lifeforms that possessed a strong connection to the mystical energy field known as the Force</description>
+		<descriptionShort>Connection to Force</descriptionShort>
+		<inheritable>true</inheritable>
+		<iconPath>UI/Icons/Xenotypes/Baseliner</iconPath>
+		<doubleXenotypeChances>
+		  <Pigskin>0.02</Pigskin>
+		  <Impid>0.02</Impid>
+		  <Yttakin>0.02</Yttakin>
+		  <Neanderthal>0.02</Neanderthal>
+		  <Waster>0.02</Waster>
+		  <Dirtmole>0.02</Dirtmole>
+		</doubleXenotypeChances>
+		<genes>
+			<li>Minor_Force_Sensitive</li>
+			<li>Force_Sensitive</li>
+			<li>Major_Force_Sensitive</li>
+		</genes>
+	</XenotypeDef>
+	
+	<XenotypeDef>
+		<defName>xenotype_force_Darkside</defName>
+		<label>Corrupted Force Sensitive</label>
+		<description>Force Sensitives were sentient or non-sentient lifeforms that possessed a strong connection to the mystical energy field known as the Force, however this person has started to be corrupted by the darkside of the force.</description>
+		<descriptionShort>Connection to the Darkside of the Force</descriptionShort>
+		<inheritable>true</inheritable>
+		<iconPath>UI/Icons/Xenotypes/Baseliner</iconPath>
+		<doubleXenotypeChances>
+		  <Pigskin>0.02</Pigskin>
+		  <Impid>0.02</Impid>
+		  <Yttakin>0.02</Yttakin>
+		  <Neanderthal>0.02</Neanderthal>
+		  <Waster>0.02</Waster>
+		  <Dirtmole>0.02</Dirtmole>
+		</doubleXenotypeChances>
+		<genes>
+			<li>VPE_ForceW_Corruption</li>
+			<li>VPE_ForceN_Corruption</li>
+			<li>VPE_ForceM_Corruption</li>
+		</genes>
+	</XenotypeDef>
+
+</Defs>

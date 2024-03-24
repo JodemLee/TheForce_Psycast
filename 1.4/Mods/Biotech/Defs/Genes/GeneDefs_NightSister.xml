@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <VanillaPsycastsExpanded.PsycasterPathDef  MayRequire="Ludeon.RimWorld.Biotech"> 
+    <defName>VPE_NightsisterMagick</defName>
+    <label>Nightsister Magick</label>
+    <description>Harness the power of the Force to cast unique abilities.</description>
+    <background>UI/Backgrounds/NightsisterMagick</background>
+    <altBackground>UI/AlternativeBackgrounds/PathBG_Nightsister</altBackground>
+    <tab>Force Powers</tab>
+    <tooltip>Nightsister magick encompasses a potent blend of dark side sorcery, rituals, and mystical arts native to the Force-sensitive witches of Dathomir, wielded to manipulate, curse, and command the forces of nature and beyond.</tooltip>
+  </VanillaPsycastsExpanded.PsycasterPathDef>
+
+  <GeneDef>
+    <defName>Force_NightSisterMagick</defName>
+    <label>Magick Supply</label>
+    <description>This Gene allows the use of nightsister magick using a resource called Ichor. Abilities are found in the psycaster path Nightsister Magick</description>
+    <geneClass>TheForce_Psycast.NightSisterMagick.Force_GeneMagick</geneClass>
+    <resourceGizmoType>TheForce_Psycast.NightSisterMagick.GeneGizmo_ResourceIchor</resourceGizmoType>
+    <resourceLabel>ichor</resourceLabel>
+    <resourceGizmoThresholds>
+      <li>0.25</li>
+      <li>0.5</li>
+      <li>0.75</li>
+    </resourceGizmoThresholds>
+    <showGizmoOnWorldView>true</showGizmoOnWorldView>
+    <showGizmoWhenDrafted>true</showGizmoWhenDrafted>
+    <resourceDescription>A reserve of a luminescent green mist that originated in the depths of Dathomir.</resourceDescription>
+    <iconPath>UI/Icons/Genes/Gene_Hemogenic</iconPath>
+    <selectionWeight>0</selectionWeight>
+    <displayCategory>Psychic</displayCategory>
+    <displayOrderInCategory>-2</displayOrderInCategory>
+    <customEffectDescriptions>
+      <li>Gives Ichor supply.</li>
+    </customEffectDescriptions>
+    <symbolPack>
+      <prefixSymbols>
+        <li><symbol>hemo</symbol></li>
+      </prefixSymbols>
+    </symbolPack>
+    <minAgeActive>3</minAgeActive>
+    <resourceLossPerDay>0.02</resourceLossPerDay>
+    <biostatCpx>1</biostatCpx>
+    <biostatMet>1</biostatMet>
+  </GeneDef>
+</Defs>
