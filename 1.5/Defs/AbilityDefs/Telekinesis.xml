@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Defs>	
+	<VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
+		<defName>VPE_ForcePush</defName>
+		<label>Force Push</label>
+		<description>Using the Force, push the target backwards.</description>
+		<iconPath>Abilities/Telekinesis/Force Push</iconPath>
+		<abilityClass>TheForce_Psycast.Ability_ForcePush</abilityClass>
+		<castTime>7</castTime>
+		<range>10</range>
+		 <targetingParameters>
+		  <canTargetItems>true</canTargetItems>
+		  <thingCategory>Item</thingCategory>
+		  <canTargetPawns>True</canTargetPawns>
+		  <canTargetBuildings>false</canTargetBuildings>
+		</targetingParameters>
+		<castSound>VPE_LocationSwap_Cast</castSound>
+		<modExtensions>
+		  <li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
+			<path>VPE_Telekinesis</path>
+			<level>1</level>
+			<order>1</order>
+			<psyfocusCost>0.06</psyfocusCost>
+			<entropyGain>35</entropyGain>
+		  </li>
+		  <li Class="VanillaPsycastsExpanded.Skipmaster.AbilityExtension_Clamor">
+			<clamorType>Ability</clamorType>
+			<clamorRadius>0</clamorRadius>
+		  </li>
+		</modExtensions>
+	</VFECore.Abilities.AbilityDef>
+		
+	  <VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
+		<defName>VPE_ForcePull</defName>
+		<label>Force Pull</label>
+		<description>Using the Force, Pull the target to you.</description>
+		<iconPath>Abilities/Telekinesis/Force Pull</iconPath>
+		<abilityClass>TheForce_Psycast.Ability_ForcePull</abilityClass>
+		<castTime>7</castTime>
+		<range>10</range>
+		<targetingParameters>
+		  <canTargetItems>true</canTargetItems>
+		  <thingCategory>Item</thingCategory>
+		  <canTargetPawns>True</canTargetPawns>
+		  <canTargetBuildings>false</canTargetBuildings>
+		</targetingParameters>
+		<castSound>VPE_LocationSwap_Cast</castSound>
+		<modExtensions>
+		  <li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
+			<path>VPE_Telekinesis</path>
+			<level>1</level>
+			<order>3</order>
+			<psyfocusCost>0.06</psyfocusCost>
+			<entropyGain>35</entropyGain>
+		  </li>
+		  <li Class="VanillaPsycastsExpanded.Skipmaster.AbilityExtension_Clamor">
+			<clamorType>Ability</clamorType>
+			<clamorRadius>0</clamorRadius>
+		  </li>
+		</modExtensions>
+	  </VFECore.Abilities.AbilityDef>
+	  
+	  <VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
+		<defName>VPE_ForceChoke</defName>
+		<label>Force Choke</label>
+		<description>Using the Force, crush the targets neck. Dealing damage and stunning them for a few seconds.</description>
+		<iconPath>Abilities/Telekinesis/Force_Choke</iconPath>
+		<abilityClass>TheForce_Psycast.Force_Choke</abilityClass>
+		<castTime>7</castTime>
+		<power>3</power>
+		<range>10</range>
+		 <targetingParameters>
+		  <canTargetItems>true</canTargetItems>
+		  <thingCategory>Item</thingCategory>
+		  <canTargetPawns>True</canTargetPawns>
+		  <canTargetBuildings>false</canTargetBuildings>
+		</targetingParameters>
+		<castSound>VPE_LocationSwap_Cast</castSound>
+		<modExtensions>
+		  <li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
+			<path>VPE_Telekinesis</path>
+			<level>1</level>
+			<order>2</order>
+			<psyfocusCost>0.06</psyfocusCost>
+			<entropyGain>35</entropyGain>
+		  </li>
+		  <li Class="VFECore.Abilities.AbilityExtension_Stun">
+			<stunTicks>70~120</stunTicks>
+			<durationMultiplier>PsychicSensitivity</durationMultiplier>
+		  </li>
+		</modExtensions>
+	</VFECore.Abilities.AbilityDef>
+	  
+	  <VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
+    <defName>Force_ThrowWeapon</defName>
+    <label>Throw Weapon</label>
+    <description>Using the mastery of the force. Throw your weapon at a target location.</description>
+    <iconPath>Abilities/Telekinesis/Blue_G</iconPath>
+    <abilityClass>TheForce_Psycast.ThrowLightsaber</abilityClass>
+    <castTime>9</castTime>
+    <range>22.9</range>
+	 <rangeStatFactors>
+      <PsychicSensitivity>1</PsychicSensitivity>
+    </rangeStatFactors>
+    <power>3</power>
+	<powerStatFactors>
+      <PsychicSensitivity>1.5</PsychicSensitivity>
+    </powerStatFactors>
+    <targetMode>Pawn</targetMode>
+	<targetingParametersList>
+      <li>
+		<canTargetLocations>True</canTargetLocations>
+        <canTargetSelf>false</canTargetSelf>
+        <canTargetPawns>True</canTargetPawns>
+        <canTargetBuildings>true</canTargetBuildings>
+        <canTargetItems>false</canTargetItems>
+        <canTargetPlants>false</canTargetPlants>
+        <thingCategory>Item</thingCategory>
+        <mustBeSelectable>true</mustBeSelectable>
+        <mapObjectTargetsMustBeAutoAttackable>false</mapObjectTargetsMustBeAutoAttackable>
+      </li>
+	</targetingParametersList>
+    <modExtensions>
+      <li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
+        <path>VPE_Telekinesis</path>
+        <level>2</level>
+        <order>2</order>
+        <psyfocusCost>0.06</psyfocusCost>
+        <entropyGain>24</entropyGain>
+		<prerequisites>
+          <li>VPE_ForcePull</li>
+		  <li>VPE_ForcePush</li>
+        </prerequisites>
+      </li>
+      <li Class="VFECore.Abilities.AbilityExtension_Projectile">
+        <projectile>LightsaberThrow</projectile>
+      </li>
+    </modExtensions>
+  </VFECore.Abilities.AbilityDef>
+
+	<VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
+		<defName>VPE_ForceDrop</defName>
+		<label>Force Drop</label>
+		<description>Using the Force, crush the targets neck. Dealing damage and stunning them for a few seconds.</description>
+		<iconPath>Abilities/Telekinesis/Force_Choke</iconPath>
+		<abilityClass>TheForce_Psycast.Abilities.Telekinesis.ForceDrop</abilityClass>
+		<castTime>7</castTime>
+		<power>3</power>
+		<range>10</range>
+		<targetingParameters>
+			<canTargetItems>true</canTargetItems>
+			<thingCategory>Item</thingCategory>
+			<canTargetPawns>True</canTargetPawns>
+			<canTargetBuildings>false</canTargetBuildings>
+			<canTargetLocations>True</canTargetLocations>
+		</targetingParameters>
+		<castSound>VPE_LocationSwap_Cast</castSound>
+		<modExtensions>
+		<li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
+			<path>VPE_Telekinesis</path>
+			<level>3</level>
+			<order>1</order>
+			<psyfocusCost>0.06</psyfocusCost>
+			<entropyGain>35</entropyGain>
+		</li>
+		<li Class="VFECore.Abilities.AbilityExtension_Stun">
+			<stunTicks>150</stunTicks>
+			<durationMultiplier>PsychicSensitivity</durationMultiplier>
+		</li>
+		</modExtensions>
+	</VFECore.Abilities.AbilityDef>
+    
+	<VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
+    <defName>Force_Throw</defName>
+    <label>Force Throw</label>
+    <description>Using your mastery of the force. Throw the target to a desired position, the distance scaling with the caster’s psychic sensitivity, from his starting point. Throw pawns into walls to damage them or launch items at the target. Beware Mortar shells explode when thrown.</description>
+    <iconPath>Abilities/Telekinesis/ForceThrow</iconPath>
+    <abilityClass>TheForce_Psycast.Ability_ForceThrow</abilityClass>
+    <targetCount>2</targetCount>
+    <range>28</range>
+    <rangeStatFactors>
+      <PsychicSensitivity>1</PsychicSensitivity>
+    </rangeStatFactors>
+    <castTime>30</castTime>
+    <needsTicking>true</needsTicking>
+    <targetModes>
+      <li>Pawn</li>
+      <li>Location</li>
+    </targetModes>
+    <targetingParametersList>
+      <li>
+        <canTargetSelf>false</canTargetSelf>
+        <canTargetPawns>True</canTargetPawns>
+        <canTargetBuildings>false</canTargetBuildings>
+        <canTargetItems>true</canTargetItems>
+        <canTargetPlants>false</canTargetPlants>
+        <thingCategory>Item</thingCategory>
+        <mustBeSelectable>true</mustBeSelectable>
+        <mapObjectTargetsMustBeAutoAttackable>false</mapObjectTargetsMustBeAutoAttackable>
+      </li>
+      <li Class="VFECore.Abilities.TargetingParametersForAoE">
+        <canTargetLocations>true</canTargetLocations>
+        <canTargetBlockedLocations>false</canTargetBlockedLocations>
+      </li>
+    </targetingParametersList>
+    <modExtensions>
+      <li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
+        <path>VPE_Telekinesis</path>
+        <level>5</level>
+        <order>2</order>
+        <psyfocusCost>0.02</psyfocusCost>
+        <entropyGain>25</entropyGain>
+        <prerequisites>
+          <li>Force_ThrowWeapon</li>
+        </prerequisites>
+      </li>
+      <li Class="VanillaPsycastsExpanded.Skipmaster.AbilityExtension_Clamor">
+        <clamorType>Ability</clamorType>
+        <clamorRadius>10</clamorRadius>
+      </li>
+      <li Class="VFECore.Abilities.AbilityExtension_Stun">
+        <stunTicks>70~120</stunTicks>
+      </li>
+    </modExtensions>
+  </VFECore.Abilities.AbilityDef>
+	  
+	   <VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
+    <defName>Force_Repulsion</defName>
+    <label>Force Repulse</label>
+    <description>Use the force to push back everyone in a radius around you.</description>
+    <iconPath>Abilities/Telekinesis/ForceRepulse</iconPath>
+    <targetMode>Self</targetMode>
+	<hasAoE>true</hasAoE>
+		<targetingParametersForAoE>
+			<canTargetLocations>False</canTargetLocations>
+			<canTargetSelf>false</canTargetSelf>
+			<canTargetAnimals>True</canTargetAnimals>
+			<canTargetPawns>True</canTargetPawns>
+			<canTargetHumans>True</canTargetHumans>
+			<canTargetMechs>false</canTargetMechs>
+			<canTargetBuildings>false</canTargetBuildings>
+		</targetingParametersForAoE>
+    <abilityClass>TheForce_Psycast.Ability_ForceRepulsion</abilityClass>
+    <castTime>150</castTime>
+    <radius>9</radius>
+    <castSound>VPE_NeuralHeatDetonation_Cast</castSound>
+    <modExtensions>
+     <li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
+			<path>VPE_Telekinesis</path>
+			<level>5</level>
+			<order>1</order>
+			<prerequisites>
+				<li>VPE_ForcePush</li>
+			</prerequisites>
+			<psyfocusCost>0.06</psyfocusCost>
+			<entropyGain>35</entropyGain>
+      </li>
+	  <li Class="VFECore.Abilities.AbilityExtension_Stun">
+        <stunTicks>70~120</stunTicks>
+      </li>
+    </modExtensions>
+  </VFECore.Abilities.AbilityDef>
+  
+     <VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
+    <defName>Force_Attract</defName>
+    <label>Force Attract</label>
+    <description>Use the force to pull everyone towards you.</description>
+    <iconPath>Abilities/Telekinesis/ForceAttract</iconPath>
+    <targetMode>Self</targetMode>
+	<hasAoE>true</hasAoE>
+		<targetingParametersForAoE>
+			<canTargetLocations>False</canTargetLocations>
+			<canTargetSelf>false</canTargetSelf>
+			<canTargetAnimals>True</canTargetAnimals>
+			<canTargetPawns>True</canTargetPawns>
+			<canTargetHumans>True</canTargetHumans>
+			<canTargetMechs>false</canTargetMechs>
+		</targetingParametersForAoE>
+    <abilityClass>TheForce_Psycast.Ability_ForceAttract</abilityClass>
+    <castTime>150</castTime>
+    <radius>9</radius>
+    <castSound>VPE_NeuralHeatDetonation_Cast</castSound>
+    <modExtensions>
+     <li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
+			<path>VPE_Telekinesis</path>
+			<level>5</level>
+			<order>3</order>
+			<prerequisites>
+				<li>VPE_ForcePull</li>
+			</prerequisites>
+			<psyfocusCost>0.06</psyfocusCost>
+			<entropyGain>35</entropyGain>
+      </li>
+	  <li Class="VFECore.Abilities.AbilityExtension_Stun">
+        <stunTicks>70~120</stunTicks>
+      </li>
+    </modExtensions>
+  </VFECore.Abilities.AbilityDef>
+  
+	  
+</Defs>	  

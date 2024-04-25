@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Defs>
+	<ThingDef ParentName="BaseBullet">
+		<defName>LightsaberThrow</defName>
+		<label>Weapon Throw</label>
+		<thingClass>TheForce_Psycast.LightSaberProjectile</thingClass>
+		<drawOffscreen>true</drawOffscreen>
+		<graphicData Class="VanillaPsycastsExpanded.Graphics.GraphicData_Animated">
+			<texPath>Effects/Blue</texPath>
+			<ticksPerFrame>0</ticksPerFrame>
+			<graphicClass>VanillaPsycastsExpanded.Graphics.Graphic_Animated</graphicClass>
+			<shaderType>TransparentPostLight</shaderType>
+		</graphicData>
+		<projectile>
+			<damageDef>Cut</damageDef>
+			<damageAmountBase>10</damageAmountBase>
+			<speed>25</speed>
+		</projectile>
+	</ThingDef>
+
+	<ThingDef ParentName="BaseBullet">
+		<defName>Force_ThrowItem</defName>
+		<label>Item Throw</label>
+		<drawOffscreen>true</drawOffscreen>
+		<thingClass>TheForce_Psycast.ForceThrowProjectile</thingClass>
+		<graphicData Class="VanillaPsycastsExpanded.Graphics.GraphicData_Animated">
+			<texPath>Effects/Blue</texPath>
+			<ticksPerFrame>0</ticksPerFrame>
+			<graphicClass>VanillaPsycastsExpanded.Graphics.Graphic_Animated</graphicClass>
+			<shaderType>TransparentPostLight</shaderType>
+		</graphicData>
+		<projectile>
+			<damageDef>Blunt</damageDef>
+			<damageAmountBase>1</damageAmountBase>
+			<speed>25</speed>
+		</projectile>	
+	</ThingDef>
+	
+	<ThingDef ParentName="EtherealThingBase">
+        <defName>Force_ForceStormMaker</defName>
+        <label>Force Storm maker</label>
+        <thingClass>TheForce_Psycast.Abilities.ForceStormMaker</thingClass>
+        <tickerType>Normal</tickerType>
+    </ThingDef>
+	
+	<ThingDef ParentName="BaseBullet">
+		<defName>Force_HatredBolt</defName>
+		<label>bolt of hatred</label>
+		<thingClass>VanillaPsycastsExpanded.Staticlord.ChainBolt</thingClass>
+		<drawOffscreen>true</drawOffscreen>
+		<graphicData Class="VanillaPsycastsExpanded.Graphics.GraphicData_Animated">
+			<texPath>Effects/BoltofHatred</texPath>
+			<ticksPerFrame>3</ticksPerFrame>
+			<graphicClass>VanillaPsycastsExpanded.Graphics.Graphic_Animated</graphicClass>
+			<shaderType>TransparentPostLight</shaderType>
+			<drawSize>(2, 2)</drawSize>
+		</graphicData>
+		<projectile>
+			<damageDef>Stun</damageDef>
+			<damageAmountBase>7</damageAmountBase>
+			<speed>140</speed>
+		</projectile>
+		<comps>
+			<li><compClass>VFECore.Abilities.CompAbilityProjectile</compClass></li>
+		</comps>
+		<modExtensions>
+			<li Class="VFEMech.TeslaChainingProps">
+				<maxBounceCount>4</maxBounceCount>
+				<damageDef>Crush</damageDef>
+				<explosionDamageDef>EMP</explosionDamageDef>
+				<impactRadius>1.9</impactRadius>
+				<targetFriendly>false</targetFriendly>
+				<addFire>true</addFire>
+				<bounceRange>9</bounceRange>
+				<maxLifetime>50</maxLifetime>
+				<impactSound>VPE_ChainBolt_Impact</impactSound>
+			</li>
+		</modExtensions>
+	</ThingDef>
+
+
+	<ThingDef ParentName="BaseBullet">
+		<defName>Force_LightsaberBolt</defName>
+		<label>bolt of hatred</label>
+		<thingClass>VanillaPsycastsExpanded.Staticlord.ChainBolt</thingClass>
+		<drawOffscreen>true</drawOffscreen>
+		<graphicData Class="VanillaPsycastsExpanded.Graphics.GraphicData_Animated">
+			<texPath>Effects/BoltofHatred/BoltA</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+			<shaderType>TransparentPostLight</shaderType>
+			<drawSize>(2, 2)</drawSize>
+		</graphicData>
+		<projectile>
+			<damageDef>Stun</damageDef>
+			<damageAmountBase>7</damageAmountBase>
+			<speed>140</speed>
+		</projectile>
+		<modExtensions>
+			<li Class="VFEMech.TeslaChainingProps">
+				<maxBounceCount>4</maxBounceCount>
+				<damageDef>Crush</damageDef>
+				<explosionDamageDef>Blunt</explosionDamageDef>
+				<impactRadius>1.9</impactRadius>
+				<targetFriendly>false</targetFriendly>
+				<addFire>true</addFire>
+				<bounceRange>9</bounceRange>
+				<maxLifetime>50</maxLifetime>
+				<impactSound>VPE_ChainBolt_Impact</impactSound>
+			</li>
+		</modExtensions>
+	</ThingDef>
+
+	<ThingDef ParentName="PawnFlyerBase">
+        <defName>Force_ThrownPawn</defName>
+        <thingClass>PawnFlyer</thingClass>
+		<useHitPoints>false</useHitPoints>
+		<drawOffscreen>true</drawOffscreen>
+		<tickerType>Normal</tickerType>
+		<altitudeLayer>Skyfaller</altitudeLayer>
+		<drawerType>RealtimeOnly</drawerType>
+		<pawnFlyer>
+		  <flightDurationMin>0.5</flightDurationMin>
+		  <flightSpeed>12</flightSpeed>
+		  <workerClass>PawnFlyerWorker</workerClass>
+		  <heightFactor>1</heightFactor>
+		  <progressCurve>
+			<points>
+			  <li>(0, 0)</li>
+			  <li>(0.5, 0.5)</li> <!-- Complete 15% of the journey in first 10% of time -->
+			  <li>(1, 1)</li>
+			</points>
+		  </progressCurve>
+		</pawnFlyer>
+    </ThingDef>
+</Defs>

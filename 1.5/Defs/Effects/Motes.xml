@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Defs>
+	<ThingDef ParentName="MoteBase">
+    <defName>Mote_LightSaberReturn</defName>
+    <label>LightSaber Return Mote</label>
+    <thingClass>TheForce_Psycast.MoteLightSaberReturn</thingClass>
+	<graphicData Class="VanillaPsycastsExpanded.Graphics.GraphicData_Animated">
+			<texPath>Effects/Blue</texPath>
+			<ticksPerFrame>0</ticksPerFrame>
+			<graphicClass>VanillaPsycastsExpanded.Graphics.Graphic_Animated</graphicClass>
+			<shaderType>TransparentPostLight</shaderType>
+		</graphicData>
+	<altitudeLayer>MoteOverhead</altitudeLayer>
+		<drawOffscreen>true</drawOffscreen>
+		<mote>
+			<fadeInTime>0.5</fadeInTime>
+			<solidTime>0.7</solidTime>
+			<fadeOutTime>1</fadeOutTime>
+		</mote>
+	</ThingDef>
+
+	<ThingDef ParentName="MoteBase">
+		<defName>Mote_LightSaberSpin</defName>
+		<label>LightSaber Spin Mote</label>
+		<thingClass>TheForce_Psycast.MoteLightSaberSpin</thingClass>
+		<graphicData Class="VanillaPsycastsExpanded.Graphics.GraphicData_Animated">
+				<texPath>Effects/Blue</texPath>
+				<ticksPerFrame>0</ticksPerFrame>
+				<graphicClass>VanillaPsycastsExpanded.Graphics.Graphic_Animated</graphicClass>
+				<shaderType>TransparentPostLight</shaderType>
+			</graphicData>
+		<altitudeLayer>MoteOverhead</altitudeLayer>
+			<drawOffscreen>true</drawOffscreen>
+			<mote>
+				<fadeInTime>0.5</fadeInTime>
+				<solidTime>0.7</solidTime>
+				<fadeOutTime>1</fadeOutTime>
+			</mote>
+		</ThingDef>
+
+	<ThingDef ParentName="MoteBase">
+		<defName>Mote_NightsisterMagickIchor</defName>
+		<label>Nightsister Ichor</label>
+		<graphicData Class="VanillaPsycastsExpanded.Graphics.GraphicData_Animated">
+				<texPath>Effects/NightsisterMagick</texPath>
+				<ticksPerFrame>16	</ticksPerFrame>
+				<graphicClass>VanillaPsycastsExpanded.Graphics.Graphic_Animated</graphicClass>
+				<shaderType>TransparentPostLight</shaderType>
+				<drawSize>2</drawSize>
+			</graphicData>
+		<altitudeLayer>MoteOverhead</altitudeLayer>
+			<drawOffscreen>true</drawOffscreen>
+			<mote>
+				<fadeInTime>0.5</fadeInTime>
+				<solidTime>0.7</solidTime>
+				<fadeOutTime>1</fadeOutTime>
+			</mote>
+		</ThingDef>
+
+</Defs>

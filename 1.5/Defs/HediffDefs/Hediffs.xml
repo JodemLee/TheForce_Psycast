@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Defs>
+
+	<HediffDef ParentName="PsycastHediffBase">
+		<defName>Force_Malacia</defName>
+		<label>Malacia</label>
+		<description>Force Sickness.</description>
+		 <initialSeverity>0.2</initialSeverity>
+    <comps>
+      <li Class="HediffCompProperties_SeverityPerDay">
+        <severityPerDay>-1</severityPerDay>
+      </li>
+    </comps>
+    <stages>
+      <li>
+        <label>recovering</label>
+        <vomitMtbDays>0.4</vomitMtbDays>
+        <painOffset>0.2</painOffset>
+        <capMods>
+          <li>
+            <capacity>Consciousness</capacity>
+            <postFactor>0.6</postFactor>
+          </li>
+          <li>
+            <capacity>Moving</capacity>
+            <postFactor>0.8</postFactor>
+          </li>
+          <li>
+            <capacity>Manipulation</capacity>
+            <postFactor>0.9</postFactor>
+          </li>
+          <li>
+            <capacity>BloodFiltration</capacity>
+            <postFactor>0.95</postFactor>
+          </li>
+          <li>
+            <capacity>Eating</capacity>
+            <postFactor>0.5</postFactor>
+          </li>
+        </capMods>
+      </li>
+      <li>
+        <label>major</label>
+        <minSeverity>0.2</minSeverity>
+        <vomitMtbDays>0.2</vomitMtbDays>
+        <painOffset>0.4</painOffset>
+        <capMods>
+          <li>
+            <capacity>Consciousness</capacity>
+            <postFactor>0.5</postFactor>
+          </li>
+          <li>
+            <capacity>Moving</capacity>
+            <postFactor>0.5</postFactor>
+          </li>
+          <li>
+            <capacity>Manipulation</capacity>
+            <postFactor>0.8</postFactor>
+          </li>
+          <li>
+            <capacity>BloodFiltration</capacity>
+            <postFactor>0.85</postFactor>
+          </li>
+          <li>
+            <capacity>Talking</capacity>
+            <postFactor>0.8</postFactor>
+          </li>
+          <li>
+            <capacity>Eating</capacity>
+            <postFactor>0.3</postFactor>
+          </li>
+        </capMods>
+      </li>
+      <li>
+        <label>initial</label>
+        <minSeverity>0.8</minSeverity>
+        <vomitMtbDays>0.3</vomitMtbDays>
+        <painOffset>0.2</painOffset>
+        <capMods>
+          <li>
+            <capacity>Consciousness</capacity>
+            <postFactor>0.6</postFactor>
+          </li>
+          <li>
+            <capacity>Moving</capacity>
+            <postFactor>0.8</postFactor>
+          </li>
+          <li>
+            <capacity>Manipulation</capacity>
+            <postFactor>0.9</postFactor>
+          </li>
+          <li>
+            <capacity>BloodFiltration</capacity>
+            <postFactor>0.95</postFactor>
+          </li>
+          <li>
+            <capacity>Eating</capacity>
+            <postFactor>0.5</postFactor>
+          </li>
+        </capMods>
+      </li>
+    </stages>
+	</HediffDef>
+
+	<HediffDef>
+		<defName>Hediff_BattleMeditation</defName>
+		<label>Battle Meditation</label>
+		<description>Psychically link between several entities using the force. Any 'word of' psycast will resonate between all linked individuals.</description>
+		<hediffClass>TheForce_Psycast.Hediff_BattleMeditation</hediffClass>
+		<isBad>false</isBad>
+		<comps>
+			<li Class="VanillaPsycastsExpanded.HediffCompProperties_DisappearsOnDowned"/>
+			<li Class="VanillaPsycastsExpanded.HediffCompProperties_DisappearsOnDespawn"/>
+		</comps>
+	</HediffDef>
+
+	<HediffDef ParentName = "PsycastHediffBase">
+		<defName>Force_Stasis</defName>
+		<label>Force Stasis</label>
+		<description>Psychically-induced difficulty in locomotion.</description>
+		<isBad>true</isBad>
+		<stages>
+		  <li>
+			<capMods>
+			  <li>
+				<capacity>Moving</capacity>
+				<setMax>0.4</setMax>
+			  </li>
+			</capMods>
+			<capacityFactorEffectMultiplier>PsychicSensitivity</capacityFactorEffectMultiplier>
+		  </li>
+		</stages>
+	  </HediffDef>
+
+	<HediffDef>
+		<defName>Magick_Invisibility</defName>
+		<label>Invisibility</label>
+		<description>Psychically-induced invisibility. This actually affects others nearby, making their brains unable to perceive the sight of this individual, even if the eyes are unaffected.</description>
+		<isBad>false</isBad>
+		<hediffClass>HediffWithComps</hediffClass>
+		<comps>
+		  <li Class="HediffCompProperties">
+			<compClass>HediffComp_Invisibility</compClass>
+		  </li>
+			<li Class="VanillaPsycastsExpanded.HediffCompProperties_DisappearsOnDowned"/>
+			<li Class="VanillaPsycastsExpanded.HediffCompProperties_DisappearsOnDespawn"/>
+			<li Class="HediffCompProperties_Disappears">
+				<disappearsAfterTicks>18000</disappearsAfterTicks> <!-- 3 hours -->
+				<showRemainingTime>true</showRemainingTime>
+			  </li>
+		</comps>
+	  </HediffDef>
+</Defs>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+  <Patch>
+  <Operation Class="PatchOperationFindMod">
+  <mods>
+    <li>Star Wars - Fully Functional Lightsabers</li>
+  </mods>
+  <match Class="PatchOperationAdd">
+    <xpath>Defs/ThingDef[@Name="PJ_BaseLightsaber"]</xpath>
+      <value>
+        <thingClass>TheForce_Psycast.LightsaberPatch</thingClass>
+      </value>
+  </match>
+</Operation>
+</Patch>

@@ -1,0 +1,471 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Defs>
+	
+	<VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
+		<defName>Force_Mental_Training_Targeted</defName>
+		<label>Mental Toughness Training(Targeted)</label>
+		<description>Host a lecture that will improve the targets' mental toughness. The effect lasts a few days based on your sensitivity.</description>
+		<iconPath>Abilities/JediTraining/MentalTrainingTarget</iconPath>
+		<targetMode>Pawn</targetMode>
+		<castTime>2400</castTime>
+		<durationTime>120000</durationTime>
+		<abilityClass>VFECore.Abilities.Ability_Blank</abilityClass>
+		<castSound>VPE_Speedboost_Cast</castSound>
+		<range>15.9</range>
+		<radius>7</radius>
+		<hasAoE>true</hasAoE>
+		<targetingParametersForAoE>
+			<canTargetHumans>True</canTargetHumans>
+			<canTargetSelf>false</canTargetSelf>
+			<canTargetAnimals>false</canTargetAnimals>
+			<neverTargetIncapacitated>True</neverTargetIncapacitated>
+		</targetingParametersForAoE>
+		<modExtensions>
+			<li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
+				<path>VPE_JediTraining</path>
+				<level>5</level>
+				<order>1</order>
+				<psyfocusCost>0.12</psyfocusCost>
+				<entropyGain>12</entropyGain>
+				<psychic>true</psychic>
+				<prerequisites>
+				<li>Force_Mental_Training</li>
+				</prerequisites>
+			</li>
+      <li Class="VFECore.Abilities.AbilityExtension_Hediff">
+        <hediff>Jedi_Training_Mental</hediff>
+		<durationMultiplier>PsychicSensitivity</durationMultiplier>
+      </li>
+    </modExtensions>
+	</VFECore.Abilities.AbilityDef>
+	
+	
+	<VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
+		<defName>Force_Social_Training_Targeted</defName>
+		<label>Social Training(Targeted)</label>
+		<description>Host a lecture that will improve the targets' sense of sight and hearing. The effect lasts a few days based on your sensitivity.</description>
+		<iconPath>Abilities/JediTraining/SocialTrainingTarget</iconPath>
+		<targetMode>Pawn</targetMode>
+		<castTime>2400</castTime>
+		<durationTime>120000</durationTime>
+		<abilityClass>VFECore.Abilities.Ability_Blank</abilityClass>
+		<castSound>VPE_Speedboost_Cast</castSound>
+		<range>15.9</range>
+		<radius>7</radius>
+		<hasAoE>true</hasAoE>
+		<targetingParametersForAoE>
+			<canTargetHumans>True</canTargetHumans>
+			<canTargetSelf>false</canTargetSelf>
+			<canTargetAnimals>false</canTargetAnimals>
+			<neverTargetIncapacitated>True</neverTargetIncapacitated>
+		</targetingParametersForAoE>
+		<modExtensions>
+			<li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
+				<path>VPE_JediTraining</path>
+				<level>5</level>
+				<order>2</order>
+				<psyfocusCost>0.12</psyfocusCost>
+				<entropyGain>12</entropyGain>
+				<psychic>true</psychic>
+				<prerequisites>
+				<li>Force_Social_Training</li>
+				</prerequisites>
+			</li>
+      <li Class="VFECore.Abilities.AbilityExtension_Hediff">
+        <hediff>Jedi_Training_Social</hediff>
+		<durationMultiplier>PsychicSensitivity</durationMultiplier>
+      </li>
+    </modExtensions>
+	</VFECore.Abilities.AbilityDef>
+	
+	<VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
+		<defName>Force_Sensitivty_Training_Targeted</defName>
+		<label>Force sensitivity Training(Targeted)</label>
+		<description>Host a lecture that will improve the targets' connection to the force. The effect lasts a few days based on your sensitivity.</description>
+		<iconPath>Abilities/JediTraining/ForceSensitivityTrainingTarget</iconPath>
+		<targetMode>Pawn</targetMode>
+		<castTime>2400</castTime>
+		<durationTime>120000</durationTime>
+		<abilityClass>VFECore.Abilities.Ability_Blank</abilityClass>
+		<castSound>VPE_Speedboost_Cast</castSound>
+		<range>15.9</range>
+		<radius>7</radius>
+		<hasAoE>true</hasAoE>
+		<targetingParametersForAoE>
+			<canTargetHumans>True</canTargetHumans>
+			<canTargetSelf>false</canTargetSelf>
+			<canTargetAnimals>false</canTargetAnimals>
+			<neverTargetIncapacitated>True</neverTargetIncapacitated>
+		</targetingParametersForAoE>
+		<modExtensions>
+			<li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
+				<path>VPE_JediTraining</path>
+				<level>5</level>
+				<order>3</order>
+				<psyfocusCost>0.12</psyfocusCost>
+				<entropyGain>12</entropyGain>
+				<psychic>true</psychic>
+				<prerequisites>
+				<li>Force_Sensitivty_Training</li>
+				</prerequisites>
+			</li>
+      <li Class="VFECore.Abilities.AbilityExtension_Hediff">
+        <hediff>Force_EnhanceForce</hediff>
+		<durationMultiplier>PsychicSensitivity</durationMultiplier>
+      </li>
+    </modExtensions>
+	</VFECore.Abilities.AbilityDef>
+	
+	<VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
+		<defName>Force_Mental_Training</defName>
+		<label>Mental Toughness Training</label>
+		<description>A training regiment meant to enhance your mental toughness. The effect lasts a few days based on your sensitivity.</description>
+		<iconPath>Abilities/JediTraining/MentalTraining</iconPath>
+		<targetMode>Self</targetMode>
+		<castTime>2400</castTime>
+		<durationTime>120000</durationTime>
+		<abilityClass>VFECore.Abilities.Ability_Blank</abilityClass>
+		<castSound>VPE_Speedboost_Cast</castSound>
+		<modExtensions>
+			<li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
+				<path>VPE_JediTraining</path>
+				<level>4</level>
+				<order>1</order>
+				<psyfocusCost>0.12</psyfocusCost>
+				<entropyGain>12</entropyGain>
+				<psychic>true</psychic>
+				<prerequisites>
+				<li>Force_Meditation_Training</li>
+				</prerequisites>
+			</li>
+      <li Class="VFECore.Abilities.AbilityExtension_Hediff">
+        <hediff>Jedi_Training_Mental</hediff>
+		<durationMultiplier>PsychicSensitivity</durationMultiplier>
+      </li>
+    </modExtensions>
+	</VFECore.Abilities.AbilityDef>
+	
+	
+	<VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
+		<defName>Force_Social_Training</defName>
+		<label>Social Training</label>
+		<description>A training regiment meant to enhance your social abilities. The effect lasts a few days based on your sensitivity.</description>
+		<iconPath>Abilities/JediTraining/SocialTraining</iconPath>
+		<targetMode>Self</targetMode>
+		<castTime>2400</castTime>
+		<durationTime>120000</durationTime>
+		<abilityClass>VFECore.Abilities.Ability_Blank</abilityClass>
+		<castSound>VPE_Speedboost_Cast</castSound>
+		<modExtensions>
+			<li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
+				<path>VPE_JediTraining</path>
+				<level>4</level>
+				<order>2</order>
+				<psyfocusCost>0.12</psyfocusCost>
+				<entropyGain>12</entropyGain>
+				<psychic>true</psychic>
+				<prerequisites>
+				<li>Force_Meditation_Training</li>
+				</prerequisites>
+			</li>
+      <li Class="VFECore.Abilities.AbilityExtension_Hediff">
+        <hediff>Jedi_Training_Social</hediff>
+		<durationMultiplier>PsychicSensitivity</durationMultiplier>
+      </li>
+    </modExtensions>
+	</VFECore.Abilities.AbilityDef>
+	
+	<VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
+		<defName>Force_Sensitivty_Training</defName>
+		<label>Force sensitivity Training</label>
+		<description>A training regiment meant to enhance your connection to the Force. The effect lasts a few days based on your sensitivity.</description>
+		<iconPath>Abilities/JediTraining/ForceSensitivityTraining</iconPath>
+		<targetMode>Self</targetMode>
+		<castTime>2400</castTime>
+		<durationTime>120000</durationTime>
+		<abilityClass>VFECore.Abilities.Ability_Blank</abilityClass>
+		<castSound>VPE_Speedboost_Cast</castSound>
+		<modExtensions>
+			<li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
+				<path>VPE_JediTraining</path>
+				<level>4</level>
+				<order>3</order>
+				<psyfocusCost>0.12</psyfocusCost>
+				<entropyGain>12</entropyGain>
+				<psychic>true</psychic>
+				<prerequisites>
+				<li>Force_Meditation_Training</li>
+				</prerequisites>
+			</li>
+      <li Class="VFECore.Abilities.AbilityExtension_Hediff">
+        <hediff>Force_EnhanceForce</hediff>
+		<durationMultiplier>PsychicSensitivity</durationMultiplier>
+      </li>
+    </modExtensions>
+	</VFECore.Abilities.AbilityDef>
+	
+	<VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
+		<defName>Force_Meditation_Training</defName>
+		<label>Force Meditation Training</label>
+		<description>A training regiment meant to enhance your capacity for meditation. The effect lasts a few days based on your sensitivity.</description>
+		<iconPath>Abilities/JediTraining/MeditationTraining</iconPath>
+		<targetMode>Self</targetMode>
+		<castTime>2400</castTime>
+		<durationTime>120000</durationTime>
+		<abilityClass>VFECore.Abilities.Ability_Blank</abilityClass>
+		<castSound>VPE_Speedboost_Cast</castSound>
+		<modExtensions>
+			<li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
+				<path>VPE_JediTraining</path>
+				<level>3</level>
+				<order>2</order>
+				<psyfocusCost>0.12</psyfocusCost>
+				<entropyGain>12</entropyGain>
+				<psychic>true</psychic>
+			</li>
+      <li Class="VFECore.Abilities.AbilityExtension_Hediff">
+        <hediff>Jedi_Training_Meditation</hediff>
+		<durationMultiplier>PsychicSensitivity</durationMultiplier>
+      </li>
+    </modExtensions>
+	</VFECore.Abilities.AbilityDef>
+	
+	<VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
+		<defName>Force_Apprenticeship</defName>
+		<label>Apprenticeship</label>
+		<description>Take a pawn with a lower psycast level than you as an apprentice. Periodically giving xp. One apprentice at a time.</description>
+		<iconPath>Abilities/JediTraining/MasterApprentice</iconPath>
+		<abilityClass>TheForce_Psycast.Abilities.Master_Apprentice</abilityClass>
+		<targetMode>Pawn</targetMode>
+		<range>5</range>
+		<targetingParameters>
+			<canTargetBuildings>False</canTargetBuildings>
+			<canTargetSelf>False</canTargetSelf>
+			<canTargetAnimals>False</canTargetAnimals>
+			<canTargetPawns>True</canTargetPawns>
+			<canTargetHumans>True</canTargetHumans>
+			<canTargetMechs>False</canTargetMechs>
+		</targetingParameters>
+		<castTime>1200</castTime>
+		<castSound>VPEP_Puppet_Hit</castSound>
+		<modExtensions>
+			<li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
+				<path>VPE_JediTraining</path>
+				<level>3</level>
+				<order>1</order>
+				<spaceAfter>true</spaceAfter>
+				<psyfocusCost>0.4</psyfocusCost>
+				<entropyGain>0</entropyGain>
+				<psychic>true</psychic>
+			</li>
+		</modExtensions>
+	</VFECore.Abilities.AbilityDef>
+	
+	<VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
+		<defName>Force_Sense_Training</defName>
+		<label>Sense Training</label>
+		<description>A training regiment meant to enhance your sense of sight and hearing. The effect lasts a few days based on your sensitivity.</description>
+		<iconPath>Abilities/JediTraining/SenseTraining</iconPath>
+		<targetMode>Self</targetMode>
+		<castTime>2400</castTime>
+		<durationTime>120000</durationTime>
+		<abilityClass>VFECore.Abilities.Ability_Blank</abilityClass>
+		<castSound>VPE_Speedboost_Cast</castSound>
+		<modExtensions>
+			<li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
+				<path>VPE_JediTraining</path>
+				<level>2</level>
+				<order>1</order>
+				<psyfocusCost>0.12</psyfocusCost>
+				<entropyGain>12</entropyGain>
+				<psychic>true</psychic>
+				<prerequisites>
+				<li>Force_Meditation_Training</li>
+				</prerequisites>
+			</li>
+      <li Class="VFECore.Abilities.AbilityExtension_Hediff">
+        <hediff>Jedi_Training_Sense</hediff>
+		<durationMultiplier>PsychicSensitivity</durationMultiplier>
+      </li>
+    </modExtensions>
+	</VFECore.Abilities.AbilityDef>
+	
+	<VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
+		<defName>Force_Manipulation_Training</defName>
+		<label>Manipulation Training</label>
+		<description>A training regiment meant to practice one's telekinesis skill. Improves manipulation and lasts a few days based on your sensitivity</description>
+		<iconPath>Abilities/JediTraining/ManipulationTraining</iconPath>
+		<targetMode>Self</targetMode>
+		<castTime>2400</castTime>
+		<durationTime>120000</durationTime>
+		<abilityClass>VFECore.Abilities.Ability_Blank</abilityClass>
+		<castSound>VPE_Speedboost_Cast</castSound>
+		<modExtensions>
+			<li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
+				<path>VPE_JediTraining</path>
+				<level>2</level>
+				<order>2</order>
+				<psyfocusCost>0.12</psyfocusCost>
+				<entropyGain>12</entropyGain>
+				<psychic>true</psychic>
+				<prerequisites>
+				<li>Force_Meditation_Training</li>
+				</prerequisites>
+			</li>
+      <li Class="VFECore.Abilities.AbilityExtension_Hediff">
+        <hediff>Jedi_Training_Manipulation</hediff>
+		<durationMultiplier>PsychicSensitivity</durationMultiplier>
+      </li>
+    </modExtensions>
+	</VFECore.Abilities.AbilityDef>
+	
+	<VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
+		<defName>Force_Combat_Training</defName>
+		<label>Combat Training</label>
+		<description>A training regiment meant to simulate live combat. Improves combat capabilities for a few days depending on your sensitivity.</description>
+		<iconPath>Abilities/JediTraining/CombatTraining</iconPath>
+		<targetMode>Self</targetMode>
+		<castTime>2400</castTime>
+		<durationTime>120000</durationTime>
+		<abilityClass>VFECore.Abilities.Ability_Blank</abilityClass>
+		<castSound>VPE_Speedboost_Cast</castSound>
+		<modExtensions>
+			<li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
+				<path>VPE_JediTraining</path>
+				<level>2</level>
+				<order>3</order>
+				<psyfocusCost>0.12</psyfocusCost>
+				<entropyGain>12</entropyGain>
+				<psychic>true</psychic>
+				<prerequisites>
+				<li>Force_Meditation_Training</li>
+				</prerequisites>
+			</li>
+      <li Class="VFECore.Abilities.AbilityExtension_Hediff">
+        <hediff>Jedi_Training_Combat</hediff>
+		<durationMultiplier>PsychicSensitivity</durationMultiplier>
+      </li>
+    </modExtensions>
+	</VFECore.Abilities.AbilityDef>
+	
+	
+	<VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
+		<defName>Force_Sense_Training_Targeted</defName>
+		<label>Sense Training(Targeted)</label>
+		<description>Host a lecture that will improve the targets' sense of sight and hearing. The effect lasts a few days based on your sensitivity.</description>
+		<iconPath>Abilities/JediTraining/SenseTrainingTarget</iconPath>
+		<targetMode>Pawn</targetMode>
+		<castTime>2400</castTime>
+		<durationTime>120000</durationTime>
+		<abilityClass>VFECore.Abilities.Ability_Blank</abilityClass>
+		<castSound>VPE_Speedboost_Cast</castSound>
+		<range>15.9</range>
+		<radius>7</radius>
+		<hasAoE>true</hasAoE>
+		<targetingParametersForAoE>
+			<canTargetHumans>True</canTargetHumans>
+			<canTargetSelf>false</canTargetSelf>
+			<canTargetAnimals>false</canTargetAnimals>
+			<neverTargetIncapacitated>True</neverTargetIncapacitated>
+		</targetingParametersForAoE>
+		<modExtensions>
+			<li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
+				<path>VPE_JediTraining</path>
+				<level>1</level>
+				<order>1</order>
+				<psyfocusCost>0.12</psyfocusCost>
+				<entropyGain>12</entropyGain>
+				<psychic>true</psychic>
+				<prerequisites>
+				<li>Force_Sense_Training</li>
+				</prerequisites>
+			</li>
+      <li Class="VFECore.Abilities.AbilityExtension_Hediff">
+        <hediff>Jedi_Training_Sense</hediff>
+		<durationMultiplier>PsychicSensitivity</durationMultiplier>
+      </li>
+    </modExtensions>
+	</VFECore.Abilities.AbilityDef>
+	
+	<VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
+		<defName>Force_Manipulation_Training_Targeted</defName>
+		<label>Manipulation Training(Targeted)</label>
+		<description>Host a lecture that will improve the targets' manipulation capabilities for a few days based on your sensitivity.</description>
+		<iconPath>Abilities/JediTraining/ManipulationTrainingTarget</iconPath>
+		<targetMode>Pawn</targetMode>
+		<castTime>2400</castTime>
+		<durationTime>120000</durationTime>
+		<abilityClass>VFECore.Abilities.Ability_Blank</abilityClass>
+		<castSound>VPE_Speedboost_Cast</castSound>
+		<range>15.9</range>
+		<radius>7</radius>
+		<hasAoE>true</hasAoE>
+		<targetingParametersForAoE>
+			<canTargetHumans>True</canTargetHumans>
+			<canTargetSelf>false</canTargetSelf>
+			<canTargetAnimals>false</canTargetAnimals>
+			<neverTargetIncapacitated>True</neverTargetIncapacitated>
+		</targetingParametersForAoE>
+		<modExtensions>
+			<li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
+				<path>VPE_JediTraining</path>
+				<level>1</level>
+				<order>2</order>
+				<psyfocusCost>0.12</psyfocusCost>
+				<entropyGain>12</entropyGain>
+				<psychic>true</psychic>
+				<prerequisites>
+				<li>Force_Manipulation_Training</li>
+				</prerequisites>
+			</li>
+      <li Class="VFECore.Abilities.AbilityExtension_Hediff">
+        <hediff>Jedi_Training_Manipulation</hediff>
+		<durationMultiplier>PsychicSensitivity</durationMultiplier>
+      </li>
+    </modExtensions>
+	</VFECore.Abilities.AbilityDef>
+	
+	<VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
+		<defName>Force_Combat_Training_Targeted</defName>
+		<label>Combat Training(Targeted)</label>
+		<description>Host a lecture that will improve the targets'combat capabilities for a few days depending on your psychic sensitivity.</description>
+		<iconPath>Abilities/JediTraining/CombatTrainingTarget</iconPath>
+		<targetMode>Pawn</targetMode>
+		<castTime>2400</castTime>
+		<durationTime>120000</durationTime>
+		<abilityClass>VFECore.Abilities.Ability_Blank</abilityClass>
+		<castSound>VPE_Speedboost_Cast</castSound>
+		<range>15.9</range>
+		<radius>7</radius>
+		<hasAoE>true</hasAoE>
+		<targetingParametersForAoE>
+			<canTargetHumans>True</canTargetHumans>
+			<canTargetSelf>false</canTargetSelf>
+			<canTargetAnimals>false</canTargetAnimals>
+			<neverTargetIncapacitated>True</neverTargetIncapacitated>
+		</targetingParametersForAoE>
+		<modExtensions>
+			<li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
+				<path>VPE_JediTraining</path>
+				<level>1</level>
+				<order>3</order>
+				<psyfocusCost>0.12</psyfocusCost>
+				<entropyGain>12</entropyGain>
+				<psychic>true</psychic>
+				<prerequisites>
+				<li>Force_Combat_Training</li>
+				</prerequisites>
+			</li>
+      <li Class="VFECore.Abilities.AbilityExtension_Hediff">
+        <hediff>Jedi_Training_Combat</hediff>
+		<durationMultiplier>PsychicSensitivity</durationMultiplier>
+      </li>
+    </modExtensions>
+	</VFECore.Abilities.AbilityDef>
+	
+	
+
+
+
+
+</Defs>
