@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<loadFolders>
+	<v1.4>
+		<li>/</li>
+		<li>1.4</li>
+		<li IfModActive="Ludeon.RimWorld.Biotech">1.4/Mods/Biotech</li>
+		<li IfModActive="projectjedi.lightsabers">1.4/Mods/JecsLightsabers</li>
+		<li IfModActive="guy762.starwarsxenotypes, neronix17.outerrim.galacticdiversity">1.4/Mods/StarWarsXenotypes</li>
+	</v1.4>
+
+	<v1.5>
+		<li>/</li>
+		<li>1.5</li>
+		<li IfModActive="Ludeon.RimWorld.Biotech">1.5/Mods/Biotech</li>
+		<li IfModActive="projectjedi.lightsabers">1.5/Mods/JecsLightsabers</li>
+		<li IfModActive="guy762.starwarsxenotypes, neronix17.outerrim.galacticdiversity">1.5/Mods/StarWarsXenotypes</li>
+	</v1.5>
+</loadFolders>
