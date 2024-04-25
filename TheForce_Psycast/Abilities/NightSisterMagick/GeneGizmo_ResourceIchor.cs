@@ -55,13 +55,13 @@ namespace TheForce_Psycast.NightSisterMagick
             return result;
         }
 
-        protected override void DrawLabel(Rect LabelRect, ref bool mouseOverAnyHighlightableElement)
+        protected override void DrawHeader(Rect HeaderRect, ref bool mouseOverAnyHighlightableElement)
         {
             Force_GeneMagick ichorGene;
             if ((gene.pawn.IsColonistPlayerControlled || gene.pawn.IsPrisonerOfColony) && (ichorGene = gene as Force_GeneMagick) != null)
             {
-                LabelRect.xMax -= 24f;
-                Rect rect = new Rect(LabelRect.xMax, LabelRect.y, 24f, 24f);
+                HeaderRect.xMax -= 24f;
+                Rect rect = new Rect(HeaderRect.xMax, HeaderRect.y, 24f, 24f);
                 Widgets.DefIcon(rect, ForceDefOf.Force_Bottled_Ichor);
                 GUI.DrawTexture(new Rect(rect.center.x, rect.y, rect.width / 2f, rect.height / 2f), ichorGene.IchorAllowed ? Widgets.CheckboxOnTex : Widgets.CheckboxOffTex);
                 if (Widgets.ButtonInvisible(rect))
@@ -84,7 +84,7 @@ namespace TheForce_Psycast.NightSisterMagick
                     mouseOverAnyHighlightableElement = true;
                 }
             }
-            base.DrawLabel(LabelRect, ref mouseOverAnyHighlightableElement);
+            base.DrawHeader(HeaderRect, ref mouseOverAnyHighlightableElement);
         }
 
         protected override string GetTooltip()

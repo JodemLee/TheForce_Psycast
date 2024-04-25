@@ -33,9 +33,7 @@ namespace TheForce_Psycast
 
                 if (target.Thing is Pawn)
                 {
-                    AbilityPawnFlyer flyer = (AbilityPawnFlyer)PawnFlyer.MakeFlyer(VFE_DefOf_Abilities.VFEA_AbilityFlyer, target.Thing as Pawn, pullPosition, null, null);
-                    flyer.ability = this;
-                    flyer.target = pullPosition.ToVector3();
+                    var flyer = PawnFlyer.MakeFlyer(ForceDefOf.Force_ThrownPawn, target.Thing as Pawn, pullPosition, null, null);
                     GenSpawn.Spawn(flyer, pullPosition, this.pawn.Map);
                 }
                 else

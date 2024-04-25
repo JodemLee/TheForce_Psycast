@@ -60,6 +60,11 @@ namespace TheForce_Psycast
         {
             get
             {
+                if (base.SelPawn == null)
+                {
+                    return false; // Return false if SelPawn is null
+                }
+
                 if (base.SelPawn.RaceProps.Animal && base.SelPawn.Faction == null)
                 {
                     return false;

@@ -1,9 +1,4 @@
 ﻿using RimWorld;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using VanillaPsycastsExpanded;
 using Verse;
 
@@ -17,6 +12,7 @@ namespace TheForce_Psycast
         public static ThingDef Force_BoltofHatred;
         public static ThingDef Force_ScrollSuppressThought;
         public static ThingDef Force_ScrollDarksideWeb;
+        public static ThingDef Force_WaterofLife;
         public static WeatherDef Force_ForceStorm;
         public static ThingDef Mote_NightsisterMagickIchor;
         public static GeneDef Force_NightSisterMagick;
@@ -38,6 +34,7 @@ namespace TheForce_Psycast
         public static FleckDef MagickSkipOuterRingExit;
         public static EffecterDef Magick_Entry;
         public static EffecterDef Magick_Exit;
+        public static ThingDef Mote_LightSaberSpin;
 
         public static StatDef Force_Darkside_Attunement;
         public static StatDef Force_Lightside_Attunement;
@@ -60,5 +57,6 @@ namespace TheForce_Psycast
         public static ThingDef LightsaberThrow;
         public static ThingDef Force_AncientScroll;
         public static ThingDef Force_AncientResurrectorScroll;
+        public static ThingDef Force_ThrownPawn;
     }
 }

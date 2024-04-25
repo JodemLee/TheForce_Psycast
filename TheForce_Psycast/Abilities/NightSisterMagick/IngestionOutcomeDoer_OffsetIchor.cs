@@ -1,9 +1,5 @@
 ﻿using RimWorld;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TheForce_Psycast.NightSisterMagick;
 using UnityEngine;
 using Verse;
@@ -14,7 +10,7 @@ namespace TheForce_Psycast.Abilities.NightSisterMagick
     {
         public float offset;
 
-        protected override void DoIngestionOutcomeSpecial(Pawn pawn, Thing ingested)
+        protected override void DoIngestionOutcomeSpecial(Pawn pawn, Thing ingested, int ingest)
         {
             Force_GeneMagick.OffsetIchor(pawn, offset * (float)ingested.stackCount);
         }

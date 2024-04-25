@@ -12,6 +12,18 @@ namespace TheForce_Psycast.Abilities.NightSisterMagick
 {
     internal class Nightsister_TeleportAbility : Ability
     {
+
+        public override void Init()
+        {
+            base.Init();
+            var nightsisterGene = pawn.genes.GetGene(ForceDefOf.Force_NightSisterMagick);
+            if (nightsisterGene is null)
+            {
+                nightsisterGene = GeneMaker.MakeGene(ForceDefOf.Force_NightSisterMagick, this.pawn);
+                pawn.genes.AddGene(nightsisterGene.def, true);
+            }
+        }
+
         public virtual FleckDef[] EffectSet => new[]
         {
             ForceDefOf.MagickSkipFlashEntry,

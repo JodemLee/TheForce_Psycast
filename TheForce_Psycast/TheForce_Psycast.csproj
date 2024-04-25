@@ -19,7 +19,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>L:\SteamLibrary\steamapps\common\RimWorld\Mods\The Force- Psycast\1.4\Assemblies\</OutputPath>
+    <OutputPath>L:\SteamLibrary\steamapps\common\RimWorld\Mods\The Force- Psycast\1.5\Assemblies\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -113,6 +113,8 @@
   <ItemGroup>
     <Compile Include="Abilities\Darkside\Force_Lightning.cs" />
     <Compile Include="Abilities\Darkside\Force_Rage.cs" />
+    <Compile Include="Abilities\NightSisterMagick\Ability_Resurrect.cs" />
+    <Compile Include="Abilities\NightSisterMagick\Ability_Summon_WaterofLife.cs" />
     <Compile Include="Abilities\NightSisterMagick\Ability_Summon_InvisibilityPotion.cs" />
     <Compile Include="Abilities\NightSisterMagick\Force_GeneMagick.cs" />
     <Compile Include="Abilities\NightSisterMagick\GeneGizmo_ResourceIchor.cs" />
@@ -121,11 +123,13 @@
     <Compile Include="Abilities\NightSisterMagick\Nightsister_TeleportAbility.cs" />
     <Compile Include="Abilities\NightSisterMagick\RestoreIchor_Ability.cs" />
     <Compile Include="Abilities\NightSisterMagick\Summon_Object.cs" />
+    <Compile Include="Abilities\NightSisterMagick\Thing_BardottanSphere.cs" />
     <Compile Include="Abilities\Telekinesis\ForceDrop.cs" />
     <Compile Include="Comps\CompUse_AddEffect_Invisibility.cs" />
     <Compile Include="Comps\DeflectionComp.cs" />
     <Compile Include="Hediffs\ForceAttunement.cs" />
     <Compile Include="LightsaberStanceGizmo.cs" />
+    <Compile Include="Lightsabers\DamageWorker_Lightsaber.cs" />
     <Compile Include="Lightsabers\LightsaberBladeGraphic.cs" />
     <Compile Include="Lightsabers\LightsaberPatch.cs" />
     <Compile Include="Abilities\Neutral\LightsaberCrafting.cs" />

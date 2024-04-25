@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 using Verse;
 
 namespace TheForce_Psycast
 {
-   [StaticConstructorOnStartup]
+    [StaticConstructorOnStartup]
     internal class Gizmo_LightsaberStance : Gizmo
     {
         private readonly Pawn pawn;
@@ -41,13 +36,13 @@ namespace TheForce_Psycast
 
         private string[] severityTips = new string[]
         {
-            "Form I: Shii-Cho" + "\n\n" + "Shii-Cho, the Way of the Sarlacc, is the most basic form focusing on wide, sweeping strikes and disarming techniques, ideal for beginners seeking simplicity and versatility in combat."  + "\n\n" + " [CLICK HERE TO CHANGE] ",
-            "Form II: Makashi" + "\n\n" + "Makashi, the Way of the Ysalamiri:, is characterized by its elegant and precise movements, emphasizing dueling and defensive maneuvers, making it favored by those seeking finesse and sophistication in combat."  + "\n\n" + " [CLICK HERE TO CHANGE] ",
-            "Form III: Soresu" + "\n\n" + "Soresu, the Way of the Mynock, is a defensive form focused on tight, efficient movements and quick reflexes, designed to provide maximum protection against blaster fire and lightsaber attacks."  + "\n\n" + " [CLICK HERE TO CHANGE] " ,
-            "Form IV: Ataru" + "\n\n" + "Ataru, the Way of the Hawk-Bat, is an acrobatic and aggressive style characterized by its fast-paced, energetic movements, incorporating flips and spins to overwhelm opponents with speed and unpredictability."  + "\n\n" + " [CLICK HERE TO CHANGE] ",
-            "Form V: Shien/Djem So" + "\n\n" + "Shien and Djem So, also known as the Perseverance and Way of the Krayt Dragon respectively, are variants of the same form emphasizing powerful counterattacks and aggressive deflection, suited for warriors seeking to turn their opponent's strength against them." + "\n\n" + " [CLICK HERE TO CHANGE] ",
-            "Form VI: Niman" + "\n\n" + "Niman, the Way of the Rancor, is a balanced form incorporating elements of all previous forms, providing practitioners with versatility and adaptability in combat situations, making it a preferred choice for diplomats and peacekeepers."  + "\n\n" + " [CLICK HERE TO CHANGE] ",
-            "Form VII: Juyo/Vaapad" + "\n\n" + "Juyo and its variant Vaapad, the Ferocity and the Way of the Vornskr respectively, are aggressive and unpredictable styles that channel the user's inner darkness, offering immense offensive power at the risk of succumbing to the dark side of the Force."  + "\n\n" + " [CLICK HERE TO CHANGE] "
+            "Form_I".Translate(),
+            "Form_II".Translate(),
+            "Form_III".Translate() ,
+            "Form_IV".Translate(),
+            "Form_V".Translate(),
+            "Form_VI".Translate(),
+            "Form_VII".Translate()
         };
 
         private string GetTipForSeverity(float severity)

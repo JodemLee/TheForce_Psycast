@@ -38,14 +38,13 @@ namespace TheForce_Psycast
 
                 if (target.Thing is Pawn)
                 {
-                    AbilityPawnFlyer flyer = (AbilityPawnFlyer)PawnFlyer.MakeFlyer(VFE_DefOf_Abilities.VFEA_AbilityFlyer, target.Thing as Pawn, pullPosition, null, null);
-                    flyer.ability = this; ValidateTargetTile(pawn);
-                    flyer.target = pullPosition.ToVector3();
+                    var flyer = PawnFlyer.MakeFlyer(ForceDefOf.Force_ThrownPawn, target.Thing as Pawn, pullPosition, null, null);
+                    ValidateTargetTile(pawn);
                     GenSpawn.Spawn(flyer, pullPosition, this.pawn.Map);
                 }
                 else
                 {
-                    target.Thing.Position = pullPosition;
+                   return;
                 }
 
                 base.Cast(targets);

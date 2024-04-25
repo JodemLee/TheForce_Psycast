@@ -9,6 +9,18 @@ namespace TheForce_Psycast.Abilities.NightSisterMagick
     internal class Summon_Object : Ability
     {
         float drainAmount = .01f;
+
+        public override void Init()
+        {
+            base.Init();
+            var nightsisterGene = pawn.genes.GetGene(ForceDefOf.Force_NightSisterMagick);
+            if (nightsisterGene is null)
+            {
+                nightsisterGene = GeneMaker.MakeGene(ForceDefOf.Force_NightSisterMagick, this.pawn);
+                pawn.genes.AddGene(nightsisterGene.def, true);
+            }
+        }
+
         public override void Cast(params GlobalTargetInfo[] targets)
         {
             base.Cast(targets);

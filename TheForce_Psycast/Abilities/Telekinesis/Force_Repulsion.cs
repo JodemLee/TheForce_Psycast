@@ -31,9 +31,7 @@ namespace TheForce_Psycast
                     {
                         IntVec3 validPosition = FindValidPosition(target.Cell, normalizedOffset);
 
-                        AbilityPawnFlyer flyer = (AbilityPawnFlyer)PawnFlyer.MakeFlyer(VFE_DefOf_Abilities.VFEA_AbilityFlyer, target.Thing as Pawn, validPosition, null, null);
-                        flyer.ability = this;
-                        flyer.target = validPosition.ToVector3();
+                        var flyer = PawnFlyer.MakeFlyer(ForceDefOf.Force_ThrownPawn, target.Thing as Pawn, validPosition, null, null);
                         GenSpawn.Spawn(flyer, this.pawn.Position, this.pawn.Map);
                     }
                     else
@@ -61,30 +59,38 @@ namespace TheForce_Psycast
                 return vector;
             }
 
-            // Helper method to find a valid position closer to the target
-            private IntVec3 FindValidPosition(IntVec3 originalPosition, IntVec3 offset)
-            {
-                Map map = this.pawn.Map;
-                IntVec3 closestValidPosition = originalPosition;
-                float closestDistanceSquared = float.MaxValue;
+        // Helper method to find a valid position closer to the target
+        private IntVec3 FindValidPosition(IntVec3 originalPosition, IntVec3 offset)
+        {
+            Map map = this.pawn.Map;
+            IntVec3 closestValidPosition = originalPosition;
+            float closestDistanceSquared = float.MaxValue;
+            bool foundValidPosition = false;
 
-                for (int i = 1; i <= 3; i++)
+            for (int i = 1; i <= 3; i++)
+            {
+                IntVec3 newPosition = originalPosition + (offset * i);
+                if (newPosition.InBounds(map) && newPosition.Standable(map))
                 {
-                    IntVec3 newPosition = originalPosition + (offset * i);
-                    if (newPosition.InBounds(map) && newPosition.Standable(map))
+                    // If the new position is valid, calculate its distance to the original position
+                    float distanceSquared = newPosition.DistanceToSquared(originalPosition);
+                    if (distanceSquared >= 9 || i == 3)
                     {
-                        // If the new position is valid, calculate its distance to the original position
-                        float distanceSquared = newPosition.DistanceToSquared(originalPosition);
-                        if (distanceSquared < closestDistanceSquared)
-                        {
-                            // Update the closest valid position if this position is closer
-                            closestValidPosition = newPosition;
-                            closestDistanceSquared = distanceSquared;
-                        }
+                        // If the distance is at least 3 cells or it's the third iteration, mark as a valid position
+                        foundValidPosition = true;
+                    }
+
+                    if (foundValidPosition)
+                    {
+                        // Update the closest valid position if this position is closer
+                        closestValidPosition = newPosition;
+                        closestDistanceSquared = distanceSquared;
+                        break; // Exit the loop once a valid position is found
                     }
                 }
-                // Return the closest valid position found
-                return closestValidPosition;
             }
+            // Return the closest valid position found
+            return closestValidPosition;
         }
+    }
     }

@@ -1,6 +1,6 @@
-﻿using RimWorld.Planet;
-using RimWorld;
-using UnityEngine;
+﻿using RimWorld;
+using RimWorld.Planet;
+using System.Security.Cryptography;
 using Verse;
 using VFECore.Abilities;
 
@@ -32,16 +32,7 @@ namespace TheForce_Psycast
                 {
                     // If it intersects, find a valid position closer to the target
                     pushBackPosition = FindValidPosition(target.Cell, offset);
-                }
 
-                if (target.Thing is Pawn)
-                {
-                    AbilityPawnFlyer flyer = (AbilityPawnFlyer)PawnFlyer.MakeFlyer(VFE_DefOf_Abilities.VFEA_AbilityFlyer, target.Thing as Pawn, pushBackPosition, null, null);
-                    flyer.ability = this;
-                    flyer.target = pushBackPosition.ToVector3();
-                    GenSpawn.Spawn(flyer, this.pawn.Position, this.pawn.Map);
-
-                    // Calculate the distance pushed
                     float distancePushed = (pushBackPosition - target.Cell).LengthHorizontal;
 
                     // Scale the damage based on the distance pushed
@@ -50,6 +41,13 @@ namespace TheForce_Psycast
                     // Apply damage to the pawn when it hits a wall
                     DamageInfo damageInfo = new DamageInfo(DamageDefOf.Blunt, (int)scaledDamage, 0f, -1f, this.pawn, null, null, DamageInfo.SourceCategory.ThingOrUnknown);
                     target.Thing.TakeDamage(damageInfo);
+                }
+
+                if (target.Thing is Pawn)
+                {
+                    var map = Caster.Map;
+                    var flyer = PawnFlyer.MakeFlyer(ForceDefOf.Force_ThrownPawn, target.Thing as Pawn, pushBackPosition, null, null);
+                    GenSpawn.Spawn(flyer, this.pawn.Position, map);
                 }
                 else
                 {
