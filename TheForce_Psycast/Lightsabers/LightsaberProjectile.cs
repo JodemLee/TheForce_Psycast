@@ -1,5 +1,9 @@
-﻿using UnityEngine;
+﻿using RimWorld;
+using System;
+using TheForce_Psycast.Lightsabers;
+using UnityEngine;
 using Verse;
+using Verse.Sound;
 using VFECore.Abilities;
 
 namespace TheForce_Psycast
@@ -9,11 +13,11 @@ namespace TheForce_Psycast
     {
         private float rotationAngle = 0f;
         public int ticksPerFrame = 8;
-
         public int TicksToImpact => ticksToImpact;
         Projectile projectile;
-        public Graphic originalWeaponGraphic;
-        private Pawn cachedLauncher;
+
+        public float spinRate { get; set; }
+
         private static readonly Material shadowMaterial = MaterialPool.MatFrom("Things/Skyfaller/SkyfallerShadowCircle", ShaderDatabase.Transparent);
         private float ArcHeightFactor
         {
@@ -30,60 +34,113 @@ namespace TheForce_Psycast
             }
         }
 
+
         protected override void DrawAt(Vector3 drawLoc, bool flip = false)
         {
+            // Calculate num and vector
             float num = ArcHeightFactor * GenMath.InverseParabola(DistanceCoveredFractionArc);
             Vector3 vector = drawLoc + new Vector3(0f, 0f, 1f) * num;
 
+            // Draw shadow if necessary
             if (def.projectile.shadowSize > 0f)
             {
                 DrawShadow(drawLoc, num);
             }
 
+            // Get the initial rotation
             Quaternion rotation = ExactRotation;
 
-            Graphic graphicToDraw;
+            // Default assignment for the graphic
+            Graphic graphicToDraw = def.graphic;
+            Comp_LightsaberBlade compLightsaberBlade = null;
 
-            // Check if the pawn has an equipped weapon
-            if (launcher is Pawn pawn && pawn.equipment?.Primary != null)
+            // Check if the launcher is a pawn and has an equipped weapon
+            if (launcher is Pawn pawn)
             {
-                ThingWithComps equippedWeapon = pawn.equipment?.Primary;
-                // Get the graphic of the equipped weapon
-                graphicToDraw = equippedWeapon.Graphic;
-            }
-            else
-            {
-                graphicToDraw = def.graphic;
+                if (pawn.equipment != null && pawn.equipment.Primary != null)
+                {
+                    ThingWithComps equippedWeapon = pawn.equipment.Primary;
+                    graphicToDraw = equippedWeapon.Graphic;
+
+                    // Check if the equipped weapon has a Comp_LightsaberBlade component
+                    compLightsaberBlade = equippedWeapon.TryGetComp<Comp_LightsaberBlade>();
+                }
             }
 
-            float rotationSpeed = 720f; // Adjust the rotation speed as needed
+            // Get the rotation speed
+            float spinRate = Force_ModSettings.spinRate;
+            float rotationSpeed = 100f * spinRate;
             float rotationAngle = Time.time * rotationSpeed;
+            rotation *= Quaternion.Euler(0f, rotationAngle, 0f);
 
+            // Draw the main graphic
             if (def.projectile.useGraphicClass)
             {
-                // Apply continuous rotation
-                rotation *= Quaternion.Euler(0f, rotationAngle, 0f);
                 Graphic.Draw(vector, Rotation, this, rotation.eulerAngles.y);
             }
             else
             {
-                // Apply continuous rotation
-                rotation *= Quaternion.Euler(0f, rotationAngle, 0f);
                 Graphics.DrawMesh(MeshPool.GridPlane(graphicToDraw.drawSize), vector, rotation, graphicToDraw.MatSingle, 0);
+            }
+
+            // Draw additional meshes if the projectile has a lightsaber component
+            if (compLightsaberBlade != null)
+            {
+                DrawLightsaberGraphics(compLightsaberBlade, vector, rotation, rotationSpeed);
             }
 
             Comps_PostDraw();
         }
 
+        private void DrawLightsaberGraphics(Comp_LightsaberBlade compLightsaberBlade, Vector3 drawLoc, Quaternion rotation, float rotationSpeed)
+        {
+            // Ensure the graphic materials are not null before proceeding
+            if (compLightsaberBlade.Graphic == null)
+            {
+                return;
+            }
+
+            Material matSingle = compLightsaberBlade.Graphic.MatSingle;
+            Material thirdMatSingle = compLightsaberBlade.LightsaberCore1Graphic?.MatSingle;
+            Material fourthMatSingle = compLightsaberBlade.LightsaberBlade2Graphic?.MatSingle;
+            Material fifthMatSingle = compLightsaberBlade.LightsaberCore2Graphic?.MatSingle;
+
+            // Apply rotation to each graphic
+            Quaternion lightsaberRotation = Quaternion.Euler(0f, rotation.eulerAngles.y, 0f); // Apply rotation based on the main rotation
+
+            // Draw the main graphic
+            if (matSingle != null)
+            {
+                Graphics.DrawMesh(MeshPool.plane10, drawLoc, lightsaberRotation, matSingle, -2);
+            }
+
+            // Draw the third graphic if not null
+            if (thirdMatSingle != null)
+            {
+                Graphics.DrawMesh(MeshPool.plane10, drawLoc, lightsaberRotation, thirdMatSingle, -1);
+            }
+
+            // Draw the fourth graphic if not null
+            if (fourthMatSingle != null)
+            {
+                Graphics.DrawMesh(MeshPool.plane10, drawLoc, lightsaberRotation, fourthMatSingle, -2);
+            }
+
+            // Draw the fifth graphic if not null
+            if (fifthMatSingle != null)
+            {
+                Graphics.DrawMesh(MeshPool.plane10, drawLoc, lightsaberRotation, fifthMatSingle, -1);
+            }
+        }
+
         private void DrawShadow(Vector3 drawLoc, float height)
         {
-            if (!(shadowMaterial == null))
+            if (shadowMaterial != null)
             {
                 float num = def.projectile.shadowSize * Mathf.Lerp(1f, 0.6f, height);
                 Vector3 s = new Vector3(num, 1f, num);
                 Vector3 vector = new Vector3(0f, -0.01f, 0f);
-                Matrix4x4 matrix = default(Matrix4x4);
-                matrix.SetTRS(drawLoc + vector, Quaternion.identity, s);
+                Matrix4x4 matrix = Matrix4x4.TRS(drawLoc + vector, Quaternion.identity, s);
                 Graphics.DrawMesh(MeshPool.plane10, matrix, shadowMaterial, 0);
             }
         }
@@ -99,17 +156,17 @@ namespace TheForce_Psycast
                 MoteLightSaberReturn mote = (MoteLightSaberReturn)ThingMaker.MakeThing(ThingDef.Named("Mote_LightSaberReturn"));
                 mote.exactPosition = moteSpawnPos.ToVector3Shifted();
                 mote.rotationRate = 0f;
-                mote.SetLauncher(cachedLauncher, originalWeaponGraphic);
+                mote.SetLauncher(cachedLauncher, cachedLauncher.equipment.Primary.Graphic);
                 GenSpawn.Spawn(mote, moteSpawnPos, map);
+                SoundDef soundDef = SoundDef.Named("Force_ForceThrow_Return");
+                soundDef.PlayOneShot(new TargetInfo(moteSpawnPos, map));
             }
-
             else
             {
                 Log.Warning("Attempted to launch LightSaberProjectile without a primary weapon equipped.");
             }
         }
     }
-
 
     public class MoteLightSaberReturn : MoteThrown
     {

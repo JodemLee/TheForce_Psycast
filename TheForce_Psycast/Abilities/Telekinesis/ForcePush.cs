@@ -10,9 +10,35 @@ namespace TheForce_Psycast
     {
         // Add a variable to store the base damage amount
         public float baseDamage = 1f;
+        Force_ModSettings modSettings = new Force_ModSettings();
+        public bool usePsycastStat = false;
+        public int offsetMultiplier { get; set; }
+
+        public Ability_Forcepush()
+        {
+            modSettings = new Force_ModSettings(); // Instantiate Force_ModSettings
+        }
+
+        public int GetOffsetMultiplier()
+        {
+
+            if (Force_ModSettings.usePsycastStat == true) 
+            {
+                offsetMultiplier = (int)(offsetMultiplier * pawn.GetStatValue(StatDefOf.PsychicSensitivity));
+                return offsetMultiplier;
+            }
+            else
+            {
+                offsetMultiplier = (int)Force_ModSettings.offSetMultiplier;
+                
+            }
+            return offsetMultiplier;
+        }
 
         public override void Cast(params GlobalTargetInfo[] targets)
         {
+            int offsetMultiplier = GetOffsetMultiplier();
+
             foreach (GlobalTargetInfo target in targets)
             {
                 // Calculate the offset between caster and target
@@ -23,6 +49,8 @@ namespace TheForce_Psycast
                 {
                     offset = offset * 3;
                 }
+
+                offset *= offsetMultiplier;
 
                 // Calculate the new position by pushing back from the original position
                 IntVec3 pushBackPosition = target.Cell + offset;
@@ -47,7 +75,7 @@ namespace TheForce_Psycast
                 {
                     var map = Caster.Map;
                     var flyer = PawnFlyer.MakeFlyer(ForceDefOf.Force_ThrownPawn, target.Thing as Pawn, pushBackPosition, null, null);
-                    GenSpawn.Spawn(flyer, this.pawn.Position, map);
+                    GenSpawn.Spawn(flyer, pushBackPosition, map);
                 }
                 else
                 {

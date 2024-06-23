@@ -33,7 +33,6 @@ namespace TheForce_Psycast
 
                 // Ensure the pull position does not go beyond the caster
                 pullPosition.x = Mathf.Clamp(pullPosition.x, this.pawn.Position.x , this.pawn.Position.x );
-                pullPosition.y = Mathf.Clamp(pullPosition.y, this.pawn.Position.y , this.pawn.Position.y );
                 pullPosition.z = Mathf.Clamp(pullPosition.z, this.pawn.Position.z , this.pawn.Position.z );
 
                 if (target.Thing is Pawn)

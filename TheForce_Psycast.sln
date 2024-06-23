@@ -11,8 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SithRage", "SithRage\SithRa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrystalFormations", "CrystalFormations\CrystalFormations.csproj", "{94D26816-CE67-4897-9BE3-7A1D1776BAD9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SWCP", "SWCP\SWCP.csproj", "{6EF16048-90CC-44BA-A0C4-C1761189EFA3}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,10 +29,6 @@ Global
 		{94D26816-CE67-4897-9BE3-7A1D1776BAD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{94D26816-CE67-4897-9BE3-7A1D1776BAD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{94D26816-CE67-4897-9BE3-7A1D1776BAD9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6EF16048-90CC-44BA-A0C4-C1761189EFA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6EF16048-90CC-44BA-A0C4-C1761189EFA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6EF16048-90CC-44BA-A0C4-C1761189EFA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6EF16048-90CC-44BA-A0C4-C1761189EFA3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

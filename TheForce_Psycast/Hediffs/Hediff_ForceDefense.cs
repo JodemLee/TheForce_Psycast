@@ -9,8 +9,6 @@ namespace TheForce_Psycast
     {
         private Sustainer sustainer;
         public override Color OverlayColor => new ColorInt(255, 255, 255).ToColor;
-        public override float OverlaySize => 1;
-
         protected override void DeflectProjectile(Projectile projectile)
         {
             base.DeflectProjectile(projectile);

@@ -26,24 +26,23 @@ namespace TheForce_Psycast
                 if (targetPawn != null)
                 {
                     // Check if the target pawn has a neck
-                    var neckPart = targetPawn.health.hediffSet.GetNotMissingParts().FirstOrDefault(x => x.def == ForceDefOf.Neck);
+                    var neckParts = targetPawn.health.hediffSet.GetNotMissingParts(BodyPartHeight.Undefined, BodyPartDepth.Undefined)
+                .Where(part => part.def.tags.Contains(BodyPartTagDefOf.BreathingPathway)).ToList();
 
-                    if (neckPart != null)
+                    if (neckParts != null && neckParts.Count > 0)
                     {
                         // Deal damage to the target's neck
                         float damageAmount = GetPowerForPawn();
-                        damageAmount =  pawn.GetStatValue(StatDefOf.PsychicSensitivity)*damageAmount;
+                        damageAmount = pawn.GetStatValue(StatDefOf.PsychicSensitivity) * damageAmount;
 
-                        // Create a damage info object
-                        DamageInfo damageInfo = new DamageInfo(DamageDefOf.Blunt, damageAmount, 0, -1, null, neckPart);
-
-                        // Apply damage to the target pawn
-                        targetPawn.TakeDamage(damageInfo);
-
-                        // Ensure the neck's hit points don't go below 1
-                        if (neckPart.def.hitPoints <= 0)
+                        // Iterate over each neck part and apply damage
+                        foreach (var neckPart in neckParts)
                         {
-                            neckPart.def.hitPoints = 1;
+                            // Create a damage info object
+                            DamageInfo damageInfo = new DamageInfo(DamageDefOf.Blunt, damageAmount, 0, -1, null, neckPart);
+
+                            // Apply damage to the target pawn
+                            targetPawn.TakeDamage(damageInfo);
                         }
                     }
                 }

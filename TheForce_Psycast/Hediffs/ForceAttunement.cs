@@ -18,7 +18,7 @@ namespace TheForce_Psycast
     [StaticConstructorOnStartup]
     public class ITab_Pawn_Alignment : ITab
     {
-        private Vector2 thoughtScrollPosition;
+        private Vector2 thoughtScrollPosition;  
         public static readonly Vector3 PawnTextureCameraOffset = default(Vector3);
         private bool showHat = false;
         private Rot4 rot = new Rot4(2);
@@ -46,15 +46,6 @@ namespace TheForce_Psycast
             }
         }
 
-        static ITab_Pawn_Alignment()
-        {
-            foreach (var def in DefDatabase<ThingDef>.AllDefs)
-                if (def.race is { Humanlike: true })
-                {
-                    def.inspectorTabs?.Add(typeof(ITab_Pawn_Alignment));
-                    def.inspectorTabsResolved?.Add(InspectTabManager.GetSharedInstance(typeof(ITab_Pawn_Alignment)));
-                }
-        }
 
         public override bool IsVisible
         {

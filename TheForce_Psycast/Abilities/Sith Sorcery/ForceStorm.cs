@@ -49,20 +49,6 @@ namespace TheForce_Psycast.Abilities
     public class Ability_ForceStorm : Ability, IAbilityToggle, IChannelledPsycast
     {
         private ForceStormMaker maker;
-        public float DarksideConnection => pawn.GetStatValue(ForceDefOf.Force_Darkside_Attunement);
-
-        public override bool IsEnabledForPawn(out string reason)
-        {
-            if (!base.IsEnabledForPawn(out reason)) return false;
-            if (DarksideConnection >= 2.5f) return true;
-            reason = "Force.NotEnoughAttunement".Translate();
-            return false;
-        }
-
-
-        public override string GetDescriptionForPawn() => base.GetDescriptionForPawn() + "\n" + "Force.MustHaveDarkAttuneAmount".Translate(250).Colorize(Color.red);
-
-
         public bool Toggle
         {
             get => this.maker is { Spawned: true };
@@ -81,7 +67,6 @@ namespace TheForce_Psycast.Abilities
         public override void Cast(params GlobalTargetInfo[] targets)
         {
             base.Cast(targets);
-            this.pawn.health.hediffSet.GetFirstHediffOfDef(ForceDefOf.Force_Darkside).Severity -= 1f;
             this.maker = (ForceStormMaker)ThingMaker.MakeThing(ForceDefOf.Force_ForceStormMaker);
             this.maker.Pawn = this.pawn;
             GenSpawn.Spawn(this.maker, this.pawn.Position, this.pawn.Map);

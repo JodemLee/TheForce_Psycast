@@ -111,11 +111,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abilities\Darkside\Force_Destruction.cs" />
+    <Compile Include="Abilities\Darkside\Force_Fear.cs" />
+    <Compile Include="Abilities\Darkside\Force_Insanity.cs" />
     <Compile Include="Abilities\Darkside\Force_Lightning.cs" />
     <Compile Include="Abilities\Darkside\Force_Rage.cs" />
+    <Compile Include="Abilities\Lightside\Force_Meld.cs" />
+    <Compile Include="Abilities\Lightside\Hediff_ProtectionBubble.cs" />
     <Compile Include="Abilities\NightSisterMagick\Ability_Resurrect.cs" />
     <Compile Include="Abilities\NightSisterMagick\Ability_Summon_WaterofLife.cs" />
     <Compile Include="Abilities\NightSisterMagick\Ability_Summon_InvisibilityPotion.cs" />
+    <Compile Include="Abilities\NightSisterMagick\Comp_UseBardottanSphere.cs" />
     <Compile Include="Abilities\NightSisterMagick\Force_GeneMagick.cs" />
     <Compile Include="Abilities\NightSisterMagick\GeneGizmo_ResourceIchor.cs" />
     <Compile Include="Abilities\NightSisterMagick\IchorResourceDrainUtility.cs" />
@@ -124,15 +130,35 @@
     <Compile Include="Abilities\NightSisterMagick\RestoreIchor_Ability.cs" />
     <Compile Include="Abilities\NightSisterMagick\Summon_Object.cs" />
     <Compile Include="Abilities\NightSisterMagick\Thing_BardottanSphere.cs" />
+    <Compile Include="Abilities\Sith Sorcery\Ability_CraftSithArtifact.cs" />
+    <Compile Include="Abilities\Sith Sorcery\CompObelisk_Sith.cs" />
     <Compile Include="Abilities\Telekinesis\ForceDrop.cs" />
     <Compile Include="Comps\CompUse_AddEffect_Invisibility.cs" />
     <Compile Include="Comps\DeflectionComp.cs" />
+    <Compile Include="Comps\Lightsaber_Floor.cs" />
+    <Compile Include="Dialog_LightsaberColorPicker.cs" />
+    <Compile Include="Force_ModSettings.cs" />
+    <Compile Include="Harmony Patches\Darkside_HarmonyPatch.cs" />
     <Compile Include="Hediffs\ForceAttunement.cs" />
+    <Compile Include="Hediffs\HediffWithComps_Lightside.cs" />
+    <Compile Include="Hediffs\Hediff_ForceForms.cs" />
+    <Compile Include="Hediffs\SithArtifacts\Hediff_BranchofDecay.cs" />
+    <Compile Include="Hediffs\SithArtifacts\Hediff_DarkstarMedallion.cs" />
     <Compile Include="LightsaberStanceGizmo.cs" />
+    <Compile Include="Lightsabers\Comp_LightsaberBlade.cs" />
     <Compile Include="Lightsabers\DamageWorker_Lightsaber.cs" />
-    <Compile Include="Lightsabers\LightsaberBladeGraphic.cs" />
+    <Compile Include="Lightsabers\Hediff_LightsaberDeflection.cs" />
+    <Compile Include="Lightsabers\Lightsaber Combat\Lightsaber_AbilityBase.cs" />
+    <Compile Include="Lightsabers\Lightsaber Combat\Lightsaber_Ability_ChoMai.cs" />
+    <Compile Include="Lightsabers\Lightsaber Combat\Lightsaber_Ability_ChoMok.cs" />
+    <Compile Include="Lightsabers\Lightsaber Combat\Lightsaber_Ability_ChoSun.cs" />
+    <Compile Include="Lightsabers\Lightsaber Combat\Lightsaber_Ability_MouKei.cs" />
+    <Compile Include="Lightsabers\Lightsaber Combat\Lightsaber_Ability_SaiCha.cs" />
+    <Compile Include="Lightsabers\Lightsaber Combat\Lightsaber_Ability_SaiTok.cs" />
+    <Compile Include="Lightsabers\Lightsaber Combat\Lightsaber_Ability_Sai.cs" />
+    <Compile Include="Lightsabers\Lightsaber Combat\Lightsaber_Ability_SunDjerm.cs" />
+    <Compile Include="Lightsabers\LightsaberBlaster_Class.cs" />
     <Compile Include="Lightsabers\LightsaberPatch.cs" />
-    <Compile Include="Abilities\Neutral\LightsaberCrafting.cs" />
     <Compile Include="Abilities\Sith Sorcery\ForceStorm.cs" />
     <Compile Include="Abilities\Jedi Training\Master_Apprentice.cs" />
     <Compile Include="Abilities\Sith Sorcery\SithLightningStrike.cs" />
@@ -153,7 +179,7 @@
     <Compile Include="Hediffs\Hediff_DefensiveStance.cs" />
     <Compile Include="Abilities\Jedi Training\EnhanceForce.cs" />
     <Compile Include="Hediffs\Hediff_ForceDefense.cs" />
-    <Compile Include="HarmonyPatch.cs" />
+    <Compile Include="Harmony Patches\HarmonyPatch.cs" />
     <Compile Include="Hediffs\Hediff_Force_SithHeal.cs" />
     <Compile Include="Comps\LearnForceAbility.cs" />
     <Compile Include="Lightsabers\LightsaberProjectile.cs" />
@@ -163,14 +189,14 @@
     <Compile Include="Abilities\Sustained Ability.cs" />
     <Compile Include="TheForce_DefOf.cs" />
     <Compile Include="Abilities\Telekinesis\ThrowLightsaber.cs" />
+    <Compile Include="Yuuzhan_Vong\ThingClass_WeaponShift.cs" />
+    <Compile Include="Yuuzhan_Vong\WeaponShift_ThingComp.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.editorconfig">
       <Link>.editorconfig</Link>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Abilities\Lightside\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

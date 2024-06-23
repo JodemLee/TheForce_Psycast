@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using VanillaPsycastsExpanded;
+﻿using VanillaPsycastsExpanded;
 using Verse;
 using VFECore.Abilities;
 using AbilityDef = VFECore.Abilities.AbilityDef;
@@ -10,7 +9,6 @@ namespace TheForce_Psycast
     {
         private AbilityDef ability;
         private bool alreadyHad;
-        private static Dictionary<Pawn, float> previousSeverities = new Dictionary<Pawn, float>();
 
         // Constants for clarity
         private const float MinSeverity = 1f;
@@ -24,7 +22,6 @@ namespace TheForce_Psycast
         {
             base.ExposeData();
             Scribe_Values.Look(ref alreadyHad, "alreadyHad", false);
-            Scribe_Collections.Look(ref previousSeverities, "previousSeverities", LookMode.Reference, LookMode.Value);
         }
 
         // Notify_Equipped method
@@ -52,7 +49,7 @@ namespace TheForce_Psycast
                 comp.GiveAbility(ability);
 
             var hediff = HediffMaker.MakeHediff(hediffDef, pawn);
-            hediff.Severity = previousSeverities.ContainsKey(pawn) ? previousSeverities[pawn] : Rand.Range(MinSeverity, MaxSeverity);
+            hediff.Severity = Rand.Range(MinSeverity, MaxSeverity);
             pawn.health.AddHediff(hediff);
         }
 
@@ -71,7 +68,6 @@ namespace TheForce_Psycast
             var hediff = pawn.health.hediffSet.GetFirstHediffOfDef(ForceDefOf.Lightsaber_Stance);
             if (hediff != null)
             {
-                previousSeverities[pawn] = hediff.Severity;
                 pawn.health.RemoveHediff(hediff);
             }
 

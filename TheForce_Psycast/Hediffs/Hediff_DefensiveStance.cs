@@ -18,14 +18,12 @@ using VFECore.Shields;
 namespace TheForce_Psycast
 {
     [StaticConstructorOnStartup]
-    public class Hediff_DefensiveStance : Hediff_Overlay
+    public class Hediff_DefensiveStance : HediffWithComps
     {
 
         private int lastInterceptTicks = -999999;
         private float lastInterceptAngle;
         private bool drawInterceptCone;
-        public override string OverlayPath => "Other/ForceField";
-
         public virtual Color OverlayColor => Color.white;
         public override void Tick()
         {
@@ -60,8 +58,8 @@ namespace TheForce_Psycast
         public virtual bool CanDestroyProjectile(Projectile projectile)
         {
             var cell = ((Vector3)TheForce_Psycast.NonPublicFields.Projectile_origin.GetValue(projectile)).Yto0().ToIntVec3();
-            return Vector3.Distance(projectile.ExactPosition.Yto0(), pawn.DrawPos.Yto0()) <= OverlaySize &&
-                !GenRadial.RadialCellsAround(pawn.Position, OverlaySize, true).ToList().Contains(cell);
+            return Vector3.Distance(projectile.ExactPosition.Yto0(), pawn.DrawPos.Yto0()) <= 1 &&
+                !GenRadial.RadialCellsAround(pawn.Position, 1, true).ToList().Contains(cell);
         }
 
         public override void ExposeData()
@@ -73,113 +71,7 @@ namespace TheForce_Psycast
         }
     }
 
-    [StaticConstructorOnStartup]
-    public class Hediff_LightsaberDeflection : Hediff_Overlay
-    {
-
-        private int lastInterceptTicks = -999999;
-        private float lastInterceptAngle;
-        private bool drawInterceptCone;
-
-        public override string OverlayPath => "Other/ForceField";
-        public override void Tick()
-        {
-            base.Tick();
-            if (pawn.Map != null)
-            {
-                var projectiles = GenRadial.RadialDistinctThingsAround(pawn.Position, pawn.Map, 1, true)
-                    .OfType<Projectile>();
-
-                if (!projectiles.Any())
-                    return;
-
-                foreach (var projectile in projectiles)
-                {
-                    if (ShouldDeflectProjectile(projectile))
-                    {
-                        DeflectProjectile(projectile);
-                    }
-                }
-            }
-        }
-        protected virtual void DeflectProjectile(Projectile projectile)
-        {
-            Effecter effecter = new Effecter(EffecterDefOf.Interceptor_BlockedProjectile);
-            effecter.Trigger(new TargetInfo(projectile.Position, pawn.Map), TargetInfo.Invalid);
-            effecter.Cleanup();
-            lastInterceptAngle = projectile.ExactPosition.AngleToFlat(pawn.TrueCenter());
-            lastInterceptTicks = Find.TickManager.TicksGame;
-            drawInterceptCone = true;
-            projectile.Launch(pawn, ((Vector3)TheForce_Psycast.NonPublicFields.Projectile_origin.GetValue(projectile)).ToIntVec3(), ((Vector3)TheForce_Psycast.NonPublicFields.Projectile_origin.GetValue(projectile)).ToIntVec3(), ProjectileHitFlags.All, true, projectile);
-            AddEntropy(projectile);
-        }
-
-        private void AddEntropy(Projectile projectile)
-        {
-            // Calculate entropy gain based on projectile speed
-            float entropyGain = CalculateEntropyGain(projectile);
-
-            // Add entropy to the pawn's psychicEntropy hediff
-            this.pawn.psychicEntropy.TryAddEntropy(entropyGain, overLimit: true);
-        }
-
-        private float CalculateEntropyGain(Projectile projectile)
-        {
-            // Example calculation: entropy gain is proportional to the projectile's speed
-            float speedFactor = projectile.def.projectile.speed / 10f; // Adjust this factor as needed
-            return speedFactor;
-        }
-
-
-        public virtual bool ShouldDeflectProjectile(Projectile projectile)
-        {
-            if (projectile.Launcher == null || projectile.Launcher.Faction == null || projectile.Launcher.Faction == pawn.Faction)
-            {
-                return false;
-            }
-
-            if (!pawn.Faction.HostileTo(projectile.Launcher.Faction)) // Check if the launcher's faction is hostile
-            {
-                return false;
-            }
-
-            if (this.pawn.psychicEntropy.EntropyValue >= this.pawn.psychicEntropy.MaxEntropy)
-            {
-                return false;
-            }
-
-            float deflectionSkillChance = pawn.GetStatValue(ForceDefOf.Force_Lightsaber_Deflection);
-            float randomValue = Rand.Range(0f, 1.0f);
-
-            if (deflectionSkillChance >= randomValue)
-            {
-                return true; // Deflect the projectile
-            }
-            else
-            {
-                return false; // Do not deflect the projectile
-            }
-        }
-
-        public override IEnumerable<Gizmo> GetGizmos()
-        {
-            foreach (var gizmo in base.GetGizmos())
-            {
-                yield return gizmo;
-            }
-
-            // Create and yield the custom gizmo
-            yield return new Gizmo_LightsaberStance(pawn, this);
-        }
-
-        public override void ExposeData()
-        {
-            base.ExposeData();
-            Scribe_Values.Look(ref lastInterceptTicks, "lastInterceptTicks");
-            Scribe_Values.Look(ref lastInterceptAngle, "lastInterceptTicks");
-            Scribe_Values.Look(ref drawInterceptCone, "drawInterceptCone");
-        }
-    }
+   
 
     public class MoteLightSaberSpin : Mote
     {

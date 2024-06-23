@@ -18,12 +18,18 @@ namespace TheForce_Psycast
         public static GeneDef Force_NightSisterMagick;
         public static ThingDef Force_InvisibilityPotion;
         public static ThingDef Force_Bottled_Ichor;
+        public static FleckDef Force_Burst_Bubble;
+        public static HediffDef ElectricalBurn;
+        public static HediffDef Force_ForceMeld;
+        public static HediffDef Force_Fear;
+        public static SoundDef Force_Interact_Lightsaber;
 
         public static HediffDef Lightsaber_Stance;
         public static HediffDef ForceDefense;
         public static HediffDef Force_EnhanceForce;
         public static HediffDef Force_SithHeal;
         public static HediffDef Force_Darkside;
+        public static HediffDef Force_Lightside;
         public static HediffDef Force_Master;
         public static HediffDef ForceBond_MasterApprentice;
         public static HediffDef Force_Rage;
@@ -46,11 +52,18 @@ namespace TheForce_Psycast
         public static VFECore.Abilities.AbilityDef Force_CreateAncientScroll;
         public static VFECore.Abilities.AbilityDef Force_ThrowWeapon;
         public static BodyPartDef Neck;
+        public static VFECore.Abilities.AbilityDef Force_BlasterShot_Stun;
         // public static GeneDef Force_NightSisterMagick;
         public static GameConditionDef Force_ForceStormCondition;
 
 
         public static RecipeDef Make_StoneBlocksAny;
+        public static RecipeDef Make_StoneBlocksSandstone;
+        public static RecipeDef Make_StoneBlocksGranite;
+        public static RecipeDef Make_StoneBlocksLimestone;
+        public static RecipeDef Make_StoneBlocksSlate;
+        public static RecipeDef Make_StoneBlocksMarble;
+
 
         //Things/Projectiles//
 

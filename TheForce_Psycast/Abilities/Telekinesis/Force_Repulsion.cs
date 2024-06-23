@@ -1,63 +1,99 @@
-﻿using RimWorld.Planet;
-using RimWorld;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using RimWorld;
+using RimWorld.Planet;
 using UnityEngine;
 using Verse;
 using VFECore.Abilities;
 
 namespace TheForce_Psycast
 {
-        public class Ability_ForceRepulsion : VFECore.Abilities.Ability
+    public class Ability_ForceRepulsion : VFECore.Abilities.Ability
+    {
+        Force_ModSettings modSettings = new Force_ModSettings();
+        public bool usePsycastStat = false;
+        public int offsetMultiplier { get; set; }
+
+        public Ability_ForceRepulsion()
         {
-            public override void Cast(params GlobalTargetInfo[] targets)
+            modSettings = new Force_ModSettings(); // Instantiate Force_ModSettings
+        }
+
+        public int GetOffsetMultiplier()
+        {
+
+            if (Force_ModSettings.usePsycastStat == true)
             {
-                // Calculate the explosive force
-                int explosiveForce = Mathf.FloorToInt((pawn.GetStatValue(StatDefOf.PsychicSensitivity) * 7));
+                offsetMultiplier = (int)(offsetMultiplier * pawn.GetStatValue(StatDefOf.PsychicSensitivity));
+                return offsetMultiplier;
+            }
+            else
+            {
+                offsetMultiplier = (int)Force_ModSettings.offSetMultiplier;
 
-                foreach (GlobalTargetInfo target in targets)
+            }
+            return offsetMultiplier;
+        }
+
+        public override void Cast(params GlobalTargetInfo[] targets)
+        {
+            int offsetMultiplier = GetOffsetMultiplier();
+
+            foreach (GlobalTargetInfo target in targets)
+            {
+                // Calculate the offset between caster and target
+                IntVec3 offset = target.Cell - this.pawn.Position;
+
+                // Normalize the offset to ensure correct direction
+                IntVec3 normalizedOffset = NormalizeIntVec3(offset);
+
+                // Apply the offset multiplier
+                normalizedOffset *= offsetMultiplier;
+
+                // Calculate the new position by pushing back from the original position
+                IntVec3 pushBackPosition = target.Cell + normalizedOffset;
+
+                // Check if the new position intersects with a solid object (e.g., a wall)
+                if (!IsPositionValid(pushBackPosition))
                 {
-                    // Calculate the offset between caster and target
-                    IntVec3 offset = target.Cell - this.pawn.Position;
-
-                    // Normalize the offset
-                    IntVec3 normalizedOffset = NormalizeIntVec3(offset);
-
-                    // Apply explosive force to the target
-                    if (target.Thing is Pawn)
-                    {
-                        IntVec3 validPosition = FindValidPosition(target.Cell, normalizedOffset);
-
-                        var flyer = PawnFlyer.MakeFlyer(ForceDefOf.Force_ThrownPawn, target.Thing as Pawn, validPosition, null, null);
-                        GenSpawn.Spawn(flyer, this.pawn.Position, this.pawn.Map);
-                    }
-                    else
-                    {
-                        IntVec3 validPosition = FindValidPosition(target.Cell, normalizedOffset);
-                        target.Thing.Position = validPosition;
-                    }
+                    // If it intersects, find a valid position closer to the target
+                    pushBackPosition = FindValidPosition(target.Cell, normalizedOffset);
                 }
 
-                base.Cast(targets);
-            }
-
-            public override float GetPowerForPawn() => def.power + Mathf.FloorToInt((pawn.GetStatValue(StatDefOf.PsychicSensitivity) * 2));
-
-            private IntVec3 NormalizeIntVec3(IntVec3 vector)
-            {
-                float magnitude = Mathf.Sqrt(vector.x * vector.x + vector.y * vector.y + vector.z * vector.z);
-
-                if (magnitude > 0)
+                // Apply explosive force to the target
+                if (target.Thing is Pawn pawn)
                 {
-                    float scaleFactor = 1f / magnitude;
-                    return new IntVec3(Mathf.RoundToInt(vector.x * scaleFactor), Mathf.RoundToInt(vector.y * scaleFactor), Mathf.RoundToInt(vector.z * scaleFactor));
+                    var map = Caster.Map;
+                    var flyer = PawnFlyer.MakeFlyer(ForceDefOf.Force_ThrownPawn, pawn, pushBackPosition, null, null);
+                    GenSpawn.Spawn(flyer, pushBackPosition, map);
                 }
-
-                return vector;
+                else
+                {
+                    target.Thing.Position = pushBackPosition;
+                }
             }
+
+            base.Cast(targets);
+        }
+
+        public override float GetPowerForPawn() => def.power + Mathf.FloorToInt((pawn.GetStatValue(StatDefOf.PsychicSensitivity) * 2));
+
+        private IntVec3 NormalizeIntVec3(IntVec3 vector)
+        {
+            float magnitude = Mathf.Sqrt(vector.x * vector.x + vector.z * vector.z);
+
+            if (magnitude > 0)
+            {
+                float scaleFactor = 1f / magnitude;
+                return new IntVec3(Mathf.RoundToInt(vector.x * scaleFactor), 0, Mathf.RoundToInt(vector.z * scaleFactor));
+            }
+
+            return vector;
+        }
+
+        // Helper method to check if the position is valid
+        private bool IsPositionValid(IntVec3 position)
+        {
+            return position.InBounds(this.pawn.Map) && position.Walkable(this.pawn.Map) && position.Standable(this.pawn.Map);
+        }
 
         // Helper method to find a valid position closer to the target
         private IntVec3 FindValidPosition(IntVec3 originalPosition, IntVec3 offset)
@@ -65,27 +101,19 @@ namespace TheForce_Psycast
             Map map = this.pawn.Map;
             IntVec3 closestValidPosition = originalPosition;
             float closestDistanceSquared = float.MaxValue;
-            bool foundValidPosition = false;
 
             for (int i = 1; i <= 3; i++)
             {
                 IntVec3 newPosition = originalPosition + (offset * i);
-                if (newPosition.InBounds(map) && newPosition.Standable(map))
+                if (IsPositionValid(newPosition))
                 {
                     // If the new position is valid, calculate its distance to the original position
                     float distanceSquared = newPosition.DistanceToSquared(originalPosition);
-                    if (distanceSquared >= 9 || i == 3)
-                    {
-                        // If the distance is at least 3 cells or it's the third iteration, mark as a valid position
-                        foundValidPosition = true;
-                    }
-
-                    if (foundValidPosition)
+                    if (distanceSquared < closestDistanceSquared)
                     {
                         // Update the closest valid position if this position is closer
                         closestValidPosition = newPosition;
                         closestDistanceSquared = distanceSquared;
-                        break; // Exit the loop once a valid position is found
                     }
                 }
             }
@@ -93,4 +121,4 @@ namespace TheForce_Psycast
             return closestValidPosition;
         }
     }
-    }
+}

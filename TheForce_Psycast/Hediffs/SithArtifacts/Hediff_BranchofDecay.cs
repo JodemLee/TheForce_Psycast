@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TheForce_Psycast.Lightsabers
+namespace TheForce_Psycast.Hediffs.SithArtifacts
 {
-    internal class LightsaberBladeGraphic
+    internal class Hediff_BranchofDecay
     {
     }
 }
