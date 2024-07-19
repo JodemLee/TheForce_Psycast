@@ -1,5 +1,6 @@
 ﻿using RimWorld;
 using System;
+using System.Collections.Generic;
 using TheForce_Psycast.Lightsabers;
 using UnityEngine;
 using Verse;
@@ -33,7 +34,6 @@ namespace TheForce_Psycast
                 return num;
             }
         }
-
 
         protected override void DrawAt(Vector3 drawLoc, bool flip = false)
         {
@@ -92,44 +92,32 @@ namespace TheForce_Psycast
             Comps_PostDraw();
         }
 
-        private void DrawLightsaberGraphics(Comp_LightsaberBlade compLightsaberBlade, Vector3 drawLoc, Quaternion rotation, float rotationSpeed)
+        private void DrawLightsaberGraphics(Comp_LightsaberBlade compLightsaberBlade, Vector3 drawLoc, Quaternion rotation, float rotationspeed)
         {
-            // Ensure the graphic materials are not null before proceeding
-            if (compLightsaberBlade.Graphic == null)
-            {
+            // Early return if the main graphic material is null
+            if (compLightsaberBlade.Graphic?.MatSingle == null)
                 return;
-            }
 
-            Material matSingle = compLightsaberBlade.Graphic.MatSingle;
-            Material thirdMatSingle = compLightsaberBlade.LightsaberCore1Graphic?.MatSingle;
-            Material fourthMatSingle = compLightsaberBlade.LightsaberBlade2Graphic?.MatSingle;
-            Material fifthMatSingle = compLightsaberBlade.LightsaberCore2Graphic?.MatSingle;
+            List<Material> materialsToDraw = new List<Material>();
 
-            // Apply rotation to each graphic
-            Quaternion lightsaberRotation = Quaternion.Euler(0f, rotation.eulerAngles.y, 0f); // Apply rotation based on the main rotation
 
-            // Draw the main graphic
-            if (matSingle != null)
+            // Add main graphic material
+            materialsToDraw.Add(compLightsaberBlade.Graphic.MatSingle);
+
+            // Add additional graphics materials if not null
+            if (compLightsaberBlade.LightsaberCore1Graphic?.MatSingle != null)
+                materialsToDraw.Add(compLightsaberBlade.LightsaberCore1Graphic.MatSingle);
+
+            if (compLightsaberBlade.LightsaberBlade2Graphic?.MatSingle != null)
+                materialsToDraw.Add(compLightsaberBlade.LightsaberBlade2Graphic.MatSingle);
+
+            if (compLightsaberBlade.LightsaberCore2Graphic?.MatSingle != null)
+                materialsToDraw.Add(compLightsaberBlade.LightsaberCore2Graphic.MatSingle);
+
+            // Draw all collected materials in one pass
+            for (int i = 0; i < materialsToDraw.Count; i++)
             {
-                Graphics.DrawMesh(MeshPool.plane10, drawLoc, lightsaberRotation, matSingle, -2);
-            }
-
-            // Draw the third graphic if not null
-            if (thirdMatSingle != null)
-            {
-                Graphics.DrawMesh(MeshPool.plane10, drawLoc, lightsaberRotation, thirdMatSingle, -1);
-            }
-
-            // Draw the fourth graphic if not null
-            if (fourthMatSingle != null)
-            {
-                Graphics.DrawMesh(MeshPool.plane10, drawLoc, lightsaberRotation, fourthMatSingle, -2);
-            }
-
-            // Draw the fifth graphic if not null
-            if (fifthMatSingle != null)
-            {
-                Graphics.DrawMesh(MeshPool.plane10, drawLoc, lightsaberRotation, fifthMatSingle, -1);
+                Graphics.DrawMesh(MeshPool.plane10, drawLoc, rotation, materialsToDraw[i], -2 + i);
             }
         }
 

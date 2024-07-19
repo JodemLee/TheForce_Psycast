@@ -38,9 +38,6 @@ namespace TheForce_Psycast
             // Scale damage based on target mass
             float scaledDamage = baseDamage + (totalMass * 1f); // Adjust the multiplier as needed
 
-            // Check if the target belongs to a specific thing category
-
-
             // Spawn the projectile
             ForceThrowProjectile projectile = (ForceThrowProjectile)GenSpawn.Spawn(ThingDef.Named("Force_ThrowItem"), target.Position, this.pawn.Map);
             projectile.targetThing = target;

@@ -109,13 +109,19 @@
       <HintPath>L:\SteamLibrary\steamapps\workshop\content\294100\3033779606\1.4\Assemblies\VPEPuppeteer.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="zAnimationMod">
+      <HintPath>L:\SteamLibrary\steamapps\workshop\content\294100\2944488802\1.5\Assemblies\zAnimationMod.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abilities\Darkside\Force_Phantom.cs" />
     <Compile Include="Abilities\Darkside\Force_Destruction.cs" />
     <Compile Include="Abilities\Darkside\Force_Fear.cs" />
     <Compile Include="Abilities\Darkside\Force_Insanity.cs" />
     <Compile Include="Abilities\Darkside\Force_Lightning.cs" />
     <Compile Include="Abilities\Darkside\Force_Rage.cs" />
+    <Compile Include="Hediffs\ForceGhostUtility.cs" />
     <Compile Include="Abilities\Lightside\Force_Meld.cs" />
     <Compile Include="Abilities\Lightside\Hediff_ProtectionBubble.cs" />
     <Compile Include="Abilities\NightSisterMagick\Ability_Resurrect.cs" />
@@ -134,13 +140,17 @@
     <Compile Include="Abilities\Sith Sorcery\CompObelisk_Sith.cs" />
     <Compile Include="Abilities\Telekinesis\ForceDrop.cs" />
     <Compile Include="Comps\CompUse_AddEffect_Invisibility.cs" />
-    <Compile Include="Comps\DeflectionComp.cs" />
-    <Compile Include="Comps\Lightsaber_Floor.cs" />
+    <Compile Include="Comps\FocusStrength_ForceOffset.cs" />
+    <Compile Include="Comps\HediffIncrease_Comp.cs" />
     <Compile Include="Dialog_LightsaberColorPicker.cs" />
     <Compile Include="Force_ModSettings.cs" />
+    <Compile Include="Harmony Patches\AlignmentMeditation.cs" />
     <Compile Include="Harmony Patches\Darkside_HarmonyPatch.cs" />
+    <Compile Include="Harmony Patches\ForceGhost_HarmonyPatch.cs" />
+    <Compile Include="Harmony Patches\MeditationHarmonyPatch.cs" />
     <Compile Include="Hediffs\ForceAttunement.cs" />
-    <Compile Include="Hediffs\HediffWithComps_Lightside.cs" />
+    <Compile Include="Hediffs\HediffComp_DarksideGhost.cs" />
+    <Compile Include="Hediffs\HediffComps_Lightside.cs" />
     <Compile Include="Hediffs\Hediff_ForceForms.cs" />
     <Compile Include="Hediffs\SithArtifacts\Hediff_BranchofDecay.cs" />
     <Compile Include="Hediffs\SithArtifacts\Hediff_DarkstarMedallion.cs" />
@@ -197,6 +207,8 @@
       <Link>.editorconfig</Link>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Abilities\Mechu-deru\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

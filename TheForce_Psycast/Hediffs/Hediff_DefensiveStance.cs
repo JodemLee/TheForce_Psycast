@@ -1,18 +1,7 @@
-﻿using HarmonyLib;
-using TheForce_Psycast;
-using RimWorld;
-using System.Collections.Generic;
+﻿using RimWorld;
 using System.Linq;
-using System.Reflection;
 using UnityEngine;
-using UnityEngine.Networking;
-using VanillaPsycastsExpanded;
 using Verse;
-using Verse.Sound;
-using VFECore;
-using VFECore.Abilities;
-using static HarmonyLib.Code;
-using VFECore.Shields;
 
 
 namespace TheForce_Psycast
