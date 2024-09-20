@@ -1,20 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <LanguagData>
-
-	<VPEP.TargetCannotBeSameFactionAsCaster>Target cannot be colonist.</VPEP.TargetCannotBeSameFactionAsCaster>
-	<VPEP.TargetMustBeSameFactionAsCaster>Target must be prisoner or colonist.</VPEP.TargetMustBeSameFactionAsCaster>
-	<VPEP.TargetMustBePrisonerOrSlave>Target must be prisoner or slave.</VPEP.TargetMustBePrisonerOrSlave>
-	<VPEP.DegradePsycast>It was caused by the Degrade psycast.</VPEP.DegradePsycast>
-	<VPEP.TargetMustHaveBrainLeech>Target must have brain leech from the caster.</VPEP.TargetMustHaveBrainLeech>
-	<VPEP.TargetIsPuppetAlready>Target is a puppet already.</VPEP.TargetIsPuppetAlready>
-	<VPEP.CannotHaveMorePuppets>Cannot have more puppets due to the puppet limit.</VPEP.CannotHaveMorePuppets>
-	<VPEP.Puppets>Puppets</VPEP.Puppets>
-	<VPEP.PuppetsGizmoTip>A puppeteer can only sustain a puppet if there is enough psychic capacity to do so. Gain more psychic capacity to sustain more puppets by casting mind split, however bear in mind it will send the puppeteer and all their puppets into a {0} coma.\n\nPsychic capacity: {1}</VPEP.PuppetsGizmoTip>
-	<VPEP.PuppetsUsage>Current puppets:</VPEP.PuppetsUsage>
-	<VPEP.TargetMustBePuppetOfCaster>Target must be a puppet of the caster.</VPEP.TargetMustBePuppetOfCaster>
-	<VPEP.NoPuppets>No puppets.</VPEP.NoPuppets>
-	<VPEP.MindJumpTitle>Mind jump</VPEP.MindJumpTitle>
-	<VPEP.MindJumpText>{Puppeteer_nameDef} has died. Before {Puppeteer_pronoun} died, {Puppeteer_pronoun} used the mind jump ability on {NewPuppeteer_nameDef}. Now {NewPuppeteer_nameDef} is a new puppeteer.</VPEP.MindJumpText>
+	<Force.TargetIsApprenticeAlready>Target is an apprentice already.</Force.TargetIsApprenticeAlready>
+	<Force.CannotHaveMoreApprentice>Cannot have more apprentices.</Force.CannotHaveMoreApprentice>
+	<Force.Apprentices>Apprentices</Force.Apprentices>
+	<Force.ApprenticeUsage>Current apprentices:</Force.ApprenticeUsage>
+	<Force_ApprenticeCapacity>Amount of Apprentices one can have.</Force_ApprenticeCapacity>
 	<Force.MustHaveDarkAttuneAmount>Must have at least {0}% Darkside Attunement.</Force.MustHaveDarkAttuneAmount>
 	<Force.NotEnoughAttunement>Connection to the Darkside is too weak.</Force.NotEnoughAttunement>
+	<Force_Ghost>{0} returns as a force ghost</Force_Ghost>
+	<Force_GhostReturns>{0} returns as a force ghost</Force_GhostReturns>
+	<Force_HigherConnection>{0} has a stronger connection to the force. Failed to apply ability</Force_HigherConnection>
+	<Force_FearFailed>{0} resisted Force Fear</Force_FearFailed>
+	<Force_Fear_TemporaryMap>Not at player colony, apply hediff instead of mental break</Force_Fear_TemporaryMap>
+	<Force_Fear>Overwhelmed by Force Fear</Force_Fear>
+	<Force_Insanity>Driven Insane by Force Insanity</Force_Insanity>
+	<Force_MindControlFailed>The target's willpower is too strong to be affected.</Force_MindControlFailed>
+	<Force_InsanityFailed>{0} resisted Force Insanity.</Force_InsanityFailed>
+	<Force_HediffCheck>Required {0} severity of {1}, but current severity is {2}.</Force_HediffCheck>
+	<Force_slot_colorcrystal>Color crystal</Force_slot_colorcrystal>
+	<MForce_Core>Core Color</MForce_Core>
+	<MForce_Hilt>Hilt</MForce_Hilt>
+	<SithGhost>Bound To:</SithGhost>
+	<Force.MustbeAncientScrollSith>Must target Ancient Scroll(Sith)</Force.MustbeAncientScrollSith>
+	<Force.CancelForceDefense>Cancel Force Defense</Force.CancelForceDefense>
+    <Force.CancelSkipbarrierDesc>Click to cancel the defensive stance on the caster.</Force.CancelSkipbarrierDesc>
+    <Force.Alignment>Alignment</Force.Alignment>
 </LanguagData>
