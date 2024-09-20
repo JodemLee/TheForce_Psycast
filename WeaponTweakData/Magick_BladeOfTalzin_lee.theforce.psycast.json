@@ -1,0 +1,7 @@
+{
+  "TextureModID": "lee.theforce.psycast",
+  "ItemDefName": "Magick_BladeOfTalzin",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "MeleeWeaponType": 6
+}

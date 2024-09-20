@@ -1,0 +1,15 @@
+{
+  "TextureModID": "lee.theforce.psycast",
+  "ItemDefName": "Force_Lightsaber_Curved",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.301234573,
+  "OffY": -0.3308642,
+  "Rotation": 90.0,
+  "ScaleX": 1.5,
+  "ScaleY": 1.5,
+  "HandsMode": 1,
+  "MeleeWeaponType": 6,
+  "CustomRendererClass": "MeleeAnimPatch_ForcePsycast.MeleeAnimPatch",
+  "SweepProviderClass": "MeleeAnimPatch_ForcePsycast.LightsaberSweepProvider"
+}

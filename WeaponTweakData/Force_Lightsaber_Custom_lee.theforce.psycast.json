@@ -1,0 +1,15 @@
+{
+  "TextureModID": "lee.theforce.psycast",
+  "ItemDefName": "Force_Lightsaber_Custom",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.34074074,
+  "Rotation": 45.0,
+  "ScaleX": 1.2,
+  "ScaleY": 1.2,
+  "BladeStart": 0.212058216,
+  "BladeEnd": 1.1891892,
+  "MeleeWeaponType": 6,
+  "CustomRendererClass": "MeleeAnimPatch_ForcePsycast.MeleeAnimPatch",
+  "SweepProviderClass": "MeleeAnimPatch_ForcePsycast.LightsaberSweepProvider"
+}

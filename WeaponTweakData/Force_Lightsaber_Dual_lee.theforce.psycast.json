@@ -1,0 +1,16 @@
+{
+  "TextureModID": "lee.theforce.psycast",
+  "ItemDefName": "Force_Lightsaber_Dual",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": -0.00723917224,
+  "Rotation": 45.0,
+  "ScaleX": 1.4,
+  "ScaleY": 1.4,
+  "FlipY": true,
+  "BladeStart": -0.869863033,
+  "BladeEnd": 0.8041237,
+  "MeleeWeaponType": 52,
+  "CustomRendererClass": "MeleeAnimPatch_ForcePsycast.MeleeAnimPatch",
+  "SweepProviderClass": "MeleeAnimPatch_ForcePsycast.LightsaberSweepProvider"
+}

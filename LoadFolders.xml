@@ -14,5 +14,11 @@
 		<li IfModActive="Ludeon.RimWorld.Biotech">1.5/Mods/Biotech</li>
 		<li IfModActive="projectjedi.lightsabers">1.5/Mods/JecsLightsabers</li>
 		<li IfModActive="guy762.starwarsxenotypes, neronix17.outerrim.galacticdiversity">1.5/Mods/StarWarsXenotypes</li>
+		<li IfModActive="vanillaexpanded.skills">1.5/Mods/VESkills</li>
+		<li IfModActive="co.uk.epicguru.meleeanimation">1.5/Mods/MeleeAnim</li>
+		<li IfModActive="guy762.kotorweapons">1.5/Mods/KoTORWeapons</li>
+		<li IfModActive="guy762.mm.kotorcore">1.5/Mods/KoTORResources</li>
+		<li IfModNotActive="guy762.mm.kotorcore">1.5/Mods/KoTORResources-NONE</li>
+		<li IfModActive="ceteam.combatextended">1.5/Mods/CE</li>
 	</v1.5>
 </loadFolders>
