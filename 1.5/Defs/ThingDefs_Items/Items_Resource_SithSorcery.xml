@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- ====== EGGS ====== -->
+  <ThingDef ParentName="EggFertBase">
+    <defName>SithSorcery_EggTerentatekFertilized</defName>
+    <label>Terentatek egg (fert.)</label>
+    <description>Fertilized Terentatek egg.</description>
+    <graphicData>
+      <texPath>Animals/Terentatek/Egg</texPath>
+      <color>(246,230,227)</color>
+      <drawSize>1.6</drawSize>
+    </graphicData>
+    <statBases>
+      <MarketValue>140.0</MarketValue>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Hatcher">
+        <hatcherDaystoHatch>15</hatcherDaystoHatch>
+        <hatcherPawn>SithSorcery_Terentatek_PawnKind</hatcherPawn>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <ThingDef ParentName="LeatherBase">
+    <defName>Leather_Terentatek</defName>
+    <label>terentatek hide</label>
+    <description>Tough hide of a Terentatek. Strong, durable, and highly sought after.</description>
+    <graphicData>
+      <color>(90,0,0)</color>
+    </graphicData>
+    <statBases>
+      <MarketValue>20.0</MarketValue>
+      <StuffPower_Armor_Sharp>3.0</StuffPower_Armor_Sharp>
+      <StuffPower_Armor_Blunt>3.0</StuffPower_Armor_Blunt>
+      <StuffPower_Insulation_Cold>15</StuffPower_Insulation_Cold>
+      <StuffPower_Insulation_Heat>15</StuffPower_Insulation_Heat>
+    </statBases>
+    <stuffProps>
+      <color>(90,0,0)</color>
+      <commonality>0.025</commonality>
+      <statFactors>
+        <MaxHitPoints>1.5</MaxHitPoints>
+      </statFactors>
+    </stuffProps>
+  </ThingDef>
+
+</Defs>

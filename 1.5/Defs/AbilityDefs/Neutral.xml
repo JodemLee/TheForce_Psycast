@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Defs>
+
+  <!-- Core Force Abilities -->
+  <VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
+    <defName>Force_SpeedBoost</defName>
+    <label>Force Speedboost</label>
+    <description>Use the Force to enhance the caster's physical abilities, tripling their movement speed for a limited time based on their psychic sensitivity.</description>
+    <iconPath>Abilities/Neutral/Force_ForceSpeed</iconPath>
+    <targetMode>Self</targetMode>
+    <castTime>5</castTime>
+    <durationTime>2400</durationTime>
+    <abilityClass>VFECore.Abilities.Ability_Blank</abilityClass>
+    <castSound>VPE_Speedboost_Cast</castSound>
+    <modExtensions>
+      <li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
+        <path>Force_Neutral</path>
+        <level>1</level>
+        <order>2</order>
+        <psyfocusCost>0.12</psyfocusCost>
+        <entropyGain>12</entropyGain>
+        <psychic>true</psychic>
+      </li>
+      <li Class="VFECore.Abilities.AbilityExtension_Hediff">
+        <hediff>VPE_SpeedBoost</hediff>
+        <durationMultiplier>PsychicSensitivity</durationMultiplier>
+      </li>
+    </modExtensions>
+  </VFECore.Abilities.AbilityDef>
+
+  <VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
+    <defName>Force_Leap</defName>
+    <label>Force Leap</label>
+    <description>Utilize the Force to enhance the caster's legs, allowing them to leap great distances without harm. The distance of the leap improves with the user's psychic sensitivity.</description>
+    <iconPath>Abilities/Neutral/PowerLeap</iconPath>
+    <abilityClass>VanillaPsycastsExpanded.Ability_PowerLeap</abilityClass>
+    <castTime>3</castTime>
+    <targetMode>Location</targetMode>
+    <range>15</range>
+    <rangeStatFactors>
+      <PsychicSensitivity>1.1</PsychicSensitivity>
+    </rangeStatFactors>
+    <castSound>VPE_PowerLeap_Cast</castSound>
+    <modExtensions>
+      <li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
+        <path>Force_Neutral</path>
+        <level>2</level>
+        <order>2</order>
+        <psyfocusCost>0.02</psyfocusCost>
+        <entropyGain>8</entropyGain>
+      </li>
+    </modExtensions>
+  </VFECore.Abilities.AbilityDef>
+
+  <VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
+    <defName>Force_AwakenPsycasting</defName>
+    <label>Awaken Force</label>
+    <description>Master the Force to awaken non-sensitive pawns, granting them the ability to use psycasting. Use this power to bestow psycasting abilities upon normal pawns.</description>
+    <iconPath>Abilities/Neutral/Force_AwakenPsycast</iconPath>
+    <targetMode>Pawn</targetMode>
+    <castTime>24000</castTime>
+    <range>2.9</range>
+    <abilityClass>VFECore.Abilities.Ability_Blank</abilityClass>
+    <castSound>VPE_Speedboost_Cast</castSound>
+    <modExtensions>
+      <li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
+        <path>Force_Neutral</path>
+        <level>5</level>
+        <order>2</order>
+        <psyfocusCost>0.12</psyfocusCost>
+        <entropyGain>12</entropyGain>
+        <psychic>true</psychic>
+      </li>
+      <li Class="VFECore.Abilities.AbilityExtension_Hediff">
+        <hediff>PsychicAmplifier</hediff>
+        <bodyPartToApply>Brain</bodyPartToApply>
+        <severity>1</severity>
+      </li>
+    </modExtensions>
+  </VFECore.Abilities.AbilityDef>
+
+  <!-- Self Benefit -->
+
+  <VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
+    <defName>Force_Meditation</defName>
+    <label>Meditation</label>
+    <description>Through meditation, tap into the power of the Force and achieve a deeper state of relaxation. This allows for a clear mind and the conversion of accumulated heat into psyfocus. Cannot overcharge psyfocus or release heat.</description>
+    <iconPath>Abilities/Neutral/HeatFocus</iconPath>
+    <abilityClass>VanillaPsycastsExpanded.Harmonist.Ability_HeatFocus</abilityClass>
+    <targetMode>Self</targetMode>
+    <castTime>600</castTime>
+    <castFleck>PsycastPsychicEffect</castFleck>
+    <castSound>VPE_HeatFocus_Cast</castSound>
+    <modExtensions>
+      <li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
+        <path>Force_Neutral</path>
+        <level>1</level>
+        <order>3</order>
+        <psyfocusCost>0.06</psyfocusCost>
+        <entropyGain>0</entropyGain>
+      </li>
+    </modExtensions>
+  </VFECore.Abilities.AbilityDef>
+
+  <VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
+    <defName>Force_Cloak</defName>
+    <label>Force Cloak</label>
+    <description>Harness the power of the Force to bend light and sound waves, rendering yourself invisible to visual and audio detection.</description>
+    <iconPath>Abilities/Neutral/Force_ForceCloak</iconPath>
+    <abilityClass>VFECore.Abilities.Ability_Blank</abilityClass>
+    <targetMode>Humanlike</targetMode>
+    <targetingParameters>
+      <canTargetSelf>True</canTargetSelf>
+      <canTargetAnimals>True</canTargetAnimals>
+    </targetingParameters>
+    <fleckOnTarget>PsycastPsychicEffect</fleckOnTarget>
+    <castTime>60</castTime>
+    <durationTime>900</durationTime>
+    <range>20</range>
+    <chance>0</chance>
+    <modExtensions>
+      <li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
+        <path>Force_Neutral</path>
+        <level>2</level>
+        <order>3</order>
+        <psyfocusCost>0.12</psyfocusCost>
+        <entropyGain>45</entropyGain>
+        <psychic>true</psychic>
+      </li>
+      <li Class="VFECore.Abilities.AbilityExtension_Hediff">
+        <hediff>PsychicInvisibility</hediff>
+        <durationMultiplier>PsychicSensitivity</durationMultiplier>
+      </li>
+    </modExtensions>
+  </VFECore.Abilities.AbilityDef>
+
+  <VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
+    <defName>Force_Battle_Meditation</defName>
+    <label>Battle Meditation</label>
+    <description>Focus the power of the Force to enhance the abilities of nearby pawns for a limited time. Boost their sight, hearing, and movement capacities.</description>
+    <iconPath>Abilities/Neutral/Force_BattleMeditation</iconPath>
+    <abilityClass>VFECore.Abilities.Ability_Blank</abilityClass>
+    <targetMode>Self</targetMode>
+    <castSound>VPE_PsychicDrone_Cast</castSound>
+    <durationTime>1800</durationTime>
+    <castTime>60</castTime>
+    <hasAoE>true</hasAoE>
+    <radius>12</radius>
+    <targetingParametersForAoE>
+      <canTargetLocations>False</canTargetLocations>
+      <canTargetSelf>False</canTargetSelf>
+      <canTargetAnimals>False</canTargetAnimals>
+      <canTargetPawns>True</canTargetPawns>
+      <canTargetHumans>True</canTargetHumans>
+    </targetingParametersForAoE>
+    <modExtensions>
+      <li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
+        <path>Force_Neutral</path>
+        <level>3</level>
+        <order>3</order>
+        <psyfocusCost>0.03</psyfocusCost>
+        <entropyGain>15</entropyGain>
+        <psychic>true</psychic>
+      </li>
+      <li Class="VFECore.Abilities.AbilityExtension_Hediff">
+        <hediff>PsychicFocus</hediff>
+        <durationMultiplier>PsychicSensitivity</durationMultiplier>
+        <bodyPartToApply>Brain</bodyPartToApply>
+      </li>
+    </modExtensions>
+  </VFECore.Abilities.AbilityDef>
+
+  <VFECore.Abilities.AbilityDef ParentName="VPE_WordOfAbilityBase">
+    <defName>Force_Precognition</defName>
+    <label>Precognition</label>
+    <description>Tap into the Force to gain visions of future events, premonitions, and warnings. Develop prescience to predict future events with the help of the Force.</description>
+    <iconPath>Abilities/Neutral/WordofForetelling</iconPath>
+    <distanceToTarget>3</distanceToTarget>
+    <showUndrafted>true</showUndrafted>
+    <chance>0</chance>
+    <modExtensions>
+      <li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
+        <path>Force_Neutral</path>
+        <level>4</level>
+        <order>3</order>
+        <psyfocusCost>0.6</psyfocusCost>
+        <entropyGain>0</entropyGain>
+      </li>
+      <li Class="VanillaPsycastsExpanded.AbilityExtension_GiveInspiration">
+        <onlyPlayer>true</onlyPlayer>
+      </li>
+      <li Class="VanillaPsycastsExpanded.Chronopath.AbilityExtension_ImproveRelations" />
+      <li Class="VanillaPsycastsExpanded.Chronopath.AbilityExtension_ReduceResistance" />
+      <li Class="VanillaPsycastsExpanded.AbilityExtension_Flee">
+        <onlyHostile>true</onlyHostile>
+      </li>
+      <li Class="VanillaPsycastsExpanded.Chronopath.AbilityExtension_Age">
+        <casterYears>0</casterYears>
+      </li>
+    </modExtensions>
+  </VFECore.Abilities.AbilityDef>
+
+  <!--Targeted -->
+
+  <VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
+    <defName>Force_Telekinesis</defName>
+    <label>Force Barrier</label>
+    <description>Utilize the power of the Force to redirect incoming and outgoing ground-level projectiles to a distant location. People and items are not affected. The duration of the barrier scales with the psychic sensitivity of the caster.</description>
+    <iconPath>Abilities/Neutral/Force_TelekineticBarrier</iconPath>
+    <castTime>60</castTime>
+    <durationTime>900</durationTime>
+    <durationTimeStatFactors>
+      <PsychicSensitivity>1</PsychicSensitivity>
+    </durationTimeStatFactors>
+    <range>25</range>
+    <radius>4.9</radius>
+    <targetMode>Location</targetMode>
+    <abilityClass>VFECore.Abilities.Ability_Spawn</abilityClass>
+    <chance>0</chance>
+    <modExtensions>
+      <li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
+        <path>Force_Neutral</path>
+        <level>1</level>
+        <order>1</order>
+        <psyfocusCost>0.08</psyfocusCost>
+        <entropyGain>65</entropyGain>
+
+      </li>
+      <li Class="VFECore.Abilities.AbilityExtension_FleckOnTarget">
+        <fleckDef>BulletShieldAreaEffect</fleckDef>
+        <sound>Psycast_Skip_Exit</sound>
+      </li>
+      <li Class="VFECore.Abilities.AbilityExtension_Spawn">
+        <thing>BulletShieldPsychic</thing>
+      </li>
+    </modExtensions>
+  </VFECore.Abilities.AbilityDef>
+
+
+  <VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
+    <defName>Force_Burden</defName>
+    <label>Force Stasis</label>
+    <description>Temporarily slow down the target by suppressing motor activity in their brain. This power is considered hostile and its effectiveness is influenced by the target's psychic sensitivity.</description>
+    <iconPath>Abilities/Neutral/Force_ForceSlow</iconPath>
+    <targetMode>Pawn</targetMode>
+    <abilityClass>VFECore.Abilities.Ability_Blank</abilityClass>
+    <castTime>15</castTime>
+    <fleckOnTarget>PsycastPsychicEffect</fleckOnTarget>
+    <goodwillImpact>-15</goodwillImpact>
+    <durationTime>1200</durationTime>
+    <range>30</range>
+    <modExtensions>
+      <li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
+        <path>Force_Neutral</path>
+        <level>2</level>
+        <order>1</order>
+        <psyfocusCost>0.01</psyfocusCost>
+        <entropyGain>8</entropyGain>
+        <psychic>true</psychic>
+      </li>
+      <li Class="VFECore.Abilities.AbilityExtension_Hediff">
+        <hediff>Force_Stasis</hediff>
+        <durationMultiplier>PsychicSensitivity</durationMultiplier>
+      </li>
+      <li Class="VFECore.Abilities.AbilityExtension_Stun">
+        <durationMultiplier>PsychicSensitivity</durationMultiplier>
+      </li>
+    </modExtensions>
+  </VFECore.Abilities.AbilityDef>
+
+  <VFECore.Abilities.AbilityDef ParentName="VPE_WordOfAbilityBase">
+    <defName>Force_Malacia</defName>
+    <label>Malacia</label>
+    <description>Force technique used to induce a powerful dizziness and nausea in enemies by turning their equilibrium against them, scaling with their psychic sensitivity.</description>
+    <iconPath>Abilities/Neutral/Force_ForceMalacia</iconPath>
+    <durationTime>1440</durationTime>
+    <castSound>PsychicShockLanceCast</castSound>
+    <castTime>30</castTime>
+    <distanceToTarget>14.9</distanceToTarget>
+    <modExtensions>
+      <li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
+        <path>Force_Neutral</path>
+        <level>3</level>
+        <order>1</order>
+        <psyfocusCost>0.2</psyfocusCost>
+        <entropyGain>30</entropyGain>
+        <spaceAfter>true</spaceAfter>
+      </li>
+      <li Class="VFECore.Abilities.AbilityExtension_Hediff">
+        <hediff>Force_Malacia</hediff>
+      </li>
+    </modExtensions>
+  </VFECore.Abilities.AbilityDef>
+
+  <VFECore.Abilities.AbilityDef ParentName="VPE_PsycastGoToTargetBase">
+    <defName>Force_MindWipe</defName>
+    <label>Mind wipe</label>
+    <description>Induce a harmless, instantaneous retrograde amnesia in the target, purging all memories, social bonds and skills acquired outside of their backstory. They also feel a strong kinship with the caster’s colony and joy at rediscovering the joys of life without commitment.</description>
+    <iconPath>Abilities/Neutral/MindWipe</iconPath>
+    <abilityClass>VFECore.Abilities.Ability_Blank</abilityClass>
+    <castTime>300</castTime>
+    <goodwillImpact>-25</goodwillImpact>
+    <castSound>VPE_MindWipe_Cast</castSound>
+    <showUndrafted>true</showUndrafted>
+    <needsTicking>true</needsTicking>
+    <targetingParameters>
+      <canTargetSelf>false</canTargetSelf>
+      <canTargetHumans>True</canTargetHumans>
+      <canTargetAnimals>false</canTargetAnimals>
+      <canTargetMechs>false</canTargetMechs>
+    </targetingParameters>
+    <modExtensions>
+      <li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
+        <path>Force_Neutral</path>
+        <level>4</level>
+        <order>1</order>
+        <psyfocusCost>0.8</psyfocusCost>
+        <entropyGain>0</entropyGain>
+        <spaceAfter>true</spaceAfter>
+      </li>
+      <li Class="VanillaPsycastsExpanded.AbilityExtension_MindWipe"></li>
+      <li Class="VFECore.Abilities.AbilityExtension_EffecterOnTarget">
+        <effecterDef>Skip_Exit</effecterDef>
+        <maintainForTicks>60</maintainForTicks>
+      </li>
+      <li Class="VFECore.Abilities.AbilityExtension_ThoughtOnTarget">
+        <thoughtDef>VPE_MindWiped</thoughtDef>
+      </li>
+    </modExtensions>
+  </VFECore.Abilities.AbilityDef>
+
+</Defs>

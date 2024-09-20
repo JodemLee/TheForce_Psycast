@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	
+	<ThingDef Name="Force_CrystalFormation_Base" ParentName="BuildingNaturalBase" Abstract="True">
+		<graphicData Inherit="False">
+		  <graphicClass>Graphic_Random</graphicClass>
+		  <shaderType>TransparentPostLight</shaderType>
+		</graphicData>
+		<building>
+			<artificialForMeditationPurposes>false</artificialForMeditationPurposes>
+			<ai_neverTrashThis>true</ai_neverTrashThis>
+			<ai_chillDestination>false</ai_chillDestination>
+			<destroySound>BuildingDestroyed_Stone_Small</destroySound>
+			
+			<isResourceRock>true</isResourceRock>
+			<veinMineable>false</veinMineable>
+			
+			<isInert>true</isInert>
+			<isNaturalRock>true</isNaturalRock>
+			<canBuildNonEdificesUnder>false</canBuildNonEdificesUnder>
+			<deconstructible>false</deconstructible>
+			<destroyShakeAmount>0</destroyShakeAmount>
+		</building>
+		<thingClass>Mineable</thingClass>
+		<mineable>true</mineable>
+		<rotatable>false</rotatable>
+		<altitudeLayer>Building</altitudeLayer>
+		<pathCostIgnoreRepeat>true</pathCostIgnoreRepeat>
+		<fillPercent>0.35</fillPercent>
+		<comps>
+		  <li Class="CompProperties_MeditationFocus">
+			<statDef>MeditationFocusStrength</statDef>
+			<focusTypes>
+			  <li>Natural</li>
+			</focusTypes>
+		  </li>
+		  <li>
+			<compClass>CompColorable</compClass>
+		  </li>
+		  <li Class="TheForce_Psycast.CompProperties_ColorCrystal">
+		</li>
+		</comps>
+		<colorGenerator Class="ColorGenerator_Options">
+			<options>
+			  <li>
+				<only>(153, 102, 204)</only>  <!--Amethyst-->
+			  </li>
+			  <li>
+				<only>(10, 10, 10)</only>     <!--Black-->
+			  </li>
+			  <li>
+				<only>(135,206,250)</only>    <!--Blue-->
+			  </li>
+			  <li>
+				<only>(220,20,60)</only>      <!--Red-->
+			  </li>
+			  <li>
+				<only>(0, 255, 255)</only>    <!--Cyan-->
+			  </li>
+			  <li>
+				<only>(0, 255, 0)</only>      <!--Green-->
+			  </li>
+			  <li>
+				<only>(75, 0, 130)</only>     <!--Indigo-->
+			  </li>
+			  <li>
+				<only>(255, 0, 255)</only>    <!--Magenta-->
+			  </li>
+			  <li>
+				<only>(255, 165, 0)</only>    <!--Orange-->
+			  </li>
+			  <li>
+				<only>(255, 192, 203)</only>   <!--Pink-->
+			  </li>
+			  <li>
+				<only>(255, 255, 255)</only>    <!--White-->
+			  </li>
+			  <li>
+				<only>(255, 255, 0)</only>      <!--Yellow-->
+			  </li>
+			</options>
+		  </colorGenerator>
+	</ThingDef>
+
+	<ThingDef ParentName="Force_CrystalFormation_Base">
+		<defName>Force_CrystalFormation_Small</defName>
+		<label>Kyber Crystal Formation</label>
+		<description>A small-sized crystal formation, drops a kyber crystal when mined.</description>
+		<graphicData>
+		  <texPath>Things/Building/CrystalFormation</texPath>
+		  <drawSize>(1.0,1.0)</drawSize>
+		</graphicData>
+		<statBases>
+			<MaxHitPoints>250</MaxHitPoints>
+			<Beauty>5</Beauty>
+			<BeautyOutdoors>5</BeautyOutdoors>
+			<MeditationFocusStrength>1</MeditationFocusStrength>
+		</statBases>
+		<building>
+			<mineableThing>Force_KyberCrystal</mineableThing>
+			<mineableYield>1</mineableYield>
+			<mineableScatterCommonality>0.25</mineableScatterCommonality>
+			<mineableScatterLumpSizeRange>10~25</mineableScatterLumpSizeRange>
+		</building>
+		<comps>
+		  <li Class="TheForce_Psycast.CompProperties_GlowerOptions">
+			<glowRadius>1</glowRadius>
+		  </li>
+		</comps>
+	</ThingDef>
+
+	<ThingDef ParentName="Force_CrystalFormation_Base">
+		<defName>Force_CrystalFormation_Medium</defName>
+		<label>Kyber Crystal Formation</label>
+		<description>A medium-sized crystal formation, drops a kyber crystal when mined.</description>
+		<graphicData>
+		  <texPath>Things/Building/CrystalFormation</texPath>
+		  <drawSize>(1.5,1.5)</drawSize>
+		</graphicData>
+		<size>1,2</size>
+		<statBases>
+			<MaxHitPoints>500</MaxHitPoints>
+			<Beauty>10</Beauty>
+			<BeautyOutdoors>10</BeautyOutdoors>
+			<MeditationFocusStrength>1.5</MeditationFocusStrength>
+		</statBases>
+		<building>
+			<mineableThing>Force_KyberCrystal</mineableThing>
+			<mineableYield>1</mineableYield>
+			<mineableScatterCommonality>0.25</mineableScatterCommonality>
+			<mineableScatterLumpSizeRange>10~25</mineableScatterLumpSizeRange>
+		</building>
+		<comps>
+		  <li Class="TheForce_Psycast.CompProperties_GlowerOptions">
+			<glowRadius>2.5</glowRadius>
+		  </li>
+		</comps>
+	</ThingDef>
+
+	<ThingDef ParentName="Force_CrystalFormation_Base">
+		<defName>Force_CrystalFormation_Large</defName>
+		<label>Kyber Crystal Formation</label>
+		<description>A large-sized crystal formation, drops a kyber crystal when mined.</description>
+		<graphicData>
+		  <texPath>Things/Building/CrystalFormation</texPath>
+		  <drawSize>(2.0,2.0)</drawSize>
+		</graphicData>
+		<size>2,2</size>
+		<statBases>
+			<MaxHitPoints>1000</MaxHitPoints>
+			<Beauty>15</Beauty>
+			<BeautyOutdoors>15</BeautyOutdoors>
+			<MeditationFocusStrength>2</MeditationFocusStrength>
+		</statBases>
+		<building>
+			<mineableThing>Force_KyberCrystal</mineableThing>
+			<mineableYield>1</mineableYield>
+			<mineableScatterCommonality>0.25</mineableScatterCommonality>
+			<mineableScatterLumpSizeRange>10~25</mineableScatterLumpSizeRange>
+		</building>
+		<comps>
+		  <li Class="TheForce_Psycast.CompProperties_GlowerOptions">
+			<glowRadius>5</glowRadius>
+		  </li>
+		</comps>
+	</ThingDef>
+	
+</Defs>

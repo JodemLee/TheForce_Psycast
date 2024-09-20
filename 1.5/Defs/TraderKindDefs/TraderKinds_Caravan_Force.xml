@@ -71,7 +71,7 @@
 	  <li Class="StockGenerator_Tag">
         <tradeTag>SithScroll</tradeTag>
         <thingDefCountRange>2~2</thingDefCountRange>
-        <countRange>1~1</countRange>
+        <countRange>1~4</countRange>
       </li>
       
       <!-- Drugs -->
@@ -398,7 +398,13 @@
 	  <li Class="StockGenerator_Tag">
         <tradeTag>SithScroll</tradeTag>
         <thingDefCountRange>2~2</thingDefCountRange>
-        <countRange>1~1</countRange>
+        <countRange>1~4</countRange>
+      </li>
+
+      <li Class="StockGenerator_Tag">
+        <tradeTag>Force_KyberCrystal</tradeTag>
+        <thingDefCountRange>1</thingDefCountRange>
+        <countRange>1~6</countRange>
       </li>
 	  
 	  <li MayRequire="guy762.KotORWeapons, jecrell.jecstools" Class="StockGenerator_Tag">

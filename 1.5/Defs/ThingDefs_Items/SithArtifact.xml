@@ -2,7 +2,7 @@
 <Defs>
 
 
-<ThingDef ParentName="ResourceBase" Name="AncientSithAmulet" Abstract="True">
+  <ThingDef ParentName="ResourceBase" Name="AncientSithAmulet" Abstract="True">
     <thingClass>ThingWithComps</thingClass>
     <resourceReadoutPriority>Middle</resourceReadoutPriority>
     <useHitPoints>true</useHitPoints>
@@ -25,7 +25,7 @@
     <graphicData>
       <texPath>Things/Item/Special/SithCrystalHealing</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-	   <shaderType>TransparentPostLight</shaderType>
+      <shaderType>TransparentPostLight</shaderType>
     </graphicData>
     <stackLimit>10</stackLimit>
     <statBases>
@@ -48,12 +48,18 @@
         <soundOnUsed>MechSerumUsed</soundOnUsed>
       </li>
       <li Class="CompProperties_UseEffectDestroySelf" />
+      <li Class="CompProperties_MeditationFocus">
+        <statDef>MeditationFocusStrength</statDef>
+        <focusTypes>
+          <li>Force_DarksideMeditation</li>
+        </focusTypes>
+      </li>
     </comps>
     <thingSetMakerTags>
       <li>RewardStandardCore</li>
     </thingSetMakerTags>
   </ThingDef>
-  
+
   <RecipeDef>
     <defName>AdministerDarksideHealingCrystal</defName>
     <label>Use the Darkside Healing Crystal</label>
@@ -82,7 +88,6 @@
     </fixedIngredientFilter>
   </RecipeDef>
   
-  
   <ThingDef ParentName="ResourceBase">
     <defName>Force_AncientScroll</defName>
     <label>Scroll(Sith Sorcery)</label>
@@ -102,16 +107,16 @@
       <DeteriorationRate>2.0</DeteriorationRate>
     </statBases>
     <intricate>true</intricate>
-	<tradeTags>
+    <tradeTags>
       <li>ExoticMisc</li>
-	  <li>SithScroll</li>
+      <li>SithScroll</li>
     </tradeTags>
     <thingCategories>
       <li>Manufactured</li>
     </thingCategories>
     <allowedArchonexusCount>10</allowedArchonexusCount>
   </ThingDef>
- 
+
   <ThingDef ParentName="MechSerumBase">
     <defName>Force_AncientResurrectorScroll</defName>
     <label>Ancient Resurrector Scroll</label>
@@ -119,7 +124,7 @@
     <graphicData>
       <texPath>Things/Item/Special/SithResurrector</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-	  <shaderType>TransparentPostLight</shaderType>
+      <shaderType>TransparentPostLight</shaderType>
     </graphicData>
     <stackLimit>10</stackLimit>
     <statBases>
@@ -147,11 +152,17 @@
       <li Class="CompProperties_TargetEffectResurrect">
         <moteDef>Mote_ResurrectFlash</moteDef>
       </li>
+      <li Class="CompProperties_MeditationFocus">
+        <statDef>MeditationFocusStrength</statDef>
+        <focusTypes>
+          <li>Force_DarksideMeditation</li>
+        </focusTypes>
+      </li>
     </comps>
   </ThingDef>
 
 
-	<ThingDef ParentName="BaseGun">
+  <ThingDef ParentName="BaseGun">
     <defName>Force_BoltofHatred</defName>
     <label>Scroll of Bolt of Hatred</label>
     <description>An ancient sith scroll inscribed with a sith sorcery long lost to the planet. This scroll was infused with a Bolt of Hatred, a single use ability that can jump from target to target, dealing cuts and emp damage.</description>
@@ -160,7 +171,7 @@
     <graphicData>
       <texPath>Things/Item/Special/SithBoltOfHatred</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-	  <shaderType>TransparentPostLight</shaderType>
+      <shaderType>TransparentPostLight</shaderType>
     </graphicData>
     <statBases>
       <MarketValue>1000</MarketValue>
@@ -214,17 +225,23 @@
         <explosiveDamageType>Bomb</explosiveDamageType>
         <requiredDamageTypeToExplode>Flame</requiredDamageTypeToExplode>
       </li>
-	 </comps>
-	 </ThingDef>
-	 
-	  <ThingDef ParentName="ApparelNoQualityBase">
+      <li Class="CompProperties_MeditationFocus">
+        <statDef>MeditationFocusStrength</statDef>
+        <focusTypes>
+          <li>Force_DarksideMeditation</li>
+        </focusTypes>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <ThingDef ParentName="ApparelNoQualityBase">
     <defName>Force_ScrollDarksideWeb</defName>
     <label>Scroll Darkside Web</label>
     <description>An ancient scroll inscribed with sith Sorcery long forgotten to the planet. This scroll was inscribed with "Odojinya", this power would summon strands of dark side energy that would wrap around the target and ensnare them in an unbreakable mesh, downing the target instantly.There is a risk of brain damage. It has a long range, but requires line of sight.</description>
     <graphicData>
       <texPath>Things/Item/Special/SithDarksideWeb</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-	  <shaderType>TransparentPostLight</shaderType>
+      <shaderType>TransparentPostLight</shaderType>
     </graphicData>
     <techLevel>Archotech</techLevel>
     <tradeTags>
@@ -303,18 +320,24 @@
       <li Class="CompProperties_TargetEffect_FleckConnecting">
         <fleckDef>PsycastPsychicLine</fleckDef>
       </li>
+      <li Class="CompProperties_MeditationFocus">
+        <statDef>MeditationFocusStrength</statDef>
+        <focusTypes>
+          <li>Force_DarksideMeditation</li>
+        </focusTypes>
+      </li>
     </comps>
     <allowedArchonexusCount>1</allowedArchonexusCount>
   </ThingDef>
-	 
-	 <ThingDef ParentName="ApparelNoQualityBase">
+
+  <ThingDef ParentName="ApparelNoQualityBase">
     <defName>Force_ScrollSuppressThought</defName>
     <label>Scroll of Suppress thought</label>
     <description>An ancient scroll inscribed with sith Sorcery long forgotten to the planet. Inscribed with "Qâzoi Kyantuska" which was a Sith magical ability that made the wielder effectively able to control and influence the minds of anyone they chose, using this commands the target to attack everything it sees. There is a risk of brain damage. It has a long range, but requires line of sight.</description>
     <graphicData>
       <texPath>Things/Item/Special/SithSuppressThoughts</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-	  <shaderType>TransparentPostLight</shaderType>
+      <shaderType>TransparentPostLight</shaderType>
     </graphicData>
     <techLevel>Spacer</techLevel>
     <tradeTags>
@@ -395,7 +418,146 @@
         <fleckDef>PsycastPsychicLine</fleckDef>
       </li>
       <li Class="CompProperties_Styleable"></li>
+      <li Class="CompProperties_MeditationFocus">
+        <statDef>MeditationFocusStrength</statDef>
+        <focusTypes>
+          <li>Force_DarksideMeditation</li>
+        </focusTypes>
+      </li>
     </comps>
     <allowedArchonexusCount>1</allowedArchonexusCount>
   </ThingDef>
+
+  <ThingDef ParentName="BuildingBase">
+    <defName>Force_SithStatue</defName>
+    <label>Sith Statue</label>
+    <description>An ancient sith statue. It radiates power from the darkside, empowering those of the same faction while weakening your enemies.</description>
+    <graphicData>
+      <texPath>Things/Building/SithStatue/SithStatue</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <shaderType>CutoutComplex</shaderType>
+      <drawSize>(2, 2)</drawSize>
+      <shadowData>
+        <volume>(0.3, 0.6, 0.3)</volume>
+        <offset>(0.0, 0.0, -0.1)</offset>
+      </shadowData>
+      <damageData>
+        <rect>(0,0.75,1.0,0.5)</rect>
+      </damageData>
+    </graphicData>
+    <uiIconScale>0.85</uiIconScale>
+    <thingCategories>
+      <li>BuildingsSpecial</li>
+    </thingCategories>
+    <stuffCategories>
+      <li>Metallic</li>
+      <li>Woody</li>
+      <li>Stony</li>
+    </stuffCategories>
+    <costList>
+      <Steel>50</Steel>
+      <ComponentSpacer>6</ComponentSpacer>
+    </costList>
+    <comps>
+      <li Class="CompProperties_MoteEmitter">
+        <mote>Mote_PsychicEmanatorEffect</mote>
+        <emissionInterval>600</emissionInterval>
+      </li>
+      <li Class="CompProperties_Breakdownable"/>
+      <li Class="TheForce_Psycast.Abilities.Sith_Sorcery.CompProperties_Radiate">
+        <radius>5</radius>
+        <friendlyHediff>Force_SithArtifactEmpowerment</friendlyHediff>
+        <friendlyIncreaseAmount>0.3</friendlyIncreaseAmount>
+        <hostileHediff>Force_SithArtifactFear</hostileHediff>
+        <hostileIncreaseAmount>0.3</hostileIncreaseAmount>
+        <applyFrequency>600</applyFrequency>
+      </li>
+    </comps>
+    <altitudeLayer>Building</altitudeLayer>
+    <building>
+      <destroySound>BuildingDestroyed_Metal_Medium</destroySound>
+    </building>
+    <statBases>
+      <MarketValue>1300</MarketValue>
+      <MaxHitPoints>100</MaxHitPoints>
+      <Flammability>0</Flammability>
+      <Beauty>0</Beauty>
+      <Mass>15</Mass>
+      <WorkToBuild>2000</WorkToBuild>
+    </statBases>
+    <thingSetMakerTags>
+      <li>RewardStandardCore</li>
+    </thingSetMakerTags>
+    <fillPercent>0.2</fillPercent>
+    <leaveResourcesWhenKilled>false</leaveResourcesWhenKilled>
+    <pathCost>30</pathCost>
+    <passability>PassThroughOnly</passability>
+    <rotatable>false</rotatable>
+    <defaultPlacingRot>South</defaultPlacingRot>
+    <canOverlapZones>false</canOverlapZones>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <specialDisplayRadius>14.9</specialDisplayRadius>
+    <tradeability>Sellable</tradeability>
+    <tickerType>Normal</tickerType>
+    <tradeTags>
+      <li>ExoticBuilding</li>
+    </tradeTags>
+  </ThingDef>
+
+  <ThingDef ParentName="BaseWeapon_Bladelink">
+    <defName>Force_SithBladelink</defName>
+    <label>Sith Warblade</label>
+    <description>A dark crimson-hued warblade, its edge gleaming with a sinister red glow. The blade shimmers with veins of deep scarlet, channeling the dark side of the Force, and is honed to a mono-molecular sharpness capable of slicing through even the heaviest of armor. Despite its fearsome appearance, the blade is surprisingly light, allowing its wielder to strike with blinding speed and fluidity.
+    \nBound within the weapon is a vengeful Sith spirit, its essence intertwined with the blade for centuries. This malevolent entity seeks only the most powerful of masters, offering synchronization of mind and body with its wielder, allowing for lightning-fast, precise, and devastating attacks. Once bonded, the warblade’s crimson glow intensifies, and it will reject any who attempt to wield it, forever loyal to its chosen master.</description>
+    <statBases>
+      <MarketValue>3000</MarketValue>
+      <Mass>2</Mass>
+    </statBases>
+    <equippedAngleOffset>0</equippedAngleOffset>
+    <graphicData>
+      <graphicClass>Graphic_Single</graphicClass>
+      <texPath>Things/Item/Special/Sith Artifacts/SithWarBlade</texPath>
+    </graphicData>
+    <soundInteract>Interact_BladelinkMonoSword</soundInteract>
+    <meleeHitSound>MeleeHit_BladelinkMonoSword</meleeHitSound>
+    <smeltable>false</smeltable>
+    <weaponClasses>
+      <li>Melee</li>
+      <li>MeleePiercer</li>
+    </weaponClasses>
+    <stuffCategories>
+      <li>Metallic</li>
+      <li>Woody</li>
+      <li>Stony</li>
+    </stuffCategories>
+    <tools>
+      <li>
+        <label>handle</label>
+        <capacities>
+          <li>Blunt</li>
+        </capacities>
+        <power>12</power>
+        <cooldownTime>1.6</cooldownTime>
+      </li>
+      <li>
+        <label>point</label>
+        <capacities>
+          <li>Stab</li>
+        </capacities>
+        <power>15</power>
+        <cooldownTime>1.6</cooldownTime>
+        <armorPenetration>0.9</armorPenetration>
+      </li>
+      <li>
+        <label>edge</label>
+        <capacities>
+          <li>Cut</li>
+        </capacities>
+        <power>15</power>
+        <cooldownTime>1.6</cooldownTime>
+        <armorPenetration>0.9</armorPenetration>
+      </li>
+    </tools>
+  </ThingDef>
+
 </Defs>  

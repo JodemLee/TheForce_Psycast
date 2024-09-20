@@ -2,9 +2,9 @@
 <Defs>
  
   <VanillaPsycastsExpanded.PsycasterPathDef>
-    <defName>VPE_LightSide</defName>
+    <defName>Force_LightSide</defName>
     <label>Light-Side</label>
-    <description>Harness the power of the Force to cast unique abilities.</description>
+    <description>Master the light side of the Force to cast abilities that heal, protect, and support allies.</description>
     <background>UI/Backgrounds/Lightside</background>
     <altBackground>UI/AlternativeBackgrounds/PathBG_Lightside</altBackground>
     <tab>Force Powers</tab>
@@ -12,9 +12,9 @@
   </VanillaPsycastsExpanded.PsycasterPathDef>
 
   <VanillaPsycastsExpanded.PsycasterPathDef>
-    <defName>VPE_Force</defName>
+    <defName>Force_Neutral</defName>
     <label>Force-Sensitive</label>
-    <description>Harness the power of the Force to cast unique abilities.</description>
+    <description>Master the Force to maintain balance and harmony, using abilities that neither align with the light nor the dark side.</description>
     <background>UI/Backgrounds/Neutral</background>
     <altBackground>UI/AlternativeBackgrounds/PathBG_Neutral</altBackground>
     <tab>Force Powers</tab>
@@ -22,19 +22,19 @@
   </VanillaPsycastsExpanded.PsycasterPathDef>
   
   <VanillaPsycastsExpanded.PsycasterPathDef>
-    <defName>VPE_Darkside</defName>
+    <defName>Force_Darkside</defName>
     <label>Dark-Side</label>
-    <description>Harness the power of the Force to cast unique abilities.</description>
+    <description>Master the dark side of the Force to cast abilities that harm, dominate, and destroy enemies.</description>
     <background>UI/Backgrounds/Darkside</background>
     <altBackground>UI/AlternativeBackgrounds/PathBG_Darkside</altBackground>
     <tab>Force Powers</tab>
-    <tooltip>The dark side of the Force was considered by the Jedi to be the element aligned with selfishness, fear, hatred, aggression, and malice toward all living things. Such emotions seemed to increase the strength and abilities of a user of the dark side, providing a path towards personal power and the destruction or control of all opposition</tooltip>
+    <tooltip>The dark side of the Force was considered by the Jedi to be the element aligned with selfishness, fear, hatred, aggression, and malice toward all living things. Such emotions seemed to increase the strength and abilities of a user of the dark side, providing a path towards personal power and the destruction or control of all opposition.</tooltip>
   </VanillaPsycastsExpanded.PsycasterPathDef>
   
   <VanillaPsycastsExpanded.PsycasterPathDef>
-    <defName>VPE_SithSorcery</defName>
+    <defName>Force_SithSorcery</defName>
     <label>Sith Sorcery</label>
-    <description>An arcane expression of Force ability first developed and practiced by the original Sith species through which they manipulated the power of the dark side.</description>
+    <description>Master the arcane arts of the Sith to manipulate the dark side of the Force through spells and rituals.</description>
     <background>UI/Backgrounds/SithSorcerer</background>
     <altBackground>UI/AlternativeBackgrounds/PathBG_SithSorcery</altBackground>
     <tab>Force Powers</tab>
@@ -42,9 +42,9 @@
   </VanillaPsycastsExpanded.PsycasterPathDef>
   
   <VanillaPsycastsExpanded.PsycasterPathDef>
-    <defName>VPE_Telekinesis</defName>
+    <defName>Force_Telekinesis</defName>
     <label>Telekinesis</label>
-    <description>Harness the power of the Force to push and pull your enemies.</description>
+    <description>Master the Force to push, pull, and manipulate objects and enemies with telekinetic power.</description>
     <background>UI/Backgrounds/Telekinesis</background>
     <altBackground>UI/AlternativeBackgrounds/PathBG_Telekinesis</altBackground>
     <tab>Force Powers</tab>
@@ -52,12 +52,23 @@
   </VanillaPsycastsExpanded.PsycasterPathDef>
   
   <VanillaPsycastsExpanded.PsycasterPathDef>
-    <defName>VPE_JediTraining</defName>
+    <defName>Force_JediTraining</defName>
     <label>Jedi Training</label>
-    <description>A series of training regiments meant to improve the pawn's stats for a few days</description>
+    <description>Undergo rigorous Jedi training to enhance your abilities and improve your connection to the Force.</description>
     <background>UI/Backgrounds/JediTraining</background>
     <altBackground>UI/AlternativeBackgrounds/PathBG_JediTraining</altBackground>
     <tab>Force Powers</tab>
-    <tooltip>Jedi training was the action of teaching an apprentice the ways of the Force in the Jedi Order. Focusing on longer casting for longer buffs, start off with improving oneself, then move on to improving others with your skills</tooltip>
+    <tooltip>Jedi training was the action of teaching an apprentice the ways of the Force in the Jedi Order. Focusing on longer casting for longer buffs, start off with improving oneself, then move on to improving others with your skills.</tooltip>
   </VanillaPsycastsExpanded.PsycasterPathDef>
+
+  <VanillaPsycastsExpanded.PsycasterPathDef>
+    <defName>Force_LightsaberCombat</defName>
+    <label>Lightsaber Combat</label>
+    <description>Master the art of lightsaber combat to unleash powerful melee attacks and disable your opponents. Requires a melee weapon to use.</description>
+    <background>UI/Backgrounds/JediTraining</background>
+    <altBackground>UI/AlternativeBackgrounds/PathBG_LightsaberCombat</altBackground>
+    <tab>Force Powers</tab>
+    <tooltip>"Energy constantly flows through the crystal. You're not fighting with a simple blade as much as you are directing a current of power. Your thoughts, your actions, they become energy. They flow through the crystal as well and become a part of the blade." - Kanan Jarrus</tooltip>
+  </VanillaPsycastsExpanded.PsycasterPathDef>
+
 </Defs>

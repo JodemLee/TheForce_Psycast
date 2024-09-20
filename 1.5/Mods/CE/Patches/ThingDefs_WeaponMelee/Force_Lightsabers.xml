@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<Patch>
+
+      <!-- ========== Force_Saber_Base ========== -->
+      <Operation Class="PatchOperationAdd">
+        <xpath>Defs/ThingDef[@Name="Force_LightsaberBase"]/equippedStatOffsets</xpath>
+        <value>
+          <MeleeCritChance>0.63</MeleeCritChance>
+			  	<MeleeParryChance>0.75</MeleeParryChance>
+				  <MeleeDodgeChance>0.4</MeleeDodgeChance>
+        </value>
+      </Operation>
+      <Operation Class="PatchOperationAdd">
+        <xpath>Defs/ThingDef[@Name="Force_LightsaberBase"]/statBases</xpath>
+        <value>
+          <Bulk>1.5</Bulk>
+          <MeleeCounterParryBonus>0.5</MeleeCounterParryBonus>
+        </value>
+      </Operation>
+      <!-- Add CE attribute to all tools entries -->
+      <Operation Class="PatchOperationAttributeSet">
+        <xpath>Defs/ThingDef[@Name="Force_LightsaberBase"]/tools/li</xpath>
+        <value>CombatExtended.ToolCE</value>
+        <attribute>Class</attribute>
+      </Operation>
+      <Operation Class="PatchOperationAdd">
+        <xpath>Defs/ThingDef[@Name="Force_LightsaberBase"]/tools/li[label="hilt"]</xpath>
+        <value>
+          <armorPenetrationBlunt>0.500</armorPenetrationBlunt>
+        </value>
+      </Operation>
+      <Operation Class="PatchOperationAdd">
+        <xpath>Defs/ThingDef[@Name="Force_LightsaberBase"]/tools/li[label="point"]</xpath>
+        <value>
+          <armorPenetrationBlunt>8</armorPenetrationBlunt>
+					<armorPenetrationSharp>42</armorPenetrationSharp>
+        </value>
+      </Operation>
+      <Operation Class="PatchOperationAdd">
+        <xpath>Defs/ThingDef[@Name="Force_LightsaberBase"]/tools/li[label="edge"]</xpath>
+        <value>
+          <armorPenetrationBlunt>12</armorPenetrationBlunt>
+					<armorPenetrationSharp>20</armorPenetrationSharp>
+        </value>
+      </Operation>
+      <Operation Class="PatchOperationAdd">
+        <xpath>Defs/ThingDef[@Name="Force_LightsaberBase"]</xpath>
+        <value>
+          <weaponTags>
+            <li>CE_Sidearm</li>
+            <li>CE_OneHandedWeapon</li> 
+          </weaponTags>
+        </value>
+      </Operation> 
+  <!-- end sequence -->
+</Patch>

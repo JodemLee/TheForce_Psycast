@@ -11,47 +11,47 @@
     <researchPrerequisite>MicroelectronicsBasics</researchPrerequisite>
     <recipeUsers>
       <li>ElectricSmithy</li>
-	    <li>FueledSmithy</li>
+      <li>FueledSmithy</li>
       <li>TableMachining</li>
     </recipeUsers>
-          <ingredients>
-            <li>
-              <filter>
-                <thingDefs>
-                  <li>Plasteel</li>
-                </thingDefs>
-              </filter>
-              <count>150</count>
-            </li>
-            <li>
-              <filter>
-                <thingDefs>
-                  <li>ComponentIndustrial</li>
-                </thingDefs>
-              </filter>
-              <count>25</count>
-            </li>
-            <li>
-            <filter>
-            <thingDefs>
-              <li>ComponentSpacer</li>
-            </thingDefs>
-            </filter>
-            <count>1</count>
-            </li>
-            <li>
-              <filter>
-                <thingDefs>
-                  <li>Force_KyberCrystal</li>
-                </thingDefs>
-              </filter>
-              <count>1</count>
-            </li>
-          </ingredients>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Plasteel</li>
+          </thingDefs>
+        </filter>
+        <count>150</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ComponentIndustrial</li>
+          </thingDefs>
+        </filter>
+        <count>25</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>ComponentSpacer</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>Force_KyberCrystal</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
     <workSkill>Crafting</workSkill>
   </RecipeDef>
 
-  <RecipeDef  ParentName="Lightsaber_Crafting">
+  <RecipeDef ParentName="Lightsaber_Crafting">
     <defName>Force_CraftLightsaberSingle</defName>
     <label>Craft lightsaber (Single)</label>
     <products>
@@ -59,7 +59,7 @@
     </products>
   </RecipeDef>
 
-  <RecipeDef  ParentName="Lightsaber_Crafting">
+  <RecipeDef ParentName="Lightsaber_Crafting">
     <defName>Force_CraftLightsaberCurved</defName>
     <label>Craft lightsaber (Curved)</label>
     <products>
@@ -67,7 +67,7 @@
     </products>
   </RecipeDef>
 
-  <RecipeDef  ParentName="Lightsaber_Crafting">
+  <RecipeDef ParentName="Lightsaber_Crafting">
     <defName>Force_CraftLightsaberShoto</defName>
     <label>Craft lightsaber (Shoto)</label>
     <products>
@@ -75,7 +75,7 @@
     </products>
   </RecipeDef>
 
-  <RecipeDef  ParentName="Lightsaber_Crafting">
+  <RecipeDef ParentName="Lightsaber_Crafting">
     <defName>Force_CraftLightsaberDual</defName>
     <label>Craft lightsaber (Dual)</label>
     <products>
@@ -102,22 +102,29 @@
     <soundDrop>Silver_Drop</soundDrop>
     <resourceReadoutPriority>Middle</resourceReadoutPriority>
     <useHitPoints>false</useHitPoints>
+    <tradeTags>
+      <li>ExoticMisc</li>
+      <li>Force_KyberCrystal</li>
+    </tradeTags>
     <selectable>true</selectable>
     <altitudeLayer>Item</altitudeLayer>
-    <stackLimit>1</stackLimit>
-    <tradeNeverStack>True</tradeNeverStack>
+    <stackLimit>25</stackLimit>
+    <tradeNeverStack>False</tradeNeverStack>
     <descriptionHyperlinks>
       <RecipeDef>Make_StoneBlocksAny</RecipeDef>
     </descriptionHyperlinks>
     <statBases>
       <Beauty>5</Beauty>
-      <MarketValue>200</MarketValue>
+      <MarketValue>100</MarketValue>
       <Mass>0.3</Mass>
     </statBases>
     <comps>
       <li Class="CompProperties_Forbiddable" />
       <li>
         <compClass>CompColorable</compClass>
+      </li>
+      <li Class="TheForce_Psycast.CompProperties_GlowerOptions">
+        <glowRadius>1</glowRadius>
       </li>
     </comps>
     <alwaysHaulable>true</alwaysHaulable>
@@ -130,40 +137,40 @@
     <colorGenerator Class="ColorGenerator_Options">
       <options>
         <li>
-          <only>(153, 102, 204)</only>  <!--Amethyst-->
+          <only>(153, 102, 204)</only>          <!--Amethyst-->
         </li>
         <li>
-          <only>(10, 10, 10)</only>     <!--Black-->
+          <only>(10, 10, 10)</only>          <!--Black-->
         </li>
         <li>
-          <only>(135,206,250)</only>    <!--Blue-->
+          <only>(135,206,250)</only>          <!--Blue-->
         </li>
         <li>
-          <only>(220,20,60)</only>      <!--Red-->
+          <only>(220,20,60)</only>          <!--Red-->
         </li>
         <li>
-          <only>(0, 255, 255)</only>    <!--Cyan-->
+          <only>(0, 255, 255)</only>          <!--Cyan-->
         </li>
         <li>
-          <only>(0, 255, 0)</only>      <!--Green-->
+          <only>(0, 255, 0)</only>          <!--Green-->
         </li>
         <li>
-          <only>(75, 0, 130)</only>     <!--Indigo-->
+          <only>(75, 0, 130)</only>          <!--Indigo-->
         </li>
         <li>
-          <only>(255, 0, 255)</only>    <!--Magenta-->
+          <only>(255, 0, 255)</only>          <!--Magenta-->
         </li>
         <li>
-          <only>(255, 165, 0)</only>    <!--Orange-->
+          <only>(255, 165, 0)</only>          <!--Orange-->
         </li>
         <li>
-          <only>(255, 192, 203)</only>   <!--Pink-->
+          <only>(255, 192, 203)</only>          <!--Pink-->
         </li>
         <li>
-          <only>(255, 255, 255)</only>    <!--White-->
+          <only>(255, 255, 255)</only>          <!--White-->
         </li>
         <li>
-          <only>(255, 255, 0)</only>      <!--Yellow-->
+          <only>(255, 255, 0)</only>          <!--Yellow-->
         </li>
       </options>
     </colorGenerator>

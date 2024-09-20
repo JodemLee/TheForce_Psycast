@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Defs>
+	
+
+	<VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase" Name="Force_LightsaberCombatBase" Abstract="True">
+		<requireLineOfSight>True</requireLineOfSight>
+		<targetMode>Pawn</targetMode>
+		<range>2.5</range>
+		<distanceToTarget>1</distanceToTarget>
+		<drawAimPie>false</drawAimPie>
+	</VFECore.Abilities.AbilityDef>
+
+	<VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
+		<defName>Force_Jedi_Ready</defName>
+		<label>Jedi Ready</label>
+		<description>Jedi ready was the most common stance among Jedi. The dominant foot was held back, with the blade in a vertical parry position on the dominant side. Provides a tempory boost to offensive capabilities</description>
+		<iconPath>Abilities/LightsaberCombat/JediReady</iconPath>
+		<targetMode>Self</targetMode>
+		<castTime>7</castTime>
+		<durationTime>7200</durationTime>
+		<cooldownTime>3600</cooldownTime>
+		<abilityClass>VFECore.Abilities.Ability_Blank</abilityClass>
+		<castSound>VPE_Speedboost_Cast</castSound>
+		<modExtensions>
+		  <li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
+			<path>Force_LightsaberCombat</path>
+			<level>1</level>
+			<order>1</order>
+			<psyfocusCost>0.10</psyfocusCost>
+			<entropyGain>10</entropyGain>
+			<psychic>true</psychic>
+		  </li>
+		  <li Class="VFECore.Abilities.AbilityExtension_Hediff">
+			<hediff>Force_JediReady</hediff>
+			<durationMultiplier>PsychicSensitivity</durationMultiplier>
+		  </li>
+		</modExtensions>
+	  </VFECore.Abilities.AbilityDef>
+
+	  <VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
+		<defName>Force_CenterOfBeing</defName>
+		<label>Center of Being</label>
+		<description>Users of this stance would hold the lightsaber horizontally, with the lightsaber hilt just below the chin. The meditative stance would find use in combination with more passive and defensive forms. Provides a temporary increase in defensive capabilities.</description>
+		<iconPath>Abilities/LightsaberCombat/CenterOfBeing</iconPath>
+		<targetMode>Self</targetMode>
+		<castTime>7</castTime>
+		<durationTime>7200</durationTime>
+		<cooldownTime>3600</cooldownTime>
+		<abilityClass>VFECore.Abilities.Ability_Blank</abilityClass>
+		<castSound>VPE_Speedboost_Cast</castSound>
+		<modExtensions>
+		  <li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
+			<path>Force_LightsaberCombat</path>
+			<level>1</level>
+			<order>3</order>
+			<psyfocusCost>0.10</psyfocusCost>
+			<entropyGain>10</entropyGain>
+			<psychic>true</psychic>
+		  </li>
+		  <li Class="VFECore.Abilities.AbilityExtension_Hediff">
+			<hediff>Force_CenterOfBeing</hediff>
+			<durationMultiplier>PsychicSensitivity</durationMultiplier>
+		  </li>
+		</modExtensions>
+	  </VFECore.Abilities.AbilityDef>
+
+	<VFECore.Abilities.AbilityDef ParentName="Force_LightsaberCombatBase">
+		<defName>Force_SunDjerm</defName>
+		<label>Sun Djerm</label>
+		<description>An attack used by the Jedi that destroyed or disarmed the weapon of an opponent, the objective usually being not to physically harm the wielder. This destroys the opponents weapon permamently.</description>
+		<iconPath>Abilities/LightsaberCombat/SunDjerm</iconPath>
+		<abilityClass>TheForce_Psycast.Lightsabers.Lightsaber_Combat.Lightsaber_Ability_SunDjerm</abilityClass>
+		<castTime>1</castTime>
+		<targetMode>Pawn</targetMode>
+		<needsTicking>true</needsTicking>
+		<cooldownTime>300</cooldownTime>
+		<modExtensions>
+		  <li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
+			<path>Force_LightsaberCombat</path>
+			<level>3</level>
+			<order>2</order>
+			<psyfocusCost>0.15</psyfocusCost>
+			<entropyGain>15</entropyGain>
+		  </li>
+		</modExtensions>
+	  </VFECore.Abilities.AbilityDef>
+
+	  <VFECore.Abilities.AbilityDef ParentName="Force_LightsaberCombatBase">
+		<defName>Force_ChoMok</defName>
+		<label>Cho Mok</label>
+		<description>Perform an attack that cuts off a random limb of the target.</description>
+		<iconPath>Abilities/LightsaberCombat/ChoMok</iconPath>
+		<abilityClass>TheForce_Psycast.Lightsabers.Lightsaber_Combat.Lightsaber_Ability_ChoMok</abilityClass>
+		<castTime>1</castTime>
+		<targetMode>Pawn</targetMode>
+		<needsTicking>true</needsTicking>
+		<cooldownTime>100</cooldownTime>
+		<modExtensions>
+		  <li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
+			<path>Force_LightsaberCombat</path>
+			<level>3</level>
+			<order>1</order>
+			<psyfocusCost>0.06</psyfocusCost>
+			<entropyGain>20</entropyGain>
+		  </li>
+		</modExtensions>
+	  </VFECore.Abilities.AbilityDef>
+
+	  <VFECore.Abilities.AbilityDef ParentName="Force_LightsaberCombatBase">
+		<defName>Force_ChoSun</defName>
+		<label>Cho Sun</label>
+		<description>Perform an attack that cuts off an arm of the target.</description>
+		<iconPath>Abilities/LightsaberCombat/ChoSun</iconPath>
+		<abilityClass>TheForce_Psycast.Lightsabers.Lightsaber_Combat.Lightsaber_Ability_ChoSun</abilityClass>
+		<castTime>1</castTime>
+		<targetMode>Pawn</targetMode>
+		<needsTicking>true</needsTicking>
+		<cooldownTime>600</cooldownTime>
+		<modExtensions>
+		  <li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
+			<path>Force_LightsaberCombat</path>
+			<level>4</level>
+			<order>1</order>
+			<psyfocusCost>0.06</psyfocusCost>
+			<entropyGain>30</entropyGain>
+		  </li>
+		</modExtensions>
+	  </VFECore.Abilities.AbilityDef>
+
+	  <VFECore.Abilities.AbilityDef ParentName="Force_LightsaberCombatBase">
+		<defName>Force_ChoMai</defName>
+		<label>Cho Mai</label>
+		<description>Perform an attack that cuts off a hand and disarms the target.</description>
+		<iconPath>Abilities/LightsaberCombat/ChoMai</iconPath>
+		<abilityClass>TheForce_Psycast.Lightsabers.Lightsaber_Combat.Lightsaber_Ability_ChoMai</abilityClass>
+		<castTime>1</castTime>
+		<targetMode>Pawn</targetMode>
+		<needsTicking>true</needsTicking>
+		<cooldownTime>3600</cooldownTime>
+		<modExtensions>
+		  <li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
+			<path>Force_LightsaberCombat</path>
+			<level>5</level>
+			<order>1</order>
+			<psyfocusCost>0.06</psyfocusCost>
+			<entropyGain>45</entropyGain>
+		  </li>
+		</modExtensions>
+	  </VFECore.Abilities.AbilityDef>
+
+	  <VFECore.Abilities.AbilityDef ParentName="Force_LightsaberCombatBase">
+		<defName>Force_Shiim</defName>
+		<label>Shiim</label>
+		<description>A light attack meant to temporarily stun or slow the target</description>
+		<iconPath>Abilities/LightsaberCombat/Shiim</iconPath>
+		<abilityClass>TheForce_Psycast.Lightsabers.Lightsaber_Combat.Lightsaber_AbilityBase</abilityClass>
+		<castTime>0.1</castTime>
+		<targetMode>Pawn</targetMode>
+		<needsTicking>true</needsTicking>
+		<durationTime>250</durationTime>
+		<cooldownTime>220</cooldownTime>
+		<modExtensions>
+		  <li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
+			<path>Force_LightsaberCombat</path>
+			<level>2</level>
+			<order>2</order>
+			<psyfocusCost>0.06</psyfocusCost>
+			<entropyGain>20</entropyGain>
+		  </li>
+		  <li Class="VFECore.Abilities.AbilityExtension_Stun">
+		  </li>
+		</modExtensions>
+	  </VFECore.Abilities.AbilityDef>
+
+	  <VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
+		<defName>Force_DunMoch</defName>
+		<label>Dun Möch</label>
+		<description>Hurl Taunts at the opponent, enraging them so they come after you.</description>
+		<iconPath>Abilities/LightsaberCombat/DunMoch</iconPath>
+		<abilityClass>VFECore.Abilities.Ability_Blank</abilityClass>
+		<targetingParameters>
+		  <canTargetHumans>True</canTargetHumans>
+		  <canTargetSelf>false</canTargetSelf>
+		  <canTargetAnimals>True</canTargetAnimals>
+		  <neverTargetIncapacitated>True</neverTargetIncapacitated>
+		</targetingParameters>
+		<castTime>7</castTime>
+		<durationTime>240</durationTime>
+		<range>7</range>
+		<cooldownTime>100</cooldownTime>
+		<castSound>PsycastPsychicEffect</castSound>
+		<modExtensions>
+		  <li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
+			<path>Force_LightsaberCombat</path>
+			<level>4</level>
+			<order>2</order>
+			<psyfocusCost>0.01</psyfocusCost>
+			<entropyGain>30</entropyGain>
+			<psychic>true</psychic>
+		  </li>
+		  <li Class = "VanillaPsycastsExpanded.AbilityExtension_ForceJobOnTarget">
+			<jobDef>GotoMindControlled</jobDef>
+		  </li>
+		</modExtensions>
+	  </VFECore.Abilities.AbilityDef>
+
+	  <VFECore.Abilities.AbilityDef ParentName="Force_LightsaberCombatBase">
+		<defName>Force_MouKei</defName>
+		<label>Mou Kei</label>
+		<description>Perform an attack that cuts off majority of the targets limbs</description>
+		<iconPath>Abilities/LightsaberCombat/MouKei</iconPath>
+		<abilityClass>TheForce_Psycast.Lightsabers.Lightsaber_Combat.Lightsaber_Ability_MouKei</abilityClass>
+		<castTime>1</castTime>
+		<targetMode>Pawn</targetMode>
+		<needsTicking>true</needsTicking>
+		<cooldownTime>3600</cooldownTime>
+		<modExtensions>
+		  <li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
+			<path>Force_LightsaberCombat</path>
+			<level>5</level>
+			<order>2</order>
+			<psyfocusCost>0.06</psyfocusCost>
+			<entropyGain>45</entropyGain>
+		  </li>
+		</modExtensions>
+	  </VFECore.Abilities.AbilityDef>
+
+	  <VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
+		<defName>Force_Sai</defName>
+		<label>Sai</label>
+		<description>Jump towards the target</description>
+		<iconPath>Abilities/LightsaberCombat/Sai</iconPath>
+		<abilityClass>TheForce_Psycast.Lightsabers.Lightsaber_Combat.Lightsaber_Ability_Sai</abilityClass>
+		<castTime>1</castTime>
+		<range>5</range>
+		<targetMode>Pawn</targetMode>
+		<needsTicking>true</needsTicking>
+		<cooldownTime>100</cooldownTime>
+		<modExtensions>
+		  <li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
+			<path>Force_LightsaberCombat</path>
+			<level>3</level>
+			<order>3</order>
+			<psyfocusCost>0.06</psyfocusCost>
+			<entropyGain>20</entropyGain>
+		  </li>
+		</modExtensions>
+	  </VFECore.Abilities.AbilityDef>
+
+	  <VFECore.Abilities.AbilityDef ParentName="Force_LightsaberCombatBase">
+		<defName>Force_SaiTok</defName>
+		<label>Sai Tok</label>
+		<description>Perform an attack that bisects the target</description>
+		<iconPath>Abilities/LightsaberCombat/SaiTok</iconPath>
+		<abilityClass>TheForce_Psycast.Lightsabers.Lightsaber_Combat.Lightsaber_Ability_SaiTok</abilityClass>
+		<castTime>1</castTime>
+		<targetMode>Pawn</targetMode>
+		<needsTicking>true</needsTicking>
+		<cooldownTime>600</cooldownTime>
+		<modExtensions>
+		  <li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
+			<path>Force_LightsaberCombat</path>
+			<level>4</level>
+			<order>3</order>
+			<psyfocusCost>0.06</psyfocusCost>
+			<entropyGain>30</entropyGain>
+		  </li>
+		</modExtensions>
+	  </VFECore.Abilities.AbilityDef>
+
+	  <VFECore.Abilities.AbilityDef ParentName="Force_LightsaberCombatBase">
+		<defName>Force_SaiCha</defName>
+		<label>Sai Cha</label>
+		<description>Perform an attack that beheads the target</description>
+		<iconPath>Abilities/LightsaberCombat/SaiCha</iconPath>
+		<abilityClass>TheForce_Psycast.Lightsabers.Lightsaber_Combat.Lightsaber_Ability_SaiCha</abilityClass>
+		<castTime>1</castTime>
+		<targetMode>Pawn</targetMode>
+		<needsTicking>true</needsTicking>
+		<cooldownTime>3600</cooldownTime>
+		<modExtensions>
+		  <li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
+			<path>Force_LightsaberCombat</path>
+			<level>5</level>
+			<order>3</order>
+			<psyfocusCost>0.06</psyfocusCost>
+			<entropyGain>45</entropyGain>
+		  </li>
+		</modExtensions>
+	  </VFECore.Abilities.AbilityDef>
+
+</Defs>	  

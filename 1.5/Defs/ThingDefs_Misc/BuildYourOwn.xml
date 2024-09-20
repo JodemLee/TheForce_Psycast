@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+	<ThingDef ParentName="Force_LightsaberBase">
+		<defName>Force_Lightsaber_BuildYourOwn</defName>
+		<label>Lightsaber</label>
+		<description>The lightsaber, also referred to as a laser sword by those who were unfamiliar with it, was a weapon usually used by the Jedi, Sith, and other Force-sensitives. Lightsabers consisted of a plasma blade, powered by a kyber crystal, that was emitted from a usually metal hilt and could be shut off at will. It was a weapon that required skill and training, and was greatly enhanced when used in conjunction with the Force.</description>
+		<possessionCount>1</possessionCount>
+		<smeltable>false</smeltable>
+		<graphicData>
+			<texPath>Things/Item/Lightsaber/SingleSaber/SaberHilts/Jaden_Korr</texPath>
+		</graphicData>
+		<techLevel>Ultra</techLevel>
+		<weaponTags>
+			<li>Force_Lightsaber</li>
+		</weaponTags>
+		<statBases>
+			<WorkToMake>3000</WorkToMake>
+			<Mass>2</Mass>
+		</statBases>
+		<equippedStatOffsets>
+			<PsychicEntropyRecoveryRate>0.1</PsychicEntropyRecoveryRate>
+			<MeditationFocusGain>0.1</MeditationFocusGain>
+		</equippedStatOffsets>
+		<equippedAngleOffset>-45</equippedAngleOffset>
+		<colorGenerator IsNull="True"/>
+		<comps>
+			<li Class="GraphicCustomization.CompProperties_GraphicCustomization">
+				<customizable>true</customizable>
+				<customizationTitle>Lightsaber Customization</customizationTitle>
+				<graphics>
+					<li>
+						<name>Emitter</name>
+						<texVariants>
+							<li>
+								<texName>Armafred Umphana</texName>
+								<outline>Things/Item/Lightsaber/BuildYourOwn/Outline/Emitter/Armafred_Umphana</outline>
+								<texture>Things/Item/Lightsaber/BuildYourOwn/Hilt/Emitter/Armafred_Umphana</texture>
+							</li>
+							<li>
+								<texName>Davicol Cusstic</texName>
+								<outline>Things/Item/Lightsaber/BuildYourOwn/Outline/Emitter/Davicol_Cusstic</outline>
+								<texture>Things/Item/Lightsaber/BuildYourOwn/Hilt/Emitter/Davicol_Cusstic</texture>
+							</li>
+							<li>
+								<texName>Jarroge Cassedg</texName>
+								<outline>Things/Item/Lightsaber/BuildYourOwn/Outline/Emitter/Jarroge_Cassedg</outline>
+								<texture>Things/Item/Lightsaber/BuildYourOwn/Hilt/Emitter/Jarroge_Cassedg</texture>
+							</li>
+							<li>
+								<texName>Jermose Fetnew</texName>
+								<outline>Things/Item/Lightsaber/BuildYourOwn/Outline/Emitter/Jermose_Fetnew</outline>
+								<texture>Things/Item/Lightsaber/BuildYourOwn/Hilt/Emitter/Jermose_Fetnew</texture>
+							</li>
+							<li>
+								<texName>Kadsant Beevloos</texName>
+								<outline>Things/Item/Lightsaber/BuildYourOwn/Outline/Emitter/Kadsant_Beevloos</outline>
+								<texture>Things/Item/Lightsaber/BuildYourOwn/Hilt/Emitter/Kadsant_Beevloos</texture>
+							</li>
+							<li>
+								<texName>Keoclif Harbanst</texName>
+								<outline>Things/Item/Lightsaber/BuildYourOwn/Outline/Emitter/Keoclif_Harbanst</outline>
+								<texture>Things/Item/Lightsaber/BuildYourOwn/Hilt/Emitter/Keoclif_Harbanst</texture>
+							</li>
+							<li>
+								<texName>Sinjac Canotrou</texName>
+								<outline>Things/Item/Lightsaber/BuildYourOwn/Outline/Emitter/Sinjac_Canotrou</outline>
+								<texture>Things/Item/Lightsaber/BuildYourOwn/Hilt/Emitter/Sinjac_Canotrou</texture>
+							</li>
+							<li>
+								<texName>Zankev Surmbrum</texName>
+								<outline>Things/Item/Lightsaber/BuildYourOwn/Outline/Emitter/Zankev_Surmbrum</outline>
+								<texture>Things/Item/Lightsaber/BuildYourOwn/Hilt/Emitter/Zankev_Surmbrum</texture>
+							</li>
+						</texVariants>
+					</li>
+					<li>
+						<name>Body 1</name>
+						<texVariants>
+							<li>
+								<texName>A</texName>
+								<outline>Things/Item/Lightsaber/BuildYourOwn/Outline/Body1/A1</outline>
+								<texture>Things/Item/Lightsaber/BuildYourOwn/Hilt/Body1/A1</texture>
+							</li>
+							<li>
+								<texName>B</texName>
+								<outline>Things/Item/Lightsaber/BuildYourOwn/Outline/Body1/B1</outline>
+								<texture>Things/Item/Lightsaber/BuildYourOwn/Hilt/Body1/B1</texture>
+							</li>
+							<li>
+								<texName>C</texName>
+								<outline>Things/Item/Lightsaber/BuildYourOwn/Outline/Body1/C1</outline>
+								<texture>Things/Item/Lightsaber/BuildYourOwn/Hilt/Body1/C1</texture>
+							</li>
+							<li>
+								<texName>D</texName>
+								<outline>Things/Item/Lightsaber/BuildYourOwn/Outline/Body1/D1</outline>
+								<texture>Things/Item/Lightsaber/BuildYourOwn/Hilt/Body1/D1</texture>
+							</li>
+							<li>
+								<texName>E</texName>
+								<outline>Things/Item/Lightsaber/BuildYourOwn/Outline/Body1/E1</outline>
+								<texture>Things/Item/Lightsaber/BuildYourOwn/Hilt/Body1/E1</texture>
+							</li>
+							<li>
+								<texName>F</texName>
+								<outline>Things/Item/Lightsaber/BuildYourOwn/Outline/Body1/F1</outline>
+								<texture>Things/Item/Lightsaber/BuildYourOwn/Hilt/Body1/F1</texture>
+							</li>
+							<li>
+								<texName>G</texName>
+								<outline>Things/Item/Lightsaber/BuildYourOwn/Outline/Body1/G1</outline>
+								<texture>Things/Item/Lightsaber/BuildYourOwn/Hilt/Body1/G1</texture>
+							</li>
+							<li>
+								<texName>H</texName>
+								<outline>Things/Item/Lightsaber/BuildYourOwn/Outline/Body1/H1</outline>
+								<texture>Things/Item/Lightsaber/BuildYourOwn/Hilt/Body1/H1</texture>
+							</li>
+							<li>
+								<texName>I</texName>
+								<outline>Things/Item/Lightsaber/BuildYourOwn/Outline/Body1/I1</outline>
+								<texture>Things/Item/Lightsaber/BuildYourOwn/Hilt/Body1/I1</texture>
+							</li>
+							<li>
+								<texName>J</texName>
+								<outline>Things/Item/Lightsaber/BuildYourOwn/Outline/Body1/J1</outline>
+								<texture>Things/Item/Lightsaber/BuildYourOwn/Hilt/Body1/J1</texture>
+							</li>
+							<li>
+								<texName>K</texName>
+								<outline>Things/Item/Lightsaber/BuildYourOwn/Outline/Body1/K1</outline>
+								<texture>Things/Item/Lightsaber/BuildYourOwn/Hilt/Body1/K1</texture>
+							</li>
+							<li>
+								<texName>L</texName>
+								<outline>Things/Item/Lightsaber/BuildYourOwn/Outline/Body1/L1</outline>
+								<texture>Things/Item/Lightsaber/BuildYourOwn/Hilt/Body1/L1</texture>
+							</li>
+							<li>
+								<texName>M</texName>
+								<outline>Things/Item/Lightsaber/BuildYourOwn/Outline/Body1/M1</outline>
+								<texture>Things/Item/Lightsaber/BuildYourOwn/Hilt/Body1/M1</texture>
+							</li>
+							<li>
+								<texName>N</texName>
+								<outline>Things/Item/Lightsaber/BuildYourOwn/Outline/Body1/N1</outline>
+								<texture>Things/Item/Lightsaber/BuildYourOwn/Hilt/Body1/N1</texture>
+							</li>
+							<li>
+								<texName>O</texName>
+								<outline>Things/Item/Lightsaber/BuildYourOwn/Outline/Body1/O1</outline>
+								<texture>Things/Item/Lightsaber/BuildYourOwn/Hilt/Body1/O1</texture>
+							</li>
+							<li>
+								<texName>P</texName>
+								<outline>Things/Item/Lightsaber/BuildYourOwn/Outline/Body1/P1</outline>
+								<texture>Things/Item/Lightsaber/BuildYourOwn/Hilt/Body1/P1</texture>
+							</li>
+						</texVariants>
+					</li>
+					<li>
+						<name>Button</name>
+						<texVariants>
+							<li>
+								<texName>Aubrjosu Wimsat</texName>
+								<outline>Things/Item/Lightsaber/BuildYourOwn/Outline/Button/AubrjosuWimsat</outline>
+								<texture>Things/Item/Lightsaber/BuildYourOwn/Hilt/Button/AubrjosuWimsat</texture>
+							</li>
+							<li>
+								<texName>Dantjul Colisou</texName>
+								<outline>Things/Item/Lightsaber/BuildYourOwn/Outline/Button/DantjulColisou</outline>
+								<texture>Things/Item/Lightsaber/BuildYourOwn/Hilt/Button/DantjulColisou</texture>
+							</li>
+							<li>
+								<texName>Dilbren Mussbar</texName>
+								<outline>Things/Item/Lightsaber/BuildYourOwn/Outline/Button/DilbrenMussbar</outline>
+								<texture>Things/Item/Lightsaber/BuildYourOwn/Hilt/Button/DilbrenMussbar</texture>
+							</li>
+							<li>
+								<texName>Erictre Danetri</texName>
+								<outline>Things/Item/Lightsaber/BuildYourOwn/Outline/Button/ErictreDanetri</outline>
+								<texture>Things/Item/Lightsaber/BuildYourOwn/Hilt/Button/ErictreDanetri</texture>
+							</li>
+							<li>
+								<texName>Garrcamr Jaqbram</texName>
+								<outline>Things/Item/Lightsaber/BuildYourOwn/Outline/Button/GarrcamrJaqbram</outline>
+								<texture>Things/Item/Lightsaber/BuildYourOwn/Hilt/Button/GarrcamrJaqbram</texture>
+							</li>
+							<li>
+								<texName>Gianbra Bolhee</texName>
+								<outline>Things/Item/Lightsaber/BuildYourOwn/Outline/Button/GianbraBolhee</outline>
+								<texture>Things/Item/Lightsaber/BuildYourOwn/Hilt/Button/GianbraBolhee</texture>
+							</li>
+							<li>
+								<texName>Gianshel Skelloll</texName>
+								<outline>Things/Item/Lightsaber/BuildYourOwn/Outline/Button/GianshelSkelloll</outline>
+								<texture>Things/Item/Lightsaber/BuildYourOwn/Hilt/Button/GianshelSkelloll</texture>
+							</li>
+							<li>
+								<texName>Joalarr Autrwild</texName>
+								<outline>Things/Item/Lightsaber/BuildYourOwn/Outline/Button/JoalarrAutrwild</outline>
+								<texture>Things/Item/Lightsaber/BuildYourOwn/Hilt/Button/JoalarrAutrwild</texture>
+							</li>
+						</texVariants>
+					</li>
+					<li>
+						<name>Body 2</name>
+						<texVariants>
+							<li>
+								<texName>A</texName>
+								<outline>Things/Item/Lightsaber/BuildYourOwn/Outline/Body2/A2</outline>
+								<texture>Things/Item/Lightsaber/BuildYourOwn/Hilt/Body2/A2</texture>
+							</li>
+							<li>
+								<texName>B</texName>
+								<outline>Things/Item/Lightsaber/BuildYourOwn/Outline/Body2/B2</outline>
+								<texture>Things/Item/Lightsaber/BuildYourOwn/Hilt/Body2/B2</texture>
+							</li>
+							<li>
+								<texName>C</texName>
+								<outline>Things/Item/Lightsaber/BuildYourOwn/Outline/Body2/C2</outline>
+								<texture>Things/Item/Lightsaber/BuildYourOwn/Hilt/Body2/C2</texture>
+							</li>
+							<li>
+								<texName>D</texName>
+								<outline>Things/Item/Lightsaber/BuildYourOwn/Outline/Body2/D2</outline>
+								<texture>Things/Item/Lightsaber/BuildYourOwn/Hilt/Body2/D2</texture>
+							</li>
+							<li>
+								<texName>E</texName>
+								<outline>Things/Item/Lightsaber/BuildYourOwn/Outline/Body2/E2</outline>
+								<texture>Things/Item/Lightsaber/BuildYourOwn/Hilt/Body2/E2</texture>
+							</li>
+							<li>
+								<texName>F</texName>
+								<outline>Things/Item/Lightsaber/BuildYourOwn/Outline/Body2/F2</outline>
+								<texture>Things/Item/Lightsaber/BuildYourOwn/Hilt/Body2/F2</texture>
+							</li>
+							<li>
+								<texName>G</texName>
+								<outline>Things/Item/Lightsaber/BuildYourOwn/Outline/Body2/G2</outline>
+								<texture>Things/Item/Lightsaber/BuildYourOwn/Hilt/Body2/G2</texture>
+							</li>
+							<li>
+								<texName>H</texName>
+								<outline>Things/Item/Lightsaber/BuildYourOwn/Outline/Body2/H2</outline>
+								<texture>Things/Item/Lightsaber/BuildYourOwn/Hilt/Body2/H2</texture>
+							</li>
+							<li>
+								<texName>I</texName>
+								<outline>Things/Item/Lightsaber/BuildYourOwn/Outline/Body2/I2</outline>
+								<texture>Things/Item/Lightsaber/BuildYourOwn/Hilt/Body2/I2</texture>
+							</li>
+							<li>
+								<texName>J</texName>
+								<outline>Things/Item/Lightsaber/BuildYourOwn/Outline/Body2/J2</outline>
+								<texture>Things/Item/Lightsaber/BuildYourOwn/Hilt/Body2/J2</texture>
+							</li>
+							<li>
+								<texName>K</texName>
+								<outline>Things/Item/Lightsaber/BuildYourOwn/Outline/Body2/K2</outline>
+								<texture>Things/Item/Lightsaber/BuildYourOwn/Hilt/Body2/K2</texture>
+							</li>
+							<li>
+								<texName>L</texName>
+								<outline>Things/Item/Lightsaber/BuildYourOwn/Outline/Body2/L2</outline>
+								<texture>Things/Item/Lightsaber/BuildYourOwn/Hilt/Body2/L2</texture>
+							</li>
+							<li>
+								<texName>M</texName>
+								<outline>Things/Item/Lightsaber/BuildYourOwn/Outline/Body2/M2</outline>
+								<texture>Things/Item/Lightsaber/BuildYourOwn/Hilt/Body2/M2</texture>
+							</li>
+							<li>
+								<texName>N</texName>
+								<outline>Things/Item/Lightsaber/BuildYourOwn/Outline/Body2/N2</outline>
+								<texture>Things/Item/Lightsaber/BuildYourOwn/Hilt/Body2/N2</texture>
+							</li>
+							<li>
+								<texName>O</texName>
+								<outline>Things/Item/Lightsaber/BuildYourOwn/Outline/Body2/O2</outline>
+								<texture>Things/Item/Lightsaber/BuildYourOwn/Hilt/Body2/O2</texture>
+							</li>
+							<li>
+								<texName>P</texName>
+								<outline>Things/Item/Lightsaber/BuildYourOwn/Outline/Body2/P2</outline>
+								<texture>Things/Item/Lightsaber/BuildYourOwn/Hilt/Body2/P2</texture>
+							</li>
+						</texVariants>
+					</li>
+					<li>
+						<name>Pommel</name>
+						<texVariants>
+							<li>
+								<texName>Ahmomar Dyarud</texName>
+								<outline>Things/Item/Lightsaber/BuildYourOwn/Outline/Pommel/AhmomarDyarud</outline>
+								<texture>Things/Item/Lightsaber/BuildYourOwn/Hilt/Pommel/AhmomarDyarud</texture>
+							</li>
+							<li>
+								<texName>Byrxza Bencgeor</texName>
+								<outline>Things/Item/Lightsaber/BuildYourOwn/Outline/Pommel/ByrxzaBencgeor</outline>
+								<texture>Things/Item/Lightsaber/BuildYourOwn/Hilt/Pommel/ByrxzaBencgeor</texture>
+							</li>
+							<li>
+								<texName>Chrset Crowcup</texName>
+								<outline>Things/Item/Lightsaber/BuildYourOwn/Outline/Pommel/ChrsetCrowcup</outline>
+								<texture>Things/Item/Lightsaber/BuildYourOwn/Hilt/Pommel/ChrsetCrowcup</texture>
+							</li>
+							<li>
+								<texName>Freroy Idemang</texName>
+								<outline>Things/Item/Lightsaber/BuildYourOwn/Outline/Pommel/FreroyIdemang</outline>
+								<texture>Things/Item/Lightsaber/BuildYourOwn/Hilt/Pommel/FreroyIdemang</texture>
+							</li>
+							<li>
+								<texName>Jaspdari Seaste</texName>
+								<outline>Things/Item/Lightsaber/BuildYourOwn/Outline/Pommel/JaspdariSeaste</outline>
+								<texture>Things/Item/Lightsaber/BuildYourOwn/Hilt/Pommel/JaspdariSeaste</texture>
+							</li>
+							<li>
+								<texName>Kenree Gidewe</texName>
+								<outline>Things/Item/Lightsaber/BuildYourOwn/Outline/Pommel/KenreeGidewe</outline>
+								<texture>Things/Item/Lightsaber/BuildYourOwn/Hilt/Pommel/KenreeGidewe</texture>
+							</li>
+							<li>
+								<texName>Ramchar Mogber</texName>
+								<outline>Things/Item/Lightsaber/BuildYourOwn/Outline/Pommel/RamcharMogber</outline>
+								<texture>Things/Item/Lightsaber/BuildYourOwn/Hilt/Pommel/RamcharMogber</texture>
+							</li>
+							<li>
+								<texName>Shayedwa Caralec</texName>
+								<outline>Things/Item/Lightsaber/BuildYourOwn/Outline/Pommel/ShayedwaCaralec</outline>
+								<texture>Things/Item/Lightsaber/BuildYourOwn/Hilt/Pommel/ShayedwaCaralec</texture>
+							</li>
+						</texVariants>
+					</li>
+				</graphics>
+			</li>
+			<li Class="TheForce_Psycast.Lightsabers.CompProperties_LightsaberBlade">
+				<graphicData>
+					<texPath>Things/Item/Lightsaber/SingleSaber/SaberOutline/White_Outline</texPath>
+					<graphicClass>Graphic_Single</graphicClass>
+					<shaderType>TransparentPostLight</shaderType>
+					<drawSize>1.5</drawSize>
+				</graphicData>
+				<lightsaberCore1GraphicData>
+					<texPath>Things/Item/Lightsaber/SingleSaber/SaberCore/White_Core</texPath>
+					<graphicClass>Graphic_Single</graphicClass>
+					<shaderType>TransparentPostLight</shaderType>
+					<drawSize>1.5</drawSize>
+				</lightsaberCore1GraphicData>
+				<lightsaberGlowGraphic>
+					<texPath>Things/Item/Lightsaber/SingleSaber/SaberOutline/White_Glow</texPath>
+					<graphicClass>Graphic_Single</graphicClass>
+					<shaderType>TransparentPostLight</shaderType>
+					<drawSize>1.3</drawSize>
+				</lightsaberGlowGraphic>
+			</li>
+		</comps>
+	</ThingDef>
+</Defs>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Defs>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>Force_Deflection</defName>
+    <label>Deflection</label>
+    <skill>Melee</skill>
+    <description>An expertise in the deflection of projectiles.</description>
+    <statOffsets>
+      <Force_Lightsaber_Deflection>2.5</Force_Lightsaber_Deflection>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>Force_FormOne</defName>
+    <label>Form I: Shii-Cho</label>
+    <skill>Melee</skill>
+    <description>An expertise in the Form I: Shii-Cho.</description>
+    <statOffsets>
+      <MeleeDPS>0.20</MeleeDPS>
+      <MeleeHitChance>0.1</MeleeHitChance>
+      <MeleeDodgeChance>-0.1</MeleeDodgeChance>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>Force_FormTwo</defName>
+    <label>Form II: Makashi</label>
+    <skill>Melee</skill>
+    <description>An expertise in the Form II: Makashi.</description>
+    <statOffsets>
+      <MeleeArmorPenetration>0.05</MeleeArmorPenetration>
+      <MeleeHitChance>0.16</MeleeHitChance>
+      <MeleeDodgeChance>0.1</MeleeDodgeChance>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>Force_FormThree</defName>
+    <label>Form III: Soresu</label>
+    <skill>Melee</skill>
+    <description>An expertise in the Form III: Soresu.</description>
+    <statOffsets>
+      <MeleeDPS>-0.1</MeleeDPS>
+      <MeleeDodgeChance>0.2</MeleeDodgeChance>
+      <Force_Lightsaber_Deflection>0.4</Force_Lightsaber_Deflection>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>Force_FormFour</defName>
+    <label>Form IV: Ataru</label>
+    <skill>Melee</skill>
+    <description>An expertise in the Form IV: Ataru.</description>
+    <statOffsets>
+      <MeleeDPS>0.3</MeleeDPS>
+      <PsychicEntropyRecoveryRate>0.1</PsychicEntropyRecoveryRate>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>Force_FormFive</defName>
+    <label>Form V: Shien/Djem So</label>
+    <skill>Melee</skill>
+    <description>An expertise in the Form V: Shien/Djem So.</description>
+    <statOffsets>
+      <MeleeArmorPenetration>0.04</MeleeArmorPenetration>
+      <MeleeHitChance>0.1</MeleeHitChance>
+      <Force_Lightsaber_Deflection>0.14</Force_Lightsaber_Deflection>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>Force_FormSix</defName>
+    <label>Form VI: Niman</label>
+    <skill>Melee</skill>
+    <description>An expertise in the Form VI: Niman.</description>
+    <statOffsets>
+      <MeleeDPS>.05</MeleeDPS>
+      <MeleeHitChance>.1</MeleeHitChance>
+      <MeleeDodgeChance>0.1</MeleeDodgeChance>
+      <PsychicSensitivityOffset>0.07</PsychicSensitivityOffset>
+      <PsychicEntropyRecoveryRate>0.122</PsychicEntropyRecoveryRate>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+  <VSE.Expertise.ExpertiseDef>
+    <defName>Force_Form7</defName>
+    <label>Form VII: Juyo/Vaapad</label>
+    <skill>Melee</skill>
+    <description>An expertise in the Form VII: Juyo/Vaapad.</description>
+    <statOffsets>
+      <MeleeDPS>0.4</MeleeDPS>
+      <MeleeHitChance>0.14</MeleeHitChance>
+      <MeleeDodgeChance>-0.20</MeleeDodgeChance>
+      <Force_Darkside_Attunement>0.1</Force_Darkside_Attunement>
+    </statOffsets>
+  </VSE.Expertise.ExpertiseDef>
+</Defs>

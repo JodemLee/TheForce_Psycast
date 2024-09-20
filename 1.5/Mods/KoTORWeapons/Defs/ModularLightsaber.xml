@@ -1,0 +1,1447 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef ParentName="BaseModularWeapon">
+    <defName>Modular_Lightsaber</defName>
+    <label>modular Lightsaber</label>
+    <description>Traditionally associated with the Jedi, the lightsaber is a devastating weapon difficult to master. Properties can vary with the type of focusing crystal used in construction.</description>
+    <graphicData>
+      <texPath>lightsaberbundle</texPath>
+      <graphicClass>ModularWeapons.Graphic_Modular</graphicClass>
+      <shaderType>TransparentPostLight</shaderType>
+      <drawSize>1.3</drawSize>
+    </graphicData>
+    <uiIconScale>1.4</uiIconScale>
+    <soundInteract>kotorsound_lightsaber_on</soundInteract>
+    <recipeMaker>
+      <researchPrerequisite>guy762_ResearchKotOR_lightsabers</researchPrerequisite>
+      <skillRequirements>
+        <Crafting>6</Crafting>
+      </skillRequirements>
+      <displayPriority>410</displayPriority>
+    </recipeMaker>
+    <statBases>
+      <WorkToMake>11000</WorkToMake>
+      <Mass>2.5</Mass>
+      <AccuracyTouch>0.90</AccuracyTouch>
+      <AccuracyShort>0.65</AccuracyShort>
+      <AccuracyMedium>0.35</AccuracyMedium>
+      <AccuracyLong>0.15</AccuracyLong>
+      <RangedWeapon_Cooldown>0.7</RangedWeapon_Cooldown>
+    </statBases>
+    <relicChance>3</relicChance>
+    <equippedAngleOffset>-45</equippedAngleOffset>
+    <comps>
+      <li Class="ModularWeapons.CompProperties_ModularParts">
+        <compClass>ModularWeapons.CompModularParts</compClass>
+        <partKinds>
+          <li>Force_slot_colorcrystal</li>
+          <li>guy762_slot_lens</li>
+          <li>guy762_slot_emitter</li>
+          <li>MForce_Core</li>
+          <li>MForce_Hilt</li>
+        </partKinds>
+        <majorKinds>
+          <li>MForce_Hilt</li>
+          <li>Force_slot_colorcrystal</li>
+          <li>MForce_Core</li>
+        </majorKinds>
+        <randomizeParts>true</randomizeParts>
+        <gunsmithOnMade>True</gunsmithOnMade>
+      </li>
+      <li Class="ModularWeapon_Patch.CompProperties_WeaponStance"/>
+    </comps>
+    <costList>
+      <guy762_saberpart_lens>1</guy762_saberpart_lens>
+      <guy762_saberpart_emitter>1</guy762_saberpart_emitter>
+      <guy762_saberpart_pcell>1</guy762_saberpart_pcell>
+      <Steel>25</Steel>
+    </costList>
+    <tools>
+      <li>
+        <label>hilt</label>
+        <capacities>
+          <li>Blunt</li>
+        </capacities>
+        <!---->
+        <power>12</power>
+        <chanceFactor>0.05</chanceFactor>
+        <cooldownTime>4</cooldownTime>
+      </li>
+      <li>
+        <label>tip</label>
+        <alwaysTreatAsWeapon>true</alwaysTreatAsWeapon>
+        <soundMeleeMiss>kotorsound_lightsaber_swing</soundMeleeMiss>
+        <capacities>
+          <li>guy762_ToolCapacity_SaberStab</li>
+        </capacities>
+        <!---->
+        <power>26</power>
+        <chanceFactor>0.5</chanceFactor>
+        <cooldownTime>2.5</cooldownTime>
+      </li>
+      <li>
+        <label>edge</label>
+        <alwaysTreatAsWeapon>true</alwaysTreatAsWeapon>
+        <soundMeleeMiss>kotorsound_lightsaber_swing</soundMeleeMiss>
+        <capacities>
+          <li>guy762_ToolCapacity_SaberSlash</li>
+        </capacities>
+        <!---->
+        <power>26</power>
+        <chanceFactor>1.5</chanceFactor>
+        <cooldownTime>2.5</cooldownTime>
+      </li>
+    </tools>
+    <weaponTags>      <!--9月末アプデで追加-->
+      <li>Force_JediM</li>
+      <li>Force_SithM</li>
+    </weaponTags>
+    <equippedAngleOffset>-45</equippedAngleOffset>
+    <modExtensions>
+			<li MayRequire="co.uk.epicguru.meleeanimation" Class="MeleeAnimPatch.LightsaberClashModExtension">
+			  <clashSounds>
+				<li>Force_LightsaberClashOne</li>
+				<li>Force_LightsaberClashTwo</li>
+				<li>Force_LightsaberClashThree</li>
+				<li>Force_LightsaberClashFour</li>
+				<li>Force_LightsaberClashFive</li>
+			  </clashSounds>
+			</li>
+      <li Class="TheForce_Psycast.DefStanceAngles">
+				<stanceData>
+					<li>
+						<MinSeverity>1</MinSeverity>
+						<StanceIconPath>UI/Icons/Gizmo/Stance_Form1</StanceIconPath>
+						<StanceString>Form I: Shii-Cho  Users: Kit Fisto  \n\n Shii-Cho, the Way of the Sarlacc, is the most basic form focusing on wide, sweeping strikes and disarming techniques, ideal for beginners seeking simplicity and versatility in combat.</StanceString>
+						<Angle>0</Angle>
+						<Offset>
+							<x>0</x>
+							<y>0</y>
+							<z>0</z>
+						</Offset>
+					</li>
+					<li>
+						<MinSeverity>2</MinSeverity>
+						<StanceIconPath>UI/Icons/Gizmo/Stance_Form2</StanceIconPath>
+						<StanceString>Form II: Makashi  Users: Count Dooku  \n\n Makashi, the Way of the Ysalamiri:, is characterized by its elegant and precise movements, emphasizing dueling and defensive maneuvers, making it favored by those seeking finesse and sophistication in combat.</StanceString>
+						<Angle>-180</Angle>
+						<Offset>
+							<x>-0.7</x>
+							<y>0</y>
+							<z>-0.5</z>
+						</Offset>
+					</li>
+					<li>
+						<MinSeverity>3</MinSeverity>
+						<StanceIconPath>UI/Icons/Gizmo/Stance_Form3</StanceIconPath>
+						<StanceString>Form III: Soresu  Users: Obi-Wan Kenobi  \n\n Soresu, the Way of the Mynock, is a defensive form focused on tight, efficient movements and quick reflexes, designed to provide maximum protection against blaster fire and lightsaber attacks.</StanceString>
+						<Angle>-90</Angle>
+						<Offset>
+							<x>-0.2</x>
+							<y>0</y>
+							<z>0.3</z>
+						</Offset>
+					</li>
+					<li>
+						<MinSeverity>4</MinSeverity>
+						<StanceIconPath>UI/Icons/Gizmo/Stance_Form4</StanceIconPath>
+						<StanceString>Form IV: Ataru  Users: Yoda  \n\n Ataru, the Way of the Hawk-Bat, is an acrobatic and aggressive style characterized by its fast-paced, energetic movements, incorporating flips and spins to overwhelm opponents with speed and unpredictability</StanceString>
+						<Angle>-45</Angle>
+						<Offset>
+							<x>-0.4</x>
+							<y>0</y>
+							<z>0.5</z>
+						</Offset>
+					</li>
+					<li>
+						<MinSeverity>5</MinSeverity>
+						<StanceIconPath>UI/Icons/Gizmo/Stance_Form5</StanceIconPath>
+						<StanceString>Form V: Shien/Djem So  Users: Anakin Skywalker, Ahsoka Tano  \n\n Shien and Djem So, also known as the Perseverance and Way of the Krayt Dragon respectively, are variants of the same form emphasizing powerful counterattacks and aggressive deflection, suited for warriors seeking to turn their opponent's strength against them.</StanceString>
+						<Angle>86.1</Angle>
+						<Offset>
+							<x>0</x>
+							<y>0</y>
+							<z>0.2</z>
+						</Offset>
+					</li>
+					<li>
+						<MinSeverity>6</MinSeverity>
+						<StanceIconPath>UI/Icons/Gizmo/Stance_Form6</StanceIconPath>
+						<StanceString>Form VI: Niman  Users: Darth Maul  \n\n Niman, the Way of the Rancor, is a balanced form incorporating elements of all previous forms, providing practitioners with versatility and adaptability in combat situations, making it a preferred choice for diplomats and peacekeepers.</StanceString>
+						<Angle>-152.6</Angle>
+						<Offset>
+							<x>-1</x>
+							<y>0</y>
+							<z>0.1</z>
+						</Offset>
+					</li>
+					<li>
+						<MinSeverity>7</MinSeverity>
+						<StanceIconPath>UI/Icons/Gizmo/Stance_Form7</StanceIconPath>
+						<StanceString>Form VII: Juyo/Vaapad  Users: Mace Windu   \n\n Juyo and its variant Vaapad, the Ferocity and the Way of the Vornskr respectively, are aggressive and unpredictable styles that channel the user's inner darkness, offering immense offensive power at the risk of succumbing to the dark side of the Force.</StanceString>
+						<Angle>52</Angle>
+						<Offset>
+							<x>0</x>
+							<y>0</y>
+							<z>0.7</z>
+						</Offset>
+					</li>
+				</stanceData>
+			</li>
+		</modExtensions>
+  </ThingDef>
+
+  <!--                Parts                   -->
+
+  <ModularWeapons.ModularPartDef>
+    <defName>MForce_core_white</defName>
+    <label>White</label>
+    <kind>MForce_Core</kind>
+    <path>core_crystal</path>
+    <costList>
+    </costList>
+  </ModularWeapons.ModularPartDef>
+
+  <!--                crystal                 -->
+  <ModularWeapons.ModularPartDef>
+    <defName>Force_colorcrystal_red</defName>
+    <label>red color crystal</label>
+    <kind>Force_slot_colorcrystal</kind>
+    <path>red_crystal</path>
+    <costList>
+      <guy762_crystalitem_red>1</guy762_crystalitem_red>
+    </costList>
+    <isRare>true</isRare>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>Force_colorcrystal_orange</defName>
+    <label>orange color crystal</label>
+    <kind>Force_slot_colorcrystal</kind>
+    <path>orange_crystal</path>
+    <costList>
+      <guy762_crystalitem_orange>1</guy762_crystalitem_orange>
+    </costList>
+    <isRare>true</isRare>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>Force_colorcrystal_yellow</defName>
+    <label>yellow color crystal</label>
+    <kind>Force_slot_colorcrystal</kind>
+    <path>yellow_crystal</path>
+    <costList>
+      <guy762_crystalitem_yellow>1</guy762_crystalitem_yellow>
+    </costList>
+    <isRare>true</isRare>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>Force_colorcrystal_white</defName>
+    <label>silver color crystal</label>
+    <kind>Force_slot_colorcrystal</kind>
+    <path>white_crystal</path>
+    <costList>
+      <guy762_crystalitem_white>1</guy762_crystalitem_white>
+    </costList>
+    <isRare>true</isRare>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>Force_colorcrystal_green</defName>
+    <label>green color crystal</label>
+    <kind>Force_slot_colorcrystal</kind>
+    <path>green_crystal</path>
+    <costList>
+      <guy762_crystalitem_green>1</guy762_crystalitem_green>
+    </costList>
+    <isRare>true</isRare>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>Force_colorcrystal_blue</defName>
+    <label>blue color crystal</label>
+    <kind>Force_slot_colorcrystal</kind>
+    <path>blue_crystal</path>
+    <costList>
+      <guy762_crystalitem_blue>1</guy762_crystalitem_blue>
+    </costList>
+    <isRare>true</isRare>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>Force_colorcrystal_purple</defName>
+    <label>violet color crystal</label>
+    <kind>Force_slot_colorcrystal</kind>
+    <path>purple_crystal</path>
+    <costList>
+      <guy762_crystalitem_purple>1</guy762_crystalitem_purple>
+    </costList>
+    <isRare>true</isRare>
+  </ModularWeapons.ModularPartDef>
+
+
+
+
+  <ModularWeapons.ModularPartDef>
+    <defName>Force_colorcrystal_jade</defName>
+    <label>jade color crystal</label>
+    <kind>Force_slot_colorcrystal</kind>
+    <path>jade_crystal</path>
+    <costList>
+      <Jade>1</Jade>
+    </costList>
+    <isRare>true</isRare>
+  </ModularWeapons.ModularPartDef>
+
+
+  <ModularWeapons.ModularPartDef>
+    <defName>Force_colorcrystal_bronze</defName>
+    <label>bronze color crystal</label>
+    <kind>Force_slot_colorcrystal</kind>
+    <path>bronze_crystal</path>
+    <costList>
+      <guy762_crystalitem_bronze>1</guy762_crystalitem_bronze>
+    </costList>
+    <isRare>true</isRare>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>Force_colorcrystal_viridian</defName>
+    <label>viridian color crystal</label>
+    <kind>Force_slot_colorcrystal</kind>
+    <path>viridian_crystal</path>
+    <costList>
+      <guy762_crystalitem_viridian>1</guy762_crystalitem_viridian>
+    </costList>
+    <isRare>true</isRare>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>Force_colorcrystal_cyan</defName>
+    <label>cyan color crystal</label>
+    <kind>Force_slot_colorcrystal</kind>
+    <path>cyan_crystal</path>
+    <costList>
+      <guy762_crystalitem_cyan>1</guy762_crystalitem_cyan>
+    </costList>
+    <isRare>true</isRare>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>Force_colorcrystal_pink</defName>
+    <label>fuchsia color crystal</label>
+    <kind>Force_slot_colorcrystal</kind>
+    <path>pink_crystal</path>
+    <costList>
+      <guy762_crystalitem_fuchsia>1</guy762_crystalitem_fuchsia>
+    </costList>
+    <isRare>true</isRare>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>Force_colorcrystal_turquoise</defName>
+    <label>turquoise color crystal</label>
+    <kind>Force_slot_colorcrystal</kind>
+    <path>turquoise_crystal</path>
+    <costList>
+      <guy762_crystalitem_turquoise>1</guy762_crystalitem_turquoise>
+    </costList>
+    <isRare>true</isRare>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>Force_colorcrystal_cracked</defName>
+    <label>fractured Kyber crystal</label>
+    <kind>Force_slot_colorcrystal</kind>
+    <path>cracked_crystal</path>
+    <massFactor>0.2</massFactor>
+    <MeleeDamageMultiplierFactor>0.5</MeleeDamageMultiplierFactor>
+    <MeleeAverageAPFactor>0.5</MeleeAverageAPFactor>
+    <MeleeHitChanceFactor>-0.2</MeleeHitChanceFactor>
+    <MentalBreakThresholdFactor>0.5</MentalBreakThresholdFactor>
+    <costList>
+      <guy762_crystalitem_cracked>1</guy762_crystalitem_cracked>
+    </costList>
+    <isRare>true</isRare>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>Force_colorcrystal_heart</defName>
+    <label>Heart of the Guardian</label>
+    <kind>Force_slot_colorcrystal</kind>
+    <path>heartOfTheGuardian_crystal</path>
+    <massFactor>0.2</massFactor>
+    <MeleeDamageMultiplierFactor>0.2</MeleeDamageMultiplierFactor>
+    <MeleeHitChanceFactor>0.3</MeleeHitChanceFactor>
+    <MeleeAverageAPFactor>0.3</MeleeAverageAPFactor>
+    <PsychicSensitivityFactor>0.2</PsychicSensitivityFactor>
+    <costList>
+      <guy762_crystalitem_heart>1</guy762_crystalitem_heart>
+    </costList>
+    <isRare>true</isRare>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>Force_colorcrystal_mantle</defName>
+    <label>Mantle of the Force</label>
+    <kind>Force_slot_colorcrystal</kind>
+    <path>mantleOfTheForce_crystal</path>
+    <massFactor>0.2</massFactor>
+    <MeleeDamageMultiplierFactor>0.3</MeleeDamageMultiplierFactor>
+    <MeleeHitChanceFactor>0.3</MeleeHitChanceFactor>
+    <PsychicEntropyRecoveryRateFactor>0.4</PsychicEntropyRecoveryRateFactor>
+    <PsychicSensitivityFactor>0.4</PsychicSensitivityFactor>
+    <costList>
+      <guy762_crystalitem_mantle>1</guy762_crystalitem_mantle>
+    </costList>
+    <isRare>true</isRare>
+  </ModularWeapons.ModularPartDef>
+
+  <!-- Hilts -->
+
+  <ModularWeapons.ModularPartDef>
+    <defName>MForce_Hilt_aayla</defName>
+    <label>aayla</label>
+    <kind>MForce_Hilt</kind>
+    <path>aayla</path>
+    <toolFactor>
+      <label>Hilt</label>
+      <capacities>
+        <li>Blunt</li>
+        <li>Poke</li>
+      </capacities>
+      <power>9</power>
+      <cooldownTime>2</cooldownTime>
+    </toolFactor>
+    <costList>
+      <Steel>15</Steel>
+    </costList>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>MForce_Hilt_Adept</defName>
+    <label>Adept</label>
+    <kind>MForce_Hilt</kind>
+    <path>adeptja</path>
+    <toolFactor>
+      <label>Hilt</label>
+      <capacities>
+        <li>Blunt</li>
+        <li>Poke</li>
+      </capacities>
+      <power>9</power>
+      <cooldownTime>2</cooldownTime>
+    </toolFactor>
+    <costList>
+      <Steel>15</Steel>
+    </costList>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>MForce_Hilt_Adjudicator</defName>
+    <label>Adjudicator</label>
+    <kind>MForce_Hilt</kind>
+    <path>adjudicatorja</path>
+    <toolFactor>
+      <label>Hilt</label>
+      <capacities>
+        <li>Blunt</li>
+        <li>Poke</li>
+      </capacities>
+      <power>9</power>
+      <cooldownTime>2</cooldownTime>
+    </toolFactor>
+    <costList>
+      <Steel>15</Steel>
+    </costList>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>MForce_Hilt_anakin1</defName>
+    <label>Anakin 1</label>
+    <kind>MForce_Hilt</kind>
+    <path>anakin1</path>
+    <toolFactor>
+      <label>Hilt</label>
+      <capacities>
+        <li>Blunt</li>
+        <li>Poke</li>
+      </capacities>
+      <power>9</power>
+      <cooldownTime>2</cooldownTime>
+    </toolFactor>
+    <costList>
+      <Steel>15</Steel>
+    </costList>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>MForce_Hilt_anakin2</defName>
+    <label>Anakin 2</label>
+    <kind>MForce_Hilt</kind>
+    <path>anakin2</path>
+    <toolFactor>
+      <label>Hilt</label>
+      <capacities>
+        <li>Blunt</li>
+        <li>Poke</li>
+      </capacities>
+      <power>9</power>
+      <cooldownTime>2</cooldownTime>
+    </toolFactor>
+    <costList>
+      <Steel>15</Steel>
+    </costList>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>MForce_Hilt_arbiter</defName>
+    <label>Arbiter</label>
+    <kind>MForce_Hilt</kind>
+    <path>arbiter</path>
+    <toolFactor>
+      <label>Hilt</label>
+      <capacities>
+        <li>Blunt</li>
+        <li>Poke</li>
+      </capacities>
+      <power>9</power>
+      <cooldownTime>2</cooldownTime>
+    </toolFactor>
+    <costList>
+      <Steel>15</Steel>
+    </costList>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>MForce_Hilt_arn_peralun</defName>
+    <label>Arn Peralun</label>
+    <kind>MForce_Hilt</kind>
+    <path>arn_peralun</path>
+    <toolFactor>
+      <label>Hilt</label>
+      <capacities>
+        <li>Blunt</li>
+        <li>Poke</li>
+      </capacities>
+      <power>9</power>
+      <cooldownTime>2</cooldownTime>
+    </toolFactor>
+    <costList>
+      <Steel>15</Steel>
+    </costList>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>MForce_Hilt_dnihilus</defName>
+    <label>Darth Mihilus</label>
+    <kind>MForce_Hilt</kind>
+    <path>darth nihilus</path>
+    <toolFactor>
+      <label>Hilt</label>
+      <capacities>
+        <li>Blunt</li>
+        <li>Poke</li>
+      </capacities>
+      <power>9</power>
+      <cooldownTime>2</cooldownTime>
+    </toolFactor>
+    <costList>
+      <Steel>15</Steel>
+    </costList>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>MForce_Hilt_darthBane</defName>
+    <label>Darth Bane</label>
+    <kind>MForce_Hilt</kind>
+    <path>darthbane</path>
+    <toolFactor>
+      <label>Hilt</label>
+      <capacities>
+        <li>Blunt</li>
+        <li>Poke</li>
+      </capacities>
+      <power>9</power>
+      <cooldownTime>2</cooldownTime>
+    </toolFactor>
+    <costList>
+      <Steel>15</Steel>
+    </costList>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>MForce_Hilt_darth_malgus</defName>
+    <label>Darth Malgus</label>
+    <kind>MForce_Hilt</kind>
+    <path>darthmalgus</path>
+    <toolFactor>
+      <label>Hilt</label>
+      <capacities>
+        <li>Blunt</li>
+        <li>Poke</li>
+      </capacities>
+      <power>9</power>
+      <cooldownTime>2</cooldownTime>
+    </toolFactor>
+    <costList>
+      <Steel>15</Steel>
+    </costList>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>MForce_Hilt_darth_vader</defName>
+    <label>Darth Vader</label>
+    <kind>MForce_Hilt</kind>
+    <path>darthvader</path>
+    <toolFactor>
+      <label>Hilt</label>
+      <capacities>
+        <li>Blunt</li>
+        <li>Poke</li>
+      </capacities>
+      <power>9</power>
+      <cooldownTime>2</cooldownTime>
+    </toolFactor>
+    <costList>
+      <Steel>15</Steel>
+    </costList>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>MForce_Hilt_defender</defName>
+    <label>Defender</label>
+    <kind>MForce_Hilt</kind>
+    <path>defenderja</path>
+    <toolFactor>
+      <label>Hilt</label>
+      <capacities>
+        <li>Blunt</li>
+        <li>Poke</li>
+      </capacities>
+      <power>9</power>
+      <cooldownTime>2</cooldownTime>
+    </toolFactor>
+    <costList>
+      <Steel>15</Steel>
+    </costList>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>MForce_Hilt_desann</defName>
+    <label>Desann</label>
+    <kind>MForce_Hilt</kind>
+    <path>desann</path>
+    <toolFactor>
+      <label>Hilt</label>
+      <capacities>
+        <li>Blunt</li>
+        <li>Poke</li>
+      </capacities>
+      <power>9</power>
+      <cooldownTime>2</cooldownTime>
+    </toolFactor>
+    <costList>
+      <Steel>15</Steel>
+    </costList>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>MForce_Hilt_ahsoka</defName>
+    <label>ahsoka</label>
+    <kind>MForce_Hilt</kind>
+    <path>ahsoka</path>
+    <toolFactor>
+      <label>Hilt</label>
+      <capacities>
+        <li>Blunt</li>
+        <li>Poke</li>
+      </capacities>
+      <power>9</power>
+      <cooldownTime>2</cooldownTime>
+    </toolFactor>
+    <costList>
+      <Steel>15</Steel>
+    </costList>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>MForce_Hilt_Asajj</defName>
+    <label>Asajj</label>
+    <kind>MForce_Hilt</kind>
+    <path>asajj</path>
+    <toolFactor>
+      <label>Hilt</label>
+      <capacities>
+        <li>Blunt</li>
+        <li>Poke</li>
+      </capacities>
+      <power>9</power>
+      <cooldownTime>2</cooldownTime>
+    </toolFactor>
+    <costList>
+      <Steel>15</Steel>
+    </costList>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>MForce_Hilt_AshokaTano</defName>
+    <label>ashokaTano</label>
+    <kind>MForce_Hilt</kind>
+    <path>ashokaTano</path>
+    <toolFactor>
+      <label>Hilt</label>
+      <capacities>
+        <li>Blunt</li>
+        <li>Poke</li>
+      </capacities>
+      <power>9</power>
+      <cooldownTime>2</cooldownTime>
+    </toolFactor>
+    <costList>
+      <Steel>15</Steel>
+    </costList>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>MForce_Hilt_Consul</defName>
+    <label>Consul</label>
+    <kind>MForce_Hilt</kind>
+    <path>consul</path>
+    <toolFactor>
+      <label>Hilt</label>
+      <capacities>
+        <li>Blunt</li>
+        <li>Poke</li>
+      </capacities>
+      <power>9</power>
+      <cooldownTime>2</cooldownTime>
+    </toolFactor>
+    <costList>
+      <Steel>15</Steel>
+    </costList>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>MForce_Hilt_Count_Dooku</defName>
+    <label>Count Dooku</label>
+    <kind>MForce_Hilt</kind>
+    <path>Count_Dooku</path>
+    <toolFactor>
+      <label>Hilt</label>
+      <capacities>
+        <li>Blunt</li>
+        <li>Poke</li>
+      </capacities>
+      <power>9</power>
+      <cooldownTime>2</cooldownTime>
+    </toolFactor>
+    <costList>
+      <Steel>15</Steel>
+    </costList>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>MForce_Hilt_Descendants</defName>
+    <label>descendants</label>
+    <kind>MForce_Hilt</kind>
+    <path>descendants</path>
+    <toolFactor>
+      <label>Hilt</label>
+      <capacities>
+        <li>Blunt</li>
+        <li>Poke</li>
+      </capacities>
+      <power>9</power>
+      <cooldownTime>2</cooldownTime>
+    </toolFactor>
+    <costList>
+      <Steel>15</Steel>
+    </costList>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>MForce_Hilt_Ezra2</defName>
+    <label>Ezra</label>
+    <kind>MForce_Hilt</kind>
+    <path>ezra2</path>
+    <toolFactor>
+      <label>Hilt</label>
+      <capacities>
+        <li>Blunt</li>
+        <li>Poke</li>
+      </capacities>
+      <power>9</power>
+      <cooldownTime>2</cooldownTime>
+    </toolFactor>
+    <costList>
+      <Steel>15</Steel>
+    </costList>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>MForce_Hilt_FireBrandJA</defName>
+    <label>Fire Brand</label>
+    <kind>MForce_Hilt</kind>
+    <path>fireBrandJA</path>
+    <toolFactor>
+      <label>Hilt</label>
+      <capacities>
+        <li>Blunt</li>
+        <li>Poke</li>
+      </capacities>
+      <power>9</power>
+      <cooldownTime>2</cooldownTime>
+    </toolFactor>
+    <costList>
+      <Steel>15</Steel>
+    </costList>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>MForce_Hilt_GalenMalek</defName>
+    <label>Galen Malek</label>
+    <kind>MForce_Hilt</kind>
+    <path>galenMalek</path>
+    <toolFactor>
+      <label>Hilt</label>
+      <capacities>
+        <li>Blunt</li>
+        <li>Poke</li>
+      </capacities>
+      <power>9</power>
+      <cooldownTime>2</cooldownTime>
+    </toolFactor>
+    <costList>
+      <Steel>15</Steel>
+    </costList>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>MForce_Hilt_ImperialKnight</defName>
+    <label>Imperial Knight</label>
+    <kind>MForce_Hilt</kind>
+    <path>ImperialKnight</path>
+    <toolFactor>
+      <label>Hilt</label>
+      <capacities>
+        <li>Blunt</li>
+        <li>Poke</li>
+      </capacities>
+      <power>9</power>
+      <cooldownTime>2</cooldownTime>
+    </toolFactor>
+    <costList>
+      <Steel>15</Steel>
+    </costList>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>MForce_Hilt_Jaden_Korr</defName>
+    <label>Jaden Korr</label>
+    <kind>MForce_Hilt</kind>
+    <path>jaden_korr</path>
+    <toolFactor>
+      <label>Hilt</label>
+      <capacities>
+        <li>Blunt</li>
+        <li>Poke</li>
+      </capacities>
+      <power>9</power>
+      <cooldownTime>2</cooldownTime>
+    </toolFactor>
+    <costList>
+      <Steel>15</Steel>
+    </costList>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>MForce_Hilt_JediTempleGuard</defName>
+    <label>Jedi Temple Guard</label>
+    <kind>MForce_Hilt</kind>
+    <path>jeditempleguard</path>
+    <toolFactor>
+      <label>Hilt</label>
+      <capacities>
+        <li>Blunt</li>
+        <li>Poke</li>
+      </capacities>
+      <power>9</power>
+      <cooldownTime>2</cooldownTime>
+    </toolFactor>
+    <costList>
+      <Steel>15</Steel>
+    </costList>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>MForce_Hilt_Jinsu_Razor</defName>
+    <label>Jinsu Razor</label>
+    <kind>MForce_Hilt</kind>
+    <path>jinsu_razor</path>
+    <toolFactor>
+      <label>Hilt</label>
+      <capacities>
+        <li>Blunt</li>
+        <li>Poke</li>
+      </capacities>
+      <power>9</power>
+      <cooldownTime>2</cooldownTime>
+    </toolFactor>
+    <costList>
+      <Steel>15</Steel>
+    </costList>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>MForce_Hilt_KanaJarrus</defName>
+    <label>Kanan Jarrus</label>
+    <kind>MForce_Hilt</kind>
+    <path>kanajarrus</path>
+    <toolFactor>
+      <label>Hilt</label>
+      <capacities>
+        <li>Blunt</li>
+        <li>Poke</li>
+      </capacities>
+      <power>9</power>
+      <cooldownTime>2</cooldownTime>
+    </toolFactor>
+    <costList>
+      <Steel>15</Steel>
+    </costList>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>MForce_Hilt_Karness_Muur</defName>
+    <label>Karness Muur</label>
+    <kind>MForce_Hilt</kind>
+    <path>karness_muur</path>
+    <toolFactor>
+      <label>Hilt</label>
+      <capacities>
+        <li>Blunt</li>
+        <li>Poke</li>
+      </capacities>
+      <power>9</power>
+      <cooldownTime>2</cooldownTime>
+    </toolFactor>
+    <costList>
+      <Steel>15</Steel>
+    </costList>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>MForce_Hilt_KiAudi</defName>
+    <label>Ki-Audi</label>
+    <kind>MForce_Hilt</kind>
+    <path>kiaudi</path>
+    <toolFactor>
+      <label>Hilt</label>
+      <capacities>
+        <li>Blunt</li>
+        <li>Poke</li>
+      </capacities>
+      <power>9</power>
+      <cooldownTime>2</cooldownTime>
+    </toolFactor>
+    <costList>
+      <Steel>15</Steel>
+    </costList>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>MForce_Hilt_Kirak_Infila</defName>
+    <label>Kirak Infila</label>
+    <kind>MForce_Hilt</kind>
+    <path>kirak_infila</path>
+    <toolFactor>
+      <label>Hilt</label>
+      <capacities>
+        <li>Blunt</li>
+        <li>Poke</li>
+      </capacities>
+      <power>9</power>
+      <cooldownTime>2</cooldownTime>
+    </toolFactor>
+    <costList>
+      <Steel>15</Steel>
+    </costList>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>MForce_Hilt_KitFisto</defName>
+    <label>Kit Fisto</label>
+    <kind>MForce_Hilt</kind>
+    <path>kitfisto</path>
+    <toolFactor>
+      <label>Hilt</label>
+      <capacities>
+        <li>Blunt</li>
+        <li>Poke</li>
+      </capacities>
+      <power>9</power>
+      <cooldownTime>2</cooldownTime>
+    </toolFactor>
+    <costList>
+      <Steel>15</Steel>
+    </costList>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>MForce_Hilt_Kyle_Katarn</defName>
+    <label>Kyle Katarn</label>
+    <kind>MForce_Hilt</kind>
+    <path>kyle_katarn</path>
+    <toolFactor>
+      <label>Hilt</label>
+      <capacities>
+        <li>Blunt</li>
+        <li>Poke</li>
+      </capacities>
+      <power>9</power>
+      <cooldownTime>2</cooldownTime>
+    </toolFactor>
+    <costList>
+      <Steel>15</Steel>
+    </costList>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>MForce_Hilt_Luke</defName>
+    <label>Luke</label>
+    <kind>MForce_Hilt</kind>
+    <path>luke</path>
+    <toolFactor>
+      <label>Hilt</label>
+      <capacities>
+        <li>Blunt</li>
+        <li>Poke</li>
+      </capacities>
+      <power>9</power>
+      <cooldownTime>2</cooldownTime>
+    </toolFactor>
+    <costList>
+      <Steel>15</Steel>
+    </costList>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>MForce_Hilt_Mace</defName>
+    <label>Mace</label>
+    <kind>MForce_Hilt</kind>
+    <path>mace</path>
+    <toolFactor>
+      <label>Hilt</label>
+      <capacities>
+        <li>Blunt</li>
+        <li>Poke</li>
+      </capacities>
+      <power>9</power>
+      <cooldownTime>2</cooldownTime>
+    </toolFactor>
+    <costList>
+      <Steel>15</Steel>
+    </costList>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>MForce_Hilt_MaraJade</defName>
+    <label>Mara Jade</label>
+    <kind>MForce_Hilt</kind>
+    <path>marajade</path>
+    <toolFactor>
+      <label>Hilt</label>
+      <capacities>
+        <li>Blunt</li>
+        <li>Poke</li>
+      </capacities>
+      <power>9</power>
+      <cooldownTime>2</cooldownTime>
+    </toolFactor>
+    <costList>
+      <Steel>15</Steel>
+    </costList>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>MForce_Hilt_ObiWan1</defName>
+    <label>Obi-Wan I</label>
+    <kind>MForce_Hilt</kind>
+    <path>obiWan1</path>
+    <toolFactor>
+      <label>Hilt</label>
+      <capacities>
+        <li>Blunt</li>
+        <li>Poke</li>
+      </capacities>
+      <power>9</power>
+      <cooldownTime>2</cooldownTime>
+    </toolFactor>
+    <costList>
+      <Steel>15</Steel>
+    </costList>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>MForce_Hilt_ObiWan2</defName>
+    <label>Obi-Wan II</label>
+    <kind>MForce_Hilt</kind>
+    <path>obiwan2</path>
+    <toolFactor>
+      <label>Hilt</label>
+      <capacities>
+        <li>Blunt</li>
+        <li>Poke</li>
+      </capacities>
+      <power>9</power>
+      <cooldownTime>2</cooldownTime>
+    </toolFactor>
+    <costList>
+      <Steel>15</Steel>
+    </costList>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>MForce_Hilt_Oppo_Rancisis</defName>
+    <label>Oppo Rancisis</label>
+    <kind>MForce_Hilt</kind>
+    <path>oppo_rancisis</path>
+    <toolFactor>
+      <label>Hilt</label>
+      <capacities>
+        <li>Blunt</li>
+        <li>Poke</li>
+      </capacities>
+      <power>9</power>
+      <cooldownTime>2</cooldownTime>
+    </toolFactor>
+    <costList>
+      <Steel>15</Steel>
+    </costList>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>MForce_Hilt_PloKoon</defName>
+    <label>Plo-Koon</label>
+    <kind>MForce_Hilt</kind>
+    <path>plokoon</path>
+    <toolFactor>
+      <label>Hilt</label>
+      <capacities>
+        <li>Blunt</li>
+        <li>Poke</li>
+      </capacities>
+      <power>9</power>
+      <cooldownTime>2</cooldownTime>
+    </toolFactor>
+    <costList>
+      <Steel>15</Steel>
+    </costList>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>MForce_Hilt_PraetorJA</defName>
+    <label>Praetor</label>
+    <kind>MForce_Hilt</kind>
+    <path>praetorJA</path>
+    <toolFactor>
+      <label>Hilt</label>
+      <capacities>
+        <li>Blunt</li>
+        <li>Poke</li>
+      </capacities>
+      <power>9</power>
+      <cooldownTime>2</cooldownTime>
+    </toolFactor>
+    <costList>
+      <Steel>15</Steel>
+    </costList>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>MForce_Hilt_QuiGon</defName>
+    <label>Qui-Gon</label>
+    <kind>MForce_Hilt</kind>
+    <path>quigon</path>
+    <toolFactor>
+      <label>Hilt</label>
+      <capacities>
+        <li>Blunt</li>
+        <li>Poke</li>
+      </capacities>
+      <power>9</power>
+      <cooldownTime>2</cooldownTime>
+    </toolFactor>
+    <costList>
+      <Steel>15</Steel>
+    </costList>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>MForce_Hilt_QuinlanVoss</defName>
+    <label>Quinlan Voss</label>
+    <kind>MForce_Hilt</kind>
+    <path>quinlanvoss</path>
+    <toolFactor>
+      <label>Hilt</label>
+      <capacities>
+        <li>Blunt</li>
+        <li>Poke</li>
+      </capacities>
+      <power>9</power>
+      <cooldownTime>2</cooldownTime>
+    </toolFactor>
+    <costList>
+      <Steel>15</Steel>
+    </costList>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>MForce_Hilt_Rahm</defName>
+    <label>Rahm</label>
+    <kind>MForce_Hilt</kind>
+    <path>rahm</path>
+    <toolFactor>
+      <label>Hilt</label>
+      <capacities>
+        <li>Blunt</li>
+        <li>Poke</li>
+      </capacities>
+      <power>9</power>
+      <cooldownTime>2</cooldownTime>
+    </toolFactor>
+    <costList>
+      <Steel>15</Steel>
+    </costList>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>MForce_Hilt_RebornJA</defName>
+    <label>Reborn</label>
+    <kind>MForce_Hilt</kind>
+    <path>rebornja</path>
+    <toolFactor>
+      <label>Hilt</label>
+      <capacities>
+        <li>Blunt</li>
+        <li>Poke</li>
+      </capacities>
+      <power>9</power>
+      <cooldownTime>2</cooldownTime>
+    </toolFactor>
+    <costList>
+      <Steel>15</Steel>
+    </costList>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>MForce_Hilt_Retaliator</defName>
+    <label>retaliator</label>
+    <kind>MForce_Hilt</kind>
+    <path>retaliator</path>
+    <toolFactor>
+      <label>Hilt</label>
+      <capacities>
+        <li>Blunt</li>
+        <li>Poke</li>
+      </capacities>
+      <power>9</power>
+      <cooldownTime>2</cooldownTime>
+    </toolFactor>
+    <costList>
+      <Steel>15</Steel>
+    </costList>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>MForce_Hilt_Revan</defName>
+    <label>Revan</label>
+    <kind>MForce_Hilt</kind>
+    <path>revan</path>
+    <toolFactor>
+      <label>Hilt</label>
+      <capacities>
+        <li>Blunt</li>
+        <li>Poke</li>
+      </capacities>
+      <power>9</power>
+      <cooldownTime>2</cooldownTime>
+    </toolFactor>
+    <costList>
+      <Steel>15</Steel>
+    </costList>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>MForce_Hilt_Ronin</defName>
+    <label>Ronin</label>
+    <kind>MForce_Hilt</kind>
+    <path>ronin</path>
+    <toolFactor>
+      <label>Hilt</label>
+      <capacities>
+        <li>Blunt</li>
+        <li>Poke</li>
+      </capacities>
+      <power>9</power>
+      <cooldownTime>2</cooldownTime>
+    </toolFactor>
+    <costList>
+      <Steel>15</Steel>
+    </costList>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>MForce_Hilt_Saesee</defName>
+    <label>Saesee</label>
+    <kind>MForce_Hilt</kind>
+    <path>saesee</path>
+    <toolFactor>
+      <label>Hilt</label>
+      <capacities>
+        <li>Blunt</li>
+        <li>Poke</li>
+      </capacities>
+      <power>9</power>
+      <cooldownTime>2</cooldownTime>
+    </toolFactor>
+    <costList>
+      <Steel>15</Steel>
+    </costList>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>MForce_Hilt_SentinelJA</defName>
+    <label>Sentinel</label>
+    <kind>MForce_Hilt</kind>
+    <path>sentinelJA</path>
+    <toolFactor>
+      <label>Hilt</label>
+      <capacities>
+        <li>Blunt</li>
+        <li>Poke</li>
+      </capacities>
+      <power>9</power>
+      <cooldownTime>2</cooldownTime>
+    </toolFactor>
+    <costList>
+      <Steel>15</Steel>
+    </costList>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>MForce_Hilt_Shaak_Ti</defName>
+    <label>Shaak-Ti</label>
+    <kind>MForce_Hilt</kind>
+    <path>shaak_ti</path>
+    <toolFactor>
+      <label>Hilt</label>
+      <capacities>
+        <li>Blunt</li>
+        <li>Poke</li>
+      </capacities>
+      <power>9</power>
+      <cooldownTime>2</cooldownTime>
+    </toolFactor>
+    <costList>
+      <Steel>15</Steel>
+    </costList>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>MForce_Hilt_Sharad_Hett</defName>
+    <label>Sharad Hett</label>
+    <kind>MForce_Hilt</kind>
+    <path>sharad_hett</path>
+    <toolFactor>
+      <label>Hilt</label>
+      <capacities>
+        <li>Blunt</li>
+        <li>Poke</li>
+      </capacities>
+      <power>9</power>
+      <cooldownTime>2</cooldownTime>
+    </toolFactor>
+    <costList>
+      <Steel>15</Steel>
+    </costList>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>MForce_Hilt_Sidious</defName>
+    <label>Sidious</label>
+    <kind>MForce_Hilt</kind>
+    <path>sidious</path>
+    <toolFactor>
+      <label>Hilt</label>
+      <capacities>
+        <li>Blunt</li>
+        <li>Poke</li>
+      </capacities>
+      <power>9</power>
+      <cooldownTime>2</cooldownTime>
+    </toolFactor>
+    <costList>
+      <Steel>15</Steel>
+    </costList>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>MForce_Hilt_Tenel_Ka_Djo</defName>
+    <label>Tenel Ka Djo</label>
+    <kind>MForce_Hilt</kind>
+    <path>tenel_ka_djo</path>
+    <toolFactor>
+      <label>Hilt</label>
+      <capacities>
+        <li>Blunt</li>
+        <li>Poke</li>
+      </capacities>
+      <power>9</power>
+      <cooldownTime>2</cooldownTime>
+    </toolFactor>
+    <costList>
+      <Steel>15</Steel>
+    </costList>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>MForce_Hilt_Ulic_Qel-Drome</defName>
+    <label>Ulic Qel-Drome</label>
+    <kind>MForce_Hilt</kind>
+    <path>ulic_qel-drome</path>
+    <toolFactor>
+      <label>Hilt</label>
+      <capacities>
+        <li>Blunt</li>
+        <li>Poke</li>
+      </capacities>
+      <power>9</power>
+      <cooldownTime>2</cooldownTime>
+    </toolFactor>
+    <costList>
+      <Steel>15</Steel>
+    </costList>
+  </ModularWeapons.ModularPartDef>
+
+  <ModularWeapons.ModularPartDef>
+    <defName>MForce_Hilt_Ven_Zallow</defName>
+    <label>Ven Zallow</label>
+    <kind>MForce_Hilt</kind>
+    <path>ven_zallow</path>
+    <toolFactor>
+      <label>Hilt</label>
+      <capacities>
+        <li>Blunt</li>
+        <li>Poke</li>
+      </capacities>
+      <power>9</power>
+      <cooldownTime>2</cooldownTime>
+    </toolFactor>
+    <costList>
+      <Steel>15</Steel>
+    </costList>
+  </ModularWeapons.ModularPartDef>
+</Defs>

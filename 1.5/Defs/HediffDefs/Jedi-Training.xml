@@ -1,181 +1,181 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
 
-	<HediffDef ParentName ="PsycastHediffBase">
-	<defName>Force_EnhanceForce</defName>
-		<label>Enhanced Force Sensitivity</label>
-		<description>The clearing of your mind has deepened your connection to the force for a few days.</description>
-		<stages>
-			<li>
-				<statOffsets>
-					<PsychicSensitivity>1</PsychicSensitivity>
-				</statOffsets>
-			</li>
-		</stages>
-	</HediffDef>
-	
-	<HediffDef ParentName="PsycastHediffBase">
-		<defName>Jedi_Training_Combat</defName>
-		<label>Jedi Combat Training</label>
-		<description>Going through a few rounds of simulated combat has left you feeling alert and more likely to succeed in real combat.</description>
-		<stages>
-			<li>
-				<statOffsets>
-				<ShootingAccuracyPawn>1.15</ShootingAccuracyPawn>
-				<MeleeHitChance>1.15</MeleeHitChance>
-				</statOffsets>
-				<capMods>
-					<li>
-						<capacity>Moving</capacity>
-						<postFactor>1.15</postFactor>
-					</li>
-					<li>
-						<capacity>Breathing</capacity>
-						<postFactor>1.15</postFactor>
-					</li>
-				</capMods>
-			</li>
-		</stages>
-	</HediffDef>
-	
-	<HediffDef ParentName="PsycastHediffBase">
-		<defName>Jedi_Training_Mental</defName>
-		<label>Jedi Mental Training</label>
-		<description>Reinforcement of the mind has led to a increased mental break threshold. Making it harder for mental breaks to happen for a few days.</description>
-		<stages>
-			<li>
-				<statOffsets>
-				<MentalBreakThreshold>-0.5</MentalBreakThreshold>
-				</statOffsets>
-			</li>
-		</stages>
-	</HediffDef>
-	
-	<HediffDef ParentName="PsycastHediffBase">
-		<defName>Jedi_Training_Social</defName>
-		<label>Jedi Social Training</label>
-		<description>Training has left you with an improvement in your social skills.Effects will last a few days.</description>
-		<stages>
-			<li>
-				<statOffsets>
-					<NegotiationAbility>0.25</NegotiationAbility>
-					<TradePriceImprovement>0.5</TradePriceImprovement>
-				</statOffsets>
-			</li>
-		</stages>
-	</HediffDef>
-	
-	<HediffDef ParentName="PsycastHediffBase">
-		<defName>Jedi_Training_Sense</defName>
-		<label>Jedi Sense Training</label>
-		<description>Train for a few hours to enhance your senses for a few days.</description>
-		<stages>
-			<li>
-				<capMods>
-					<li>
-						<capacity>Sight</capacity>
-						<postFactor>1.25</postFactor>
-					</li>
-					<li>
-						<capacity>Hearing</capacity>
-						<postFactor>1.25</postFactor>
-					</li>
-				</capMods>
-			</li>
-		</stages>
-	</HediffDef>
-	
-	<HediffDef ParentName="PsycastHediffBase">
-		<defName>Jedi_Training_Manipulation</defName>
-		<label>Jedi Manipulation Training</label>
-		<description>Repeatingly using your telekinesis skill has enabled you to use it subconsciously, meaning your manipulation has been increased for a few days.</description>
-		<stages>
-			<li>
-				<capMods>
-					<li>
-						<capacity>Manipulation</capacity>
-						<postFactor>1.25</postFactor>
-					</li>
-				</capMods>
-			</li>
-		</stages>
-	</HediffDef>
-	
-	<HediffDef ParentName="PsycastHediffBase">
-		<defName>Jedi_Training_Meditation</defName>
-		<label>Jedi Meditation Training</label>
-		<description>Empty your thoughts and prepare for meditation. Increase the benefits you recieve from meditation for a few days.</description>
-		<scenarioCanAdd>false</scenarioCanAdd>
-		<maxSeverity>1.0</maxSeverity>
-		<initialSeverity>1.0</initialSeverity>
-		<isBad>false</isBad>
-		<stages>
-			<li>
-				<statOffsets>
-					<MeditationFocusGain>.5</MeditationFocusGain>
-					<PsychicEntropyRecoveryRate>.5</PsychicEntropyRecoveryRate>
-				</statOffsets>
-			</li>
-		</stages>
-	</HediffDef>
+    <HediffDef ParentName ="PsycastHediffBase">
+        <defName>Force_EnhanceForce</defName>
+        <label>Enhanced Force Sensitivity</label>
+        <description>The pawn's mind has been cleared, deepening their connection to the Force for a few days.</description>
+        <stages>
+            <li>
+                <statOffsets>
+                    <PsychicSensitivity>1</PsychicSensitivity>
+                </statOffsets>
+            </li>
+        </stages>
+    </HediffDef>
+    
+    <HediffDef ParentName="PsycastHediffBase">
+        <defName>Jedi_Training_Combat</defName>
+        <label>Jedi Combat Training</label>
+        <description>The pawn has undergone simulated combat training, leaving them feeling alert and more likely to succeed in real combat.</description>
+        <stages>
+            <li>
+                <statOffsets>
+                    <ShootingAccuracyPawn>1.15</ShootingAccuracyPawn>
+                    <MeleeHitChance>1.15</MeleeHitChance>
+                </statOffsets>
+                <capMods>
+                    <li>
+                        <capacity>Moving</capacity>
+                        <postFactor>1.15</postFactor>
+                    </li>
+                    <li>
+                        <capacity>Breathing</capacity>
+                        <postFactor>1.15</postFactor>
+                    </li>
+                </capMods>
+            </li>
+        </stages>
+    </HediffDef>
+    
+    <HediffDef ParentName="PsycastHediffBase">
+        <defName>Jedi_Training_Mental</defName>
+        <label>Jedi Mental Training</label>
+        <description>The pawn's mind has been reinforced, increasing their mental break threshold and making it harder for mental breaks to occur for a few days.</description>
+        <stages>
+            <li>
+                <statOffsets>
+                    <MentalBreakThreshold>-0.5</MentalBreakThreshold>
+                </statOffsets>
+            </li>
+        </stages>
+    </HediffDef>
+    
+    <HediffDef ParentName="PsycastHediffBase">
+        <defName>Jedi_Training_Social</defName>
+        <label>Jedi Social Training</label>
+        <description>The pawn's social skills have been improved through training, with effects lasting for a few days.</description>
+        <stages>
+            <li>
+                <statOffsets>
+                    <NegotiationAbility>0.25</NegotiationAbility>
+                    <TradePriceImprovement>0.5</TradePriceImprovement>
+                </statOffsets>
+            </li>
+        </stages>
+    </HediffDef>
+    
+    <HediffDef ParentName="PsycastHediffBase">
+        <defName>Jedi_Training_Sense</defName>
+        <label>Jedi Sense Training</label>
+        <description>The pawn has trained to enhance their senses, with effects lasting for a few days.</description>
+        <stages>
+            <li>
+                <capMods>
+                    <li>
+                        <capacity>Sight</capacity>
+                        <postFactor>1.25</postFactor>
+                    </li>
+                    <li>
+                        <capacity>Hearing</capacity>
+                        <postFactor>1.25</postFactor>
+                    </li>
+                </capMods>
+            </li>
+        </stages>
+    </HediffDef>
+    
+    <HediffDef ParentName="PsycastHediffBase">
+        <defName>Jedi_Training_Manipulation</defName>
+        <label>Jedi Manipulation Training</label>
+        <description>The pawn has repeatedly used their telekinesis skill, enabling them to use it subconsciously and increasing their manipulation abilities for a few days.</description>
+        <stages>
+            <li>
+                <capMods>
+                    <li>
+                        <capacity>Manipulation</capacity>
+                        <postFactor>1.25</postFactor>
+                    </li>
+                </capMods>
+            </li>
+        </stages>
+    </HediffDef>
+    
+    <HediffDef ParentName="PsycastHediffBase">
+        <defName>Jedi_Training_Meditation</defName>
+        <label>Jedi Meditation Training</label>
+        <description>The pawn has emptied their thoughts and prepared for meditation, increasing the benefits they receive from meditation for a few days.</description>
+        <scenarioCanAdd>false</scenarioCanAdd>
+        <maxSeverity>1.0</maxSeverity>
+        <initialSeverity>1.0</initialSeverity>
+        <isBad>false</isBad>
+        <stages>
+            <li>
+                <statOffsets>
+                    <MeditationFocusGain>.5</MeditationFocusGain>
+                    <PsychicEntropyRecoveryRate>.5</PsychicEntropyRecoveryRate>
+                </statOffsets>
+            </li>
+        </stages>
+    </HediffDef>
 
-	<HediffDef>
-		<defName>ForceBond_MasterApprentice</defName>
-		<label>Force Bond (Master/Apprentice)</label>
-		<description>The pawn has spent enough time with their Master/Apprentice and managed to form a minor force bond.</description>
-		<hediffClass>HediffWithComps</hediffClass>
-		<isBad>false</isBad>
-		<everCurableByItem>false</everCurableByItem>
-		<stages>
-		  <li>
-			<minSeverity>0</minSeverity>
-			<painFactor>0.8</painFactor>
-			<statOffsets>
-			  <PsychicSensitivity>0.1</PsychicSensitivity>
-			</statOffsets>
-			<capMods>
-			  <li>
-				<capacity>Consciousness</capacity>
-				<offset>0.15</offset>
-			  </li>
-			</capMods>
-		  </li>
-		</stages>
-		<comps>		
-			<li Class="HediffCompProperties_Disappears">
-				<disappearsAfterTicks>60000~300000</disappearsAfterTicks>
-			</li>
-		</comps>
-	  </HediffDef>
-	
-	  <HediffDef>
-		<defName>Force_Master</defName>
-		<label>Master</label>
-		<description>This individual is a master of the force and has chosen an apprentice. If the master dies, the apprentice will go into a rage. Only 1 apprentice is allowed.</description>
-		<hediffClass>TheForce_Psycast.Abilities.Hediff_Master</hediffClass>
-		<isBad>False</isBad>
-		<stages>
-			<li>
-				<statOffsets>
-					<GlobalLearningFactor>0.1</GlobalLearningFactor>
-				</statOffsets>
-			</li>
-		</stages>
-	</HediffDef>
+    <HediffDef>
+        <defName>ForceBond_MasterApprentice</defName>
+        <label>Force Bond (Master/Apprentice)</label>
+        <description>The pawn has formed a minor Force bond with their Master/Apprentice after spending enough time together.</description>
+        <hediffClass>HediffWithComps</hediffClass>
+        <isBad>false</isBad>
+        <everCurableByItem>false</everCurableByItem>
+        <stages>
+          <li>
+            <minSeverity>0</minSeverity>
+            <painFactor>0.8</painFactor>
+            <statOffsets>
+              <PsychicSensitivity>0.1</PsychicSensitivity>
+            </statOffsets>
+            <capMods>
+              <li>
+                <capacity>Consciousness</capacity>
+                <offset>0.15</offset>
+              </li>
+            </capMods>
+          </li>
+        </stages>
+        <comps>		
+            <li Class="HediffCompProperties_Disappears">
+                <disappearsAfterTicks>60000~300000</disappearsAfterTicks>
+            </li>
+        </comps>
+    </HediffDef>
+    
+    <HediffDef>
+        <defName>Force_Master</defName>
+        <label>Master</label>
+        <description>This individual is a master of the Force and has chosen an apprentice. If the master dies, the apprentice will go into a rage. Only one apprentice is allowed.</description>
+        <hediffClass>TheForce_Psycast.Abilities.Jedi_Training.Hediff_Master</hediffClass>
+        <isBad>false</isBad>
+        <stages>
+            <li>
+                <statOffsets>
+                    <GlobalLearningFactor>0.1</GlobalLearningFactor>
+                </statOffsets>
+            </li>
+        </stages>
+    </HediffDef>
 
-	<HediffDef>
-		<defName>Force_Apprentice</defName>
-		<label>Apprentice</label>
-		<description>This individual has beem selected as an Apprentice by a Master psycaster. They will experience random xp gains and have various other stat buffs when the master is around.</description>
-		<hediffClass>TheForce_Psycast.Abilities.Hediff_Apprentice</hediffClass>
-		<isBad>False</isBad>
-		<stages>
-			<li>
-				<statOffsets>
-					<GlobalLearningFactor>0.05</GlobalLearningFactor>
-				</statOffsets>
-			</li>
-		</stages>
-	</HediffDef>
+    <HediffDef>
+        <defName>Force_Apprentice</defName>
+        <label>Apprentice</label>
+        <description>This individual has been selected as an apprentice by a master psycaster. They will experience random XP gains and various other stat buffs when the master is around.</description>
+        <hediffClass>TheForce_Psycast.Abilities.Jedi_Training.Hediff_Apprentice</hediffClass>
+        <isBad>false</isBad>
+        <stages>
+            <li>
+                <statOffsets>
+                    <GlobalLearningFactor>0.05</GlobalLearningFactor>
+                </statOffsets>
+            </li>
+        </stages>
+    </HediffDef>
 
 </Defs>
