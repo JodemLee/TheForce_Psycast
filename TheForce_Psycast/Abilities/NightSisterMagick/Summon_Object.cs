@@ -1,8 +1,8 @@
-﻿using RimWorld.Planet;
-using RimWorld;
+﻿using RimWorld;
+using RimWorld.Planet;
+using TheForce_Psycast.NightSisterMagick;
 using Verse;
 using Ability = VFECore.Abilities.Ability;
-using TheForce_Psycast.NightSisterMagick;
 
 namespace TheForce_Psycast.Abilities.NightSisterMagick
 {

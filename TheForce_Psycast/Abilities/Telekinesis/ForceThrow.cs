@@ -5,8 +5,6 @@ using System;
 using UnityEngine;
 using Verse;
 using Verse.AI;
-using VFECore.Abilities;
-using static UnityEngine.GraphicsBuffer;
 
 namespace TheForce_Psycast
 {
@@ -59,7 +57,7 @@ namespace TheForce_Psycast
                     {
                         var map = Caster.Map;
                         var flyer = PawnFlyer.MakeFlyer(ForceDefOf.Force_ThrownPawn, targets[i].Thing as Pawn, dest.Cell, null, null);
-                        GenSpawn.Spawn(flyer, dest.Cell, map);    
+                        GenSpawn.Spawn(flyer, dest.Cell, map);
                         float distancePushed = (dest.Cell - targets[i].Cell).LengthHorizontal;
                         float scaledDamage = baseDamage + (distancePushed * 2f); // Adjust the multiplier as needed
                         if (!dest.Cell.Walkable(dest.Map))
@@ -97,21 +95,25 @@ namespace TheForce_Psycast
             // Calculate the position of the projectile based on its current position and destination
             var position = Vector3.Lerp(origin, destCell.ToVector3(), DistanceCoveredFraction);
 
-            // Get the graphic of the target thing
-            Graphic targetGraphic = targetThing?.Graphic;
-
-            // Check if the target thing has a graphic
-            if (targetGraphic != null)
+            // Check if the target thing is a corpse
+            if (targetThing is Corpse corpse)
             {
-                // Draw the target thing's graphic at the calculated position
-                Material targetMaterial = targetGraphic.MatSingle;
-                Vector2 graphicSize = targetGraphic.drawSize; // Get the original size of the graphic
-                Mesh graphicMesh = MeshPool.GridPlane(graphicSize);
-                UnityEngine.Graphics.DrawMesh(graphicMesh, position, Quaternion.identity, targetMaterial, 0);
+                corpse.InnerPawn.Drawer.renderer.RenderPawnAt(position, Rot4.South, neverAimWeapon: true);
             }
             else
             {
-                return;
+                // Get the graphic of the target thing
+                Graphic targetGraphic = targetThing?.Graphic;
+
+                // Check if the target thing has a graphic
+                if (targetGraphic != null)
+                {
+                    // Draw the target thing's graphic at the calculated position
+                    Material targetMaterial = targetGraphic.MatSingle;
+                    Vector2 graphicSize = targetGraphic.drawSize; // Get the original size of the graphic
+                    Mesh graphicMesh = MeshPool.GridPlane(graphicSize);
+                    UnityEngine.Graphics.DrawMesh(graphicMesh, position, Quaternion.identity, targetMaterial, 0);
+                }
             }
         }
 
@@ -123,24 +125,70 @@ namespace TheForce_Psycast
                 hitThing.TakeDamage(new DamageInfo(DamageDefOf.Blunt, DamageAmount, 0f, -1f, this.launcher, null, null, DamageInfo.SourceCategory.ThingOrUnknown));
             }
 
-
-
-            if (targetThing.def.thingCategories.Contains(ThingCategoryDef.Named("MortarShells")))
+            // Check if the targetThing is in the MortarShells category
+            if (targetThing.def.thingCategories != null && targetThing.def.thingCategories.Contains(ThingCategoryDef.Named("MortarShells")))
             {
-                // Add 2 damage to the original target
+                // Add 30 damage to the original target
                 targetThing.TakeDamage(new DamageInfo(DamageDefOf.Blunt, 30));
             }
 
             base.Impact(hitThing, blockedByShield);
 
-            // Move the target to the destination cell
             if (targetThing != null)
             {
-                targetThing.Position = destCell;
+                // Check if the destination cell is occupied
+                Thing occupyingThing = destCell.GetFirstThing(targetThing.Map, targetThing.def);
+                if (occupyingThing != null)
+                {
+                    if (occupyingThing.def == targetThing.def && occupyingThing.stackCount < occupyingThing.def.stackLimit)
+                    {
+                        // If it's the same item and stackable, transfer to the stack
+                        int spaceLeft = occupyingThing.def.stackLimit - occupyingThing.stackCount;
+                        int transferAmount = Mathf.Min(spaceLeft, targetThing.stackCount);
+                        occupyingThing.stackCount += transferAmount;
+                        targetThing.stackCount -= transferAmount;
+
+                        // If targetThing's stack count reaches zero, destroy it to prevent spawning issues
+                        if (targetThing.stackCount <= 0)
+                        {
+                            targetThing.Destroy(DestroyMode.Vanish);
+                        }
+                        else
+                        {
+                            // Find a nearby empty spot and place the remaining stack there
+                            IntVec3 nearbyCell = FindNearbyEmptyCell(targetThing.Map, destCell);
+                            targetThing.Position = nearbyCell;
+                        }
+                    }
+                    else
+                    {
+                        // Find a nearby empty spot and place the item there
+                        IntVec3 nearbyCell = FindNearbyEmptyCell(targetThing.Map, destCell);
+                        targetThing.Position = nearbyCell;
+                    }
+                }
+                else
+                {
+                    // If the destination cell is unoccupied, just move the item there without spawning
+                    IntVec3 nearbyCell = FindNearbyEmptyCell(targetThing.Map, destCell);
+                    targetThing.Position = nearbyCell;
+                }
             }
         }
 
+        private IntVec3 FindNearbyEmptyCell(Map map, IntVec3 center)
+        {
+            TargetInfo targetInfo = new TargetInfo(destCell, targetThing.Map);
+
+            foreach (IntVec3 cell in GenAdj.CellsAdjacent8Way(targetInfo))
+            {
+                if (cell.InBounds(map) && cell.Standable(map) && cell.GetFirstThing(map, def) == null)
+                {
+                    return cell;
+                }
+            }
+            // If no adjacent empty spot found, return the original cell (this should be rare)
+            return center;
+        }
     }
 }
-
-

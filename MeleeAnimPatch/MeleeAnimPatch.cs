@@ -1,5 +1,6 @@
 ﻿using AM;
 using AM.Sweep;
+using TheForce_Psycast;
 using TheForce_Psycast.Lightsabers;
 using UnityEngine;
 using Verse;
@@ -9,73 +10,65 @@ namespace MeleeAnimPatch_ForcePsycast
     internal class MeleeAnimPatch : PartRenderer
     {
         private Comp_LightsaberBlade lightsaberComp;
-
         public override bool Draw()
         {
-            lightsaberComp = Item?.GetComp<Comp_LightsaberBlade>();
+            // Draw lightsaber base.
+            Graphics.DrawMesh(Mesh, TRS, Material, 0);
 
+            var weapon = Item;
+
+            if (weapon == null)
+                return true;
+
+            var lightsaberComp = weapon.GetComp<Comp_LightsaberBlade>();
             if (lightsaberComp == null)
                 return true;
-            Graphics.DrawMesh(Mesh, TRS, Material, (int)-.001f);
 
-            // Draw the main blade
-            DrawLightsaberBlade(lightsaberComp.Graphic);
+            var bladeMat = weapon.GetComp<Comp_LightsaberBlade>()?.Graphic?.MatSingle;
+            var coreMat = weapon.GetComp<Comp_LightsaberBlade>()?.LightsaberCore1Graphic?.MatSingle;
+            var blade2Mat = weapon.GetComp<Comp_LightsaberBlade>()?.LightsaberBlade2Graphic?.MatSingle;
+            var core2Mat = weapon.GetComp<Comp_LightsaberBlade>()?.LightsaberCore2Graphic?.MatSingle;
+            var glowMat = weapon.GetComp<Comp_LightsaberBlade>()?.LightsaberGlowGraphic?.MatSingle;
 
-            // Draw the cores if they exist
+            if (bladeMat == null)
+                return true;
+
+            float lenFactor = Rand.Range(0.99f, 1.01f);
+            Vector3 scale = new Vector3(lenFactor, 1, 1);
+            var scaleMatrix = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, scale);
+            var glowMatrix = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, Force_ModSettings.glowRadius*scale);
+
+            Matrix4x4 TRSBlade = TRS;
+            TRSBlade.m13 -= 0.002f;
+            Matrix4x4 TRSCore = TRS;
+            TRSCore.m13 -= 0.001f;
+
+            if (lightsaberComp.Graphic != null)
+            {
+                Graphics.DrawMesh(Mesh, TRSBlade, bladeMat, 0);
+            }
+
             if (lightsaberComp.LightsaberCore1Graphic != null)
             {
-                DrawLightsaberCore(lightsaberComp.LightsaberCore1Graphic);
+                Graphics.DrawMesh(Mesh, TRSCore, coreMat, 0);
             }
+
             if (lightsaberComp.LightsaberBlade2Graphic != null)
             {
-                DrawLightsaberBlade(lightsaberComp.LightsaberBlade2Graphic);
+                Graphics.DrawMesh(Mesh, TRSBlade, blade2Mat, 0);
             }
+
             if (lightsaberComp.LightsaberCore2Graphic != null)
             {
-                DrawLightsaberCore(lightsaberComp.LightsaberCore2Graphic);
+             Graphics.DrawMesh(Mesh, TRSCore, core2Mat, 0);
+            }
+
+            if (lightsaberComp.LightsaberGlowGraphic != null && Force_ModSettings.LightsaberFakeGlow)
+            {
+                Graphics.DrawMesh(Mesh, TRSCore * glowMatrix, glowMat, 0);
             }
 
             return true;
-        }
-
-        private void DrawLightsaberBlade(Graphic graphic)
-        {
-            if (graphic == null)
-                return;
-
-            Material material = graphic.MatSingle;
-
-            float bladeYOffset = 0.002f; // Adjust this value as needed
-
-            // Create the TRSBlade matrix with the y offset
-            Matrix4x4 TRSBlade = TRS;
-            TRSBlade.m23 -= bladeYOffset; // Adjusting the translation component in the y-axis
-
-            float lenFactor = Rand.Range(0.99f, 1.01f);
-            Vector3 scale = new Vector3(lenFactor, 1, 1);
-            Matrix4x4 scaleMatrix = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, scale);
-
-            Graphics.DrawMesh(Mesh, TRSBlade * scaleMatrix, material, 0);
-        }
-
-        private void DrawLightsaberCore(Graphic graphic)
-        {
-            if (graphic == null)
-                return;
-
-            Material material = graphic.MatSingle;
-
-            float CoreYOffset = 0.001f; // Adjust this value as needed
-
-            // Create the TRSBlade matrix with the y offset
-            Matrix4x4 TRSCore = TRS;
-            TRSCore.m23 -= CoreYOffset; // Adjusting the translation component in the y-axis
-
-            float lenFactor = Rand.Range(0.99f, 1.01f);
-            Vector3 scale = new Vector3(lenFactor, 1, 1);
-            Matrix4x4 scaleMatrix = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, scale);
-
-            Graphics.DrawMesh(Mesh, TRSCore * scaleMatrix, material, 0);
         }
     }
 

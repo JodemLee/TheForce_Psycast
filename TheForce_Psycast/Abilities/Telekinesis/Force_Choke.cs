@@ -1,14 +1,8 @@
-﻿using RimWorld.Planet;
-using RimWorld;
-using System;
-using System.Collections.Generic;
+﻿using RimWorld;
+using RimWorld.Planet;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using VanillaPsycastsExpanded;
-using Verse;
-using VFECore;
 using UnityEngine;
+using Verse;
 
 namespace TheForce_Psycast
 {

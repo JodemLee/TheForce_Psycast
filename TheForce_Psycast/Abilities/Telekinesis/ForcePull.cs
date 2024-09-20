@@ -1,10 +1,8 @@
 ﻿using RimWorld;
 using RimWorld.Planet;
 using UnityEngine;
-using VanillaPsycastsExpanded.Skipmaster;
 using Verse;
-using VFECore.Abilities;
-using Ability = VFECore.Abilities.Ability;
+using Verse.Sound;
 
 namespace TheForce_Psycast
 {
@@ -35,6 +33,12 @@ namespace TheForce_Psycast
                     var flyer = PawnFlyer.MakeFlyer(ForceDefOf.Force_ThrownPawn, target.Thing as Pawn, pullPosition, null, null);
                     GenSpawn.Spawn(flyer, pullPosition, this.pawn.Map);
                 }
+                else if (target.Thing.def.equipmentType == EquipmentType.Primary && this.pawn.equipment.Primary == null)
+                {
+                    // If the target is a weapon and the caster is unarmed, equip the weapon
+                     var targetWeapon = target.Thing as ThingWithComps;
+                    Equip(this.pawn, targetWeapon);
+                }
                 else
                 {
                     target.Thing.Position = pullPosition;
@@ -44,6 +48,25 @@ namespace TheForce_Psycast
             }
         }
 
+        public void Equip(Pawn equipper, ThingWithComps thingWithComps)
+        {
+            ThingWithComps thingWithComps2;
+            if (thingWithComps.def.stackLimit > 1 && thingWithComps.stackCount > 1)
+            {
+                thingWithComps2 = (ThingWithComps)thingWithComps.SplitOff(1);
+            }
+            else
+            {
+                thingWithComps2 = thingWithComps;
+                thingWithComps2.DeSpawn();
+            }
+            equipper.equipment.MakeRoomFor(thingWithComps2);
+            equipper.equipment.AddEquipment(thingWithComps2);
+            if (thingWithComps.def.soundInteract != null)
+            {
+                thingWithComps.def.soundInteract.PlayOneShot(new TargetInfo(equipper.Position, equipper.Map));
+            }
 
+        }
     }
 }

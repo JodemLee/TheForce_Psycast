@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 using Verse;
 
 namespace TheForce_Psycast.Hediffs
@@ -19,6 +14,10 @@ namespace TheForce_Psycast.Hediffs
             if (pawn.health.hediffSet.GetFirstHediffOfDef(ForceDefOf.Force_SithGhost) != null)
             {
                 return new Color(1f, 0f, 0f, 0.7f); // Light transparent red for Darkside Ghost
+            }
+            if (pawn.health.hediffSet.GetFirstHediffOfDef(ForceDefOf.Force_Sithzombie) != null)
+            {
+                return new Color(0.8f, 0.8f, 0.8f, 1f);
             }
             return null;
         }

@@ -6,10 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Emit;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using Verse;
-using VFECore;
 
 namespace TheForce_Psycast.Harmony_Patches
 {
@@ -56,13 +53,14 @@ namespace TheForce_Psycast.Harmony_Patches
         public static void Postfix(Pawn_PsychicEntropyTracker __instance)
         {
             Pawn pawn = __instance.Pawn;
-            if (pawn != null && pawn.health != null)
+            if (pawn != null && pawn.health != null && pawn.Map != null && pawn.Map.listerBuildings != null)
             {
                 Hediff hediff = null;
                 Hediff hediff2 = null;
                 foreach (var def in Base.AllMeditationSpots)
                 {
-                    if (pawn.Map.listerBuildings.AllBuildingsColonistOfDef(def).Any())
+                    var buildings = pawn.Map.listerBuildings.AllBuildingsColonistOfDef(def);
+                    if (buildings != null && buildings.Any())
                     {
                         var alignment = def.GetModExtension<MeditationBuilding_Alignment>();
                         if (alignment != null)
@@ -72,17 +70,21 @@ namespace TheForce_Psycast.Harmony_Patches
                             {
                                 // Increase the severity of the hediff
                                 hediff.Severity += MeditationUtility.PsyfocusGainPerTick(pawn);
-                                
                             }
+
                             hediff2 = pawn.health.hediffSet.GetFirstHediffOfDef(alignment.hedifftoDecrease);
                             if (hediff2 != null)
                             {
-                                // Increase the severity of the hediff
+                                // Decrease the severity of the hediff
                                 hediff2.Severity -= MeditationUtility.PsyfocusGainPerTick(pawn);
                             }
                         }
                     }
                 }
+            }
+            else
+            {
+                return;
             }
         }
     }

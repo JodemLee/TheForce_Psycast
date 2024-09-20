@@ -1,10 +1,5 @@
 ﻿using RimWorld;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TheForce_Psycast.Abilities.Lightside;
 using UnityEngine;
 using Verse;
 
@@ -70,7 +65,7 @@ namespace TheForce_Psycast.Hediffs
                 {
                     defaultLabel = "Link to Object",
                     defaultDesc = "Link the pawn's spirit to an object. If the object is destroyed, the pawn will die.",
-                    icon = ContentFinder<Texture2D>.Get("Abilities/Lightside/ForceGhost", true),
+                    icon = ContentFinder<Texture2D>.Get("Abilities/Darkside/SithGhost", true),
                     action = () =>
                     {
                         Find.Targeter.BeginTargeting(ForLinkToObject(), (target) =>
@@ -103,7 +98,7 @@ namespace TheForce_Psycast.Hediffs
                     {
                         defaultLabel = "Unlink Object",
                         defaultDesc = "Safely unlink the pawn's spirit from the object.",
-                        icon = GetIconFor(linkedObject.def, linkedObject.Stuff),
+                        icon = Widgets.GetIconFor(linkedObject.def, linkedObject.Stuff),
                         action = () =>
                         {
                             linkedObject = null;
@@ -113,7 +108,7 @@ namespace TheForce_Psycast.Hediffs
                 }
             }
 
-            if (isDead && linkedObject != null)
+            if (isDead && linkedObject != null && !ForceGhostUtility.IsForceGhost(pawn))
             {
                 yield return new Command_Action
                 {
@@ -137,7 +132,7 @@ namespace TheForce_Psycast.Hediffs
         }
 
         public override void PostRemoved()
-        {
+        {   
             base.PostRemoved();
             linkedObject = null;
         }

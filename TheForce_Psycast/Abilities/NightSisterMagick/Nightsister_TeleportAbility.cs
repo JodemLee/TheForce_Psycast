@@ -1,7 +1,6 @@
 ﻿using RimWorld;
 using RimWorld.Planet;
 using UnityEngine;
-using VanillaPsycastsExpanded;
 using VanillaPsycastsExpanded.Skipmaster;
 using Verse;
 using Verse.AI;

@@ -13,6 +13,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrystalFormations", "Crysta
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeleeAnimPatch_ForcePsycast", "MeleeAnimPatch\MeleeAnimPatch_ForcePsycast.csproj", "{CF903D3E-AA71-4C1D-8716-2251E7A1650D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheForce_ItsSorcery", "TheForce_ItsSorcery\TheForce_ItsSorcery.csproj", "{2110FA43-6CDE-4C55-9E74-9F77791C971B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JecToolsLightsaberPatch", "JecToolsLightsaberPatch\JecToolsLightsaberPatch.csproj", "{418D99F7-4F70-4E96-9501-DEC133349997}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModularWeapon_Patch", "ModularWeapon_Patch\ModularWeapon_Patch.csproj", "{BFDC2D8C-B8CC-4534-ADFC-97E3655EB8AB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Force_CEPatch", "Force_CEPatch\Force_CEPatch.csproj", "{991D6F91-2603-411B-A034-6215399BE4E0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +43,22 @@ Global
 		{CF903D3E-AA71-4C1D-8716-2251E7A1650D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CF903D3E-AA71-4C1D-8716-2251E7A1650D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CF903D3E-AA71-4C1D-8716-2251E7A1650D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2110FA43-6CDE-4C55-9E74-9F77791C971B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2110FA43-6CDE-4C55-9E74-9F77791C971B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2110FA43-6CDE-4C55-9E74-9F77791C971B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2110FA43-6CDE-4C55-9E74-9F77791C971B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{418D99F7-4F70-4E96-9501-DEC133349997}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{418D99F7-4F70-4E96-9501-DEC133349997}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{418D99F7-4F70-4E96-9501-DEC133349997}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{418D99F7-4F70-4E96-9501-DEC133349997}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFDC2D8C-B8CC-4534-ADFC-97E3655EB8AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFDC2D8C-B8CC-4534-ADFC-97E3655EB8AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFDC2D8C-B8CC-4534-ADFC-97E3655EB8AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFDC2D8C-B8CC-4534-ADFC-97E3655EB8AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{991D6F91-2603-411B-A034-6215399BE4E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{991D6F91-2603-411B-A034-6215399BE4E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{991D6F91-2603-411B-A034-6215399BE4E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{991D6F91-2603-411B-A034-6215399BE4E0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

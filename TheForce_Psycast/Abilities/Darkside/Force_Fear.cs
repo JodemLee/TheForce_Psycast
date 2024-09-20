@@ -1,9 +1,8 @@
-﻿using RimWorld.Planet;
-using RimWorld;
-using System;
+﻿using RimWorld;
+using RimWorld.Planet;
+using UnityEngine;
 using Verse;
 using Ability = VFECore.Abilities.Ability;
-using UnityEngine;
 
 namespace TheForce_Psycast.Abilities.Darkside
 {

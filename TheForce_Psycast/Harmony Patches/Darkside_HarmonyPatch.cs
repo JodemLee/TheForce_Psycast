@@ -83,7 +83,7 @@ namespace TheForce_Psycast.Harmony_Patches
                     if (hediff != null)
                     {
                         // Adjust the severity increment as per your needs
-                        hediff.Severity += 1f;
+                        hediff.Severity += 0.1f;
                     }
                 }
             }

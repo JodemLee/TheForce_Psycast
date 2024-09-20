@@ -1,8 +1,6 @@
 ﻿using RimWorld;
 using RimWorld.Planet;
-using System.Security.Cryptography;
 using Verse;
-using VFECore.Abilities;
 
 namespace TheForce_Psycast
 {
@@ -56,10 +54,10 @@ namespace TheForce_Psycast
                 IntVec3 pushBackPosition = target.Cell + offset;
 
                 // Check if the new position intersects with a solid object (e.g., a wall)
-                if (CheckIntersectsWithSolid(pushBackPosition))
+                if (!PositionUtils.CheckValidPosition(pushBackPosition, Caster.Map))
                 {
                     // If it intersects, find a valid position closer to the target
-                    pushBackPosition = FindValidPosition(target.Cell, offset);
+                    pushBackPosition = PositionUtils.FindValidPosition(target.Cell, offset, Caster.Map);
 
                     float distancePushed = (pushBackPosition - target.Cell).LengthHorizontal;
 
@@ -71,51 +69,19 @@ namespace TheForce_Psycast
                     target.Thing.TakeDamage(damageInfo);
                 }
 
-                if (target.Thing is Pawn)
+                if (target.Thing is Pawn pawn)
                 {
                     var map = Caster.Map;
-                    var flyer = PawnFlyer.MakeFlyer(ForceDefOf.Force_ThrownPawn, target.Thing as Pawn, pushBackPosition, null, null);
+                    var flyer = PawnFlyer.MakeFlyer(ForceDefOf.Force_ThrownPawn, pawn, pushBackPosition, null, null);
                     GenSpawn.Spawn(flyer, pushBackPosition, map);
                 }
                 else
                 {
                     target.Thing.Position = pushBackPosition;
                 }
-
-                base.Cast(targets);
             }
-        }
 
-        // Helper method to check if the position intersects with a solid object
-        private bool CheckIntersectsWithSolid(IntVec3 position)
-        {
-            return !position.Walkable(this.pawn.Map);
-        }
-
-        // Helper method to find a valid position closer to the target
-        private IntVec3 FindValidPosition(IntVec3 originalPosition, IntVec3 offset)
-        {
-            Map map = this.pawn.Map;
-            IntVec3 closestValidPosition = originalPosition;
-            float closestDistanceSquared = float.MaxValue;
-
-            for (int i = 1; i <= 3; i++)
-            {
-                IntVec3 newPosition = originalPosition + (offset * i);
-                if (newPosition.InBounds(map) && newPosition.Standable(map))
-                {
-                    // If the new position is valid, calculate its distance to the original position
-                    float distanceSquared = newPosition.DistanceToSquared(originalPosition);
-                    if (distanceSquared < closestDistanceSquared)
-                    {
-                        // Update the closest valid position if this position is closer
-                        closestValidPosition = newPosition;
-                        closestDistanceSquared = distanceSquared;
-                    }
-                }
-            }
-            // Return the closest valid position found
-            return closestValidPosition;
+            base.Cast(targets);
         }
     }
 }

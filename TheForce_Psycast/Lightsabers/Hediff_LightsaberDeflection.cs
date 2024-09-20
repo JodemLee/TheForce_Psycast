@@ -1,11 +1,6 @@
 ﻿using RimWorld;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
-using VanillaPsycastsExpanded;
 using Verse;
 
 namespace TheForce_Psycast.Lightsabers
@@ -20,27 +15,7 @@ namespace TheForce_Psycast.Lightsabers
         public float entropyGain { get; set; }
         public float deflectionMultiplier { get; set; }
 
-        public override void Tick()
-        {
-            base.Tick();
-            if (pawn.Map != null)
-            {
-                var projectiles = GenRadial.RadialDistinctThingsAround(pawn.Position, pawn.Map, 1, true)
-                    .OfType<Projectile>();
-
-                if (!projectiles.Any())
-                    return;
-
-                foreach (var projectile in projectiles)
-                {
-                    if (ShouldDeflectProjectile(projectile))
-                    {
-                        DeflectProjectile(projectile);
-                    }
-                }
-            }
-        }
-        protected virtual void DeflectProjectile(Projectile projectile)
+        public virtual void DeflectProjectile(Projectile projectile)
         {
             Effecter effecter = new Effecter(EffecterDefOf.Interceptor_BlockedProjectile);
             effecter.Trigger(new TargetInfo(projectile.Position, pawn.Map), TargetInfo.Invalid);
@@ -48,11 +23,30 @@ namespace TheForce_Psycast.Lightsabers
             lastInterceptAngle = projectile.ExactPosition.AngleToFlat(pawn.TrueCenter());
             lastInterceptTicks = Find.TickManager.TicksGame;
             drawInterceptCone = true;
+
+            var lightsaber = pawn.equipment.Primary.TryGetComp<Comp_LightsaberBlade>();
+            if (lightsaber != null)
+            {
+                lightsaber.lastInterceptAngle = lastInterceptAngle;
+                float projectileSpeed = projectile.def.projectile.speed;
+                int lightsaberSkill = pawn.skills.GetSkill(SkillDefOf.Melee).Level;
+
+                // Calculate the deflection angle difference to adjust animation timing
+                float angleDifference = Mathf.Abs(projectile.ExactPosition.AngleToFlat(pawn.TrueCenter()) - lastInterceptAngle);
+
+                // Base the animation duration on all factors: speed, skill, and deflection angle, with added randomness
+                lightsaber.AnimationDeflectionTicks = (int)Mathf.Clamp(
+                    (5000f / (projectileSpeed * (angleDifference + 1))) * Mathf.Lerp(1.2f, 0.8f, lightsaberSkill / 20f) + Random.Range(-100, 100),
+                    300,
+                    1200
+                );
+            }
+
             projectile.Launch(pawn, ((Vector3)TheForce_Psycast.NonPublicFields.Projectile_origin.GetValue(projectile)).ToIntVec3(), ((Vector3)TheForce_Psycast.NonPublicFields.Projectile_origin.GetValue(projectile)).ToIntVec3(), ProjectileHitFlags.All, true, projectile);
             AddEntropy(projectile);
         }
 
-        private void AddEntropy(Projectile projectile)
+        public void AddEntropy(Projectile projectile)
         {
             // Calculate entropy gain based on projectile speed
             float EntropyGain = CalculateEntropyGain(projectile);
@@ -61,7 +55,7 @@ namespace TheForce_Psycast.Lightsabers
             this.pawn.psychicEntropy.TryAddEntropy(EntropyGain, overLimit: false);
         }
 
-        private float CalculateEntropyGain(Projectile projectile)
+        public float CalculateEntropyGain(Projectile projectile)
         {
             entropyGain = Force_ModSettings.entropyGain;
 
@@ -74,16 +68,6 @@ namespace TheForce_Psycast.Lightsabers
         public virtual bool ShouldDeflectProjectile(Projectile projectile)
         {
             float deflectionMultiplier = Force_ModSettings.deflectionMultiplier;
-
-            if (projectile.Launcher == null || projectile.Launcher.Faction == null || projectile.Launcher.Faction == pawn.Faction)
-            {
-                return false;
-            }
-
-            if (!pawn.Faction.HostileTo(projectile.Launcher.Faction)) // Check if the launcher's faction is hostile
-            {
-                return false;
-            }
 
             if (this.pawn.psychicEntropy.EntropyValue >= this.pawn.psychicEntropy.MaxEntropy)
             {
@@ -122,8 +106,7 @@ namespace TheForce_Psycast.Lightsabers
                 yield return gizmo;
             }
 
-            // Create and yield the custom gizmo
-            yield return new Gizmo_LightsaberStance(pawn, this);
+            yield return new Gizmo_LightsaberStance(pawn, this, pawn.equipment.Primary.def); // Pass ThingDef here
         }
 
         public override void ExposeData()

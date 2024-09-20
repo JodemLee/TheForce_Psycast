@@ -1,16 +1,10 @@
-﻿using RimWorld.Planet;
-using RimWorld;
-using System;
+﻿using RimWorld;
+using RimWorld.Planet;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using Verse;
 using VFECore.Abilities;
 using Ability = VFECore.Abilities.Ability;
-using static HarmonyLib.Code;
-using TheForce_Psycast.NightSisterMagick;
 
 namespace TheForce_Psycast
 {
@@ -42,21 +36,21 @@ namespace TheForce_Psycast
     }
 
 
-    public class AbilityExtension_IchorCost : AbilityExtension_AbilityMod
-    {
-        public float IchorCost;
-        public override void Cast(GlobalTargetInfo[] targets, Ability ability)
-        {
-            base.Cast(targets, ability);
-            var Ichor = ability.pawn.genes.GetFirstGeneOfType<Force_GeneMagick>();
-            Ichor.Resource.Value -= IchorCost;
-        }
+    //public class AbilityExtension_IchorCost : AbilityExtension_AbilityMod
+    //{
+    //    public float IchorCost;
+    //    public override void Cast(GlobalTargetInfo[] targets, Ability ability)
+    //    {
+    //        base.Cast(targets, ability);
+    //        var Ichor = ability.pawn.genes.GetFirstGeneOfType<Force_GeneMagick>();
+    //        Ichor.Resource.Value -= IchorCost;
+    //    }
 
-        public override string GetDescription(Ability ability)
-        {
-            return (("AbilityIchorCost".Translate() + ": ") + Mathf.RoundToInt(IchorCost * 100f)).ToString().Colorize(Color.green);
-        }
-    }
+    //    public override string GetDescription(Ability ability)
+    //    {
+    //        return (("AbilityIchorCost".Translate() + ": ") + Mathf.RoundToInt(IchorCost * 100f)).ToString().Colorize(Color.green);
+    //    }
+    //}
 
     public class AbilityExtension_PsycastHediffCheck : AbilityExtension_Hediff
     {

@@ -1,6 +1,4 @@
-﻿using RimWorld;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using TheForce_Psycast.Lightsabers;
 using UnityEngine;
 using Verse;
@@ -37,24 +35,19 @@ namespace TheForce_Psycast
 
         protected override void DrawAt(Vector3 drawLoc, bool flip = false)
         {
-            // Calculate num and vector
             float num = ArcHeightFactor * GenMath.InverseParabola(DistanceCoveredFractionArc);
-            Vector3 vector = drawLoc + new Vector3(0f, 0f, 1f) * num;
+            Vector3 vector = drawLoc;
 
-            // Draw shadow if necessary
             if (def.projectile.shadowSize > 0f)
             {
                 DrawShadow(drawLoc, num);
             }
 
-            // Get the initial rotation
             Quaternion rotation = ExactRotation;
 
-            // Default assignment for the graphic
             Graphic graphicToDraw = def.graphic;
             Comp_LightsaberBlade compLightsaberBlade = null;
 
-            // Check if the launcher is a pawn and has an equipped weapon
             if (launcher is Pawn pawn)
             {
                 if (pawn.equipment != null && pawn.equipment.Primary != null)
@@ -62,18 +55,15 @@ namespace TheForce_Psycast
                     ThingWithComps equippedWeapon = pawn.equipment.Primary;
                     graphicToDraw = equippedWeapon.Graphic;
 
-                    // Check if the equipped weapon has a Comp_LightsaberBlade component
                     compLightsaberBlade = equippedWeapon.TryGetComp<Comp_LightsaberBlade>();
                 }
             }
 
-            // Get the rotation speed
             float spinRate = Force_ModSettings.spinRate;
             float rotationSpeed = 100f * spinRate;
             float rotationAngle = Time.time * rotationSpeed;
             rotation *= Quaternion.Euler(0f, rotationAngle, 0f);
 
-            // Draw the main graphic
             if (def.projectile.useGraphicClass)
             {
                 Graphic.Draw(vector, Rotation, this, rotation.eulerAngles.y);
@@ -83,41 +73,64 @@ namespace TheForce_Psycast
                 Graphics.DrawMesh(MeshPool.GridPlane(graphicToDraw.drawSize), vector, rotation, graphicToDraw.MatSingle, 0);
             }
 
-            // Draw additional meshes if the projectile has a lightsaber component
+
             if (compLightsaberBlade != null)
             {
-                DrawLightsaberGraphics(compLightsaberBlade, vector, rotation, rotationSpeed);
+                DrawLightsaberGraphics(compLightsaberBlade, DrawPos,  rotation, rotationSpeed);
+                compLightsaberBlade.IsThrowingWeapon = true;
             }
+
+            
 
             Comps_PostDraw();
         }
 
-        private void DrawLightsaberGraphics(Comp_LightsaberBlade compLightsaberBlade, Vector3 drawLoc, Quaternion rotation, float rotationspeed)
+        private void DrawLightsaberGraphics(Comp_LightsaberBlade compLightsaberBlade, Vector3 drawLoc, Quaternion rotation, float rotationspeed, float drawSize = 2.0f)
         {
-            // Early return if the main graphic material is null
             if (compLightsaberBlade.Graphic?.MatSingle == null)
                 return;
 
+            // Adjust y-axis for blade and core offsets
+            float coreYOffset = -0.001f;
+            float bladeYOffset = -0.002f;
+
             List<Material> materialsToDraw = new List<Material>();
+            List<Vector3> drawLocations = new List<Vector3>();
 
-
-            // Add main graphic material
             materialsToDraw.Add(compLightsaberBlade.Graphic.MatSingle);
+            drawLocations.Add(drawLoc + new Vector3(0, bladeYOffset, 0));
 
-            // Add additional graphics materials if not null
             if (compLightsaberBlade.LightsaberCore1Graphic?.MatSingle != null)
+            {
                 materialsToDraw.Add(compLightsaberBlade.LightsaberCore1Graphic.MatSingle);
+                drawLocations.Add(drawLoc + new Vector3(0, coreYOffset, 0));
+            }
 
             if (compLightsaberBlade.LightsaberBlade2Graphic?.MatSingle != null)
+            {
                 materialsToDraw.Add(compLightsaberBlade.LightsaberBlade2Graphic.MatSingle);
+                drawLocations.Add(drawLoc + new Vector3(0, bladeYOffset, 0));
+            }
 
             if (compLightsaberBlade.LightsaberCore2Graphic?.MatSingle != null)
+            {
                 materialsToDraw.Add(compLightsaberBlade.LightsaberCore2Graphic.MatSingle);
+                drawLocations.Add(drawLoc + new Vector3(0, coreYOffset, 0));
+            }
 
-            // Draw all collected materials in one pass
+            if (compLightsaberBlade.LightsaberGlowGraphic?.MatSingle != null)
+            {
+                materialsToDraw.Add(compLightsaberBlade.LightsaberGlowGraphic.MatSingle);
+                drawLocations.Add(drawLoc + new Vector3(0, coreYOffset, 0));
+            }
+
             for (int i = 0; i < materialsToDraw.Count; i++)
             {
-                Graphics.DrawMesh(MeshPool.plane10, drawLoc, rotation, materialsToDraw[i], -2 + i);
+                // Create a scaling matrix with the desired draw size
+                Matrix4x4 matrix = Matrix4x4.TRS(drawLocations[i], rotation, new Vector3(drawSize, 1, drawSize));
+
+                // Draw the mesh with scaling applied
+                Graphics.DrawMesh(MeshPool.plane10, matrix, materialsToDraw[i], -2 + i);
             }
         }
 
@@ -148,6 +161,7 @@ namespace TheForce_Psycast
                 GenSpawn.Spawn(mote, moteSpawnPos, map);
                 SoundDef soundDef = SoundDef.Named("Force_ForceThrow_Return");
                 soundDef.PlayOneShot(new TargetInfo(moteSpawnPos, map));
+                
             }
             else
             {
@@ -204,6 +218,14 @@ namespace TheForce_Psycast
             if (CheckCollisionWithLauncher())
             {
                 this.Destroy(DestroyMode.Vanish);
+                Comp_LightsaberBlade compLightsaberBlade = originalLauncher.equipment.Primary.TryGetComp<Comp_LightsaberBlade>();
+                if(compLightsaberBlade != null)
+                {
+                    compLightsaberBlade.IsThrowingWeapon = false;
+                    SoundDef soundDef = ForceDefOf.Force_Interact_Lightsaber;
+                    SoundStarter.PlayOneShot(soundDef, this);
+                }
+                
             }
         }
 
@@ -221,6 +243,7 @@ namespace TheForce_Psycast
                 }
             }
         }
+
 
         private bool CheckCollisionWithLauncher()
         {

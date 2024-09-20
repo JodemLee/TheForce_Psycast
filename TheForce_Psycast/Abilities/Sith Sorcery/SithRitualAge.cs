@@ -1,16 +1,12 @@
-﻿using RimWorld.Planet;
-using RimWorld;
-using System;
-using System.Collections.Generic;
+﻿using RimWorld;
+using RimWorld.Planet;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using VanillaPsycastsExpanded;
 using Verse;
+using Verse.AI;
 using VFECore.Abilities;
 using Ability = VFECore.Abilities.Ability;
-using Verse.AI;
 
 namespace TheForce_Psycast.Abilities
 {

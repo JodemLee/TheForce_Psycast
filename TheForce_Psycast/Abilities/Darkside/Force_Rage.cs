@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
-using VanillaPsycastsExpanded;
+﻿using VanillaPsycastsExpanded;
 using Verse;
 using Verse.Sound;
 using VFECore.Abilities;
@@ -39,12 +33,19 @@ namespace TheForce_Psycast.Abilities.Darkside
         {
             base.PostTick();
             this.AddEntropy();
+            IncreaseSeverity();
         }
 
         private void AddEntropy()
         {
             if (Find.TickManager.TicksGame % 10 == 0) this.pawn.psychicEntropy.TryAddEntropy(1f, overLimit: true);
             if (this.pawn.psychicEntropy.EntropyValue >= this.pawn.psychicEntropy.MaxEntropy) this.pawn.health.RemoveHediff(this);
+        }
+
+        private void IncreaseSeverity()
+        {
+            var DarksideHediff = this.pawn.health.hediffSet.GetFirstHediffOfDef(ForceDefOf.Force_Darkside);
+            DarksideHediff.Severity += 0.0001f; // Adjust the value to control how quickly the severity increases
         }
     }
 }

@@ -2,7 +2,6 @@
 using RimWorld.Planet;
 using UnityEngine;
 using Verse;
-using VFECore.Abilities;
 
 namespace TheForce_Psycast
 {
@@ -52,10 +51,10 @@ namespace TheForce_Psycast
                 IntVec3 pushBackPosition = target.Cell + normalizedOffset;
 
                 // Check if the new position intersects with a solid object (e.g., a wall)
-                if (!IsPositionValid(pushBackPosition))
+                if (!PositionUtils.CheckValidPosition(pushBackPosition, Caster.Map))
                 {
                     // If it intersects, find a valid position closer to the target
-                    pushBackPosition = FindValidPosition(target.Cell, normalizedOffset);
+                    pushBackPosition = PositionUtils.FindValidPosition(target.Cell, normalizedOffset, Caster.Map);
                 }
 
                 // Apply explosive force to the target
@@ -74,6 +73,7 @@ namespace TheForce_Psycast
             base.Cast(targets);
         }
 
+
         public override float GetPowerForPawn() => def.power + Mathf.FloorToInt((pawn.GetStatValue(StatDefOf.PsychicSensitivity) * 2));
 
         private IntVec3 NormalizeIntVec3(IntVec3 vector)
@@ -87,38 +87,6 @@ namespace TheForce_Psycast
             }
 
             return vector;
-        }
-
-        // Helper method to check if the position is valid
-        private bool IsPositionValid(IntVec3 position)
-        {
-            return position.InBounds(this.pawn.Map) && position.Walkable(this.pawn.Map) && position.Standable(this.pawn.Map);
-        }
-
-        // Helper method to find a valid position closer to the target
-        private IntVec3 FindValidPosition(IntVec3 originalPosition, IntVec3 offset)
-        {
-            Map map = this.pawn.Map;
-            IntVec3 closestValidPosition = originalPosition;
-            float closestDistanceSquared = float.MaxValue;
-
-            for (int i = 1; i <= 3; i++)
-            {
-                IntVec3 newPosition = originalPosition + (offset * i);
-                if (IsPositionValid(newPosition))
-                {
-                    // If the new position is valid, calculate its distance to the original position
-                    float distanceSquared = newPosition.DistanceToSquared(originalPosition);
-                    if (distanceSquared < closestDistanceSquared)
-                    {
-                        // Update the closest valid position if this position is closer
-                        closestValidPosition = newPosition;
-                        closestDistanceSquared = distanceSquared;
-                    }
-                }
-            }
-            // Return the closest valid position found
-            return closestValidPosition;
         }
     }
 }

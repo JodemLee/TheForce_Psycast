@@ -1,12 +1,6 @@
 ﻿using RimWorld;
 using RimWorld.Planet;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Verse;
-using VFECore.Abilities;
 using Ability = VFECore.Abilities.Ability;
 
 namespace TheForce_Psycast.Abilities.NightSisterMagick

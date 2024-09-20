@@ -1,18 +1,10 @@
-﻿using HarmonyLib;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
-using VanillaPsycastsExpanded;
-using Verse.Sound;
-using Verse;
-using VanillaPsycastsExpanded.Graphics;
+﻿using RimWorld;
 using RimWorld.Planet;
-using VFECore.Abilities;
-using RimWorld;
+using System.Collections.Generic;
+using UnityEngine;
+using Verse;
 using VFECore;
+using VFECore.Abilities;
 using Ability = VFECore.Abilities.Ability;
 
 namespace TheForce_Psycast.Abilities.Darkside
@@ -20,12 +12,78 @@ namespace TheForce_Psycast.Abilities.Darkside
 
     public class Ability_ForceLightning : Ability_ShootProjectile
     {
+        private float range => this.def.range;
+        private float coneAngle => 30;
+        public override void Cast(params GlobalTargetInfo[] targets)
+        {
+            base.Cast(targets);
+
+            if (targets.Length > 0)
+            {
+                List<IntVec3> affectedCells = AffectedCells(targets[0].Cell);
+
+                foreach (IntVec3 cell in affectedCells)
+                {
+                    List<Thing> thingsInCell = cell.GetThingList(pawn.Map);
+
+                    foreach (Thing thing in thingsInCell)
+                    {
+                        if (thing is Pawn targetPawn && targetPawn != pawn) // Ignore the caster
+                        {
+                            ShootProjectile(targetPawn);
+                            DrawLightningEffect(pawn.DrawPos, targetPawn.DrawPos);
+                        }
+                    }
+                }
+            }
+        }
+
         protected override Projectile ShootProjectile(GlobalTargetInfo target)
         {
             var projectile = base.ShootProjectile(target) as ForceLightningProjectile;
             projectile.ability = this;
             return projectile;
         }
+
+        private List<IntVec3> AffectedCells(IntVec3 targetCell)
+        {
+            List<IntVec3> cells = new List<IntVec3>();
+            Vector3 startVector = pawn.Position.ToVector3Shifted().Yto0();
+            Vector3 targetVector = targetCell.ToVector3Shifted().Yto0();
+            float targetAngle = Vector3.SignedAngle(targetVector - startVector, Vector3.right, Vector3.up);
+            int numCells = GenRadial.NumCellsInRadius(range);
+
+            for (int i = 0; i < numCells; i++)
+            {
+                IntVec3 cell = pawn.Position + GenRadial.RadialPattern[i];
+                if (Mathf.Abs(Mathf.DeltaAngle(Vector3.SignedAngle(cell.ToVector3Shifted().Yto0() - startVector, Vector3.right, Vector3.up), targetAngle)) <= coneAngle)
+                {
+                    cells.Add(cell);
+                }
+            }
+
+            return cells;
+        }
+
+        private void DrawLightningEffect(Vector3 startPos, Vector3 endPos)
+        {
+            // Create a line draw effect to simulate the lightning bolt
+            FleckCreationData fleckData = FleckMaker.GetDataStatic(startPos, pawn.Map, FleckDefOf.LightningGlow);
+            fleckData.rotation = (endPos - startPos).AngleFlat();
+            fleckData.velocity = (endPos - startPos).normalized * 0.5f;
+            fleckData.targetSize = (endPos - startPos).magnitude;
+
+            pawn.Map.flecks.CreateFleck(fleckData);
+        }
+
+        public override void DrawHighlight(LocalTargetInfo target)
+        {
+            base.DrawHighlight(target);
+
+            List<IntVec3> affectedCells = AffectedCells(target.Cell);
+            GenDraw.DrawFieldEdges(affectedCells);
+        }
+
     }
 
     public class ForceLightningProjectile : ExpandableProjectile
@@ -34,7 +92,6 @@ namespace TheForce_Psycast.Abilities.Darkside
         public override void DoDamage(IntVec3 pos)
         {
             base.DoDamage(pos);
-            try
             {
                 if (pos != this.launcher.Position && this.launcher.Map != null && GenGrid.InBounds(pos, this.launcher.Map))
                 {
@@ -58,8 +115,9 @@ namespace TheForce_Psycast.Abilities.Darkside
                     }
                 }
             }
-            catch { };
         }
+  
+        
 
         public override bool IsDamagable(Thing t)
         {

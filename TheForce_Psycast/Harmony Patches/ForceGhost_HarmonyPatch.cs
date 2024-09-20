@@ -2,8 +2,8 @@
 using RimWorld;
 using System;
 using System.Collections.Generic;
+using System.Text;
 using TheForce_Psycast;
-using TheForce_Psycast.Abilities.Lightside;
 using TheForce_Psycast.Hediffs;
 using UnityEngine;
 using Verse;
@@ -153,6 +153,47 @@ public static class ForceGhost_HarmonyPatch
                     }
                 }
                 return false;
+            }
+        }
+
+        [HarmonyPatch(typeof(Thing), "GetInspectString")]
+        public static class Patch_Thing_GetInspectString
+        {
+            public static void Postfix(Thing __instance, ref string __result)
+            {
+                if (__instance == null || Find.CurrentMap == null)
+                {
+                    return;
+                }
+
+                // Initialize the StringBuilder with the existing inspect string
+                StringBuilder stringBuilder = new StringBuilder(__result ?? "");
+
+                // Flag to check if we appended "Linked to:" information
+                bool appendedInfo = false;
+
+                // Iterate over all pawns in the current map
+                foreach (Pawn pawn in Find.CurrentMap.mapPawns.AllPawns)
+                {
+                    // Get the hediff and check if it is of the correct type
+                    var ghostHediff = pawn.health.hediffSet.GetFirstHediffOfDef(ForceDefOf.Force_Darkside) as HediffWithComps_DarksideGhost;
+                    if (ghostHediff != null && ghostHediff.linkedObject == __instance)
+                    {
+                        // Check if we need to add a newline before appending
+                        if (stringBuilder.Length > 0 && !stringBuilder.ToString().EndsWith("\n"))
+                        {
+                            stringBuilder.AppendLine(); // Add a newline if needed
+                        }
+
+                        // Append the "Linked to:" information
+                        stringBuilder.Append("SithGhost".Translate() + pawn.LabelCap);
+                        appendedInfo = true; // Mark that we've appended the info
+                        break; // Exit loop after finding the linked pawn
+                    }
+                }
+
+                // Set the final result
+                __result = stringBuilder.ToString();
             }
         }
     }

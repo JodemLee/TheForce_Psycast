@@ -20,47 +20,34 @@ namespace MeleeAnimPatch
     }
 
 
+    public class LightsaberClashModExtension : DefModExtension
+    {
+        public List<SoundDef> clashSounds; // The list of sounds to play for this lightsaber type
+    }
+
 
     [HarmonyPatch(typeof(AudioUtility), "GetWeaponClashSound")]
     public static class DuelPatchSound
     {
-        // Define a list of specific ThingDefs
-        private static readonly List<ThingDef> specificThingDefs = new List<ThingDef>
-         {
-        DefDatabase<ThingDef>.GetNamed("Force_Lightsaber_Custom"),
-        DefDatabase<ThingDef>.GetNamed("Force_Lightsaber_Shoto"),
-        DefDatabase<ThingDef>.GetNamed("Force_Lightsaber_Curved"),
-        DefDatabase<ThingDef>.GetNamed("Force_Lightsaber_Dual"),
-        DefDatabase<ThingDef>.GetNamed("Force_Darksaber"),
-        DefDatabase<ThingDef>.GetNamed("Force_Ezra_BlasterLightsaber"),
-        // Add more ThingDefs as needed
-         };
-
-        private static readonly List<SoundDef> clashSounds = new List<SoundDef>
-         {
-        ForceDefOf.Force_LightsaberClashOne,
-        ForceDefOf.Force_LightsaberClashTwo,
-        ForceDefOf.Force_LightsaberClashThree,
-        ForceDefOf.Force_LightsaberClashFour,
-        ForceDefOf.Force_LightsaberClashFive
-        // Add more SoundDefs as needed
-         };
-
         public static bool Prefix(Thing weapon1, Thing weapon2, ref SoundDef __result)
         {
-            // Check if either weapon matches any of the ThingDefs in the list
-            bool weapon1Matches = specificThingDefs.Contains(weapon1.def);
-            bool weapon2Matches = specificThingDefs.Contains(weapon2.def);
+            // Check if the first weapon has a LightsaberClashModExtension
+            var weapon1ModExt = weapon1.def.GetModExtension<LightsaberClashModExtension>();
+            var weapon2ModExt = weapon2.def.GetModExtension<LightsaberClashModExtension>();
 
-            if (weapon1Matches || weapon2Matches)
+            // If either weapon has the mod extension, choose a sound from its defined list
+            if (weapon1ModExt != null || weapon2ModExt != null)
             {
-                // Choose a random SoundDef from the list
-                Random random = new Random();
-                __result = clashSounds[random.Next(clashSounds.Count)];
-                return false; // Skip the original method
+                var soundList = weapon1ModExt?.clashSounds ?? weapon2ModExt?.clashSounds;
+                if (soundList != null && soundList.Count > 0)
+                {
+                    Random random = new Random();
+                    __result = soundList[random.Next(soundList.Count)];
+                    return false; // Skip the original method
+                }
             }
 
-            // Otherwise, let the original method run
+            // Let the original method run if no mod extension is found
             return true;
         }
     }

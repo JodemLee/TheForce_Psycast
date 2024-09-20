@@ -1,7 +1,5 @@
-﻿using RimWorld;
-using RimWorld.Planet;
+﻿using RimWorld.Planet;
 using Verse;
-using Verse.AI;
 using Ability = VFECore.Abilities.Ability;
 
 namespace TheForce_Psycast.Lightsabers.Lightsaber_Combat

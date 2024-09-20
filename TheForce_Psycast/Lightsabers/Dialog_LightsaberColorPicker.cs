@@ -263,7 +263,7 @@ namespace TheForce_Psycast
                     { "Green", new Color(0, 1, 0) },
                     { "Yellow", new Color(1, 1, 0) },
                     { "Purple", new Color(0.5f, 0, 0.5f) },
-                    { "Orange", new Color (1 , 64, 0)  },
+                    { "Orange", new Color (1 , .64f, 0)  },
                     { "White", new Color(1, 1, 1 ) }
                     // Add more presets as needed
                 };

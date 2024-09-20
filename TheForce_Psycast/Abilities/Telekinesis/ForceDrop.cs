@@ -1,9 +1,7 @@
 ﻿using RimWorld;
 using RimWorld.Planet;
 using System.Collections.Generic;
-using System.Linq;
 using Verse;
-using Verse.Noise;
 using Ability = VFECore.Abilities.Ability;
 
 namespace TheForce_Psycast.Abilities.Telekinesis

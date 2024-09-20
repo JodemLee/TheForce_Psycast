@@ -1,13 +1,6 @@
 ﻿using RimWorld;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TheForce_Psycast.Abilities.Lightside;
-using TheForce_Psycast.Lightsabers;
 using UnityEngine;
-using VanillaPsycastsExpanded;
 using Verse;
 
 namespace TheForce_Psycast.Hediffs
@@ -25,23 +18,25 @@ namespace TheForce_Psycast.Hediffs
         {
             if (isDead)
             {
-                if (Severity >= 1f)
+                if (!ForceGhostUtility.IsForceGhost(pawn)) 
                 {
-                    yield return new Command_Action
+                    if (Severity >= 1f)
                     {
-                        defaultLabel = "Return as Ghost",
-                        defaultDesc = "Return as a Force Ghost.",
-                        icon = ContentFinder<Texture2D>.Get("Abilities/Lightside/ForceGhost", true),
-                        action = () =>
+                        yield return new Command_Action
                         {
-                            ResurrectionUtility.TryResurrect(pawn);
-                            pawn.health.AddHediff(ForceDefOf.Force_Ghost);
-                            isDead = false;
-                            Severity = 1;
-                        }
-                    };
+                            defaultLabel = "Return as Ghost",
+                            defaultDesc = "Return as a Force Ghost.",
+                            icon = ContentFinder<Texture2D>.Get("Abilities/Lightside/ForceGhost", true),
+                            action = () =>
+                            {
+                                ResurrectionUtility.TryResurrect(pawn);
+                                pawn.health.AddHediff(ForceDefOf.Force_Ghost);
+                                isDead = false;
+                                Severity = 1;
+                            }
+                        };
+                    }
                 }
-                
             }
 
             // Yield other gizmos from base class
