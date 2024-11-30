@@ -196,7 +196,7 @@
 	  <li Class="StockGenerator_Tag">
         <tradeTag>Holocron</tradeTag>
         <thingDefCountRange>1~6</thingDefCountRange>
-        <countRange>1~6</countRange>
+        <countRange>1</countRange>
       </li>
 	  
 	 <li MayRequire="guy762.KotORWeapons, jecrell.jecstools" Class="StockGenerator_Tag">
@@ -450,10 +450,22 @@
           <Hyperweave>50~200</Hyperweave>
         </customCountRanges>
       </li>
+
+      <li Class="StockGenerator_Tag">
+        <tradeTag>SithScroll</tradeTag>
+        <thingDefCountRange>1~2</thingDefCountRange>
+        <countRange>5~10</countRange>
+      </li>
 	  
 	  <li Class="StockGenerator_Tag">
         <tradeTag>SithHolocron</tradeTag>
         <thingDefCountRange>1~6</thingDefCountRange>
+        <countRange>1</countRange>
+      </li>
+
+      <li Class="StockGenerator_Tag">
+        <tradeTag>Force_KyberCrystal</tradeTag>
+        <thingDefCountRange>1</thingDefCountRange>
         <countRange>1~6</countRange>
       </li>
 	  

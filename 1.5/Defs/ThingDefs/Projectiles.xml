@@ -14,7 +14,10 @@
 		<projectile>
 			<damageDef>Cut</damageDef>
 			<damageAmountBase>10</damageAmountBase>
-			<speed>25</speed>
+			<speed>32</speed>
+			<soundAmbient>Force_ForceThrow</soundAmbient>
+			<spinRate>9</spinRate>
+			<soundImpact>Force_MeleeHit_Lightsaber</soundImpact>
 		</projectile>
 	</ThingDef>
 
@@ -132,4 +135,52 @@
 		  </progressCurve>
 		</pawnFlyer>
     </ThingDef>
+
+	<ThingDef ParentName="BaseBullet">
+		<defName>Force_StunBlaster</defName>
+		<label>Stun Bolt</label>
+		<drawOffscreen>true</drawOffscreen>
+		<graphicData>
+			<texPath>Effects/Projectile/Stun_Blaster</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+			<shaderType>TransparentPostLight</shaderType>
+		</graphicData>
+		<projectile>
+			<damageDef>Stun</damageDef>
+			<damageAmountBase>10</damageAmountBase>
+			<speed>12</speed>
+		</projectile>
+	</ThingDef>
+
+	<VFECore.ExpandableProjectileDef ParentName="BaseBullet">
+		<defName>Force_ForceLightning</defName>
+		<label>Force lightning</label>
+		<thingClass>TheForce_Psycast.Abilities.Darkside.ForceLightningProjectile</thingClass>
+		<graphicData>
+			<texPath>Effects/ForceLightning/Force Lightning</texPath>
+			<texPathFadeOut>Effects/ForceLightning/Force Lightning Fade Out</texPathFadeOut>
+			<shaderType>MoteGlow</shaderType>
+		</graphicData>
+		<projectile>
+			<damageDef>Force_Lightning</damageDef>
+			<speed>32</speed>
+			<damageAmountBase>1</damageAmountBase>
+			<armorPenetrationBase>0.06</armorPenetrationBase>
+			<soundAmbient>Force_Lightning_Sustainer</soundAmbient>
+			<stoppingPower>1.5</stoppingPower>
+			<soundImpact>VPE_ChainBolt_Impact</soundImpact>
+		</projectile>
+		<drawOffscreen>true</drawOffscreen>
+		<lifeTimeDuration>30</lifeTimeDuration>
+		<widthScaleFactor>0.75</widthScaleFactor>
+		<heightScaleFactor>1</heightScaleFactor>
+		<startingPositionOffset>(0, 0, -1)</startingPositionOffset>
+		<totalSizeScale>1.15</totalSizeScale>
+		<tickFrameRate>7</tickFrameRate>
+		<finalTickFrameRate>5</finalTickFrameRate>
+		<tickDamageRate>32</tickDamageRate>
+		<dealsDamageOnce>false</dealsDamageOnce>
+		<minDistanceToAffect>0.5</minDistanceToAffect>
+	</VFECore.ExpandableProjectileDef>
+
 </Defs>

@@ -1,79 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Defs>
-<PawnKindDef Name="Jedi_Base" Abstract="True">
-    <race>Human</race>
-    <defaultFactionType>Force_Jedi_Remnant</defaultFactionType>
-    <maxGenerationAge>80</maxGenerationAge>
-    <backstoryCryptosleepCommonality>0.00</backstoryCryptosleepCommonality>
-    <backstoryFiltersOverride>
-      <li>
-        <categories>
-		      <li>JediChildhood</li>
-            <li>Jedi</li>
-        </categories>
-      </li>
-    </backstoryFiltersOverride>
-    <royalTitleChance>0</royalTitleChance>
-    <chemicalAddictionChance>0.00</chemicalAddictionChance>
-    <itemQuality>Normal</itemQuality>
-    <combatPower>130</combatPower>
-    <weaponMoney>2000~20000</weaponMoney>
-    <weaponTags  Inherit="True">
-     <li>Force_Lightsaber</li> 
-    </weaponTags>
-    <apparelAllowHeadgearChance>0.2</apparelAllowHeadgearChance>
-    <apparelMoney>1000~1500</apparelMoney>
-    <apparelIgnoreSeasons>true</apparelIgnoreSeasons>
-    <ignoreIdeoApparelColors>true</ignoreIdeoApparelColors>
-    <apparelTags>
-      <li>Force_Clothing</li>
-      <li MayRequire="guy762.kotorweapons">OR_jeditunic_light</li>
-      <li MayRequire="guy762.kotorweapons">OR_jedi</li>
-    </apparelTags>
-    <techHediffsChance>0.15</techHediffsChance>
-    <techHediffsMoney>500~1500</techHediffsMoney>
-    <specificApparelRequirements>
-      <li>
-        <colorGenerator Class="ColorGenerator_Options">
-          <options>
-            <li>
-               <only>(131,101,57)</only> <!-- dirt brown -->
-            </li>
-            <li>
-               <only>(210, 180, 140)</only> <!--Tan-->
-             </li>
-             <li>
-               <only>(0,98,111)</only> <!--Blue Lagoon-->
-             </li>
-             <li>
-               <only>(205,177,153)</only> <!--Vanilla-->
-             </li>
-             <li>
-               <only>(89,74,37)</only> <!--Brown-->
-             </li>
-          </options>
-        </colorGenerator>
-      </li>
-    </specificApparelRequirements>
-    <modExtensions>
-      <li MayRequire="Ludeon.RimWorld.Biotech" Class="AddGeneForPK.PKAdditionalGenes">
-         <geneSets>
-           <li>
-             <isXenogene>true</isXenogene>
-             <chance>1</chance>
-             <geneDefs>
-               <li>Minor_Force_Sensitive</li>
-               <li>Force_Sensitive</li>
-               <li>Major_Force_Sensitive</li>
-             </geneDefs>
-           </li>
-         </geneSets>
-       </li>
-   </modExtensions>
-  </PawnKindDef>
+   <PawnKindDef Name="Jedi_Base" Abstract="True">
+      <race>Human</race>
+      <defaultFactionType>Force_Jedi_Remnant</defaultFactionType>
+      <maxGenerationAge>80</maxGenerationAge>
+      <backstoryCryptosleepCommonality>0.00</backstoryCryptosleepCommonality>
+      <backstoryFiltersOverride>
+         <li>
+            <categories>
+               <li>JediChildhood</li>
+               <li>Jedi</li>
+            </categories>
+         </li>
+      </backstoryFiltersOverride>
+      <royalTitleChance>0</royalTitleChance>
+      <chemicalAddictionChance>0.00</chemicalAddictionChance>
+      <itemQuality>Normal</itemQuality>
+      <combatPower>130</combatPower>
+      <weaponMoney>2000~20000</weaponMoney>
+      <weaponTags Inherit="True">
+         <li>Force_Lightsaber</li>
+      </weaponTags>
+      <apparelAllowHeadgearChance>0.2</apparelAllowHeadgearChance>
+      <apparelMoney>1000~1500</apparelMoney>
+      <apparelIgnoreSeasons>true</apparelIgnoreSeasons>
+      <ignoreIdeoApparelColors>true</ignoreIdeoApparelColors>
+      <apparelTags>
+         <li>Force_Clothing</li>
+         <li MayRequire="guy762.kotorweapons">OR_jeditunic_light</li>
+         <li MayRequire="guy762.kotorweapons">OR_jedi</li>
+      </apparelTags>
+		<techHediffsRequired>
+			<li>PsychicAmplifier</li>
+		 </techHediffsRequired>
+      <specificApparelRequirements>
+         <li>
+            <colorGenerator Class="ColorGenerator_Options">
+               <options>
+                  <li>
+                     <only>(131,101,57)</only>                     <!-- dirt brown -->
+                  </li>
+                  <li>
+                     <only>(210, 180, 140)</only>                     <!--Tan-->
+                  </li>
+                  <li>
+                     <only>(0,98,111)</only>                     <!--Blue Lagoon-->
+                  </li>
+                  <li>
+                     <only>(205,177,153)</only>                     <!--Vanilla-->
+                  </li>
+                  <li>
+                     <only>(89,74,37)</only>                     <!--Brown-->
+                  </li>
+               </options>
+            </colorGenerator>
+         </li>
+      </specificApparelRequirements>
+      <modExtensions>
+         <li Class="TheForce_Psycast.Lightsabers.ModExtension_LightsaberColors">
+            <bladeColors>
+                <!-- Blue Blade -->
+                <li>(0.0, 0.0, 1.0, 1.0)</li>
+                <!-- Green Blade -->
+                <li>(0.0, 1.0, 0.0, 1.0)</li>
+                <!-- Cyan Blade -->
+                <li>(0.0, 1.0, 1.0, 1.0)</li>
+                <!-- Yellow Blade -->
+                <li>(1.0, 1.0, 0.0, 1.0)</li>
+            </bladeColors>
+            <coreColors>
+                <!-- White Core -->
+                <li>(1.0, 1.0, 1.0, 1.0)</li>
+            </coreColors>
+        </li>
+      </modExtensions>
+   </PawnKindDef>
 
-	<PawnKindDef ParentName="Jedi_Base">
-	<defaultFactionType>Force_Jedi_Remnant</defaultFactionType>
+   <PawnKindDef ParentName="Jedi_Base">
+      <defaultFactionType>Force_Jedi_Remnant</defaultFactionType>
       <defName>Force_Jedi_Padawan</defName>
       <label>Padawan</label>
       <combatPower>120</combatPower>
@@ -83,24 +87,30 @@
          <li>Violent</li>
       </requiredWorkTags>
       <minGenerationAge>9</minGenerationAge>
-	  <maxGenerationAge>16</maxGenerationAge>
+      <maxGenerationAge>16</maxGenerationAge>
       <techHediffsMaxAmount>3</techHediffsMaxAmount>
       <initialWillRange>6~8</initialWillRange>
       <initialResistanceRange>30~46</initialResistanceRange>
+      <startingHediffs>
+         <li>
+            <def>Force_Lightside</def>
+            <severity>0.001</severity>
+        </li>
+      </startingHediffs>
       <modExtensions>
          <li Class="VanillaPsycastsExpanded.PawnKindAbilityExtension_Psycasts">
             <implantDef>VPE_PsycastAbilityImplant</implantDef>
             <initialLevel>1</initialLevel>
             <statUpgradePoints>0</statUpgradePoints>
             <unlockedPaths>
-               <VPE_Force>1~2|1~2</VPE_Force>			   
+               <Force_Neutral>1~2|1~2</Force_Neutral>
             </unlockedPaths>
          </li>
       </modExtensions>
    </PawnKindDef>
-   
+
    <PawnKindDef ParentName="Jedi_Base">
-   <defaultFactionType>Force_Jedi_Remnant</defaultFactionType>
+      <defaultFactionType>Force_Jedi_Remnant</defaultFactionType>
       <defName>Force_Jedi_Sentinel</defName>
       <label>Sentinel</label>
       <combatPower>150</combatPower>
@@ -113,22 +123,28 @@
       <techHediffsMaxAmount>3</techHediffsMaxAmount>
       <initialWillRange>6~8</initialWillRange>
       <initialResistanceRange>30~46</initialResistanceRange>
+      <startingHediffs>
+         <li>
+            <def>Force_Lightside</def>
+            <severity>0.45</severity>
+        </li>
+      </startingHediffs>
       <modExtensions>
          <li Class="VanillaPsycastsExpanded.PawnKindAbilityExtension_Psycasts">
             <implantDef>VPE_PsycastAbilityImplant</implantDef>
             <initialLevel>4</initialLevel>
             <statUpgradePoints>1</statUpgradePoints>
             <unlockedPaths>
-				<VPE_LightSide>1~2|1~2</VPE_LightSide>
-				<VPE_Force>1~2|1~2</VPE_Force>	
-				<VPE_Telekinesis>1~2|1~2</VPE_Telekinesis>			   
+               <Force_LightSide>1~2|1~2</Force_LightSide>
+               <Force_Neutral>1~2|1~2</Force_Neutral>
+               <Force_Telekinesis>1~2|1~2</Force_Telekinesis>
             </unlockedPaths>
          </li>
       </modExtensions>
    </PawnKindDef>
-   
+
    <PawnKindDef ParentName="Jedi_Base">
-   <defaultFactionType>Force_Jedi_Remnant</defaultFactionType>
+      <defaultFactionType>Force_Jedi_Remnant</defaultFactionType>
       <defName>Force_Jedi_Guardian</defName>
       <label>Guardian</label>
       <combatPower>160</combatPower>
@@ -141,22 +157,28 @@
       <techHediffsMaxAmount>3</techHediffsMaxAmount>
       <initialWillRange>6~8</initialWillRange>
       <initialResistanceRange>30~46</initialResistanceRange>
+      <startingHediffs>
+         <li>
+            <def>Force_Lightside</def>
+            <severity>0.35</severity>
+        </li>
+      </startingHediffs>
       <modExtensions>
          <li Class="VanillaPsycastsExpanded.PawnKindAbilityExtension_Psycasts">
             <implantDef>VPE_PsycastAbilityImplant</implantDef>
             <initialLevel>4</initialLevel>
             <statUpgradePoints>1</statUpgradePoints>
             <unlockedPaths>
-				<VPE_LightSide>1~1|1~1</VPE_LightSide>
-				<VPE_Force>1~3|1~4</VPE_Force>	
-				<VPE_Telekinesis>1~2|1~2</VPE_Telekinesis>		   
+               <Force_LightSide>1~1|1~1</Force_LightSide>
+               <Force_Neutral>1~3|1~4</Force_Neutral>
+               <Force_Telekinesis>1~2|1~2</Force_Telekinesis>
             </unlockedPaths>
          </li>
       </modExtensions>
    </PawnKindDef>
-   
+
    <PawnKindDef ParentName="Jedi_Base">
-   <defaultFactionType>Force_Jedi_Remnant</defaultFactionType>
+      <defaultFactionType>Force_Jedi_Remnant</defaultFactionType>
       <defName>Force_Jedi_Consular</defName>
       <label>Consular</label>
       <combatPower>140</combatPower>
@@ -169,22 +191,46 @@
       <techHediffsMaxAmount>3</techHediffsMaxAmount>
       <initialWillRange>6~8</initialWillRange>
       <initialResistanceRange>30~46</initialResistanceRange>
+      <startingHediffs>
+         <li>
+            <def>Force_Lightside</def>
+            <severity>0.4</severity>
+        </li>
+      </startingHediffs>
       <modExtensions>
          <li Class="VanillaPsycastsExpanded.PawnKindAbilityExtension_Psycasts">
             <implantDef>VPE_PsycastAbilityImplant</implantDef>
             <initialLevel>4</initialLevel>
             <statUpgradePoints>1</statUpgradePoints>
             <unlockedPaths>
-				<VPE_LightSide>1~3|1~3</VPE_LightSide>
-				<VPE_Force>1~1|1~1</VPE_Force>	
-				<VPE_Telekinesis>1~3|1~2</VPE_Telekinesis>
+               <Force_LightSide>1~3|1~3</Force_LightSide>
+               <Force_Neutral>1~1|1~1</Force_Neutral>
+               <Force_Telekinesis>1~3|1~2</Force_Telekinesis>
             </unlockedPaths>
          </li>
+         <li Class="TheForce_Psycast.Lightsabers.ModExtension_LightsaberColors">
+            <bladeColors>
+                <!-- Blue Blade -->
+                <li>(0.0, 0.0, 1.0, 1.0)</li>
+                <!-- Green Blade -->
+                <li>(0.0, 1.0, 0.0, 1.0)</li>
+                <!-- Cyan Blade -->
+                <li>(0.0, 1.0, 1.0, 1.0)</li>
+                <!-- Purple Blade -->
+                <li>(0.5, 0.0, 0.5, 1.0)</li>
+                <!-- Yellow Blade -->
+                <li>(1.0, 1.0, 0.0, 1.0)</li>
+            </bladeColors>
+            <coreColors>
+                <!-- White Core -->
+                <li>(1.0, 1.0, 1.0, 1.0)</li>
+            </coreColors>
+        </li>
       </modExtensions>
    </PawnKindDef>
-   
+
    <PawnKindDef ParentName="Jedi_Base">
-   <defaultFactionType>Force_Jedi_Remnant</defaultFactionType>
+      <defaultFactionType>Force_Jedi_Remnant</defaultFactionType>
       <defName>Force_Jedi_Master</defName>
       <label>Master</label>
       <combatPower>150</combatPower>
@@ -197,24 +243,30 @@
       <techHediffsMaxAmount>3</techHediffsMaxAmount>
       <initialWillRange>6~8</initialWillRange>
       <initialResistanceRange>30~46</initialResistanceRange>
+      <startingHediffs>
+         <li>
+            <def>Force_Lightside</def>
+            <severity>.7</severity>
+        </li>
+      </startingHediffs>
       <modExtensions>
          <li Class="VanillaPsycastsExpanded.PawnKindAbilityExtension_Psycasts">
             <implantDef>VPE_PsycastAbilityImplant</implantDef>
             <initialLevel>8</initialLevel>
             <statUpgradePoints>2~4</statUpgradePoints>
             <unlockedPaths>
-               <VPE_LightSide>1~3|2~3</VPE_LightSide>
-				<VPE_Force>1~4|2~5</VPE_Force>			   
+               <Force_LightSide>1~3|2~3</Force_LightSide>
+               <Force_Neutral>1~4|2~5</Force_Neutral>
             </unlockedPaths>
          </li>
       </modExtensions>
    </PawnKindDef>
-   
+
    <PawnKindDef ParentName="Jedi_Base">
-   <defaultFactionType>Force_Jedi_Remnant</defaultFactionType>
+      <defaultFactionType>Force_Jedi_Remnant</defaultFactionType>
       <defName>Force_Jedi_Grandmaster</defName>
       <label>Master</label>
-	  <factionLeader>true</factionLeader>
+      <factionLeader>true</factionLeader>
       <combatPower>150</combatPower>
       <weaponMoney>99999</weaponMoney>
       <techHediffsMoney>1000~4000</techHediffsMoney>
@@ -225,41 +277,168 @@
       <techHediffsMaxAmount>3</techHediffsMaxAmount>
       <initialWillRange>6~8</initialWillRange>
       <initialResistanceRange>30~46</initialResistanceRange>
+      <startingHediffs>
+         <li>
+            <def>Force_Lightside</def>
+            <severity>1</severity>
+        </li>
+      </startingHediffs>
       <modExtensions>
          <li Class="VanillaPsycastsExpanded.PawnKindAbilityExtension_Psycasts">
             <implantDef>VPE_PsycastAbilityImplant</implantDef>
             <initialLevel>12</initialLevel>
             <statUpgradePoints>2~4</statUpgradePoints>
             <unlockedPaths>
-               <VPE_LightSide>1~4|2~3</VPE_LightSide>
-				<VPE_Force>1~5|3~6</VPE_Force>			   
+               <Force_LightSide>1~4|2~3</Force_LightSide>
+               <Force_Neutral>1~5|3~6</Force_Neutral>
             </unlockedPaths>
          </li>
       </modExtensions>
    </PawnKindDef>
- 
-    <PawnKindDef ParentName="Jedi_Base">
-		<defaultFactionType>Force_Jedi_Remnant</defaultFactionType>
-		<defName>Force_Jedi_Trader</defName>
-		<label>trader</label>
-		<labelPlural>traders</labelPlural>
-		<isFighter>true</isFighter>
-		<trader>true</trader>
-		  <minGenerationAge>20</minGenerationAge>
-		  <techHediffsMaxAmount>3</techHediffsMaxAmount>
-		  <initialWillRange>6~8</initialWillRange>
-		  <initialResistanceRange>30~46</initialResistanceRange>
-		  <modExtensions>
- <li Class="VanillaPsycastsExpanded.PawnKindAbilityExtension_Psycasts">
+
+   <PawnKindDef ParentName="Jedi_Base">
+      <defaultFactionType>Force_Jedi_Remnant</defaultFactionType>
+      <defName>Force_Jedi_Trader</defName>
+      <label>trader</label>
+      <labelPlural>traders</labelPlural>
+      <isFighter>true</isFighter>
+      <trader>true</trader>
+      <minGenerationAge>20</minGenerationAge>
+      <techHediffsMaxAmount>3</techHediffsMaxAmount>
+      <initialWillRange>6~8</initialWillRange>
+      <initialResistanceRange>30~46</initialResistanceRange>
+      <startingHediffs>
+         <li>
+            <def>Force_Lightside</def>
+            <severity>.25</severity>
+        </li>
+      </startingHediffs>
+      <modExtensions>
+         <li Class="VanillaPsycastsExpanded.PawnKindAbilityExtension_Psycasts">
             <implantDef>VPE_PsycastAbilityImplant</implantDef>
             <initialLevel>4</initialLevel>
             <statUpgradePoints>1</statUpgradePoints>
             <unlockedPaths>
-				<VPE_LightSide>1~3|1~3</VPE_LightSide>
-				<VPE_Force>1~2|1~2</VPE_Force>			   
+               <Force_LightSide>1~3|1~3</Force_LightSide>
+               <Force_Neutral>1~2|1~2</Force_Neutral>
             </unlockedPaths>
          </li>
-		  </modExtensions>
-	</PawnKindDef>
+      </modExtensions>
+   </PawnKindDef>
+
+   <PawnKindDef>
+      <defName>JediInBlack</defName>
+      <label>jedi in black</label>
+      <labelMale>man in black</labelMale>
+      <labelFemale>woman in black</labelFemale>
+      <labelPlural>jedi's in black</labelPlural>
+      <race>Human</race>
+      <defaultFactionType>Force_Jedi_Remnant</defaultFactionType>
+      <combatPower>55</combatPower>
+      <minGenerationAge>20</minGenerationAge>
+      <maxGenerationAge>55</maxGenerationAge>
+      <isFighter>true</isFighter>
+      <chemicalAddictionChance>0.05</chemicalAddictionChance>
+      <backstoryCryptosleepCommonality>0.05</backstoryCryptosleepCommonality>
+      <backstoryFiltersOverride>
+         <li>
+            <categories>
+               <li>JediChildhood</li>
+               <li>Jedi</li>
+            </categories>
+         </li>
+      </backstoryFiltersOverride>
+      <requiredWorkTags>
+        <li>Violent</li>
+        <li>Caring</li>
+      </requiredWorkTags>
+      <invNutrition>10.0</invNutrition>
+      <inventoryOptions>
+        <subOptionsChooseOne>
+          <li>
+            <thingDef>MedicineIndustrial</thingDef>
+            <countRange>5</countRange>
+          </li>
+        </subOptionsChooseOne>
+      </inventoryOptions>
+      <gearHealthRange>1~1</gearHealthRange>
+      <itemQuality>Good</itemQuality>
+      <weaponMoney>9999</weaponMoney>
+      <weaponTags>
+        <li>Force_Lightsaber</li>
+      </weaponTags>
+      <apparelTags>
+         <li>Force_Clothing</li>
+         <li MayRequire="guy762.kotorweapons">OR_jeditunic_light</li>
+         <li MayRequire="guy762.kotorweapons">OR_jedi</li>
+      </apparelTags>
+      <apparelRequired>
+        <li>Force_BSkoll</li>
+        <li>Force_Cloak</li>
+        <li>Force_JediArmor</li>
+        <li>Force_ApparelHood</li>
+      </apparelRequired>
+      <apparelColor>(58,58,58)</apparelColor>
+      <ignoreIdeoApparelColors>true</ignoreIdeoApparelColors>
+      <favoriteColor>(58,58,58)</favoriteColor>
+      <initialWillRange>0~0</initialWillRange>
+      <initialResistanceRange>0~2</initialResistanceRange>
+      <humanPregnancyChance>0</humanPregnancyChance>
+      <techHediffsRequired>
+			<li>PsychicAmplifier</li>
+		 </techHediffsRequired>
+      <skills>
+        <li>
+          <skill>Melee</skill>
+          <range>8~16</range>
+        </li>
+      </skills>
+      <modExtensions>
+         <li Class="VanillaPsycastsExpanded.PawnKindAbilityExtension_Psycasts">
+            <implantDef>VPE_PsycastAbilityImplant</implantDef>
+            <initialLevel>4</initialLevel>
+            <statUpgradePoints>1</statUpgradePoints>
+            <unlockedPaths>
+               <Force_LightSide>1~3|1~3</Force_LightSide>
+               <Force_Neutral>1~1|1~1</Force_Neutral>
+               <Force_Telekinesis>1~3|1~2</Force_Telekinesis>
+            </unlockedPaths>
+         </li>
+         <li Class="TheForce_Psycast.Lightsabers.ModExtension_LightsaberColors">
+            <bladeColors>
+                <!-- Blue Blade -->
+                <li>(0.0, 0.0, 1.0, 1.0)</li>
+                <!-- Green Blade -->
+                <li>(0.0, 1.0, 0.0, 1.0)</li>
+                <!-- Cyan Blade -->
+                <li>(0.0, 1.0, 1.0, 1.0)</li>
+                <!-- Yellow Blade -->
+                <li>(1.0, 1.0, 0.0, 1.0)</li>
+            </bladeColors>
+            <coreColors>
+                <!-- White Core -->
+                <li>(1.0, 1.0, 1.0, 1.0)</li>
+            </coreColors>
+        </li>
+      </modExtensions>
+    </PawnKindDef>
+
+    <IncidentDef>
+      <defName>JediInBlackJoin</defName>
+      <label>jedi in black</label>
+      <category>Special</category>
+      <targetTags>
+        <li>Map_PlayerHome</li>
+      </targetTags>
+      <workerClass>IncidentWorker_WandererJoin</workerClass>
+      <letterLabel>jedi in black</letterLabel>
+      <letterText>Sensing trouble, a mysterious [PAWN_kind] has arrived.\n\nWill [PAWN_pronoun] be able to set things right in these parts?</letterText>
+      <baseChance>0</baseChance>
+      <minRefireDays>60</minRefireDays>
+      <minGreatestPopulation>3</minGreatestPopulation>
+      <pawnKind>JediInBlack</pawnKind>
+      <pawnFixedGender>Male</pawnFixedGender>
+      <pawnMustBeCapableOfViolence>true</pawnMustBeCapableOfViolence>
+    </IncidentDef>
 
 </Defs>

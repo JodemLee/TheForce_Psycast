@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Defs>
+	
+	  <VFECore.Abilities.AbilityDef>
+		<defName>Force_BlasterShot_Stun</defName>
+		<label>blaster shot (stun)</label>
+		<description>Launch a blaster bolt. Set to Stun</description>
+		<iconPath>Effects/Projectile/Stun_Blaster</iconPath>
+		<abilityClass>VFECore.Abilities.Ability_ShootProjectile</abilityClass>
+		<castTime>0.5</castTime>
+		<range>5</range>
+		<targetMode>Pawn</targetMode>
+		<castSound>VPE_Flameball_Cast</castSound>
+		<modExtensions>
+		  <li Class="VFECore.Abilities.AbilityExtension_Projectile">
+			<projectile>Force_StunBlaster</projectile>
+		  </li>
+		</modExtensions>
+	  </VFECore.Abilities.AbilityDef>
+
+</Defs>	  

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Defs>
+	<HediffDef>
+		<defName>Lightsaber_Stance</defName>
+		<label>Lightsaber Form</label>
+		<description>Lightsaber forms are specialized combat techniques created by Jedi and Sith to master the use of their iconic weapons. Each form focuses on different combat aspects, such as defense, agility, offense, and finesse, enabling Force users to adapt to diverse opponents and battle scenarios.</description>
+		<hediffClass>TheForce_Psycast.Lightsabers.Hediff_LightsaberDeflection</hediffClass>
+		<initialSeverity>1</initialSeverity>
+		<isBad>false</isBad>
+		<maxSeverity>7</maxSeverity>
+		<countsAsAddedPartOrImplant>false</countsAsAddedPartOrImplant>
+		<stages>
+			<li>
+				<label>Form I: Shii-Cho</label>
+				<minSeverity>1</minSeverity>
+				<statOffsets>
+					<MeleeDPS>0.10</MeleeDPS>
+					<MeleeHitChance>0.05</MeleeHitChance>
+					<MeleeDodgeChance>-0.05</MeleeDodgeChance>
+				</statOffsets>
+				<capMods>
+					<li>
+						<capacity>Consciousness</capacity>
+						<offset>0.15</offset>
+					</li>
+					<li>
+						<capacity>Sight</capacity>
+						<offset>0.15</offset>
+					</li>
+				</capMods>
+			</li>
+			<li>
+				<label>Form II: Makashi</label>
+				<minSeverity>2</minSeverity>
+				<statOffsets>
+					<MeleeArmorPenetration>0.15</MeleeArmorPenetration>
+					<MeleeHitChance>0.08</MeleeHitChance>
+					<MeleeDodgeChance>0.05</MeleeDodgeChance>
+				</statOffsets>
+				<capMods>
+					<li>
+						<capacity>Manipulation</capacity>
+						<offset>0.15</offset>
+					</li>
+				</capMods>
+			</li>
+			<li>
+				<label>Form III: Soresu</label>
+				<minSeverity>3</minSeverity>
+				<statOffsets>
+					<MeleeDPS>-0.05</MeleeDPS>
+					<MeleeDodgeChance>0.1</MeleeDodgeChance>
+					<Force_Lightsaber_Deflection>0.20</Force_Lightsaber_Deflection>
+				</statOffsets>
+			</li>
+			<li>
+				<label>Form IV: Ataru</label>
+				<minSeverity>4</minSeverity>
+				<statOffsets>
+					<MeleeDPS>0.15</MeleeDPS>
+					<PsychicEntropyRecoveryRate>0.05</PsychicEntropyRecoveryRate>
+				</statOffsets>
+				<capMods>
+					<li>
+						<capacity>Moving</capacity>
+						<postFactor>1.15</postFactor>
+					</li>
+				</capMods>
+
+			</li>
+			<li>
+				<label>Form V: Shien/Djem So</label>
+				<minSeverity>5</minSeverity>
+				<statOffsets>
+					<MeleeArmorPenetration>0.1</MeleeArmorPenetration>
+					<MeleeHitChance>0.05</MeleeHitChance>
+					<Force_Lightsaber_Deflection>0.07</Force_Lightsaber_Deflection>
+				</statOffsets>
+			</li>
+			<li>
+				<label>Form VI: Niman</label>
+				<minSeverity>6</minSeverity>
+				<statOffsets>
+					<MeleeDPS>.05</MeleeDPS>
+					<MeleeHitChance>.05</MeleeHitChance>
+					<MeleeDodgeChance>0.05</MeleeDodgeChance>
+					<PsychicSensitivityOffset>0.15</PsychicSensitivityOffset>
+					<PsychicEntropyRecoveryRate>0.066</PsychicEntropyRecoveryRate>
+				</statOffsets>
+			</li>
+			<li>
+				<label>Form VII: Juyo/Vaapad</label>
+				<minSeverity>7</minSeverity>
+				<statOffsets>
+					<MeleeDPS>0.2</MeleeDPS>
+					<MeleeHitChance>0.15</MeleeHitChance>
+					<MeleeDodgeChance>-0.10</MeleeDodgeChance>
+					<Force_Darkside_Attunement>0.2</Force_Darkside_Attunement>
+				</statOffsets>
+			</li>
+		</stages>
+		<modExtensions>
+			<li Class="TheForce_Psycast.DefStanceAngles">
+				<stanceAngles>
+					<li>0</li>      <!-- Stance 1 -->
+					<li>-180</li>   <!-- Stance 2 -->
+					<li>-90</li>    <!-- Stance 3 -->
+					<li>-45</li>    <!-- Stance 4 -->
+					<li>86.1</li>    <!-- Stance 5 -->
+					<li>225</li>    <!-- Stance 6 -->
+					<li>52</li>    <!-- Stance 7 -->
+				</stanceAngles>
+				<drawOffsets>
+					<li>
+						<x>0</x>
+						<y>0</y>
+						<z>0</z>
+					</li> <!-- Offset for Stance 1 -->
+					<li>
+						<x>-0.7</x>
+						<y>0</y>
+						<z>-0.5</z>
+					</li> <!-- Offset for Stance 2 -->
+					<li>
+						<x>-0.2</x>
+						<y>0</y>
+						<z>0.3</z>
+					</li> <!-- Offset for Stance 3 -->
+					<li>
+						<x>-0.4</x>
+						<y>0</y>
+						<z>0.5</z>
+					</li> <!-- Offset for Stance 4 -->
+					<li>
+						<x>0</x>
+						<y>0</y>
+						<z>0.2</z>
+					</li> <!-- Offset for Stance 5 -->
+					<li>
+						<x>1</x>
+						<y>1</y>
+						<z>0</z>
+					</li> <!-- Offset for Stance 6 -->
+					<li>
+						<x>0</x>
+						<y>0</y>
+						<z>0.7</z>
+					</li> <!-- Offset for Stance 7 -->
+				</drawOffsets>
+			</li>
+		</modExtensions>
+	</HediffDef>
+
+</Defs>	

@@ -5,7 +5,7 @@
 		<defName>Force_Rage</defName>
 		<label>Force Rage</label>
 		<hediffClass>TheForce_Psycast.Abilities.Darkside.Hediff_ForceRage</hediffClass>
-		<description>Channel your rage to reinforce your body, increasing sight, hearing and movement capabilities.</description>
+		<description>Harness the power of the dark side to enhance your physical abilities, increasing sight, hearing, and movement capabilities. This intense focus of rage temporarily strengthens your body.</description>
 		<stages>
 			<li>
 				<painFactor>0</painFactor>
@@ -27,7 +27,384 @@
 		</stages>
 	</HediffDef>
 
-	
+	<HediffDef ParentName="BurnBase">
+		<defName>Force_Lightning_Injury</defName>
+		<label>force lightning burn</label>
+		<labelNoun>a force lightning burn</labelNoun>
+		<description>A severe burn caused by the intense electrical discharge of Force lightning.</description>
+		<comps>
+			<li Class="HediffCompProperties_GetsPermanent">
+				<permanentLabel>force lightning scar</permanentLabel>
+			</li>
+		</comps>
+		<injuryProps>
+			<destroyedLabel>Burned off by Force lightning</destroyedLabel>
+			<destroyedOutLabel>Burned out by Force lightning</destroyedOutLabel>
+		</injuryProps>
+	</HediffDef>
 
+	<HediffDef>
+		<defName>Force_Phantom</defName>
+		<label>force phantom</label>
+		<hediffClass>HediffWithComps</hediffClass>
+		<description>The spectral manifestation of a dark side Force user. This phantom will dissipate when its severity reaches 0.</description>
+		<isBad>false</isBad>
+		<maxSeverity>1</maxSeverity>
+		<comps>
+			<li Class="HediffCompProperties_SeverityPerDay">
+				<severityPerDay>-.14</severityPerDay>
+			</li>
+			<li Class="TheForce_Psycast.Abilities.Darkside.HediffCompProperties_Vanish">
+				<vanish>true</vanish>
+			</li>
+		</comps>
+	</HediffDef>
+
+	<HediffDef>
+		<defName>Force_MindShardHediff</defName>
+		<label>mind shard</label>
+		<hediffClass>HediffWithComps</hediffClass>
+		<description>The pawn's mind has been shattered by a Mind Shard, making them vulnerable to Transfer Essence while this hediff is active.</description>
+		<isBad>True</isBad>
+		<maxSeverity>1</maxSeverity>
+		<stages>
+			<li>
+				<capMods>
+					<li>
+						<capacity>Consciousness</capacity>
+						<setMax>0.2</setMax>
+					</li>
+				</capMods>
+			</li>
+		</stages>
+		<comps>
+			<li Class="HediffCompProperties_SeverityPerDay">
+				<severityPerDay>-.24</severityPerDay>
+			</li>
+		</comps>
+	</HediffDef>
+
+
+	<HediffDef ParentName="InjuryBase">
+		<defName>Force_SithHeal</defName>
+		<label>Ancient Sith Healing</label>
+		<description>Dark side-induced tissue regeneration, harnessing ancient Sith techniques to close open wounds and regenerate missing body parts.</description>
+		<hediffClass>TheForce_Psycast.Hediff_Force_SithHeal</hediffClass>
+		<initialSeverity>0.001</initialSeverity>
+		<tendable>false</tendable>
+		<stages>
+			<li>
+				<capMods>
+					<li>
+						<capacity>Consciousness</capacity>
+						<setMax>0.1</setMax>
+					</li>
+				</capMods>
+				<hungerRateFactorOffset>-0.99</hungerRateFactorOffset>
+			</li>
+		</stages>
+		<comps>
+			<li Class="HediffCompProperties_Disappears">
+				<disappearsAfterTicks>300000</disappearsAfterTicks>
+				<showRemainingTime>true</showRemainingTime>
+			</li>
+		</comps>
+	</HediffDef>
+
+	<HediffDef ParentName = "PsycastHediffBase">
+		<defName>Force_Fear</defName>
+		<label>Force Fear</label>
+		<description>Engrossed in their own fear, they will move slower for a period of time.</description>
+		<isBad>true</isBad>
+		<stages>
+		  <li>
+			<capMods>
+			  <li>
+				<capacity>Moving</capacity>
+				<setMax>0.4</setMax>
+			  </li>
+			</capMods>
+			<capacityFactorEffectMultiplier>PsychicSensitivity</capacityFactorEffectMultiplier>
+		  </li>
+		</stages>
+	</HediffDef>
+
+	<HediffDef>
+		<defName>Force_Sithzombie</defName>
+		<label>Sith Spawn</label>
+		<hediffClass>HediffWithComps</hediffClass>
+		<description>This pawn has been raised as a sith spawn.</description>
+		<isBad>false</isBad>
+		<initialSeverity>1</initialSeverity>
+		<maxSeverity>1</maxSeverity>
+		<disablesNeeds>
+			<li>Rest</li>
+			<li>Comfort</li>
+		</disablesNeeds>
+		<comps>
+			<li Class="HediffCompProperties_SeverityPerDay">
+				<severityPerDay>-.14</severityPerDay>
+				<showDaysToRecover>true</showDaysToRecover>
+				<showHoursToRecover>true</showHoursToRecover>
+			</li>
+			<li Class="TheForce_Psycast.Abilities.Darkside.HediffCompProperties_Vanish">
+				<vanish>false</vanish>
+			</li>
+		</comps>
+		<stages>
+			<li>
+				<totalBleedFactor>0.0</totalBleedFactor>
+				<painFactor>0.0</painFactor>
+				<naturalHealingFactor>0</naturalHealingFactor>
+				<statFactors>
+					<MarketValue>0</MarketValue>
+					<Flammability>0.5</Flammability>
+					<MeatAmount>0</MeatAmount>
+					<LeatherAmount>0</LeatherAmount>
+					<RoyalFavorValue>0</RoyalFavorValue>
+					<Force_Darkside_Attunement>1</Force_Darkside_Attunement>
+					<Fertility MayRequire="Ludeon.RimWorld.Biotech">0</Fertility>
+				</statFactors>
+			</li>
+		</stages>
+	</HediffDef>
+
+	<HediffDef>
+		<defName>Force_SithArtifactWeakness</defName>
+		<label>Exhaustion</label>
+		<description>Crafting a powerful Sith artifact has drained the user's energy.</description>
+		<hediffClass>HediffWithComps</hediffClass>
+		<maxSeverity>100</maxSeverity>
+		<tendable>false</tendable>
+		<comps>
+			<li Class="HediffCompProperties_SeverityPerDay">
+				<severityPerDay>-.1</severityPerDay>
+				<showDaysToRecover>true</showDaysToRecover>
+			</li>
+		</comps>
+	  </HediffDef>
+
+	  <HediffDef ParentName="PsycastHediffBase">
+		<defName>Force_Sacrifice</defName>
+		<label>Blood Sacrifice</label>
+		<description>The pawn has offered up a portion of their consciousness. In return their darkside abilities will be enhanced for a short time.</description>
+		<isBad>false</isBad>
+		<comps>
+		  <li Class="HediffCompProperties_Effecter">
+			<stateEffecter>VPE_SparksYellow</stateEffecter>
+		  </li>
+		</comps>
+		<stages>
+		  <li>
+			<capMods>
+			  <li>
+				<capacity>Consciousness</capacity>
+				<setMax>0.4</setMax>
+			  </li>
+			</capMods>
+			<statFactors>
+				<Force_Darkside_Attunement>2</Force_Darkside_Attunement>
+				<PsychicSensitivity>2</PsychicSensitivity>
+			</statFactors>
+		  </li>
+		</stages>
+	  </HediffDef>
+
+	  <HediffDef>
+		<defName>Force_SithArtifactFear</defName>
+		<label>Overwhelming Fear</label>
+		<hediffClass>HediffWithComps</hediffClass>
+		<description>The pawn is overcome with severe fear. Move away from the sith artifact to recover</description>
+		<initialSeverity>2</initialSeverity>
+		<comps>
+		  <li Class="HediffCompProperties_SeverityPerDay">
+			<severityPerDay>-1</severityPerDay>
+		  </li>
+		</comps>
+		<stages>
+		  <li>
+			<label>recovering</label>
+			<minSeverity>1</minSeverity>
+			<vomitMtbDays>0.4</vomitMtbDays>
+			<painOffset>0.2</painOffset>
+			<capMods>
+			  <li>
+				<capacity>Consciousness</capacity>
+				<postFactor>0.6</postFactor>
+			  </li>
+			  <li>
+				<capacity>Moving</capacity>
+				<postFactor>0.8</postFactor>
+			  </li>
+			  <li>
+				<capacity>Manipulation</capacity>
+				<postFactor>0.9</postFactor>
+			  </li>
+			  <li>
+				<capacity>BloodFiltration</capacity>
+				<postFactor>0.95</postFactor>
+			  </li>
+			  <li>
+				<capacity>Eating</capacity>
+				<postFactor>0.5</postFactor>
+			  </li>
+			</capMods>
+		  </li>
+		  <li>
+			<label>initial</label>
+			<minSeverity>2</minSeverity>
+			<vomitMtbDays>0.3</vomitMtbDays>
+			<painOffset>0.2</painOffset>
+			<capMods>
+			  <li>
+				<capacity>Consciousness</capacity>
+				<postFactor>0.6</postFactor>
+			  </li>
+			  <li>
+				<capacity>Moving</capacity>
+				<postFactor>0.8</postFactor>
+			  </li>
+			  <li>
+				<capacity>Manipulation</capacity>
+				<postFactor>0.9</postFactor>
+			  </li>
+			  <li>
+				<capacity>BloodFiltration</capacity>
+				<postFactor>0.95</postFactor>
+			  </li>
+			  <li>
+				<capacity>Eating</capacity>
+				<postFactor>0.5</postFactor>
+			  </li>
+			</capMods>
+		  </li>
+		  <li>
+			<label>major</label>
+			<minSeverity>3</minSeverity>
+			<vomitMtbDays>0.2</vomitMtbDays>
+			<painOffset>0.4</painOffset>
+			<capMods>
+			  <li>
+				<capacity>Consciousness</capacity>
+				<postFactor>0.5</postFactor>
+			  </li>
+			  <li>
+				<capacity>Moving</capacity>
+				<postFactor>0.5</postFactor>
+			  </li>
+			  <li>
+				<capacity>Manipulation</capacity>
+				<postFactor>0.8</postFactor>
+			  </li>
+			  <li>
+				<capacity>BloodFiltration</capacity>
+				<postFactor>0.85</postFactor>
+			  </li>
+			  <li>
+				<capacity>Talking</capacity>
+				<postFactor>0.8</postFactor>
+			  </li>
+			  <li>
+				<capacity>Eating</capacity>
+				<postFactor>0.3</postFactor>
+			  </li>
+			</capMods>
+		  </li>
+		</stages>
+	  </HediffDef>
+
+	  <HediffDef>
+		<defName>Force_SithArtifactEmpowerment</defName>
+		<label>Empowering Aura</label>
+		<description>The pawn is filled with energy and strength while in the presence of the Sith artifact, empowering their abilities.</description>
+		<initialSeverity>1</initialSeverity>
+		<hediffClass>HediffWithComps</hediffClass>
+		<maxSeverity>5</maxSeverity>
+		<comps>
+		  <li Class="HediffCompProperties_SeverityPerDay">
+			<severityPerDay>-0.1</severityPerDay>
+		  </li>
+		</comps>
+		<stages>
+		  <li>
+			<label>mild empowerment</label>
+			<minSeverity>1</minSeverity>
+			<painOffset>-0.1</painOffset> <!-- Reduces pain slightly -->
+			<capMods>
+			  <li>
+				<capacity>Consciousness</capacity>
+				<postFactor>1.1</postFactor> <!-- Slight boost to consciousness -->
+			  </li>
+			  <li>
+				<capacity>Moving</capacity>
+				<postFactor>1.05</postFactor> <!-- Slight boost to movement speed -->
+			  </li>
+			  <li>
+				<capacity>Manipulation</capacity>
+				<postFactor>1.05</postFactor> <!-- Slight boost to manipulation -->
+			  </li>
+			  <li>
+				<capacity>BloodFiltration</capacity>
+				<postFactor>1.1</postFactor> <!-- Boost to blood filtration -->
+			  </li>
+			</capMods>
+		  </li>
+		  <li>
+			<label>moderate empowerment</label>
+			<minSeverity>2.5</minSeverity>
+			<painOffset>-0.2</painOffset> <!-- Further reduces pain -->
+			<capMods>
+			  <li>
+				<capacity>Consciousness</capacity>
+				<postFactor>1.2</postFactor> <!-- Further boost to consciousness -->
+			  </li>
+			  <li>
+				<capacity>Moving</capacity>
+				<postFactor>1.1</postFactor> <!-- Further boost to movement speed -->
+			  </li>
+			  <li>
+				<capacity>Manipulation</capacity>
+				<postFactor>1.1</postFactor> <!-- Further boost to manipulation -->
+			  </li>
+			  <li>
+				<capacity>BloodFiltration</capacity>
+				<postFactor>1.2</postFactor> <!-- Further boost to blood filtration -->
+			  </li>
+			</capMods>
+		  </li>
+		  <li>
+			<label>overwhelming empowerment</label>
+			<minSeverity>4</minSeverity>
+			<painOffset>-0.4</painOffset> <!-- Significant pain reduction -->
+			<capMods>
+			  <li>
+				<capacity>Consciousness</capacity>
+				<postFactor>1.3</postFactor> <!-- Major boost to consciousness -->
+			  </li>
+			  <li>
+				<capacity>Moving</capacity>
+				<postFactor>1.2</postFactor> <!-- Major boost to movement speed -->
+			  </li>
+			  <li>
+				<capacity>Manipulation</capacity>
+				<postFactor>1.2</postFactor> <!-- Major boost to manipulation -->
+			  </li>
+			  <li>
+				<capacity>BloodFiltration</capacity>
+				<postFactor>1.3</postFactor> <!-- Major boost to blood filtration -->
+			  </li>
+			  <li>
+				<capacity>Talking</capacity>
+				<postFactor>1.2</postFactor> <!-- Boost to talking ability -->
+			  </li>
+			  <li>
+				<capacity>Eating</capacity>
+				<postFactor>1.1</postFactor> <!-- Boost to eating ability -->
+			  </li>
+			</capMods>
+		  </li>
+		</stages>
+	  </HediffDef>
+	  
 
 </Defs>

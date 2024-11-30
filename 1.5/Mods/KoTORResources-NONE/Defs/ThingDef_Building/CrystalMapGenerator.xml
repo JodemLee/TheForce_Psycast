@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<GenStepDef>
+		<defName>Force_CrystalFormation</defName>
+		<order>1100</order>
+		<genStep Class="CrystalFormations.GenStep_ScatterLightsaberCrystals">
+			<allowInWaterBiome>false</allowInWaterBiome>
+			<minSpacing>20</minSpacing> <!-- Increased spacing to reduce clustering -->
+			<countPer10kCellsRange>1.0~5.0</countPer10kCellsRange> <!-- Adjusted to reduce crystal density -->
+			<spotMustBeStandable>true</spotMustBeStandable>
+			<allowRoofed>true</allowRoofed>
+			<validators>
+				<li Class="ScattererValidator_Buildable">
+					<radius>8</radius> <!-- Increased radius to further prevent crystal clumping -->
+					<affordance>Heavy</affordance>
+				</li>
+			</validators>
+			<groups>
+				<li>
+					<things>
+						<Force_CrystalFormation_Small>0.20</Force_CrystalFormation_Small> <!-- Lowered the spawn chance of small crystals -->
+						<Force_CrystalFormation_Medium>0.40</Force_CrystalFormation_Medium> <!-- Increased medium crystal chance -->
+						<Force_CrystalFormation_Large>0.40</Force_CrystalFormation_Large> <!-- Increased large crystal chance -->
+					</things>
+					<indoorRuin>false</indoorRuin>
+					<coveredCellsPer10Cells>0~1</coveredCellsPer10Cells>
+					<clusterRectRadius>1~1</clusterRectRadius> <!-- Increased cluster size for more spread-out formations -->
+				</li>
+			</groups>
+		</genStep>
+	</GenStepDef>
+</Defs>

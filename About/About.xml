@@ -2,18 +2,49 @@
 <ModMetaData>
 	<name>Star Wars : The Force-Psycast</name>
 	<author>Lee</author>
-	<supportedVersions><li>1.4</li></supportedVersions>
+	<supportedVersions><li>1.4</li><li>1.5</li></supportedVersions>
 	<packageId>lee.theforce.psycast</packageId>
-	<description>Adds three new paths to Vanilla Psycast Expanded. The Neutral Force Sensitive, Light Side, and Darkside powers. Simply a retheming of existing psycasts at the moment.
-	All Credit goes the original Vanilla Expanded Team, I just tweaked description of powers in the new path and did the art for the paths.</description>
-	<modDependencies>
-		<li>
+	<modIconPath IgnoreIfNoMatchingField="True">UI/ModIcon</modIconPath>
+	<description>This mod adds the force to Rimworld.
+
+	Includes several new psycaster paths, 2 force wielding factions, numerous backstories, and an alignment system.
+
+	Psycaster Paths -
+
+	Lightside - "The light side was aligned with calmness, peace, and passiveness, and was used only for knowledge and defense." 
+	The lightside of the force is used to heal others, non - lethally disable your opponents, and buff your allies
+
+	Neutral - Focus on improving you and your allies physical and mental capabilities, and at the same time trick your enemies mind.
+	Includes deflection of projectiles
+
+	Darkside - "To tap into the power of the dark side was to indulge in raw emotions such as passion, anger, and hatred."
+	Focus your hatred to improve your destructive capabilities, or find the secret to immortal life by enslaving and corrupting your enemies.
+
+	Telekinesis - Harness the force to manipulate your surroundings. Push enemies away, or pull them towards you. This path is all about moving objects.
+
+	Sith Crafting - Harness the power of the darkside to craft ancient sith artifacts. But be aware, power comes at a cost.
+
+	Jedi Training - Training Abilities that take a while to perform, but last a few days
+
+	Factions 
+	Jedi Enclave - An ancient order of protectors united by their ability to harness the power of the Force.
+	Sith Order - An ancient religious order of Force-wielders devoted to the dark side of the Force. 
+
+	Alignment: “Remember, A Jedi’s Strength Flows From The Force. But Beware: Anger, Fear, Aggression – The Dark Side, Are They.” - Yoda
+
+	Darkside Corruption - Using the darkside abilities, let the darkside of the force flow through you. As the stat increases so with the effects. (increases social fight chance, psychic entropy recovery, darkside corruption level, and adds resistance to armor taken. Increases the chance for a mental break.)
+
+	Lightside Attunement - Using the lightside abilities, the lightside of the force will flow through you. As the stat increases so with the effects. (Increases meditation speed, decreases the chance for a mental break, increases lightside attunement stats, and the global learning chance.)
+</description>
+
+	<modDependenciesByVersion>
+		<v1.4>
+		  <li>
 			<packageId>brrainz.harmony</packageId>
 			<displayName>Harmony</displayName>
 			<steamWorkshopUrl>steam://url/CommunityFilePage/2009463077</steamWorkshopUrl>
-			<downloadUrl>https://github.com/pardeike/HarmonyRimWorld/releases/latest</downloadUrl>
-		</li>
-		<li>
+		  </li>
+		  <li>
 			<packageId>Ludeon.RimWorld.Royalty</packageId>
 			<displayName>Royalty</displayName>
 		</li>
@@ -27,13 +58,35 @@
 			<displayName>Vanilla Psycast Expanded </displayName>
 			<steamWorkshopUrl>https://steamcommunity.com/sharedfiles/filedetails/?id=2842502659</steamWorkshopUrl>
 		</li>
-		
 		<li>
-		<packageId>VanillaExpanded.VPE.Puppeteer</packageId>
-		<displayName>Vanilla Psycast Expanded- Puppeteer </displayName>
-		<steamWorkshopUrl>https://steamcommunity.com/sharedfiles/filedetails/?id=3033779606</steamWorkshopUrl>
-		</li>
-	</modDependencies>
+			<packageId>VanillaExpanded.VPE.Puppeteer</packageId>
+			<displayName>Vanilla Psycast Expanded- Puppeteer </displayName>
+			<steamWorkshopUrl>https://steamcommunity.com/sharedfiles/filedetails/?id=3033779606</steamWorkshopUrl>
+			</li>
+		</v1.4>
+		<v1.5>
+			<li>
+				<packageId>brrainz.harmony</packageId>
+				<displayName>Harmony</displayName>
+				<steamWorkshopUrl>steam://url/CommunityFilePage/2009463077</steamWorkshopUrl>
+				<downloadUrl>https://github.com/pardeike/HarmonyRimWorld/releases/latest</downloadUrl>
+			</li>
+			<li>
+				<packageId>Ludeon.RimWorld.Royalty</packageId>
+				<displayName>Royalty</displayName>
+			</li>
+			<li>
+				<packageId>oskarpotocki.vanillafactionsexpanded.core</packageId>
+				<displayName>Vanilla Expanded Framework</displayName>
+				<steamWorkshopUrl>https://steamcommunity.com/sharedfiles/filedetails/?id=1854607105</steamWorkshopUrl>
+			</li>
+			<li>
+				<packageId>VanillaExpanded.VPsycastsE</packageId>
+				<displayName>Vanilla Psycast Expanded </displayName>
+				<steamWorkshopUrl>https://steamcommunity.com/sharedfiles/filedetails/?id=2842502659</steamWorkshopUrl>
+			</li>
+		</v1.5>
+	  </modDependenciesByVersion>
 	
 	<loadAfter>
 		<li>Ludeon.RimWorld</li>
@@ -46,6 +99,8 @@
 		<li>Killathon.AndroidTiersReforged</li>
 		<li>Killathon.MechanicalHumanlikesCore</li>
 		<li>smartkar.athenaframework</li>
+		<li>VanillaExpanded.VPsycastsE</li>
+		<li>VanillaExpanded.VPE.Puppeteer</li>
 		<li>Ogam.MedievalOverhaul.ArcaneArchaeologists</li>
 		<li>jecrell.StarWarsTheForce</li>
 		<li>guy762.KotORWeapons</li>

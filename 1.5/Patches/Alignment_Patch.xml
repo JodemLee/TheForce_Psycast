@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<Patch>
+
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/ThingDef[@Name="BasePawn"]/inspectorTabs</xpath>
+    <value>
+      <li>TheForce_Psycast.ITab_Pawn_Alignment</li>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/ThingDef[@Name="Human"]/recipes</xpath>
+    <value>
+      <li>AdministerDarksideHealingCrystal</li>
+    </value>
+  </Operation>
+
+</Patch>

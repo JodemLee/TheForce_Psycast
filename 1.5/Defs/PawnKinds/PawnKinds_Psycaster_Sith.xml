@@ -16,9 +16,15 @@
       <chemicalAddictionChance>0.00</chemicalAddictionChance>
       <itemQuality>Normal</itemQuality>
       <combatPower>130</combatPower>
-      <weaponMoney>2000~20000</weaponMoney>
+      <weaponMoney>4000~20000</weaponMoney>
       <weaponTags Inherit="True">
          <li>Force_Lightsaber</li>
+         <li MayRequire="guy762.kotorweapons">SE_sithsaber</li>
+         <li MayRequire="guy762.kotorweapons">SE_sithinquisitor</li>
+         <li MayRequire="guy762.kotorweapons">SE_sithwarrior</li>
+         <li MayRequire="guy762.kotorweapons">SE_sithsaber_apprentice</li>
+         <li MayRequire="guy762.kotorweapons">SE_sithsaber_assassin</li>
+         <li MayRequire="guy762.kotorweapons">SaV_darkjedisaber</li>
       </weaponTags>
       <apparelAllowHeadgearChance>0.2</apparelAllowHeadgearChance>
       <apparelMoney>1000~1500</apparelMoney>
@@ -31,8 +37,9 @@
          <li>Western</li>
       </apparelDisallowTags>
       <ignoreIdeoApparelColors>true</ignoreIdeoApparelColors>
-      <techHediffsChance>0.15</techHediffsChance>
-      <techHediffsMoney>500~1500</techHediffsMoney>
+		<techHediffsRequired>
+			<li>PsychicAmplifier</li>
+		 </techHediffsRequired>
       <specificApparelRequirements>
          <li>
             <colorGenerator Class="ColorGenerator_Options">
@@ -57,19 +64,20 @@
          </li>
       </specificApparelRequirements>
       <modExtensions>
-         <li MayRequire="Ludeon.RimWorld.Biotech" Class="AddGeneForPK.PKAdditionalGenes">
-            <geneSets>
-               <li>
-                  <isXenogene>true</isXenogene>
-                  <chance>1</chance>
-                  <geneDefs>
-                     <li>VPE_ForceW_Corruption</li>
-                     <li>VPE_ForceN_Corruption</li>
-                     <li>VPE_ForceM_Corruption</li>
-                  </geneDefs>
-               </li>
-            </geneSets>
-         </li>
+         <li Class="TheForce_Psycast.Lightsabers.ModExtension_LightsaberColors">
+            <bladeColors>
+               <!-- Red Blade -->
+               <li>(1.0, 0.0, 0.0, 1.0)</li>
+               <!-- Orange Blade -->
+               <li>(1.0, 0.5, 0.0, 1.0)</li>
+               <!-- Purple Blade -->
+               <li>(0.5, 0.0, 0.5, 1.0)</li>
+           </bladeColors>
+           <coreColors>
+            <!-- White Core -->
+            <li>(1.0, 1.0, 1.0, 1.0)</li>
+           </coreColors>
+        </li>
       </modExtensions>
    </PawnKindDef>
 
@@ -98,14 +106,20 @@
       <apparelTags>
          <li MayRequire="guy762.kotorweapons">SE_sithapprentice</li>
       </apparelTags>
+      <startingHediffs>
+         <li>
+            <def>Force_Darkside</def>
+            <severity>.1</severity>
+        </li>
+      </startingHediffs>
       <modExtensions>
          <li Class="VanillaPsycastsExpanded.PawnKindAbilityExtension_Psycasts">
             <implantDef>VPE_PsycastAbilityImplant</implantDef>
             <initialLevel>1</initialLevel>
             <statUpgradePoints>0</statUpgradePoints>
             <unlockedPaths>
-               <VPE_Darkside>1~2|1~2</VPE_Darkside>
-               <VPE_Force>1~2|1~2</VPE_Force>
+               <Force_Darkside>1~2|1~2</Force_Darkside>
+               <Force_Neutral>1~2|1~2</Force_Neutral>
             </unlockedPaths>
          </li>
       </modExtensions>
@@ -136,15 +150,21 @@
       <apparelTags>
          <li MayRequire="guy762.kotorweapons">SE_sithassassin</li>
       </apparelTags>
+      <startingHediffs>
+         <li>
+            <def>Force_Darkside</def>
+            <severity>.3</severity>
+        </li>
+      </startingHediffs>
       <modExtensions>
          <li Class="VanillaPsycastsExpanded.PawnKindAbilityExtension_Psycasts">
             <implantDef>VPE_PsycastAbilityImplant</implantDef>
             <initialLevel>4</initialLevel>
             <statUpgradePoints>1</statUpgradePoints>
             <unlockedPaths>
-               <VPE_Darkside>1~2|1~2</VPE_Darkside>
-               <VPE_Force>1~2|1~2</VPE_Force>
-               <VPE_Telekinesis>1~2|1~1</VPE_Telekinesis>
+               <Force_Darkside>1~2|1~2</Force_Darkside>
+               <Force_Neutral>1~2|1~2</Force_Neutral>
+               <Force_Telekinesis>1~2|1~1</Force_Telekinesis>
             </unlockedPaths>
          </li>
       </modExtensions>
@@ -174,15 +194,21 @@
       <apparelTags>
          <li MayRequire="guy762.kotorweapons">SE_sithwarrior</li>
       </apparelTags>
+      <startingHediffs>
+         <li>
+            <def>Force_Darkside</def>
+            <severity>.4</severity>
+        </li>
+      </startingHediffs>
       <modExtensions>
          <li Class="VanillaPsycastsExpanded.PawnKindAbilityExtension_Psycasts">
             <implantDef>VPE_PsycastAbilityImplant</implantDef>
             <initialLevel>4</initialLevel>
             <statUpgradePoints>1</statUpgradePoints>
             <unlockedPaths>
-               <VPE_Darkside>1~2|1~2</VPE_Darkside>
-               <VPE_Force>1~3|1~3</VPE_Force>
-               <VPE_Telekinesis>1~2|1~1</VPE_Telekinesis>
+               <Force_Darkside>1~2|1~2</Force_Darkside>
+               <Force_Neutral>1~3|1~3</Force_Neutral>
+               <Force_Telekinesis>1~2|1~1</Force_Telekinesis>
             </unlockedPaths>
          </li>
       </modExtensions>
@@ -209,15 +235,21 @@
       <techHediffsMaxAmount>3</techHediffsMaxAmount>
       <initialWillRange>6~8</initialWillRange>
       <initialResistanceRange>30~46</initialResistanceRange>
+      <startingHediffs>
+         <li>
+            <def>Force_Darkside</def>
+            <severity>.5</severity>
+        </li>
+      </startingHediffs>
       <modExtensions>
          <li Class="VanillaPsycastsExpanded.PawnKindAbilityExtension_Psycasts">
             <implantDef>VPE_PsycastAbilityImplant</implantDef>
             <initialLevel>4</initialLevel>
             <statUpgradePoints>1</statUpgradePoints>
             <unlockedPaths>
-               <VPE_Darkside>1~3|1~3</VPE_Darkside>
-               <VPE_Force>1~2|1~2</VPE_Force>
-               <VPE_Telekinesis>1~2|1~1</VPE_Telekinesis>
+               <Force_Darkside>1~3|1~3</Force_Darkside>
+               <Force_Neutral>1~2|1~2</Force_Neutral>
+               <Force_Telekinesis>1~2|1~1</Force_Telekinesis>
             </unlockedPaths>
          </li>
       </modExtensions>
@@ -237,14 +269,20 @@
       <techHediffsMaxAmount>3</techHediffsMaxAmount>
       <initialWillRange>6~8</initialWillRange>
       <initialResistanceRange>30~46</initialResistanceRange>
+      <startingHediffs>
+         <li>
+            <def>Force_Darkside</def>
+            <severity>.7</severity>
+        </li>
+      </startingHediffs>
       <modExtensions>
          <li Class="VanillaPsycastsExpanded.PawnKindAbilityExtension_Psycasts">
             <implantDef>VPE_PsycastAbilityImplant</implantDef>
             <initialLevel>8</initialLevel>
             <statUpgradePoints>2~4</statUpgradePoints>
             <unlockedPaths>
-               <VPE_Darkside>1~3|2~3</VPE_Darkside>
-               <VPE_Force>1~4|2~5</VPE_Force>
+               <Force_Darkside>1~3|2~3</Force_Darkside>
+               <Force_Neutral>1~4|2~5</Force_Neutral>
             </unlockedPaths>
          </li>
       </modExtensions>
@@ -265,14 +303,20 @@
       <techHediffsMaxAmount>3</techHediffsMaxAmount>
       <initialWillRange>6~8</initialWillRange>
       <initialResistanceRange>30~46</initialResistanceRange>
+      <startingHediffs>
+         <li>
+            <def>Force_Darkside</def>
+            <severity>1</severity>
+        </li>
+      </startingHediffs>
       <modExtensions>
          <li Class="VanillaPsycastsExpanded.PawnKindAbilityExtension_Psycasts">
             <implantDef>VPE_PsycastAbilityImplant</implantDef>
             <initialLevel>12</initialLevel>
             <statUpgradePoints>2~4</statUpgradePoints>
             <unlockedPaths>
-               <VPE_Darkside>1~4|2~3</VPE_Darkside>
-               <VPE_Force>1~5|3~6</VPE_Force>
+               <Force_Darkside>1~4|2~3</Force_Darkside>
+               <Force_Neutral>1~5|3~6</Force_Neutral>
             </unlockedPaths>
          </li>
       </modExtensions>
@@ -289,14 +333,20 @@
       <techHediffsMaxAmount>3</techHediffsMaxAmount>
       <initialWillRange>6~8</initialWillRange>
       <initialResistanceRange>30~46</initialResistanceRange>
+      <startingHediffs>
+         <li>
+            <def>Force_Darkside</def>
+            <severity>.3</severity>
+        </li>
+      </startingHediffs>
       <modExtensions>
          <li Class="VanillaPsycastsExpanded.PawnKindAbilityExtension_Psycasts">
             <implantDef>VPE_PsycastAbilityImplant</implantDef>
             <initialLevel>4</initialLevel>
             <statUpgradePoints>1</statUpgradePoints>
             <unlockedPaths>
-               <VPE_Darkside>1~3|1~3</VPE_Darkside>
-               <VPE_Force>1~2|1~2</VPE_Force>
+               <Force_Darkside>1~3|1~3</Force_Darkside>
+               <Force_Neutral>1~2|1~2</Force_Neutral>
             </unlockedPaths>
          </li>
       </modExtensions>

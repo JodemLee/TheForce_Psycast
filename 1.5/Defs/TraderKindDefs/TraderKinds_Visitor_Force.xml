@@ -69,6 +69,17 @@
       <!-- none -->
       
       <!-- Exotic -->
+      <li Class="StockGenerator_Tag">
+        <tradeTag>Force_KyberCrystal</tradeTag>
+        <thingDefCountRange>1</thingDefCountRange>
+        <countRange>1~6</countRange>
+      </li>
+
+      <li Class="StockGenerator_Tag">
+        <tradeTag>SithScroll</tradeTag>
+        <thingDefCountRange>1~2</thingDefCountRange>
+        <countRange>5~10</countRange>
+      </li>
       <!-- none -->
       
       <!-- Slaves -->

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+<ThingDef ParentName="BuildingBase">
+    <defName>Force_Darkside_MeditationSpot</defName>
+    <label>Force nexus (Darkside)</label>
+    <description>An ancient Force nexus at which psycasters can replenish psyfocus through meditation. Nearby focus objects will increase the meditation benefits.
+      
+Followers of the darkside will also increase their alignment while follower of the lightside will be slowly corrupted.</description>
+    <graphicData>
+      <texPath>Things/Building/MeditationSpots/DarksideMeditationSpot</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+    </graphicData>
+    <altitudeLayer>FloorEmplacement</altitudeLayer>
+    <statBases>
+      <WorkToBuild>0</WorkToBuild>
+    </statBases>
+    <rotatable>true</rotatable>
+    <scatterableOnMapGen>false</scatterableOnMapGen>
+    <useHitPoints>False</useHitPoints>
+    <designationCategory>Misc</designationCategory>
+    <uiOrder>2000</uiOrder>
+    <passability>Standable</passability>
+    <drawGUIOverlay>true</drawGUIOverlay>
+    <building>
+      <sowTag>SupportPlantsOnly</sowTag>
+      <canPlaceOverImpassablePlant>false</canPlaceOverImpassablePlant>
+      <ai_chillDestination>false</ai_chillDestination>
+      <wakeDormantPawnsOnConstruction>false</wakeDormantPawnsOnConstruction>
+      <artificialForMeditationPurposes>false</artificialForMeditationPurposes>
+      <isEdifice>false</isEdifice>
+    </building>
+    <comps>
+      <li Class="CompProperties_UsesMeditationFocus"/>
+      <li Class="CompProperties_AssignableToPawn">
+        <drawUnownedAssignmentOverlay>false</drawUnownedAssignmentOverlay>
+        <compClass>CompAssignableToPawn_MeditationSpot</compClass>
+      </li>
+    </comps>
+    <placeWorkers>
+      <li>PlaceWorker_MeditationSpot</li>
+    </placeWorkers>
+    <designationHotKey>Misc12</designationHotKey>
+    <modExtensions>
+      <li Class="TheForce_Psycast.Harmony_Patches.MeditationBuilding_Alignment">
+        <hedifftoIncrease>Force_Darkside</hedifftoIncrease>
+        <hedifftoDecrease>Force_Lightside</hedifftoDecrease>
+      </li>
+    </modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BuildingBase">
+    <defName>Force_Lightside_MeditationSpot</defName>
+    <label>Force nexus (Lightside)</label>
+    <description>An ancient Force nexus at which psycasters can replenish psyfocus through meditation. Nearby focus objects will increase the meditation benefits.
+      
+Followers of the lightside will also increase their alignment while follower of the darkside will be slowly purified.</description>
+    <graphicData>
+      <texPath>Things/Building/MeditationSpots/LightsideMeditationSpot</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+    </graphicData>
+    <altitudeLayer>FloorEmplacement</altitudeLayer>
+    <statBases>
+      <WorkToBuild>0</WorkToBuild>
+    </statBases>
+    <rotatable>true</rotatable> 
+    <scatterableOnMapGen>false</scatterableOnMapGen>
+    <useHitPoints>False</useHitPoints>
+    <designationCategory>Misc</designationCategory>
+    <uiOrder>2000</uiOrder>
+    <passability>Standable</passability>
+    <drawGUIOverlay>true</drawGUIOverlay>
+    <building>
+      <sowTag>SupportPlantsOnly</sowTag>
+      <canPlaceOverImpassablePlant>false</canPlaceOverImpassablePlant>
+      <ai_chillDestination>false</ai_chillDestination>
+      <wakeDormantPawnsOnConstruction>false</wakeDormantPawnsOnConstruction>
+      <artificialForMeditationPurposes>false</artificialForMeditationPurposes>
+      <isEdifice>false</isEdifice>
+    </building>
+    <comps>
+      <li Class="CompProperties_UsesMeditationFocus"/>
+      <li Class="CompProperties_AssignableToPawn">
+        <drawUnownedAssignmentOverlay>false</drawUnownedAssignmentOverlay>
+        <compClass>CompAssignableToPawn_MeditationSpot</compClass>
+      </li>
+    </comps>
+    <placeWorkers>
+      <li>PlaceWorker_MeditationSpot</li>
+    </placeWorkers>
+    <designationHotKey>Misc12</designationHotKey>
+    <modExtensions>
+      <li Class="TheForce_Psycast.Harmony_Patches.MeditationBuilding_Alignment">
+        <hedifftoIncrease>Force_Lightside</hedifftoIncrease>
+        <hedifftoDecrease>Force_Darkside</hedifftoDecrease>
+      </li>
+    </modExtensions>
+  </ThingDef>
+  
+</Defs>

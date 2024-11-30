@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <Defs>
-	<VFECore.Abilities.AbilityDef ParentName="VPE_WordOfAbilityBase">
+  <VFECore.Abilities.AbilityDef ParentName="VPE_WordOfAbilityBase">
     <defName>Force_Healing</defName>
     <label>Force Healing</label>
-    <description>Use the force to stimulate a person’s regenerative capabilities into overdrive, effectively tripling their natural healing factor for a few days.</description>
+    <description>Harness the power of the Force to accelerate a person's natural healing abilities, greatly enhancing their recovery rate and boosting their immunity for a few days.</description>
     <iconPath>Abilities/Lightside/WordofFortitude</iconPath>
     <durationTime>150000</durationTime>
     <castTime>60</castTime>
@@ -13,28 +13,30 @@
     <chance>0</chance>
     <modExtensions>
       <li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
-       <path>VPE_LightSide</path>
+        <path>Force_LightSide</path>
         <level>1</level>
         <order>1</order>
-        <psyfocusCost>0.36</psyfocusCost>
-        <entropyGain>0</entropyGain>
+        <psyfocusCost>0.16</psyfocusCost>
+        <entropyGain>16</entropyGain>
       </li>
       <li Class="VFECore.Abilities.AbilityExtension_Hediff">
-        <hediff>VPE_Healing</hediff>
+        <hediff>Force_Healing</hediff>
+        <durationMultiplier>Force_Lightside_Attunement</durationMultiplier>
+        <durationMultiplierFromCaster>true</durationMultiplierFromCaster>
       </li>
       <li Class="TheForce_Psycast.AbilityExtensionForce">
         <Attunement>
           <li>Force_Lightside</li>
         </Attunement>
         <severity>0.01</severity>
-        </li>
+      </li>
     </modExtensions>
   </VFECore.Abilities.AbilityDef>
 
-<VFECore.Abilities.AbilityDef ParentName="VPE_PsycastGoToTargetBase">
+  <VFECore.Abilities.AbilityDef ParentName="VPE_PsycastGoToTargetBase">
     <defName>Force_Stabilize</defName>
     <label>Force Stabilize</label>
-    <description>Temporarily puts the target’s cardiovascular system in stasis, which prevents them from bleeding out for a time, scaling with the lightside attunement of the caster.</description>
+    <description>Use the Force to temporarily place the target in stasis, immobilizing them and preventing any further injury or bleeding. The duration of the stasis scales with the caster's attunement to the light side of the Force.</description>
     <iconPath>Abilities/Lightside/Stabilize</iconPath>
     <abilityClass>VFECore.Abilities.Ability_Blank</abilityClass>
     <castTime>180</castTime>
@@ -46,31 +48,30 @@
     <chance>0</chance>
     <modExtensions>
       <li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
-        <path>VPE_LightSide</path>
+        <path>Force_LightSide</path>
         <level>2</level>
         <order>1</order>
         <psyfocusCost>0.3</psyfocusCost>
-        <entropyGain>0</entropyGain>
-        <prerequisites>
-          <li>Force_Healing</li>
-        </prerequisites>
+        <entropyGain>20</entropyGain>
       </li>
       <li Class="VFECore.Abilities.AbilityExtension_Hediff">
-        <hediff>VPE_BlockBleeding</hediff>
+        <hediff>Force_Stabilize</hediff>
+        <durationMultiplier>Force_Lightside_Attunement</durationMultiplier>
+        <durationMultiplierFromCaster>true</durationMultiplierFromCaster>
       </li>
       <li Class="TheForce_Psycast.AbilityExtensionForce">
         <Attunement>
           <li>Force_Lightside</li>
         </Attunement>
         <severity>0.03</severity>
-        </li>
+      </li>
     </modExtensions>
   </VFECore.Abilities.AbilityDef>
-	
-	<VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
+
+  <VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
     <defName>Force_Revitalize</defName>
     <label>Revitalize</label>
-    <description>Induces a psychic, regenerative coma in the target that lasts for a full day. The psychic energy assists the target by slowly regrowing any missing limbs.</description>
+    <description>Use the Force to induce a deep, regenerative trance in the target. During this trance, the target's body heals rapidly, slowly regrowing any missing limbs and recovering from injuries.</description>
     <iconPath>Abilities/Lightside/RegrowLimbs</iconPath>
     <abilityClass>VFECore.Abilities.Ability_Blank</abilityClass>
     <castTime>120</castTime>
@@ -84,33 +85,30 @@
     <chance>0</chance>
     <modExtensions>
       <li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
-        <path>VPE_LightSide</path>
+        <path>Force_LightSide</path>
         <level>4</level>
         <order>1</order>
         <psyfocusCost>0.7</psyfocusCost>
-        <entropyGain>0</entropyGain>
-        <prerequisites>
-          <li>Force_Stabilize</li>
-        </prerequisites>
+        <entropyGain>40</entropyGain>
       </li>
       <li Class="VFECore.Abilities.AbilityExtension_Hediff">
-        <hediff>VPE_RegrowLimbs</hediff>
+        <hediff>Force_Revitalize</hediff>
       </li>
       <li Class="TheForce_Psycast.AbilityExtensionForce">
         <Attunement>
           <li>Force_Lightside</li>
         </Attunement>
         <severity>0.05</severity>
-        </li>
+      </li>
     </modExtensions>
   </VFECore.Abilities.AbilityDef>
-	
-	 <VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
+
+  <VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
     <defName>Force_HealthSwap</defName>
-    <label>Transfer</label>
-    <description>Through the force, allows you to swap your lifeforce with an allied pawn, transferring all foreign objects and injuries from them to you.</description>
+    <label>Force Healing (Transfer Wounds)</label>
+    <description>Use the Force to heal an allied pawn by transferring their injuries and foreign objects to yourself, sacrificing your own well-being to restore theirs.</description>
     <iconPath>Abilities/Lightside/HealthSwap</iconPath>
-    <abilityClass>VanillaPsycastsExpanded.Harmonist.Ability_HealthSwap</abilityClass>
+    <abilityClass>TheForce_Psycast.Abilities.Lightside.Force_TransferWounds</abilityClass>
     <castTime>240</castTime>
     <castSound>VPE_HealthSwap_Cast</castSound>
     <cooldownTime>30000</cooldownTime>
@@ -118,18 +116,9 @@
     <targetCount>2</targetCount>
     <targetModes>
       <li>Pawn</li>
-      <li>Pawn</li>
     </targetModes>
     <targetingParametersList>
       <li>
-        <canTargetSelf>false</canTargetSelf>
-        <canTargetPawns>True</canTargetPawns>
-        <canTargetAnimals>False</canTargetAnimals>
-        <canTargetMechs>False</canTargetMechs>
-        <canTargetBuildings>False</canTargetBuildings>
-      </li>
-      <li>
-        <canTargetSelf>True</canTargetSelf>
         <canTargetPawns>True</canTargetPawns>
         <canTargetAnimals>False</canTargetAnimals>
         <canTargetMechs>False</canTargetMechs>
@@ -139,62 +128,63 @@
     <range>12.9</range>
     <modExtensions>
       <li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
-        <path>VPE_LightSide</path>
+        <path>Force_LightSide</path>
         <level>5</level>
         <order>1</order>
         <psyfocusCost>0.35</psyfocusCost>
-        <entropyGain>0</entropyGain>
-        <prerequisites>
-          <li>Force_Revitalize</li>
-        </prerequisites>
+        <entropyGain>35</entropyGain>
       </li>
       <li Class="TheForce_Psycast.AbilityExtensionForce">
         <Attunement>
           <li>Force_Lightside</li>
         </Attunement>
         <severity>0.07</severity>
-        </li>
+      </li>
     </modExtensions>
   </VFECore.Abilities.AbilityDef>
-	<!-- Combat - Protection Bubble, Combustion, Ionize, Stun -->
-	
-	<VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
-    <defName>Force_Stun</defName>
-    <label>Force Stun</label>
-    <description>Momentarily disrupts motor function in the target's brain, preventing any movement. This lasts for a few seconds and is considered a hostile action.</description>
-    <iconPath>Abilities/Lightside/Stun</iconPath>
-    <targetMode>Pawn</targetMode>
-    <abilityClass>VFECore.Abilities.Ability_Blank</abilityClass>
-    <castTime>15</castTime>
-    <fleckOnTarget>PsycastPsychicEffect</fleckOnTarget>
-    <goodwillImpact>-15</goodwillImpact>
-    <durationTime>180</durationTime>
-    <range>20</range>
+  <!-- Combat - Protection Bubble, Combustion, Ionize, Stun -->
+
+
+  <VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
+    <defName>Force_Ionize</defName>
+    <label>Ionize</label>
+    <description>Use the Force to create a powerful electrical surge, ionizing the air and causing electronic systems in the surrounding area to malfunction or shut down temporarily.</description>
+    <iconPath>Abilities/Lightside/StaticPulse</iconPath>
+    <abilityClass>TheForce_Psycast.Abilities.Lightside.Force_Ionize</abilityClass>
+    <castTime>3</castTime>
+    <range>8</range>
+    <targetingParameters>
+			<canTargetPawns>True</canTargetPawns>
+			<canTargetBuildings>false</canTargetBuildings>
+			<canTargetLocations>True</canTargetLocations>
+		</targetingParameters>
+    <castSound>VPE_StaticPulse_Cast</castSound>
     <modExtensions>
       <li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
-        <path>VPE_LightSide</path>
+        <path>Force_LightSide</path>
         <level>1</level>
         <order>2</order>
-        <psyfocusCost>0.01</psyfocusCost>
-        <entropyGain>24</entropyGain>
-        <psychic>true</psychic>
+        <psyfocusCost>0.1</psyfocusCost>
+        <entropyGain>5</entropyGain>
       </li>
-      <li Class="VFECore.Abilities.AbilityExtension_Stun">
-        <durationMultiplier>Force_Lightside_Attunement</durationMultiplier>
+      <li Class="VFECore.Abilities.AbilityExtension_Explosion">
+        <explosionRadius>1</explosionRadius>
+        <onCaster>false</onCaster>
+        <explosionDamageDef>EMP</explosionDamageDef>
       </li>
       <li Class="TheForce_Psycast.AbilityExtensionForce">
         <Attunement>
           <li>Force_Lightside</li>
         </Attunement>
         <severity>0.01</severity>
-        </li>
+      </li>
     </modExtensions>
   </VFECore.Abilities.AbilityDef>
-  
-    <VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
+
+  <VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
     <defName>Force_Barrier</defName>
     <label>Protection Bubble</label>
-    <description>Generate a barrier on a target that sends all incoming ground-level projectiles to some distant place, the duration scaling with the target’s lightside attunement. People and items are not affected.</description>
+    <description>Use the Force to create a protective bubble around the target, deflecting all incoming projectiles. The duration of the bubble scales with the target's attunement to the light side of the Force. People and items are not affected.</description>
     <iconPath>Abilities/Lightside/Overshield</iconPath>
     <abilityClass>VFECore.Abilities.Ability_Blank</abilityClass>
     <castTime>60</castTime>
@@ -208,79 +198,79 @@
     <chance>0</chance>
     <modExtensions>
       <li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
-        <path>VPE_LightSide</path>
+        <path>Force_LightSide</path>
         <level>2</level>
         <order>2</order>
         <psyfocusCost>0.08</psyfocusCost>
         <entropyGain>50</entropyGain>
         <psychic>true</psychic>
-        <prerequisites>
-          <li>Force_Stun</li>
-        </prerequisites>
         <spaceAfter>false</spaceAfter>
       </li>
       <li Class="VFECore.Abilities.AbilityExtension_Hediff">
-        <hediff>VPE_Overshield</hediff>
+        <hediff>Force_ProtectionBubble</hediff>
         <durationMultiplier>Force_Lightside_Attunement</durationMultiplier>
+        <durationMultiplierFromCaster>true</durationMultiplierFromCaster>
       </li>
       <li Class="TheForce_Psycast.AbilityExtensionForce">
         <Attunement>
           <li>Force_Lightside</li>
         </Attunement>
         <severity>0.03</severity>
-        </li>
+      </li>
     </modExtensions>
   </VFECore.Abilities.AbilityDef>
-  
-	
-	 <VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
-    <defName>Force_Ionize</defName>
-    <label>Ionize</label>
-    <description>The caster dumps a massive amount of voltage into the surrounding air, causing an EMP blast in a huge radius which is otherwise harmless.</description>
-    <iconPath>Abilities/Lightside/StaticPulse</iconPath>
-    <abilityClass>VFECore.Abilities.Ability_Explode</abilityClass>
-    <castTime>6</castTime>
-    <radius>50.9</radius>
-    <targetMode>Self</targetMode>
-    <castSound>VPE_StaticPulse_Cast</castSound>
-    <targetFlecks>
-      <li>PsycastSkipInnerExit</li>
-      <li>PsycastSkipOuterRingExit</li>
-    </targetFlecks>
+
+  <VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
+    <defName>Force_StasisField</defName>
+    <label>Stasis Field</label>
+    <description>Generate a stasis field with the Force, immobilizing all targets within a designated area for a short duration. All affected enemies are frozen in place, unable to move or act. This ability is considered hostile</description>
+    <iconPath>Abilities/Lightside/Stun</iconPath>
+    <targetMode>Pawn</targetMode>
+    <abilityClass>VFECore.Abilities.Ability_Blank</abilityClass>
+    <castTime>15</castTime>
+    <fleckOnTarget>PsycastPsychicEffect</fleckOnTarget>
+    <goodwillImpact>-15</goodwillImpact>
+    <durationTime>180</durationTime>
+    <cooldownTime>360</cooldownTime>
+    <range>20</range>
+    <radius>7</radius>
+    <hasAoE>true</hasAoE>
+    <targetingParametersForAoE>
+			<canTargetHumans>True</canTargetHumans>
+			<canTargetSelf>false</canTargetSelf>
+			<canTargetAnimals>false</canTargetAnimals>
+			<neverTargetIncapacitated>True</neverTargetIncapacitated>
+		</targetingParametersForAoE>
     <modExtensions>
       <li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
-        <path>VPE_LightSide</path>
+        <path>Force_LightSide</path>
         <level>4</level>
         <order>2</order>
-        <psyfocusCost>0.1</psyfocusCost>
-        <entropyGain>40</entropyGain>
-        <prerequisites>
-          <li>Force_Barrier</li>
-        </prerequisites>
+        <psyfocusCost>0.01</psyfocusCost>
+        <entropyGain>24</entropyGain>
+        <psychic>true</psychic>
       </li>
-      <li Class="VFECore.Abilities.AbilityExtension_Explosion">
-        <explosionRadius>50.9</explosionRadius>
-        <onCaster>true</onCaster>
-        <explosionDamageDef>EMP</explosionDamageDef>
+      <li Class="VFECore.Abilities.AbilityExtension_Stun">
+        <durationMultiplier>Force_Lightside_Attunement</durationMultiplier>
+        <durationMultiplierFromCaster>true</durationMultiplierFromCaster>
       </li>
       <li Class="TheForce_Psycast.AbilityExtensionForce">
         <Attunement>
           <li>Force_Lightside</li>
         </Attunement>
         <severity>0.05</severity>
-        </li>
+      </li>
     </modExtensions>
-	</VFECore.Abilities.AbilityDef>
-	
-	<VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
+  </VFECore.Abilities.AbilityDef>
+
+  <VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
     <defName>Force_Combustion</defName>
     <label>Combustion</label>
-    <description>Use the force to ignite a area underneath the target area, which vents to the surface in an explosion. Burns the area and spills forth excess liquid.</description>
+    <description>Use the Force to create a powerful explosion that blows up the target's weapon. The explosion radius scales based on the mass of the weapon, potentially causing collateral damage.</description>
     <iconPath>Abilities/Lightside/Explosion</iconPath>
-    <abilityClass>VFECore.Abilities.Ability_Explode</abilityClass>
+    <abilityClass>TheForce_Psycast.Abilities.Lightside.Force_Combustion</abilityClass>
     <range>14.9</range>
-    <radius>7</radius>
-    <targetMode>Location</targetMode>
+    <targetMode>Pawn</targetMode>
     <castTime>30</castTime>
     <castSound>VPE_Explosion</castSound>
     <targetFlecks>
@@ -288,36 +278,32 @@
     </targetFlecks>
     <modExtensions>
       <li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
-        <path>VPE_LightSide</path>
+        <path>Force_LightSide</path>
         <level>5</level>
         <order>2</order>
         <psyfocusCost>0.06</psyfocusCost>
         <entropyGain>42</entropyGain>
-        <prerequisites>
-          <li>Force_Ionize</li>
-        </prerequisites>
       </li>
       <li Class="VFECore.Abilities.AbilityExtension_Explosion">
-        <explosionRadius>7</explosionRadius>
         <onCaster>false</onCaster>
         <explosionDamageDef>Flame</explosionDamageDef>
-        <casterImmune>false</casterImmune>
+        <casterImmune>True</casterImmune>
       </li>
       <li Class="TheForce_Psycast.AbilityExtensionForce">
         <Attunement>
           <li>Force_Lightside</li>
         </Attunement>
         <severity>0.07</severity>
-        </li>
+      </li>
     </modExtensions>
-	</VFECore.Abilities.AbilityDef>
-	  	
-	<!-- Support, Force Meld, Force Surge, Force Enlightenment, Animal Bond -->
-	
-	<VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
+  </VFECore.Abilities.AbilityDef>
+
+  <!-- Support, Force Meld, Force Surge, Force Enlightenment, Animal Bond -->
+
+  <VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
     <defName>Force_Surge</defName>
     <label>Force Surge</label>
-    <description>Infuses a fertile area with chaotic life energy, causing it to sprout shoots of brambles that wither after 12 hours.</description>
+    <description>Infuses a fertile area with the force, causing it to sprout shoots of brambles that wither after 12 hours.</description>
     <iconPath>Abilities/Lightside/BrambleMaze</iconPath>
     <abilityClass>VFECore.Abilities.Ability_Spawn</abilityClass>
     <castTime>30</castTime>
@@ -332,7 +318,7 @@
     <castSound>VPE_BrambleMaze_Cast</castSound>
     <modExtensions>
       <li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
-        <path>VPE_LightSide</path>
+        <path>Force_LightSide</path>
         <level>1</level>
         <order>3</order>
         <psyfocusCost>0.01</psyfocusCost>
@@ -352,14 +338,14 @@
           <li>Force_Lightside</li>
         </Attunement>
         <severity>0.00008849557</severity>
-        </li>
+      </li>
     </modExtensions>
   </VFECore.Abilities.AbilityDef>
-	
-	<VFECore.Abilities.AbilityDef ParentName="VPE_WordOfAbilityBase">
+
+  <VFECore.Abilities.AbilityDef ParentName="VPE_WordOfAbilityBase">
     <defName>Force_Bond</defName>
     <label>Animal Bond</label>
-    <description>Soothe an animal using the force, either calming a manhunting animal or taming them. Depending on the lightside attunement of the caster and the body size of an animal, the psycast may backfire and turn the animal manhunter.</description>
+    <description>Soothe an animal using the Force, either calming a manhunting animal or taming them. Depending on the lightside attunement of the caster and the body size of an animal, the psycast may backfire and turn the animal manhunter.</description>
     <iconPath>Abilities/Lightside/WordofAnimals</iconPath>
     <abilityClass>VanillaPsycastsExpanded.Wildspeaker.Ability_Animal</abilityClass>
     <castSound>PsychicSoothePulserCast</castSound>
@@ -368,41 +354,35 @@
     <goodwillImpact>-15</goodwillImpact>
     <modExtensions>
       <li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
-        <path>VPE_LightSide</path>
+        <path>Force_LightSide</path>
         <level>2</level>
         <order>3</order>
         <psyfocusCost>0.4</psyfocusCost>
-        <entropyGain>0</entropyGain>
-        <prerequisites>
-          <li>Force_Surge</li>
-        </prerequisites>
+        <entropyGain>20</entropyGain>
       </li>
       <li Class="TheForce_Psycast.AbilityExtensionForce">
         <Attunement>
           <li>Force_Lightside</li>
         </Attunement>
         <severity>0.03</severity>
-        </li>
+      </li>
     </modExtensions>
   </VFECore.Abilities.AbilityDef>
 
-	<VFECore.Abilities.AbilityDef ParentName="VPE_WordOfAbilityBase">
+  <VFECore.Abilities.AbilityDef ParentName="VPE_WordOfAbilityBase">
     <defName>Force_Enlightment</defName>
     <label>Force Enlightment</label>
-    <description>Speak words encouraging creativity while psychically hypercharging the target's mind with new ideas. The target will experience a random inspiration appropriate to them.</description>
+    <description>Speak words encouraging creativity while using the Force to amplify the target's mind with new ideas. The target will experience a random inspiration appropriate to them.</description>
     <iconPath>Abilities/Lightside/WordofInspiration</iconPath>
     <showUndrafted>true</showUndrafted>
     <chance>0</chance>
     <modExtensions>
       <li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
-        <path>VPE_LightSide</path>
+        <path>Force_LightSide</path>
         <level>4</level>
         <order>3</order>
         <psyfocusCost>0.8</psyfocusCost>
-        <entropyGain>0</entropyGain>
-        <prerequisites>
-          <li>Force_Bond</li>
-        </prerequisites>
+        <entropyGain>34</entropyGain>
         <showCastBubble>false</showCastBubble>
       </li>
       <li Class="VanillaPsycastsExpanded.AbilityExtension_GiveInspiration" />
@@ -414,43 +394,40 @@
           <li>Force_Lightside</li>
         </Attunement>
         <severity>0.05</severity>
-        </li>
+      </li>
     </modExtensions>
   </VFECore.Abilities.AbilityDef>
 
---<VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
-		<defName>Force_Meld</defName>
-		<label>Force Meld</label>
-		<description>Creates a sphere of psychic suggestion around the caster, linking all pawns within to the caster and allowing any single target “Word of” psycast to affect all others. The effect ends when those linked move out of range.</description>
-		<iconPath>Abilities/Lightside/GroupLink</iconPath>
-		<abilityClass>VanillaPsycastsExpanded.Ability_GroupLink</abilityClass>
-		<castTime>30</castTime>
-		<targetMode>Self</targetMode>
-		<radius>9</radius>
-		<castSound>VPE_GroupLink_Cast</castSound>
-		<chance>0</chance>
-		<modExtensions>
-			<li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
-				<path>VPE_LightSide</path>
-				<level>5</level>
-				<order>3</order>
-				<psyfocusCost>0.25</psyfocusCost>
-				<entropyGain>0</entropyGain>
-				<prerequisites>
-					 <li>Force_Bond</li>
-				</prerequisites>
-			</li>
-			<li Class="VFECore.Abilities.AbilityExtension_Hediff">
-				<hediff>VPE_GroupLink</hediff>
-			</li>
-			<li Class="TheForce_Psycast.AbilityExtensionForce">
+--  <VFECore.Abilities.AbilityDef ParentName="VPE_PsycastBase">
+    <defName>Force_Meld</defName>
+    <label>Force Meld</label>
+    <description>Drawing upon the latent force in nearby pawns, it forms a force sphere that enhances the caster's psychic stats while linked pawns are inside. Ends if no pawns are inside the sphere.</description>
+    <iconPath>Abilities/Lightside/GroupLink</iconPath>
+    <abilityClass>TheForce_Psycast.Abilities.Lightside.Ability_ForceMeld</abilityClass>
+    <castTime>30</castTime>
+    <targetMode>Self</targetMode>
+    <radius>9</radius>
+    <castSound>VPE_GroupLink_Cast</castSound>
+    <chance>0</chance>
+    <modExtensions>
+      <li Class="VanillaPsycastsExpanded.AbilityExtension_Psycast">
+        <path>Force_LightSide</path>
+        <level>5</level>
+        <order>3</order>
+        <psyfocusCost>0.25</psyfocusCost>
+        <entropyGain>70</entropyGain>
+      </li>
+      <li Class="VFECore.Abilities.AbilityExtension_Hediff">
+        <hediff>Force_ForceMeld</hediff>
+      </li>
+      <li Class="TheForce_Psycast.AbilityExtensionForce">
         <Attunement>
           <li>Force_Lightside</li>
         </Attunement>
         <severity>0.07</severity>
-        </li>
-		</modExtensions>
-	</VFECore.Abilities.AbilityDef>
+      </li>
+    </modExtensions>
+  </VFECore.Abilities.AbilityDef>
 </Defs>
 	
 

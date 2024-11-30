@@ -3,145 +3,351 @@
 <Defs>
 	<HediffDef>
 		<defName>Force_Darkside</defName>
-		<label>Darkside Corruption</label>
-		<description>How much the darkside has corrupted the pawn.</description>
+		<label>Darkside Alignment</label>
+		<hediffClass>TheForce_Psycast.Hediffs.HediffWithComps_DarksideGhost</hediffClass>
+		<description>The extent to which the dark side has influenced and corrupted the pawn.</description>
 		<isBad>false</isBad>
 		<defaultLabelColor>(0.5,0,0)</defaultLabelColor>
-		<initialSeverity>0.01</initialSeverity>
-		<maxSeverity>1</maxSeverity>
+		<initialSeverity>0.001</initialSeverity>
+		<showGizmosOnCorpse>True</showGizmosOnCorpse>
+		<countsAsAddedPartOrImplant>false</countsAsAddedPartOrImplant>
+		<alwaysShowSeverity>true</alwaysShowSeverity>
 		<stages>
-		<li>
-		<socialFightChanceFactor>3.0</socialFightChanceFactor>
-		<multiplyStatChangesBySeverity>true</multiplyStatChangesBySeverity>
-		<statOffsets>
-          <Force_Darkside_Attunement>2.5</Force_Darkside_Attunement>
-		  <ArmorRating_Sharp>0.05</ArmorRating_Sharp>
-          <ArmorRating_Blunt>0.01</ArmorRating_Blunt>
-          <ArmorRating_Heat>0.03</ArmorRating_Heat>
-		  <MentalBreakThreshold>0.01</MentalBreakThreshold>
-          <PsychicEntropyRecoveryRate>0.05</PsychicEntropyRecoveryRate>
-        </statOffsets>
-		</li>
+			<li>
+				<socialFightChanceFactor>3.0</socialFightChanceFactor>
+				<multiplyStatChangesBySeverity>true</multiplyStatChangesBySeverity>
+				<statOffsets>
+					<Force_Darkside_Attunement>1</Force_Darkside_Attunement>
+					<ArmorRating_Sharp>0.05</ArmorRating_Sharp>
+					<ArmorRating_Blunt>0.01</ArmorRating_Blunt>
+					<ArmorRating_Heat>0.03</ArmorRating_Heat>
+					<MentalBreakThreshold>0.01</MentalBreakThreshold>
+					<PsychicEntropyRecoveryRate>0.05</PsychicEntropyRecoveryRate>
+				</statOffsets>
+			</li>
 		</stages>
+		<comps>
+			<li Class="HediffCompProperties_RemoveIfOtherHediff">
+				<hediffs>
+					<li>Force_Ghost</li>
+				</hediffs>
+			</li>
+		</comps>
 	</HediffDef>
-	
+
 	<HediffDef>
 		<defName>Force_Lightside</defName>
-		<label>Lightside Attunement</label>
+		<label>Lightside Alignment</label>
+		<hediffClass>TheForce_Psycast.Hediffs.HediffWithComps_LightsideGhost</hediffClass>
 		<description>The level of attunement a pawn has for the lightside</description>
 		<isBad>false</isBad>
-		<defaultLabelColor>(0,0,0.5)</defaultLabelColor>
-		<initialSeverity>0.01</initialSeverity>
-		<maxSeverity>1</maxSeverity>
+		<defaultLabelColor>(0.3,0.6,1.0)</defaultLabelColor>
+		<initialSeverity>0.001</initialSeverity>
+		<showGizmosOnCorpse>True</showGizmosOnCorpse>
+		<countsAsAddedPartOrImplant>false</countsAsAddedPartOrImplant>
+		<alwaysShowSeverity>true</alwaysShowSeverity>
 		<stages>
-		<li>
-		<multiplyStatChangesBySeverity>true</multiplyStatChangesBySeverity>
-		<statOffsets>
-			<Force_Lightside_Attunement>2.5</Force_Lightside_Attunement>
-			<MeditationFocusGain>0.05</MeditationFocusGain>
-			<MentalBreakThreshold>-0.01</MentalBreakThreshold>
-			<GlobalLearningFactor>0.2</GlobalLearningFactor>
-		</statOffsets>	
-		</li>
+			<li>
+				<multiplyStatChangesBySeverity>true</multiplyStatChangesBySeverity>
+				<statOffsets>
+					<Force_Lightside_Attunement>1</Force_Lightside_Attunement>
+					<MeditationFocusGain>0.05</MeditationFocusGain>
+					<MentalBreakThreshold>-0.01</MentalBreakThreshold>
+					<GlobalLearningFactor>0.2</GlobalLearningFactor>
+				</statOffsets>
+			</li>
+		</stages>
+		<comps>
+			<li Class="HediffCompProperties_RemoveIfOtherHediff">
+				<hediffs>
+					<li>Force_SithGhost</li>
+				</hediffs>
+			</li>
+		</comps>
+	</HediffDef>
+
+	<HediffDef Name="Force_GhostBase" Abstract="True">
+		<label>Force Ghost</label>
+		<hediffClass>HediffWithComps</hediffClass>
+		<isBad>false</isBad>
+		<defaultLabelColor>(0.3,0.3,0.8)</defaultLabelColor>
+		<initialSeverity>0.001</initialSeverity>
+		<maxSeverity>1</maxSeverity>
+		<countsAsAddedPartOrImplant>false</countsAsAddedPartOrImplant>
+		<disablesNeeds>
+			<li>Food</li>
+			<li>Rest</li>
+			<li>Comfort</li>
+		</disablesNeeds>
+		<comps>
+			<li Class="HediffCompProperties">
+				<compClass>VFECore.HediffComp_Phasing</compClass>
+			</li>
+			<li Class="TheForce_Psycast.Hediffs.HediffCompProperties_ForceGhost">
+			</li>
+			<li Class="VFECore.HediffCompProperties_Targeting">
+				<neverHit>true</neverHit>
+				<alwaysMiss>true</alwaysMiss>
+			</li>
+		</comps>
+	</HediffDef>
+
+	<HediffDef ParentName="Force_GhostBase">
+		<defName>Force_Ghost</defName>
+		<label>Force Ghost</label>
+		<description>The pawn has become a Force ghost, the ethereal manifestation of a deceased Jedi or light side Force user who has preserved their consciousness after death. As a Force ghost, they can appear to the living, offering guidance, wisdom, and support. Unlike Sith spirits, Force ghosts are not bound to specific places or objects and can travel freely within the Force. They embody peace and enlightenment, using their continued presence to aid the living in their journey towards the light side of the Force.</description>
+		<defaultLabelColor>(0.5,0.7,1.0)</defaultLabelColor>
+		<stages>
+			<li>
+				<totalBleedFactor>0.0</totalBleedFactor>
+				<painFactor>0.0</painFactor>
+				<naturalHealingFactor>5</naturalHealingFactor>
+				<makeImmuneTo>
+					<li>Flu</li>
+					<li>Malaria</li>
+					<li>SleepingSickness</li>
+					<li>Plague</li>
+					<li>WoundInfection</li>
+					<li>LungRot</li>
+					<li>GutWorms</li>
+					<li>MuscleParasites</li>
+				</makeImmuneTo>
+				<statFactors>
+					<MarketValue>0</MarketValue>
+					<Flammability>0.5</Flammability>
+					<MeatAmount>0</MeatAmount>
+					<LeatherAmount>0</LeatherAmount>
+					<RoyalFavorValue>0</RoyalFavorValue>
+					<LifespanFactor>1000</LifespanFactor>
+					<Force_Lightside_Attunement>1</Force_Lightside_Attunement>
+					<Force_Darkside_Attunement>0</Force_Darkside_Attunement>
+					<Fertility MayRequire="Ludeon.RimWorld.Biotech">0</Fertility>
+				</statFactors>
+			</li>
+		</stages>
+	</HediffDef>
+
+	<HediffDef ParentName="Force_GhostBase">
+		<defName>Force_SithGhost</defName>
+		<label>Sith Spirit</label>
+		<description>The pawn has become a Sith spirit, the lingering essence of a dark side Force user who has achieved a form of immortality through dark rituals and intense hatred. Unlike typical Force ghosts, Sith spirits are bound to specific locations, artifacts, or objects, often where significant dark side events occurred or where their physical remains are kept. They retain their malevolent personality and power, continuing to influence the living, corrupting minds, and seeking ways to return to physical form or further their dark ambitions from beyond death.</description>
+		<isBad>false</isBad>
+		<defaultLabelColor>(0.8,0.3,0.3)</defaultLabelColor>
+		<stages>
+			<li>
+				<totalBleedFactor>0.0</totalBleedFactor>
+				<painFactor>0.0</painFactor>
+				<naturalHealingFactor>5</naturalHealingFactor>
+				<makeImmuneTo>
+					<li>Flu</li>
+					<li>Malaria</li>
+					<li>SleepingSickness</li>
+					<li>Plague</li>
+					<li>WoundInfection</li>
+					<li>LungRot</li>
+					<li>GutWorms</li>
+					<li>MuscleParasites</li>
+				</makeImmuneTo>
+				<statFactors>
+					<MarketValue>0</MarketValue>
+					<Flammability>0.5</Flammability>
+					<MeatAmount>0</MeatAmount>
+					<LeatherAmount>0</LeatherAmount>
+					<RoyalFavorValue>0</RoyalFavorValue>
+					<LifespanFactor>1000</LifespanFactor>
+					<Force_Lightside_Attunement>0</Force_Lightside_Attunement>
+					<Force_Darkside_Attunement>1</Force_Darkside_Attunement>
+					<Fertility MayRequire="Ludeon.RimWorld.Biotech">0</Fertility>
+				</statFactors>
+			</li>
 		</stages>
 	</HediffDef>
 
 	<HediffDef>
 		<defName>Lightsaber_Stance</defName>
 		<label>Lightsaber Form</label>
-		<description>Lightsaber forms are combat techniques developed by Jedi and Sith to wield their iconic weapons with precision and effectiveness. Each form emphasizes different aspects of combat, from defense and agility to offense and finesse, allowing Force users to adapt to various opponents and situations in battle.</description>
-		<hediffClass>TheForce_Psycast.Hediff_LightsaberDeflection</hediffClass>
+		<description>Lightsaber forms are specialized combat techniques created by Jedi and Sith to master the use of their iconic weapons. Each form focuses on different combat aspects, such as defense, agility, offense, and finesse, enabling Force users to adapt to diverse opponents and battle scenarios.</description>
+		<hediffClass>TheForce_Psycast.Lightsabers.Hediff_LightsaberDeflection</hediffClass>
 		<initialSeverity>1</initialSeverity>
+		<isBad>false</isBad>
 		<maxSeverity>7</maxSeverity>
+		<countsAsAddedPartOrImplant>false</countsAsAddedPartOrImplant>
 		<stages>
 			<li>
-			<label>Form I: Shii-Cho</label>
-				<minSeverity>1</minSeverity>  
-					<statOffsets>
-						<MeleeDPS>0.10</MeleeDPS>
-						<MeleeHitChance>0.05</MeleeHitChance>
-						<MeleeDodgeChance>-0.05</MeleeDodgeChance>
-					</statOffsets>
-					<capMods>
-						<li>
-							<capacity>Consciousness</capacity>
-							<offset>0.15</offset>
-						</li>
-						<li>
-							<capacity>Sight</capacity>
-							<offset>0.15</offset>
-						</li>
-					</capMods>
+				<label>Form I: Shii-Cho</label>
+				<minSeverity>1</minSeverity>
+				<statOffsets>
+					<MeleeDPS>0.10</MeleeDPS>
+					<MeleeHitChance>0.05</MeleeHitChance>
+					<MeleeDodgeChance>-0.05</MeleeDodgeChance>
+				</statOffsets>
+				<capMods>
+					<li>
+						<capacity>Consciousness</capacity>
+						<offset>0.15</offset>
+					</li>
+					<li>
+						<capacity>Sight</capacity>
+						<offset>0.15</offset>
+					</li>
+				</capMods>
 			</li>
 			<li>
 				<label>Form II: Makashi</label>
-					<minSeverity>2</minSeverity>  
-						<statOffsets>
-							<MeleeArmorPenetration>0.15</MeleeArmorPenetration>
-							<MeleeHitChance>0.08</MeleeHitChance>
-							<MeleeDodgeChance>0.05</MeleeDodgeChance> 
-						</statOffsets>
-						<capMods>
-							<li>
-								<capacity>Manipulation</capacity>
-								<offset>0.15</offset>
-							</li>
-						</capMods>	
+				<minSeverity>2</minSeverity>
+				<statOffsets>
+					<MeleeArmorPenetration>0.15</MeleeArmorPenetration>
+					<MeleeHitChance>0.08</MeleeHitChance>
+					<MeleeDodgeChance>0.05</MeleeDodgeChance>
+				</statOffsets>
+				<capMods>
+					<li>
+						<capacity>Manipulation</capacity>
+						<offset>0.15</offset>
+					</li>
+				</capMods>
 			</li>
 			<li>
 				<label>Form III: Soresu</label>
-					<minSeverity>3</minSeverity>  
-						<statOffsets>
-							<MeleeDPS>-0.05</MeleeDPS>
-							<MeleeDodgeChance>0.1</MeleeDodgeChance>
-							<Force_Lightsaber_Deflection>0.20</Force_Lightsaber_Deflection>
-						</statOffsets>	
+				<minSeverity>3</minSeverity>
+				<statOffsets>
+					<MeleeDPS>-0.05</MeleeDPS>
+					<MeleeDodgeChance>0.1</MeleeDodgeChance>
+					<Force_Lightsaber_Deflection>0.20</Force_Lightsaber_Deflection>
+				</statOffsets>
 			</li>
 			<li>
 				<label>Form IV: Ataru</label>
-					<minSeverity>4</minSeverity>  
-						<statOffsets>
-							<MeleeDPS>0.15</MeleeDPS>
-							<PsychicEntropyRecoveryRate>0.05</PsychicEntropyRecoveryRate>
-						</statOffsets>	
-							<capMods>
-								<li>
-									<capacity>Moving</capacity>
-									<postFactor>1.15</postFactor>
-								</li>
-							</capMods>
-						
+				<minSeverity>4</minSeverity>
+				<statOffsets>
+					<MeleeDPS>0.15</MeleeDPS>
+					<PsychicEntropyRecoveryRate>0.05</PsychicEntropyRecoveryRate>
+				</statOffsets>
+				<capMods>
+					<li>
+						<capacity>Moving</capacity>
+						<postFactor>1.15</postFactor>
+					</li>
+				</capMods>
+
 			</li>
 			<li>
 				<label>Form V: Shien/Djem So</label>
-					<minSeverity>5</minSeverity>  
-						<statOffsets>
-							<MeleeArmorPenetration>0.1</MeleeArmorPenetration>
-							<MeleeHitChance>0.05</MeleeHitChance>
-							<Force_Lightsaber_Deflection>0.07</Force_Lightsaber_Deflection>
-						</statOffsets>	
+				<minSeverity>5</minSeverity>
+				<statOffsets>
+					<MeleeArmorPenetration>0.1</MeleeArmorPenetration>
+					<MeleeHitChance>0.05</MeleeHitChance>
+					<Force_Lightsaber_Deflection>0.07</Force_Lightsaber_Deflection>
+				</statOffsets>
 			</li>
 			<li>
 				<label>Form VI: Niman</label>
-					<minSeverity>6</minSeverity>  
-						<statOffsets>
-							<MeleeDPS>.05</MeleeDPS>
-							<MeleeHitChance>.05</MeleeHitChance>
-							<MeleeDodgeChance>0.05</MeleeDodgeChance>
-							<PsychicSensitivityOffset>0.15</PsychicSensitivityOffset>
-      						<PsychicEntropyRecoveryRate>0.066</PsychicEntropyRecoveryRate>
-						</statOffsets>	
+				<minSeverity>6</minSeverity>
+				<statOffsets>
+					<MeleeDPS>.05</MeleeDPS>
+					<MeleeHitChance>.05</MeleeHitChance>
+					<MeleeDodgeChance>0.05</MeleeDodgeChance>
+					<PsychicSensitivityOffset>0.15</PsychicSensitivityOffset>
+					<PsychicEntropyRecoveryRate>0.066</PsychicEntropyRecoveryRate>
+				</statOffsets>
 			</li>
 			<li>
 				<label>Form VII: Juyo/Vaapad</label>
-					<minSeverity>7</minSeverity>  
-						<statOffsets>
-							<MeleeDPS>0.2</MeleeDPS>
-							<MeleeHitChance>0.15</MeleeHitChance>
-							<MeleeDodgeChance>-0.10</MeleeDodgeChance>
-							<Force_Darkside_Attunement>0.2</Force_Darkside_Attunement>
-						</statOffsets>	
+				<minSeverity>7</minSeverity>
+				<statOffsets>
+					<MeleeDPS>0.2</MeleeDPS>
+					<MeleeHitChance>0.15</MeleeHitChance>
+					<MeleeDodgeChance>-0.10</MeleeDodgeChance>
+					<Force_Darkside_Attunement>0.2</Force_Darkside_Attunement>
+				</statOffsets>
 			</li>
-		  </stages>
+		</stages>
+		<modExtensions>
+			<li Class="TheForce_Psycast.DefStanceAngles">
+				<stanceData>
+					<li>
+						<MinSeverity>1</MinSeverity>
+						<StanceIconPath>UI/Icons/Gizmo/Stance_Form1</StanceIconPath>
+						<StanceString>Form I: Shii-Cho  Users: Kit Fisto  \n\n Shii-Cho, the Way of the Sarlacc, is the most basic form focusing on wide, sweeping strikes and disarming techniques, ideal for beginners seeking simplicity and versatility in combat.</StanceString>
+						<Angle>0</Angle>
+						<Offset>
+							<x>0</x>
+							<y>0</y>
+							<z>0</z>
+						</Offset>
+					</li>
+					<li>
+						<MinSeverity>2</MinSeverity>
+						<StanceIconPath>UI/Icons/Gizmo/Stance_Form2</StanceIconPath>
+						<StanceString>Form II: Makashi  Users: Count Dooku  \n\n Makashi, the Way of the Ysalamiri:, is characterized by its elegant and precise movements, emphasizing dueling and defensive maneuvers, making it favored by those seeking finesse and sophistication in combat.</StanceString>
+						<Angle>-180</Angle>
+						<Offset>
+							<x>-0.7</x>
+							<y>0</y>
+							<z>-0.5</z>
+						</Offset>
+					</li>
+					<li>
+						<MinSeverity>3</MinSeverity>
+						<StanceIconPath>UI/Icons/Gizmo/Stance_Form3</StanceIconPath>
+						<StanceString>Form III: Soresu  Users: Obi-Wan Kenobi  \n\n Soresu, the Way of the Mynock, is a defensive form focused on tight, efficient movements and quick reflexes, designed to provide maximum protection against blaster fire and lightsaber attacks.</StanceString>
+						<Angle>-90</Angle>
+						<Offset>
+							<x>-0.2</x>
+							<y>0</y>
+							<z>0.3</z>
+						</Offset>
+					</li>
+					<li>
+						<MinSeverity>4</MinSeverity>
+						<StanceIconPath>UI/Icons/Gizmo/Stance_Form4</StanceIconPath>
+						<StanceString>Form IV: Ataru  Users: Yoda  \n\n Ataru, the Way of the Hawk-Bat, is an acrobatic and aggressive style characterized by its fast-paced, energetic movements, incorporating flips and spins to overwhelm opponents with speed and unpredictability</StanceString>
+						<Angle>-45</Angle>
+						<Offset>
+							<x>-0.4</x>
+							<y>0</y>
+							<z>0.5</z>
+						</Offset>
+					</li>
+					<li>
+						<MinSeverity>5</MinSeverity>
+						<StanceIconPath>UI/Icons/Gizmo/Stance_Form5</StanceIconPath>
+						<StanceString>Form V: Shien/Djem So  Users: Anakin Skywalker, Ahsoka Tano  \n\n Shien and Djem So, also known as the Perseverance and Way of the Krayt Dragon respectively, are variants of the same form emphasizing powerful counterattacks and aggressive deflection, suited for warriors seeking to turn their opponent's strength against them.</StanceString>
+						<Angle>86.1</Angle>
+						<Offset>
+							<x>0</x>
+							<y>0</y>
+							<z>0.2</z>
+						</Offset>
+					</li>
+					<li>
+						<MinSeverity>6</MinSeverity>
+						<StanceIconPath>UI/Icons/Gizmo/Stance_Form6</StanceIconPath>
+						<StanceString>Form VI: Niman  Users: Darth Maul  \n\n Niman, the Way of the Rancor, is a balanced form incorporating elements of all previous forms, providing practitioners with versatility and adaptability in combat situations, making it a preferred choice for diplomats and peacekeepers.</StanceString>
+						<Angle>-152.6</Angle>
+						<Offset>
+							<x>-1</x>
+							<y>0</y>
+							<z>0.1</z>
+						</Offset>
+					</li>
+					<li>
+						<MinSeverity>7</MinSeverity>
+						<StanceIconPath>UI/Icons/Gizmo/Stance_Form7</StanceIconPath>
+						<StanceString>Form VII: Juyo/Vaapad  Users: Mace Windu   \n\n Juyo and its variant Vaapad, the Ferocity and the Way of the Vornskr respectively, are aggressive and unpredictable styles that channel the user's inner darkness, offering immense offensive power at the risk of succumbing to the dark side of the Force.</StanceString>
+						<Angle>52</Angle>
+						<Offset>
+							<x>0</x>
+							<y>0</y>
+							<z>0.7</z>
+						</Offset>
+					</li>
+				</stanceData>
+			</li>
+		</modExtensions>
 	</HediffDef>
+
+
+
+
 </Defs>	

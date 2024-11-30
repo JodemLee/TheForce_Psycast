@@ -1,0 +1,59 @@
+<Defs>
+
+  <AM.AnimDef ParentName="AnimDuelBase">
+    <label>Duel_Lightsaber</label>
+    <defName>Force_Duel_Lightsaber</defName>
+    <!-- Two long weapons: -->
+    <weaponFilter Class="AM.Reqs.SpecificWeapon">
+      <weapons>
+        <li>Force_Lightsaber_Custom</li>
+        <li>Force_Lightsaber_Shoto</li>
+        <li>Force_Lightsaber_Curved</li>
+      </weapons>
+    </weaponFilter>
+    <data>Duel_Lightsabers.json</data>
+  </AM.AnimDef>
+
+  <AM.AnimDef ParentName="AnimFlavour">
+    <defName>Force_Idle_LightsaberSpin1</defName>
+    <data>LightsaberSpin1.json</data>
+    <!-- Swing -->
+    <relativeProbability>0.8</relativeProbability>
+    <weaponFilter Class="AM.Reqs.SpecificWeapon">
+      <weapons>
+        <li>Force_Lightsaber_Custom</li>
+        <li>Force_Lightsaber_Shoto</li>
+        <li>Force_Lightsaber_Curved</li>
+      </weapons>
+    </weaponFilter>
+  </AM.AnimDef>
+
+  <AM.AnimDef ParentName="AnimFlavour">
+    <defName>Force_Idle_LightsaberSpin2</defName>
+    <data>LightsaberSpin2.json</data>
+    <!-- Swing -->
+    <relativeProbability>0.8</relativeProbability>
+    <weaponFilter Class="AM.Reqs.SpecificWeapon">
+      <weapons>
+        <li>Force_Lightsaber_Custom</li>
+        <li>Force_Lightsaber_Shoto</li>
+        <li>Force_Lightsaber_Curved</li>
+      </weapons>
+    </weaponFilter>
+  </AM.AnimDef>
+
+  <AM.AnimDef ParentName="AnimFlavour">
+    <defName>Force_Idle_ObiAniSpin</defName>
+    <data>ObiAniSpin.json</data>
+    <!-- Swing -->
+    <relativeProbability>0.8</relativeProbability>
+    <weaponFilter Class="AM.Reqs.SpecificWeapon">
+      <weapons>
+        <li>Force_Lightsaber_Custom</li>
+        <li>Force_Lightsaber_Shoto</li>
+        <li>Force_Lightsaber_Curved</li>
+      </weapons>
+    </weaponFilter>
+  </AM.AnimDef>
+
+</Defs>

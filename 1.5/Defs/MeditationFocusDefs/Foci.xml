@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Defs>
+    <MeditationFocusDef>
+        <defName>Force_DarksideMeditation</defName>
+        <label>Darkside</label>
+        <requiredBackstoriesAny>
+            <li>
+              <categoryName>SithChildhood</categoryName>
+              <slot>Childhood</slot>
+            </li>
+            <li>
+              <categoryName>Sith</categoryName>
+              <slot>Adulthood</slot>
+            </li>
+          </requiredBackstoriesAny>
+        <modExtensions>
+            <li Class="VanillaPsycastsExpanded.MeditationFocusExtension">
+                <icon>UI/PsyfocusIcons/Darkside</icon>
+                <statParts>
+                    <li Class="VanillaPsycastsExpanded.StatPart_Group" />
+                </statParts>
+            </li>
+        </modExtensions>
+    </MeditationFocusDef>
+    <MeditationFocusDef>
+        <defName>Force_LightsideMeditation</defName>
+        <label>Lightside</label>
+        <requiredBackstoriesAny>
+            <li>
+              <categoryName>Jedi</categoryName>
+              <slot>Adulthood</slot>
+            </li>
+            <li>
+              <categoryName>JediChildhood</categoryName>
+              <slot>Childhood</slot>
+            </li>
+          </requiredBackstoriesAny>
+        <modExtensions>
+            <li Class="VanillaPsycastsExpanded.MeditationFocusExtension">
+                <icon>UI/PsyfocusIcons/Lightside</icon>
+                <statParts>
+                    <li Class="VanillaPsycastsExpanded.StatPart_Group" />
+                </statParts>
+            </li>
+        </modExtensions>
+    </MeditationFocusDef>
+</Defs>

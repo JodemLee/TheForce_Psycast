@@ -1,15 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <LanguageData>
-    <VanillaPsycastsExpanded>Vanilla Psycasts Expanded</VanillaPsycastsExpanded>
-    <VPE.XPPerPercent>Psycaster XP per Psyfocus % gained</VPE.XPPerPercent>
-    <VPE.PsycasterSpawnBaseChance>Basilicus Bestower Psycaster spawn chance</VPE.PsycasterSpawnBaseChance>
-    <VPE.PsycasterSpawnAdditional>Basilicus Bestower Psycaster strength factor</VPE.PsycasterSpawnAdditional>
-    <VPE.AllowShrink>Allow shrinking?</VPE.AllowShrink>
-    <VPE.AllowShrink.Desc>Allow psycast gizmos to be shrunken to half size when there are a lot of them.</VPE.AllowShrink.Desc>
-    <VPE.SmallMode>UI small mode</VPE.SmallMode>
-    <VPE.SmallMode.Desc>In small mode, the stats are moved to a tooltip and the psysets are moved to a separate dialog. If checked, this will force small mode. If X'ed, this will ban small mode. If partial (yellow line), this will allow default behavior (small mode will be active if your vertical resolution is less than 1080).</VPE.SmallMode.Desc>
-    <VPE.MuteSkipdoor>Mute Skipdoor Sound</VPE.MuteSkipdoor>
-    <VPE.MaxLevel>Maximum psycaster level</VPE.MaxLevel>
-    <VPE.ChangeFocusGain>Scale base psyfocus gain with stat points?</VPE.ChangeFocusGain>
-    <VPE.ChangeFocusGain.Desc>If enabled, then the base psyfocus gain before any foci can be increased by spending stat points.</VPE.ChangeFocusGain.Desc>
+<Force_AlignmentGain>Gain Darkside/Lightside Attunement based on certain actions</Force_AlignmentGain>
+<Force_DarksideOnKill>Alignment System</Force_DarksideOnKill>
+<Force_UsePsycastStat>Use Psychic Sensitivity </Force_UsePsycastStat>
+<Force_PsycastStat>Should Psychic Sensitivity be calculated for Force Push and Repulse? </Force_PsycastStat>
+<Force_offSetMultiplier>Offset Multiplier </Force_offSetMultiplier>
+<Force_Spin_Rate>Lightsaber Spin Rate </Force_Spin_Rate>
+<Force_Entropy_Gain>Entropy Gain on Deflection ( Projectile Speed / Entropy Gain Value) </Force_Entropy_Gain>
+<Force_DropChance>Kyber crystal drop chance when cutting stone blocks </Force_DropChance>
+<Force_ResettoDefault>Reset to Default </Force_ResettoDefault>
+<StarWars_TheForce>Star Wars : The Force</StarWars_TheForce>
+<Force.LightsaberGlow>Lightsaber Glow?</Force.LightsaberGlow>
+<Force.LightsaberGlowDesc>Should a glow be drawn for drafted pawns?</Force.LightsaberGlowDesc>
+<Force_DeflectionChance>Deflection Chance Multiplier</Force_DeflectionChance><Force.LightsaberRealGlow>Real Glow</Force.LightsaberRealGlow>
+<Force.LightsaberFakeGlow>Fake Glow</Force.LightsaberFakeGlow>
+<Force.LightsaberRealGlowDesc>Real Glow - Uses the in game lighting system. Can impact performance, looks better.</Force.LightsaberRealGlowDesc>
+<Force.LightsaberFakeGlowDesc>Fake Glow - Uses a texture to simulate a fake glow, Low performance impact, not as high quality</Force.LightsaberFakeGlowDesc>
+<Force_GlowRadius>Radius of the Glow</Force_GlowRadius>
+<Force.DeflectionSpin>Spinning Deflection?</Force.DeflectionSpin>
+<Force.DeflectionSpinDesc>Whether or not the Lightsaber spins when deflecting projectiles.</Force.DeflectionSpinDesc>
+<Force.CustomStance>Custom Stance System.</Force.CustomStance>
+<Force.CustomStanceDesc>Enables the custom stance system within the stance gizmo. Allows manually adjusting angles and offsets WARNING! NOT FULLY TESTED MAY CAUSE INDEX OUT OF BOUNDS ERROR WHEN CLICKING GIZMO, TO FIX CLICK RESET</Force.CustomStanceDesc>
 </LanguageData>

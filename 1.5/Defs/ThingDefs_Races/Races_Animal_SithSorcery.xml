@@ -1,0 +1,232 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<Defs>
+  <!-- ========= RANCOR ========= -->
+  <ThingDef ParentName="AnimalThingBase" ADogSaidBody="LegsTail">
+    <defName>SithSorcery_Terentatek_Pawn</defName>
+    <label>terentatek</label>
+    <description>Terentateks resembled rancors, although smaller (approximately one-quarter the size of a fully-grown bull Rancor) except they had a number of spines growing from their backs and a pair of flaps, or tusk-like projections attached to their mouths. They also had massive claws (four to a hand). The tusks and claws of a terentatek were highly venomous. It was theorized that they were once rancors, subjected to mutations by the Sith, and that when the dark side was weak in the galaxy, terentateks would hibernate and remain dormant for many years, only to return when the dark side was strong again.</description>
+    <statBases>
+      <MoveSpeed>8</MoveSpeed>      <!-- Terentateks are known for their agility despite their size -->
+      <MarketValue>8000</MarketValue>      <!-- Reflecting their rarity and value -->
+      <ComfyTemperatureMin>-50</ComfyTemperatureMin>      <!-- Terentateks are often found in cold climates -->
+      <ComfyTemperatureMax>70</ComfyTemperatureMax>      <!-- They can adapt to a wide range of temperatures -->
+      <ArmorRating_Sharp>0.80</ArmorRating_Sharp>      <!-- Thick hide providing excellent protection -->
+      <ArmorRating_Blunt>0.70</ArmorRating_Blunt>      <!-- Muscular build offering resistance to blunt force -->
+      <ArmorRating_Heat>0.60</ArmorRating_Heat>      <!-- Limited resistance to heat due to their thick skin -->
+      <ToxicEnvironmentResistance MayRequire="Ludeon.RimWorld.Biotech">0.5</ToxicEnvironmentResistance>      <!-- Terentateks are not typically resistant to toxins -->
+    </statBases>
+    <tools>
+      <li>
+        <label>left leg</label>
+        <capacities>
+          <li>Blunt</li>
+        </capacities>
+        <power>35</power>        <!-- Increased power for stronger strikes -->
+        <cooldownTime>1.5</cooldownTime>        <!-- Reduced cooldown for more frequent attacks -->
+        <linkedBodyPartsGroup>Feet</linkedBodyPartsGroup>
+        <surpriseAttack>
+          <extraMeleeDamages>
+            <li>
+              <def>Stun</def>
+              <amount>5</amount>              <!-- Increased stun damage for disabling enemies -->
+            </li>
+          </extraMeleeDamages>
+        </surpriseAttack>
+      </li>
+      <li>
+        <label>right leg</label>
+        <capacities>
+          <li>Blunt</li>
+        </capacities>
+        <power>35</power>
+        <cooldownTime>1.5</cooldownTime>
+        <linkedBodyPartsGroup>Feet</linkedBodyPartsGroup>
+        <surpriseAttack>
+          <extraMeleeDamages>
+            <li>
+              <def>Stun</def>
+              <amount>5</amount>
+            </li>
+          </extraMeleeDamages>
+        </surpriseAttack>
+      </li>
+      <li>
+        <label>teeth</label>
+        <capacities>
+          <li>Bite</li>
+        </capacities>
+        <power>30</power>        <!-- Increased power for devastating bites -->
+        <cooldownTime>2</cooldownTime>
+        <linkedBodyPartsGroup>Teeth</linkedBodyPartsGroup>
+      </li>
+      <li>
+        <label>Left claws</label>
+        <capacities>
+          <li>Cut</li>
+        </capacities>
+        <power>15</power>
+        <cooldownTime>1.8</cooldownTime>
+        <linkedBodyPartsGroup>SithSorcery_Terentatek_LeftFingerClaw</linkedBodyPartsGroup>
+      </li>
+      <li>
+        <label>Right claws</label>
+        <capacities>
+          <li>Cut</li>
+        </capacities>
+        <power>15</power>
+        <cooldownTime>1.8</cooldownTime>
+        <linkedBodyPartsGroup>SithSorcery_Terentatek_RightFingerClaw</linkedBodyPartsGroup>
+      </li>
+      <li>
+        <label>tusks</label>
+        <capacities>
+          <li>Cut</li>
+        </capacities>
+        <power>30</power>
+        <cooldownTime>2.2</cooldownTime>
+        <linkedBodyPartsGroup>Teeth</linkedBodyPartsGroup>
+      </li>
+      <li>
+        <label>head</label>
+        <capacities>
+          <li>Blunt</li>
+        </capacities>
+        <power>25</power>        <!-- Increased power for headbutts -->
+        <cooldownTime>2</cooldownTime>
+        <linkedBodyPartsGroup>HeadAttackTool</linkedBodyPartsGroup>
+        <ensureLinkedBodyPartsGroupAlwaysUsable>true</ensureLinkedBodyPartsGroupAlwaysUsable>
+        <chanceFactor>0.3</chanceFactor>        <!-- Increased chance of successful head attacks -->
+      </li>
+    </tools>
+    <comps>
+      <li Class="CompProperties_EggLayer">
+        <eggFertilizedDef>SithSorcery_EggTerentatekFertilized</eggFertilizedDef>
+        <eggFertilizationCountMax>1</eggFertilizationCountMax>
+        <eggLayIntervalDays>30</eggLayIntervalDays>
+        <eggProgressUnfertilizedMax>0.5</eggProgressUnfertilizedMax>
+        <eggCountRange>1</eggCountRange>
+      </li>
+    </comps>
+    <race>
+      <body>SithSorcery_Terentatek</body>
+      <predator>true</predator>
+      <baseBodySize>8</baseBodySize>
+      <baseHungerRate>0.75</baseHungerRate>
+      <baseHealthScale>9</baseHealthScale>
+      <foodType>CarnivoreAnimal</foodType>
+      <gestationPeriodDays>60</gestationPeriodDays>
+      <wildness>0.90</wildness>
+      <lifeExpectancy>50</lifeExpectancy>
+      <trainability>Advanced</trainability>
+      <manhunterOnTameFailChance>0.8</manhunterOnTameFailChance>
+      <manhunterOnDamageChance>0.9</manhunterOnDamageChance>
+      <nameOnTameChance>0.8</nameOnTameChance>
+      <leatherDef>Leather_Terentatek</leatherDef>
+      <meatLabel>terentatek meat</meatLabel>
+      <nuzzleMtbHours>300</nuzzleMtbHours>
+      <lifeStageAges>
+        <li>
+          <def>AnimalBaby</def>
+          <minAge>0</minAge>
+        </li>
+        <li>
+          <def>AnimalJuvenile</def>
+          <minAge>0.4</minAge>
+        </li>
+        <li>
+          <def>AnimalAdult</def>
+          <minAge>0.8</minAge>
+        </li>
+      </lifeStageAges>
+      <soundMeleeHitPawn>Pawn_Melee_BigBash_HitPawn</soundMeleeHitPawn>
+      <soundMeleeHitBuilding>Pawn_Melee_BigBash_HitBuilding</soundMeleeHitBuilding>
+      <soundMeleeMiss>Pawn_Melee_BigBash_Miss</soundMeleeMiss>
+    </race>
+    <tradeTags>
+      <li>AnimalExotic</li>
+      <li>BadassAnimal</li>
+      <li>AnimalFighter</li>
+    </tradeTags>
+  </ThingDef>
+
+  <PawnKindDef ParentName="AnimalKindBase">
+    <defName>SithSorcery_Terentatek_PawnKind</defName>
+    <label>terentatek</label>
+    <race>SithSorcery_Terentatek_Pawn</race>
+    <combatPower>800</combatPower>
+    <ecoSystemWeight>2.0</ecoSystemWeight>
+    <wildGroupSize>
+      <min>1</min>
+      <max>3</max>
+    </wildGroupSize>
+    <lifeStages>
+      <li>
+        <bodyGraphicData>
+          <texPath>Animals/Terentatek/Terentatek</texPath>
+          <drawSize>1</drawSize>
+          <shadowData>
+            <volume>(0.8, 0.6, 0.6)</volume>
+            <offset>(0,0,-0.2)</offset>
+          </shadowData>
+        </bodyGraphicData>
+        <femaleGraphicData>
+          <texPath>Animals/Terentatek/Terentatek</texPath>
+          <drawSize>1</drawSize>
+          <shadowData>
+            <volume>(0.8, 0.6, 0.6)</volume>
+            <offset>(0,0,-0.2)</offset>
+          </shadowData>
+        </femaleGraphicData>
+        <dessicatedBodyGraphicData>
+          <texPath>Animals/Terentatek/Dessicated_Terentatek</texPath>
+          <drawSize>1</drawSize>
+        </dessicatedBodyGraphicData>
+      </li>
+      <li>
+        <bodyGraphicData>
+          <texPath>Animals/Terentatek/Terentatek</texPath>
+          <drawSize>2</drawSize>
+          <shadowData>
+            <volume>(1.2, 1, 1)</volume>
+            <offset>(0,0,-0.3)</offset>
+          </shadowData>
+        </bodyGraphicData>
+        <femaleGraphicData>
+          <texPath>Animals/Terentatek/Terentatek</texPath>
+          <drawSize>2</drawSize>
+          <shadowData>
+            <volume>(1.2, 1, 1)</volume>
+            <offset>(0,0,-0.3)</offset>
+          </shadowData>
+        </femaleGraphicData>
+        <dessicatedBodyGraphicData>
+          <texPath>Animals/Terentatek/Dessicated_Terentatek</texPath>
+          <drawSize>2</drawSize>
+        </dessicatedBodyGraphicData>
+      </li>
+      <li>
+        <bodyGraphicData>
+          <texPath>Animals/Terentatek/Terentatek</texPath>
+          <drawSize>3</drawSize>
+          <shadowData>
+            <volume>(1.2, 1, 1)</volume>
+            <offset>(0,0,-0.3)</offset>
+          </shadowData>
+        </bodyGraphicData>
+        <femaleGraphicData>
+          <texPath>Animals/Terentatek/Terentatek</texPath>
+          <drawSize>3</drawSize>
+          <shadowData>
+            <volume>(1.2, 1, 1)</volume>
+            <offset>(0,0,-0.3)</offset>
+          </shadowData>
+        </femaleGraphicData>
+        <dessicatedBodyGraphicData>
+          <texPath>Animals/Terentatek/Dessicated_Terentatek</texPath>
+          <drawSize>3</drawSize>
+        </dessicatedBodyGraphicData>
+      </li>
+    </lifeStages>
+  </PawnKindDef>
+</Defs>

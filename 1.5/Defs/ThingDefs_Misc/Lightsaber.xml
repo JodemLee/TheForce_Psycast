@@ -1,7 +1,12 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Defs>
 
 	<ThingDef Abstract="True" Name="Force_LightsaberBase" ParentName="BaseWeapon">
+		<graphicData>
+			<graphicClass>Graphic_Single</graphicClass>
+			<shaderType>TransparentPostLight</shaderType>
+			<drawSize>1.3</drawSize>
+		</graphicData>
 		<techLevel>Ultra</techLevel>
 		<statBases>
 			<MarketValue>2000</MarketValue>
@@ -15,47 +20,28 @@
 			<li>
 				<compClass>CompQuality</compClass>
 			</li>
+			<li Class="CompProperties_Art">
+				<nameMaker>NamerArtWeaponMelee</nameMaker>
+				<descriptionMaker>Force_ArtDescription_Lightsaber</descriptionMaker>
+				<minQualityForArtistic>Excellent</minQualityForArtistic>
+			</li>
 			<li Class="CompProperties_Biocodable"/>
+			<li Class="TheForce_Psycast.CompProperties_LightsaberStance"/>
 		</comps>
 		<smeltable>false</smeltable>
-		<burnableByRecipe>false</burnableByRecipe>
+		<burnableByRecipe>True</burnableByRecipe>
+		<inspectorTabs>
+			<li>ITab_Art</li>
+		</inspectorTabs>
 		<thingCategories>
 			<li>WeaponsMelee</li>
 		</thingCategories>
+		<soundInteract>Force_Interact_Lightsaber</soundInteract>
+		<soundDrop>Force_Drop_Lightsaber</soundDrop>
+		<meleeHitSound>Force_MeleeHit_Lightsaber</meleeHitSound>
 		<tradeTags>
 			<li>Force_Lightsaber</li>
 		</tradeTags>
-		<weaponClasses>
-			<li>Melee</li>
-			<li>Ultratech</li>
-		</weaponClasses>
-		<thingSetMakerTags>
-			<li>RewardStandardLowFreq</li>
-		</thingSetMakerTags>
-		<relicChance>3</relicChance>
-	</ThingDef>
-
-	<ThingDef ParentName="Force_LightsaberBase">
-		<defName>Force_Lightsaber_Custom</defName>
-		<label>Lightsaber</label>
-		<description>The lightsaber, also referred to as a laser sword by those who were unfamiliar with it, was a weapon usually used by the Jedi, Sith, and other Force-sensitives. Lightsabers consisted of a plasma blade, powered by a kyber crystal, that was emitted from a usually metal hilt and could be shut off at will. It was a weapon that required skill and training, and was greatly enhanced when used in conjunction with the Force.</description>
-		<possessionCount>1</possessionCount>
-		<smeltable>false</smeltable>
-		<thingClass>TheForce_Psycast.LightsaberPatch</thingClass>
-		<graphicData>
-			<texPath>Things/Item/Lightsaber/SingleSaber/SaberHilts/Jaden_Korr</texPath>
-			<graphicClass>Graphic_Single</graphicClass>
-			<shaderType>TransparentPostLight</shaderType>
-			<drawSize>1.2,1.2</drawSize>
-		</graphicData>
-		<techLevel>Ultra</techLevel>
-		<weaponTags>
-			<li>Force_Lightsaber</li>
-		</weaponTags>
-		<statBases>
-			<WorkToMake>3000</WorkToMake>
-			<Mass>2</Mass>
-		</statBases>
 		<tools>
 			<li>
 				<label>hilt</label>
@@ -66,22 +52,64 @@
 				<cooldownTime>2</cooldownTime>
 			</li>
 			<li>
-				<label>blade</label>
+				<label>point</label>
 				<capacities>
-					<li>Cut</li>
-					<li>Stab</li>
+					<li>Force_SaberStab</li>
 				</capacities>
-				<power>20</power>
-				<cooldownTime>2.6</cooldownTime>
-				<extraMeleeDamages>
-					<li>
-						<def>Force_LightsaberCut</def>
-						<amount>10</amount>
-						<chance>1</chance>
-					</li>
-				</extraMeleeDamages>
+				<power>28</power>
+				<armorPenetration>1</armorPenetration>
+				<cooldownTime>2</cooldownTime>
+			</li>
+			<li>
+				<label>edge</label>
+				<capacities>
+					<li>Force_SaberSlash</li>
+				</capacities>
+				<power>28</power>
+				<armorPenetration>1</armorPenetration>
+				<cooldownTime>2</cooldownTime>
 			</li>
 		</tools>
+		<weaponClasses>
+			<li>Melee</li>
+			<li>Ultratech</li>
+		</weaponClasses>
+		<thingSetMakerTags>
+			<li>RewardStandardLowFreq</li>
+		</thingSetMakerTags>
+		<relicChance>3</relicChance>
+		<modExtensions>
+			<li MayRequire="co.uk.epicguru.meleeanimation" Class="MeleeAnimPatch.LightsaberClashModExtension">
+			  <clashSounds>
+				<li>Force_LightsaberClashOne</li>
+				<li>Force_LightsaberClashTwo</li>
+				<li>Force_LightsaberClashThree</li>
+				<li>Force_LightsaberClashFour</li>
+				<li>Force_LightsaberClashFive</li>
+			  </clashSounds>
+			</li>
+		</modExtensions>
+	</ThingDef>
+
+	
+
+	<ThingDef ParentName="Force_LightsaberBase">
+		<defName>Force_Lightsaber_Custom</defName>
+		<label>Lightsaber</label>
+		<description>The lightsaber, also referred to as a laser sword by those who were unfamiliar with it, was a weapon usually used by the Jedi, Sith, and other Force-sensitives. Lightsabers consisted of a plasma blade, powered by a kyber crystal, that was emitted from a usually metal hilt and could be shut off at will. It was a weapon that required skill and training, and was greatly enhanced when used in conjunction with the Force.</description>
+		<possessionCount>1</possessionCount>
+		<smeltable>false</smeltable>
+		<graphicData>
+			<texPath>Things/Item/Lightsaber/SingleSaber/SaberHilts/Jaden_Korr</texPath>
+		</graphicData>
+		<techLevel>Ultra</techLevel>
+		<weaponTags>
+			<li>Force_Lightsaber</li>
+		</weaponTags>
+		<statBases>
+			<WorkToMake>3000</WorkToMake>
+			<Mass>2</Mass>
+		</statBases>
 		<equippedStatOffsets>
 			<PsychicEntropyRecoveryRate>0.1</PsychicEntropyRecoveryRate>
 			<MeditationFocusGain>0.1</MeditationFocusGain>
@@ -93,432 +121,6 @@
 				<customizable>true</customizable>
 				<customizationTitle>Lightsaber Customization</customizationTitle>
 				<graphics>
-
-					<li>
-						<name>Blade</name>
-						<texVariants>
-							<li>
-								<texName>Acid</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Acid_Yellow_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Amber</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Amber_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Amethsyt</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Amethsyt_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Aquamarine</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Aquamarine_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Azure</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Azure_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Brown</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Brown_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Black</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Black_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Blood</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Blood_Red_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Bronze</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Bronze_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Cloud</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Cloud_Blue_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Copper</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Copper_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Crimson</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Crimson_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Cyan</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Cyan_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Desert Green</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Desert_Green_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Emerald</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Emerald_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Fire Red</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Fire_Red_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Frost</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Frost_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Fuchsia</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Fuchsia_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Gold</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Gold_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Green</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Green_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Hot Orange</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Hot_Orange_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Ice Blue</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Ice_Blue_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Indigo</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Indigo_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Lime</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Lime_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Magenta</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Magenta_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Mauve</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Mauve_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Medium Blue</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Medium_Blue_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Mint</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Mint_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Ocean Blue</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Ocean_Blue_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Olive</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Olive_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Orange</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Orange_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Pale Gold</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Pale_Gold_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Pink</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Pink_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Purple</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Purple_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Radiant Green</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Radiant_Green_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Red</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Red_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Sea Green</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Sea_Green_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Turquoise</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Turquoise_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Violet</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Violet_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>White</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/White_Outline</texture>
-							</li>
-							<li>
-								<texName>Yellow</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Yellow_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-						</texVariants>
-					</li>
-					<li>
-						<name>Core</name>
-						<texVariants>
-							<li>
-								<texName>Black</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberCore/Black_Core</texture>
-							</li>
-							<li>
-								<texName>White</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberCore/White_Core</texture>
-							</li>
-						</texVariants>
-					</li>
 					<li>
 						<name>Grip</name>
 						<texVariants>
@@ -568,11 +170,6 @@
 								<texture>Things/Item/Lightsaber/SingleSaber/SaberHilts/Consul</texture>
 							</li>
 							<li>
-								<texName>Darksaber</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberHilts/Darksaber</texture>
-							</li>
-							<li>
 								<texName>Darth Nihilus</texName>
 								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
 								<texture>Things/Item/Lightsaber/SingleSaber/SaberHilts/Darth Nihilus</texture>
@@ -613,12 +210,12 @@
 								<texture>Things/Item/Lightsaber/SingleSaber/SaberHilts/Ezra2</texture>
 							</li>
 							<li>
-								<texName>FireBrandJA</texName>
+								<texName>Fire Brand JA</texName>
 								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
 								<texture>Things/Item/Lightsaber/SingleSaber/SaberHilts/FireBrandJA</texture>
 							</li>
 							<li>
-								<texName>GalenMalek</texName>
+								<texName>Galen Malek</texName>
 								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
 								<texture>Things/Item/Lightsaber/SingleSaber/SaberHilts/GalenMalek</texture>
 							</li>
@@ -628,7 +225,7 @@
 								<texture>Things/Item/Lightsaber/SingleSaber/SaberHilts/Gungi</texture>
 							</li>
 							<li>
-								<texName>ImperialKnight</texName>
+								<texName>Imperial Knight</texName>
 								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
 								<texture>Things/Item/Lightsaber/SingleSaber/SaberHilts/ImperialKnight</texture>
 							</li>
@@ -638,7 +235,7 @@
 								<texture>Things/Item/Lightsaber/SingleSaber/SaberHilts/Jaden_Korr</texture>
 							</li>
 							<li>
-								<texName>JediTempleGuard</texName>
+								<texName>Jedi Temple Guard</texName>
 								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
 								<texture>Things/Item/Lightsaber/SingleSaber/SaberHilts/JediTempleGuard</texture>
 							</li>
@@ -776,6 +373,26 @@
 					</li>
 				</graphics>
 			</li>
+			<li Class="TheForce_Psycast.Lightsabers.CompProperties_LightsaberBlade">
+				<graphicData>
+					<texPath>Things/Item/Lightsaber/SingleSaber/SaberOutline/White_Outline</texPath>
+					<graphicClass>Graphic_Single</graphicClass>
+					<shaderType>TransparentPostLight</shaderType>
+					<drawSize>1.5</drawSize>
+				</graphicData>
+				<lightsaberCore1GraphicData>
+					<texPath>Things/Item/Lightsaber/SingleSaber/SaberCore/White_Core</texPath>
+					<graphicClass>Graphic_Single</graphicClass>
+					<shaderType>TransparentPostLight</shaderType>
+					<drawSize>1.5</drawSize>
+				</lightsaberCore1GraphicData>
+				<lightsaberGlowGraphic>
+					<texPath>Things/Item/Lightsaber/SingleSaber/SaberOutline/White_Glow</texPath>
+					<graphicClass>Graphic_Single</graphicClass>
+					<shaderType>TransparentPostLight</shaderType>
+					<drawSize>1.3</drawSize>
+				</lightsaberGlowGraphic>
+			</li>
 		</comps>
 	</ThingDef>
 
@@ -784,12 +401,9 @@
 		<label>Curved Lightsaber</label>
 		<description>A curved lightsaber features a hilt with a curved design, offering unique handling and combat capabilities.</description>
 		<possessionCount>1</possessionCount>
-		<thingClass>TheForce_Psycast.LightsaberPatch</thingClass>
+		
 		<graphicData>
 			<texPath>Things/Item/Lightsaber/SingleSaber/Curved/Karness_Muur</texPath>
-			<graphicClass>Graphic_Single</graphicClass>
-			<shaderType>TransparentPostLight</shaderType>
-			<drawSize>1.2,1.2</drawSize>
 		</graphicData>
 		<techLevel>Ultra</techLevel>
 		<weaponTags>
@@ -799,32 +413,6 @@
 			<WorkToMake>3200</WorkToMake>
 			<Mass>2.2</Mass>
 		</statBases>
-		<tools>
-			<li>
-				<label>hilt</label>
-				<capacities>
-					<li>Blunt</li>
-				</capacities>
-				<power>14</power>
-				<cooldownTime>2.4</cooldownTime>
-			</li>
-			<li>
-				<label>blade</label>
-				<capacities>
-					<li>Cut</li>
-					<li>Stab</li>
-				</capacities>
-				<power>20</power>
-				<cooldownTime>2.6</cooldownTime>
-				<extraMeleeDamages>
-					<li>
-						<def>Force_LightsaberCut</def>
-						<amount>10</amount>
-						<chance>1</chance>
-					</li>
-				</extraMeleeDamages>
-			</li>
-		</tools>
 		<equippedStatOffsets>
 			<PsychicEntropyRecoveryRate>0.12</PsychicEntropyRecoveryRate>
 			<MeditationFocusGain>0.12</MeditationFocusGain>
@@ -836,431 +424,6 @@
 				<customizable>true</customizable>
 				<customizationTitle>Lightsaber Customization</customizationTitle>
 				<graphics>
-					<li>
-						<name>Blade</name>
-						<texVariants>
-							<li>
-								<texName>Acid</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Acid_Yellow_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Amber</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Amber_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Amethsyt</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Amethsyt_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Aquamarine</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Aquamarine_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Azure</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Azure_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Brown</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Brown_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Black</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Black_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Blood</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Blood_Red_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Bronze</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Bronze_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Cloud</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Cloud_Blue_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Copper</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Copper_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Crimson</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Crimson_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Cyan</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Cyan_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Desert Green</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Desert_Green_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Emerald</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Emerald_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Fire Red</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Fire_Red_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Frost</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Frost_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Fuchsia</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Fuchsia_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Gold</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Gold_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Green</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Green_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Hot Orange</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Hot_Orange_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Ice Blue</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Ice_Blue_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Indigo</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Indigo_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Lime</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Lime_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Magenta</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Magenta_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Mauve</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Mauve_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Medium Blue</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Medium_Blue_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Mint</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Mint_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Ocean Blue</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Ocean_Blue_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Olive</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Olive_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Orange</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Orange_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Pale Gold</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Pale_Gold_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Pink</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Pink_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Purple</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Purple_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Radiant Green</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Radiant_Green_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Red</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Red_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Sea Green</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Sea_Green_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Turquoise</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Turquoise_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Violet</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Violet_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>White</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/White_Outline</texture>
-							</li>
-							<li>
-								<texName>Yellow</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Yellow_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-						</texVariants>
-					</li>
-					<li>
-						<name>Core</name>
-						<texVariants>
-							<li>
-								<texName>Black</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberCore/Black_Core</texture>
-							</li>
-							<li>
-								<texName>White</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberCore/White_Core</texture>
-							</li>
-						</texVariants>
-					</li>
 					<li>
 						<name>Grip</name>
 						<texVariants>
@@ -1298,6 +461,26 @@
 					</li>
 				</graphics>
 			</li>
+			<li Class="TheForce_Psycast.Lightsabers.CompProperties_LightsaberBlade">
+				<graphicData>
+					<texPath>Things/Item/Lightsaber/SingleSaber/SaberOutline/White_Outline</texPath>
+					<graphicClass>Graphic_Single</graphicClass>
+					<shaderType>TransparentPostLight</shaderType>
+					<drawSize>1.5</drawSize>
+				</graphicData>
+				<lightsaberCore1GraphicData>
+					<texPath>Things/Item/Lightsaber/SingleSaber/SaberCore/White_Core</texPath>
+					<graphicClass>Graphic_Single</graphicClass>
+					<shaderType>TransparentPostLight</shaderType>
+					<drawSize>1.5</drawSize>
+				</lightsaberCore1GraphicData>
+				<lightsaberGlowGraphic>
+					<texPath>Things/Item/Lightsaber/SingleSaber/SaberOutline/White_Glow</texPath>
+					<graphicClass>Graphic_Single</graphicClass>
+					<shaderType>TransparentPostLight</shaderType>
+					<drawSize>1.3</drawSize>
+				</lightsaberGlowGraphic>
+			</li>
 		</comps>
 	</ThingDef>
 
@@ -1308,12 +491,9 @@
 		<description>A shoto lightsaber, also known as a short lightsaber, is a smaller variant of the traditional lightsaber. Its compact size offers agility and versatility in combat.</description>
 		<possessionCount>1</possessionCount>
 		<smeltable>false</smeltable>
-		<thingClass>TheForce_Psycast.LightsaberPatch</thingClass>
+		
 		<graphicData>
 			<texPath>Things/Item/Lightsaber/SingleSaber/SaberHilts/Jaden_Korr</texPath>
-			<graphicClass>Graphic_Single</graphicClass>
-			<shaderType>TransparentPostLight</shaderType>
-			<drawSize>1.1,1.1</drawSize>
 		</graphicData>
 		<techLevel>Ultra</techLevel>
 		<weaponTags>
@@ -1323,32 +503,6 @@
 			<WorkToMake>2800</WorkToMake>
 			<Mass>1.8</Mass>
 		</statBases>
-		<tools>
-			<li>
-				<label>hilt</label>
-				<capacities>
-					<li>Blunt</li>
-				</capacities>
-				<power>12</power>
-				<cooldownTime>2</cooldownTime>
-			</li>
-			<li>
-				<label>blade</label>
-				<capacities>
-					<li>Cut</li>
-					<li>Stab</li>
-				</capacities>
-				<power>20</power>
-				<cooldownTime>2.6</cooldownTime>
-				<extraMeleeDamages>
-					<li>
-						<def>Force_LightsaberCut</def>
-						<amount>10</amount>
-						<chance>1</chance>
-					</li>
-				</extraMeleeDamages>
-			</li>
-		</tools>
 		<equippedStatOffsets>
 			<PsychicEntropyRecoveryRate>0.1</PsychicEntropyRecoveryRate>
 			<MeditationFocusGain>0.1</MeditationFocusGain>
@@ -1360,431 +514,6 @@
 				<customizable>true</customizable>
 				<customizationTitle>Lightsaber Customization</customizationTitle>
 				<graphics>
-					<li>
-						<name>Blade</name>
-						<texVariants>
-							<li>
-								<texName>Acid</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Acid_Yellow_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Amber</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Amber_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Amethsyt</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Amethsyt_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Aquamarine</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Aquamarine_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Azure</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Azure_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Brown</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Brown_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Black</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Black_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Blood</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Blood_Red_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Bronze</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Bronze_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Cloud</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Cloud_Blue_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Copper</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Copper_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Crimson</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Crimson_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Cyan</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Cyan_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Desert Green</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Desert_Green_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Emerald</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Emerald_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Fire Red</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Fire_Red_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Frost</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Frost_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Fuchsia</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Fuchsia_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Gold</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Gold_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Green</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Green_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Hot Orange</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Hot_Orange_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Ice Blue</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Ice_Blue_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Indigo</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Indigo_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Lime</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Lime_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Magenta</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Magenta_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Mauve</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Mauve_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Medium Blue</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Medium_Blue_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Mint</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Mint_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Ocean Blue</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Ocean_Blue_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Olive</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Olive_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Orange</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Orange_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Pale Gold</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Pale_Gold_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Pink</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Pink_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Purple</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Purple_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Radiant Green</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Radiant_Green_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Red</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Red_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Sea Green</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Sea_Green_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Turquoise</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Turquoise_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Violet</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Violet_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>White</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/White_Outline</texture>
-							</li>
-							<li>
-								<texName>Yellow</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberOutline/Yellow_Outline</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-						</texVariants>
-					</li>
-					<li>
-						<name>Core</name>
-						<texVariants>
-							<li>
-								<texName>Black</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberCore/Black_Core</texture>
-							</li>
-							<li>
-								<texName>White</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/SingleSaber/SaberCore/White_Core</texture>
-							</li>
-						</texVariants>
-					</li>
 					<li>
 						<name>Grip</name>
 						<texVariants>
@@ -1827,6 +556,26 @@
 					</li>
 				</graphics>
 			</li>
+			<li Class="TheForce_Psycast.Lightsabers.CompProperties_LightsaberBlade">
+				<graphicData>
+					<texPath>Things/Item/Lightsaber/SingleSaber/SaberOutline/White_Outline</texPath>
+					<graphicClass>Graphic_Single</graphicClass>
+					<shaderType>TransparentPostLight</shaderType>
+					<drawSize>1.3</drawSize>
+				</graphicData>
+				<lightsaberCore1GraphicData>
+					<texPath>Things/Item/Lightsaber/SingleSaber/SaberCore/White_Core</texPath>
+					<graphicClass>Graphic_Single</graphicClass>
+					<shaderType>TransparentPostLight</shaderType>
+					<drawSize>1.3</drawSize>
+				</lightsaberCore1GraphicData>
+				<lightsaberGlowGraphic>
+					<texPath>Things/Item/Lightsaber/SingleSaber/SaberOutline/White_Glow</texPath>
+					<graphicClass>Graphic_Single</graphicClass>
+					<shaderType>TransparentPostLight</shaderType>
+					<drawSize>1.3</drawSize>
+				</lightsaberGlowGraphic>
+			</li>
 		</comps>
 	</ThingDef>
 
@@ -1836,12 +585,9 @@
 		<description>A dual-bladed lightsaber, also known as a double-bladed lightsaber, is a weapon with a blade emitting from both ends of the hilt. It requires skilled handling to wield effectively.</description>
 		<possessionCount>1</possessionCount>
 		<smeltable>false</smeltable>
-		<thingClass>TheForce_Psycast.LightsaberPatch</thingClass>
 		<graphicData>
 			<texPath>Things/Item/Lightsaber/SingleSaber/SaberHilts/Jaden_Korr</texPath>
-			<graphicClass>Graphic_Single</graphicClass>
-			<shaderType>TransparentPostLight</shaderType>
-			<drawSize>1.4,1.4</drawSize>
+			<drawSize>1.5</drawSize>
 		</graphicData>
 		<techLevel>Ultra</techLevel>
 		<weaponTags>
@@ -1851,32 +597,6 @@
 			<WorkToMake>3500</WorkToMake>
 			<Mass>2.5</Mass>
 		</statBases>
-		<tools>
-			<li>
-				<label>hilt</label>
-				<capacities>
-					<li>Blunt</li>
-				</capacities>
-				<power>15</power>
-				<cooldownTime>2.2</cooldownTime>
-			</li>
-			<li>
-				<label>blade</label>
-				<capacities>
-					<li>Cut</li>
-					<li>Stab</li>
-				</capacities>
-				<power>20</power>
-				<cooldownTime>2.6</cooldownTime>
-				<extraMeleeDamages>
-					<li>
-						<def>Force_LightsaberCut</def>
-						<amount>10</amount>
-						<chance>1</chance>
-					</li>
-				</extraMeleeDamages>
-			</li>
-		</tools>
 		<equippedStatOffsets>
 			<PsychicEntropyRecoveryRate>0.15</PsychicEntropyRecoveryRate>
 			<MeditationFocusGain>0.15</MeditationFocusGain>
@@ -1884,931 +604,42 @@
 		<equippedAngleOffset>-45</equippedAngleOffset>
 		<colorGenerator IsNull="True"/>
 		<comps>
+			<li Class="TheForce_Psycast.Lightsabers.CompProperties_LightsaberBlade">
+				<graphicData>
+					<texPath>Things/Item/Lightsaber/DualSaber/DualSaberOutline/White_Outline1</texPath>
+					<graphicClass>Graphic_Single</graphicClass>
+					<shaderType>TransparentPostLight</shaderType>
+					<drawSize>1.7</drawSize>
+				</graphicData>
+				<lightsaberCore1GraphicData>
+					<texPath>Things/Item/Lightsaber/DualSaber/DualSaberCore/White_Core1</texPath>
+					<graphicClass>Graphic_Single</graphicClass>
+					<shaderType>TransparentPostLight</shaderType>
+					<drawSize>1.7</drawSize>
+				</lightsaberCore1GraphicData>
+				<lightsaberBlade2GraphicData>
+					<texPath>Things/Item/Lightsaber/DualSaber/DualSaberOutline/White_Outline2</texPath>
+					<graphicClass>Graphic_Single</graphicClass>
+					<shaderType>TransparentPostLight</shaderType>
+					<drawSize>1.7</drawSize>
+				</lightsaberBlade2GraphicData>
+				<lightsaberCore2GraphicData>
+					<texPath>Things/Item/Lightsaber/DualSaber/DualSaberCore/White_Core2</texPath>
+					<graphicClass>Graphic_Single</graphicClass>
+					<shaderType>TransparentPostLight</shaderType>
+					<drawSize>1.7</drawSize>
+				</lightsaberCore2GraphicData>
+				<lightsaberGlowGraphic>
+					<texPath>Things/Item/Lightsaber/SingleSaber/SaberOutline/White_Glow</texPath>
+					<graphicClass>Graphic_Single</graphicClass>
+					<shaderType>TransparentPostLight</shaderType>
+					<drawSize>1.3</drawSize>
+				</lightsaberGlowGraphic>
+			</li>
 			<li Class="GraphicCustomization.CompProperties_GraphicCustomization">
 				<customizable>true</customizable>
 				<customizationTitle>Lightsaber Customization</customizationTitle>
 				<graphics>
-
-					<li>
-						<name>Blade</name>
-						<texVariants>
-							<li>
-								<texName>Acid</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/AcidYellow_Outline1</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Blade 2</groupName>
-									<texName>Acid</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Amber</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/Amber_Outline1</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Blade 2</groupName>
-									<texName>Amber</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Amethsyt</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/Amethsyt_Outline1</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Blade 2</groupName>
-									<texName>Amethsyt</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Aquamarine</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/Aquamarine_Outline1</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Blade 2</groupName>
-									<texName>Aquamarine</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Azure</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/Azure_Outline1</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Blade 2</groupName>
-									<texName>Azure</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Brown</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/Brown_Outline1</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Blade 2</groupName>
-									<texName>Brown</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Black</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/Black_Outline1</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Blade 2</groupName>
-									<texName>Black</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Blood</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/BloodRed_Outline1</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Blade 2</groupName>
-									<texName>Blood</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Bronze</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/Bronze_Outline1</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Blade 2</groupName>
-									<texName>Bronze</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Cloud</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/CloudBlue_Outline1</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Blade 2</groupName>
-									<texName>Cloud</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Copper</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/Copper_Outline1</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Blade 2</groupName>
-									<texName>Copper</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Crimson</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/Crimson_Outline1</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Blade 2</groupName>
-									<texName>Crimson</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Cyan</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/Cyan_Outline1</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Blade 2</groupName>
-									<texName>Cyan</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Desert Green</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/DesertGreen_Outline1</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Blade 2</groupName>
-									<texName>Desert Green</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Emerald</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/Emerald_Outline1</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Blade 2</groupName>
-									<texName>Emerald</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Fire Red</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/FireRed_Outline1</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Blade 2</groupName>
-									<texName>Fire Red</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Frost</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/Frost_Outline1</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Blade 2</groupName>
-									<texName>Frost</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Fuchsia</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/Fuchsia_Outline1</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Blade 2</groupName>
-									<texName>Fuchsia</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Gold</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/Gold_Outline1</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Blade 2</groupName>
-									<texName>Gold</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Green</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/Green_Outline1</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Blade 2</groupName>
-									<texName>Green</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Hot Orange</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/HotOrange_Outline1</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Blade 2</groupName>
-									<texName>Hot Orange</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Ice Blue</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/IceBlue_Outline1</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Blade 2</groupName>
-									<texName>Ice Blue</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Indigo</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/Indigo_Outline1</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Blade 2</groupName>
-									<texName>Indigo</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Lime</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/LimeGreen_Outline1</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Blade 2</groupName>
-									<texName>Lime</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Magenta</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/Magenta_Outline1</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Blade 2</groupName>
-									<texName>Magenta</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Mauve</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/Mauve_Outline1</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Blade 2</groupName>
-									<texName>Mauve</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Medium Blue</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/MediumBlue_Outline1</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Blade 2</groupName>
-									<texName>Medium Blue</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Mint</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/MintGreen_Outline1</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Blade 2</groupName>
-									<texName>Mint</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Ocean Blue</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/OceanBlue_Outline1</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Blade 2</groupName>
-									<texName>Ocean Blue</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Olive</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/OliveGreen_Outline1</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Blade 2</groupName>
-									<texName>Olive</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Orange</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/Orange_Outline1</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Blade 2</groupName>
-									<texName>Orange</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Pale Gold</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/PaleGold_Outline1</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Blade 2</groupName>
-									<texName>Pale Gold</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Pink</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/Pink_Outline1</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Blade 2</groupName>
-									<texName>Pink</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Purple</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/Purple_Outline1</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Blade 2</groupName>
-									<texName>Purple</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Radiant Green</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/RadiantGreen_Outline1</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Blade 2</groupName>
-									<texName>Radiant Green</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Red</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/Red_Outline1</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Blade 2</groupName>
-									<texName>Red</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Sea Green</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/SeaGreen_Outline1</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Blade 2</groupName>
-									<texName>Sea Green</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Turquoise</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/Turquoise_Outline1</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Blade 2</groupName>
-									<texName>Turquoise</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Violet</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/Violet_Outline1</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Blade 2</groupName>
-									<texName>Violet</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>White</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/White_Outline1</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Blade 2</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Yellow</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/Yellow_Outline1</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Blade 2</groupName>
-									<texName>Yellow</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Off</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</texture>
-								<textureVariantOverride>
-									<chance>1</chance>
-									<groupName>Core 1</groupName>
-									<texName>Off</texName>
-								</textureVariantOverride>
-							</li>
-						</texVariants>
-					</li>
-					<li>
-						<name>Blade 2</name>
-						<texVariants>
-							<li>
-								<texName>Acid</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/AcidYellow_Outline2</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core 1</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Amber</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/Amber_Outline2</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core 1</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Amethsyt</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/Amethsyt_Outline2</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core 1</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Aquamarine</texName>
-								<outline>Things/Item/Lightsaber/SingleSaber/SaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/Aquamarine_Outline2</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core 1</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Azure</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/Azure_Outline2</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core 1</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Brown</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/Brown_Outline2</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core 1</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Black</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/Black_Outline2</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core 1</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Blood</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/BloodRed_Outline2</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core 1</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Bronze</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/Bronze_Outline2</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core 1</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Cloud</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/CloudBlue_Outline2</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core 1</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Copper</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/Copper_Outline2</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core 1</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Crimson</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/Crimson_Outline2</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core 1</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Cyan</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/Cyan_Outline2</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core 1</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Desert Green</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/DesertGreen_Outline2</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core 1</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Emerald</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/Emerald_Outline2</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core 1</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Fire Red</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/FireRed_Outline2</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core 1</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Frost</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/Frost_Outline2</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core 1</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Fuchsia</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/Fuchsia_Outline2</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core 1</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Gold</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/Gold_Outline2</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core 1</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Green</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/Green_Outline2</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core 1</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Hot Orange</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/HotOrange_Outline2</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core 1</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Ice Blue</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/IceBlue_Outline2</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core 1</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Indigo</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/Indigo_Outline2</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core 1</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Lime</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/LimeGreen_Outline2</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core 1</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Magenta</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/Magenta_Outline2</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core 1</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Mauve</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/Mauve_Outline2</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core 1</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Medium Blue</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/MediumBlue_Outline2</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core 1</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Mint</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/MintGreen_Outline2</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core 1</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Ocean Blue</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/OceanBlue_Outline2</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core 1</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Olive</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/OliveGreen_Outline2</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core 1</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Orange</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/Orange_Outline2</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core 1</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Pale Gold</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/PaleGold_Outline2</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core 1</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Pink</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/Pink_Outline2</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core 1</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Purple</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/Purple_Outline2</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core 1</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Radiant Green</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/RadiantGreen_Outline2</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core 1</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Red</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/Red_Outline2</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core 1</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Sea Green</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/SeaGreen_Outline2</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core 1</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Turquoise</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/Turquoise_Outline2</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core 1</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Violet</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/Violet_Outline2</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core 1</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>White</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/White_Outline2</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core 1</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Yellow</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/Yellow_Outline2</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core 1</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Off</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</texture>
-								<textureVariantOverride>
-									<chance>1</chance>
-									<groupName>Core 2</groupName>
-									<texName>Off</texName>
-								</textureVariantOverride>
-							</li>
-						</texVariants>
-					</li>
-					<li>
-						<name>Core 1</name>
-						<texVariants>
-							<li>
-								<texName>Black</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberCore/Black_Core1</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core 2</groupName>
-									<texName>Black</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>White</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberCore/White_Core1</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core 2</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Off</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</texture>
-								<textureVariantOverride>
-									<chance>1</chance>
-									<groupName>Blade 1</groupName>
-									<texName>Off</texName>
-								</textureVariantOverride>
-							</li>
-						</texVariants>
-					</li>
-					<li>
-						<name>Core 2</name>
-						<texVariants>
-							<li>
-								<texName>Black</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberCore/Black_Core2</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core 1</groupName>
-									<texName>Black</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>White</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberCore/White_Core2</texture>
-								<textureVariantOverride>
-									<chance>0.9</chance>
-									<groupName>Core 1</groupName>
-									<texName>White</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Off</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</texture>
-								<textureVariantOverride>
-									<chance>1</chance>
-									<groupName>Blade 2</groupName>
-									<texName>Off</texName>
-								</textureVariantOverride>
-							</li>
-						</texVariants>
-					</li>
 					<li>
 						<name>Grip</name>
 						<texVariants>
@@ -2831,11 +662,6 @@
 								<texName>Darth Maul</texName>
 								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
 								<texture>Things/Item/Lightsaber/DualSaber/TwoHandedSaberHilt/Darth_Maul</texture>
-							</li>
-							<li>
-								<texName>Darth Phobos</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/TwoHandedSaberHilt/Darth_Phobos</texture>
 							</li>
 							<li>
 								<texName>Guardian JA</texName>
@@ -2868,21 +694,6 @@
 								<texture>Things/Item/Lightsaber/DualSaber/TwoHandedSaberHilt/Savage_Opress</texture>
 							</li>
 							<li>
-								<texName>Shadow Guard</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/TwoHandedSaberHilt/Shadow_Guard</texture>
-								<textureVariantOverride>
-									<chance>1</chance>
-									<groupName>Core 2</groupName>
-									<texName>Off</texName>
-								</textureVariantOverride>
-							</li>
-							<li>
-								<texName>Sky Ridge</texName>
-								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
-								<texture>Things/Item/Lightsaber/DualSaber/TwoHandedSaberHilt/Sky_Ridge</texture>
-							</li>
-							<li>
 								<texName>Vanquisher JA</texName>
 								<outline>Things/Item/Lightsaber/DualSaber/DualSaberOutline/lightsaber_Blade_Saber_Outline</outline>
 								<texture>Things/Item/Lightsaber/DualSaber/TwoHandedSaberHilt/Vanquisher_JA</texture>
@@ -2897,386 +708,180 @@
 				</graphics>
 			</li>
 		</comps>
-	</ThingDef>
-
-	<ThingDef ParentName="HatMakeableBase">
-		<defName>Force_ApparelHood</defName>
-		<label>hood</label>
-		<description>A draped hood which covers the head and ears.</description>
-		<graphicData>
-			<texPath>Things/Apparel/Hoods/Force_Hood_south</texPath>
-			<graphicClass>Graphic_Single</graphicClass>
-		</graphicData>
-		<uiIconScale>2</uiIconScale>
-		<statBases>
-			<MaxHitPoints>80</MaxHitPoints>
-			<WorkToMake>300</WorkToMake>
-			<Mass>0.1</Mass>
-			<EquipDelay>0.8</EquipDelay>
-			<StuffEffectMultiplierArmor>0.2</StuffEffectMultiplierArmor>
-			<StuffEffectMultiplierInsulation_Cold>0.10</StuffEffectMultiplierInsulation_Cold>
-			<StuffEffectMultiplierInsulation_Heat>0.25</StuffEffectMultiplierInsulation_Heat>
-		</statBases>
-		<equippedStatOffsets>
-			<SocialImpact>0.2</SocialImpact>
-		</equippedStatOffsets>
-		<costStuffCount>50</costStuffCount>
-		<stuffCategories>
-			<li>Fabric</li>
-			<li>Leathery</li>
-		</stuffCategories>
-		<apparel>
-			<developmentalStageFilter>Child, Adult</developmentalStageFilter>
-			<wornGraphicPath>Things/Apparel/Hoods/Force_Hood</wornGraphicPath>
-			<bodyPartGroups>
-				<li>UpperHead</li>
-			</bodyPartGroups>
-			<layers>
-				<li>Overhead</li>
-			</layers>
-			<tags>
-				<li>Force_Hood</li>
-				<li>Force_Clothing</li>
-			</tags>
-		</apparel>
-		<colorGenerator Class="ColorGenerator_StandardApparel" />
-		<tradeTags>
-			<li>BasicClothing</li>
-		</tradeTags>
-		<recipeMaker>
-			<researchPrerequisite>ComplexClothing</researchPrerequisite>
-			<skillRequirements>
-				<Crafting>5</Crafting>
-			</skillRequirements>
-			<recipeUsers>
-				<li>ElectricTailoringBench</li>
-				<li>HandTailoringBench</li>
-			</recipeUsers>
-			<displayPriority>125</displayPriority>
-		</recipeMaker>
-	</ThingDef>
-
-
-	<ThingDef ParentName="ApparelMakeableBase">
-		<defName>Force_Cloak</defName>
-		<label>Cloak</label>
-		<description>This cloak shields the wearer from the sun and dust.</description>
-		<graphicData>
-			<texPath>Things/Apparel/Cape/Force_Cape</texPath>
-			<graphicClass>Graphic_Single</graphicClass>
-		</graphicData>
-		<techLevel>Medieval</techLevel>
-		<uiIconScale>2</uiIconScale>
-		<costStuffCount>80</costStuffCount>
-		<stuffCategories>
-			<li>Fabric</li>
-			<li>Leathery</li>
-		</stuffCategories>
-		<tradeability>Sellable</tradeability>
-		<statBases>
-			<MaxHitPoints>200</MaxHitPoints>
-			<WorkToMake>500</WorkToMake>
-			<Mass>1.7</Mass>
-			<StuffEffectMultiplierArmor>0.30</StuffEffectMultiplierArmor>
-			<StuffEffectMultiplierInsulation_Cold>0.60</StuffEffectMultiplierInsulation_Cold>
-			<StuffEffectMultiplierInsulation_Heat>0.85</StuffEffectMultiplierInsulation_Heat>
-			<EquipDelay>2.0</EquipDelay>
-		</statBases>
-		<thingCategories>
-			<li>Apparel</li>
-		</thingCategories>
-		<apparel>
-			<bodyPartGroups>
-				<li>Torso</li>
-				<li>Shoulders</li>
-				<li>Arms</li>
-				<li>Legs</li>
-			</bodyPartGroups>
-			<wornGraphicPath>Things/Apparel/Cape/Force_Cape</wornGraphicPath>
-			<layers>
-				<li>Shell</li>
-			</layers>
-			<tags>
-				<li>Force_Cape</li>
-				<li>Force_Clothing</li>
-			</tags>
-			<defaultOutfitTags>
-				<li>Worker</li>
-				<li>Soldier</li>
-			</defaultOutfitTags>
-		</apparel>
-		<recipeMaker>
-			<researchPrerequisite>ComplexClothing</researchPrerequisite>
-			<skillRequirements>
-				<Crafting>5</Crafting>
-			</skillRequirements>
-			<recipeUsers>
-				<li>ElectricTailoringBench</li>
-				<li>HandTailoringBench</li>
-			</recipeUsers>
-		</recipeMaker>
-		<tradeTags>
-			<li>BasicClothing</li>
-		</tradeTags>
-		<colorGenerator Class="ColorGenerator_StandardApparel" />
-	</ThingDef>
-
-	<ThingDef ParentName="ApparelMakeableBase">
-		<defName>Force_Robe</defName>
-		<label>Force Sensitive Robe</label>
-		<description>The robes worn by Force users, such as Jedi or Sith, are typically flowing garments made of durable fabric, designed to reflect their connection to the Force and offer freedom of movement during combat and meditation.</description>
-		<graphicData>
-			<texPath>Things/Apparel/Robe/Force_Robe</texPath>
-			<graphicClass>Graphic_Single</graphicClass>
-		</graphicData>
-		<uiIconScale>2</uiIconScale>
-		<techLevel>Medieval</techLevel>
-		<costStuffCount>80</costStuffCount>
-		<stuffCategories>
-			<li>Fabric</li>
-			<li>Leathery</li>
-		</stuffCategories>
-		<statBases>
-			<Mass>2</Mass>
-			<MarketValue>175</MarketValue>
-			<MaxHitPoints>80</MaxHitPoints>
-			<ArmorRating_Sharp>0.2</ArmorRating_Sharp>
-			<ArmorRating_Blunt>0.2</ArmorRating_Blunt>
-			<ArmorRating_Heat>0.2</ArmorRating_Heat>
-			<Insulation_Cold>12.5</Insulation_Cold>
-			<Insulation_Heat>12.5</Insulation_Heat>
-			<EquipDelay>3</EquipDelay>
-		</statBases>
-		<equippedStatOffsets>
-			<MeleeDodgeChance>0.1</MeleeDodgeChance>
-			<PsychicSensitivity>0.1</PsychicSensitivity>
-		</equippedStatOffsets>
-		<thingCategories>
-			<li>Apparel</li>
-		</thingCategories>
-		<apparel>
-			<layers>
-				<li>OnSkin</li>
-			</layers>
-			<bodyPartGroups>
-				<li>Torso</li>
-				<li>Neck</li>
-				<li>Shoulders</li>
-				<li>Arms</li>
-				<li>Legs</li>
-				<li>Feet</li>
-			</bodyPartGroups>
-			<tags Inherit="False">
-				<li>Force_Clothing</li>
-			</tags>
-			<wornGraphicPath>Things/Apparel/Robe/Force_Robe</wornGraphicPath>
-		</apparel>
-		<recipeMaker>
-			<researchPrerequisite>ComplexClothing</researchPrerequisite>
-			<skillRequirements>
-				<Crafting>5</Crafting>
-			</skillRequirements>
-			<recipeUsers>
-				<li>ElectricTailoringBench</li>
-				<li>HandTailoringBench</li>
-			</recipeUsers>
-		</recipeMaker>
-		<tradeTags>
-			<li>BasicClothing</li>
-		</tradeTags>
-		<colorGenerator Class="ColorGenerator_StandardApparel" />
-	</ThingDef>
-
-
-	<ThingDef ParentName="ArmorMachineableBase">
-		<defName>Force_JediArmor</defName>
-		<label>Force Sensitive Armor</label>
-		<description>An armored designed to be lightweight, flexible, and imbued with Force-sensitive materials, designed to offer protection while allowing freedom of movement for its wearer.</description>
-		<techLevel>Industrial</techLevel>
-		<costStuffCount>800</costStuffCount>
-		<uiIconScale>2</uiIconScale>
-		<stuffCategories>
-			<li>Metallic</li>
-			<li>Stony</li>
-		</stuffCategories>
-		<graphicData>
-			<texPath>Things/Apparel/Armor/Force_Armor</texPath>
-			<graphicClass>Graphic_Single</graphicClass>
-		</graphicData>
-		<statBases>
-			<WorkToMake>2500</WorkToMake>
-			<MaxHitPoints>400</MaxHitPoints>
-			<Mass>4</Mass>
-			<Flammability>0.6</Flammability>
-			<ArmorRating_Sharp>0.3</ArmorRating_Sharp>
-			<ArmorRating_Blunt>0.3</ArmorRating_Blunt>
-			<ArmorRating_Heat>0.6</ArmorRating_Heat>
-			<Insulation_Cold>1</Insulation_Cold>
-			<EquipDelay>5</EquipDelay>
-			<StuffEffectMultiplierArmor>0.2</StuffEffectMultiplierArmor>
-		</statBases>
-		<equippedStatOffsets>
-			<MoveSpeed>-0.09</MoveSpeed>
-			<MeleeDodgeChance>0.1</MeleeDodgeChance>
-			<PsychicSensitivity>0.07</PsychicSensitivity>
-		</equippedStatOffsets>
-		<thingCategories>
-			<li>ApparelArmor</li>
-		</thingCategories>
-		<apparel>
-			<bodyPartGroups>
-				<li>Torso</li>
-				<li>Neck</li>
-				<li>Shoulders</li>
-				<li>Arms</li>
-				<li>Legs</li>
-				<li>Feet</li>
-			</bodyPartGroups>
-			<wornGraphicPath>Things/Apparel/Armor/Force_Armor</wornGraphicPath>
-			<layers>
-				<li>Middle</li>
-			</layers>
-			<tags>
-				<li>Force_Clothing</li>
-			</tags>
-			<defaultOutfitTags>
-				<li>Soldier</li>
-			</defaultOutfitTags>
-		</apparel>
-		<colorGenerator Class="ColorGenerator_StandardApparel" />
-		<recipeMaker>
-			<researchPrerequisite>Machining</researchPrerequisite>
-			<skillRequirements>
-				<Crafting>5</Crafting>
-			</skillRequirements>
-			<recipeUsers>
-				<li>ElectricSmithy</li>
-				<li>FueledSmithy</li>
-				<li>TableMachining</li>
-			</recipeUsers>
-		</recipeMaker>
-		<tradeTags>
-			<li>Armor</li>
-		</tradeTags>
-	</ThingDef>
-
-	<ThingDef ParentName="ArmorMachineableBase">
-		<defName>Force_ImpKnight</defName>
-		<label>Imperial Knight Armor</label>
-		<description>The Imperial Knight armor from Star Wars is a formidable and sleek ensemble designed to evoke authority and power, worn by elite warriors sworn to protect the Emperor and enforce his will. Crafted with advanced technology and reinforced materials, it blends functionality with an imposing aesthetic, embodying the strength and loyalty of those who don it in service to the Fel Empire.</description>
-		<techLevel>Industrial</techLevel>
-		<costStuffCount>1000</costStuffCount>
-		<stuffCategories>
-			<li>Metallic</li>
-		</stuffCategories>
-		<uiIconScale>2</uiIconScale>
-		<graphicData>
-			<texPath>Things/Apparel/ImpKnight/Force_ImpKnight</texPath>
-			<graphicClass>Graphic_Single</graphicClass>
-		</graphicData>
-		<statBases>
-			<WorkToMake>4500</WorkToMake>
-			<MaxHitPoints>500</MaxHitPoints>
-			<Mass>5</Mass>
-			<Flammability>0.3</Flammability>
-			<ArmorRating_Sharp>0.45</ArmorRating_Sharp>
-			<ArmorRating_Blunt>0.45</ArmorRating_Blunt>
-			<ArmorRating_Heat>0.7</ArmorRating_Heat>
-			<Insulation_Cold>1</Insulation_Cold>
-			<EquipDelay>5</EquipDelay>
-			<StuffEffectMultiplierArmor>0.2</StuffEffectMultiplierArmor>
-		</statBases>
-		<equippedStatOffsets>
-			<MoveSpeed>-0.09</MoveSpeed>
-			<MeleeDodgeChance>0.1</MeleeDodgeChance>
-			<PsychicSensitivity>0.07</PsychicSensitivity>
-		</equippedStatOffsets>
-		<thingCategories>
-			<li>ApparelArmor</li>
-		</thingCategories>
-		<apparel>
-			<bodyPartGroups>
-				<li>Torso</li>
-				<li>Neck</li>
-				<li>Shoulders</li>
-				<li>Arms</li>
-				<li>Legs</li>
-				<li>Feet</li>
-			</bodyPartGroups>
-			<wornGraphicPath>Things/Apparel/ImpKnight/Force_ImpKnight</wornGraphicPath>
-			<layers>
-				<li>Middle</li>
-			</layers>
-			<defaultOutfitTags>
-				<li>Soldier</li>
-			</defaultOutfitTags>
-		</apparel>
-		<colorGenerator Class="ColorGenerator_StandardApparel" />
-		<recipeMaker>
-			<researchPrerequisite>Machining</researchPrerequisite>
-			<skillRequirements>
-				<Crafting>12</Crafting>
-			</skillRequirements>
-			<recipeUsers>
-				<li>ElectricSmithy</li>
-				<li>FueledSmithy</li>
-				<li>TableMachining</li>
-			</recipeUsers>
-		</recipeMaker>
-		<tradeTags>
-			<li>Armor</li>
-		</tradeTags>
+		<modExtensions>
+			<li Class="TheForce_Psycast.DefStanceAngles">
+				<stanceData>
+					<li>
+					  <MinSeverity>0.1</MinSeverity>
+					  <StanceIconPath>UI/Icons/Gizmo/Stance_Form1</StanceIconPath>
+					  <StanceString>Form_I</StanceString>
+					  <Angle>45.0</Angle>
+					  <Offset>
+						<x>0.1</x>
+						<y>0.2</y>
+						<z>0.3</z>
+					  </Offset>
+					</li>
+					<li>
+					  <MinSeverity>2</MinSeverity>
+					  <StanceIconPath>UI/Icons/Gizmo/Stance_Form2</StanceIconPath>
+					  <StanceString>Form_II</StanceString>
+					  <Angle>30.0</Angle>
+					  <Offset>
+						<x>0.2</x>
+						<y>0.4</y>
+						<z>0.6</z>
+					  </Offset>
+					</li>
+					<li>
+						<MinSeverity>3</MinSeverity>
+						<StanceIconPath>UI/Icons/Gizmo/Stance_Form3</StanceIconPath>
+						<StanceString>Form_III</StanceString>
+						<Angle>30.0</Angle>
+						<Offset>
+						  <x>0.2</x>
+						  <y>0.4</y>
+						  <z>0.6</z>
+						</Offset>
+					  </li>
+					  <li>
+						<MinSeverity>4</MinSeverity>
+						<StanceIconPath>UI/Icons/Gizmo/Stance_Form4</StanceIconPath>
+						<StanceString>Form_IV</StanceString>
+						<Angle>30.0</Angle>
+						<Offset>
+						  <x>0.2</x>
+						  <y>0.4</y>
+						  <z>0.6</z>
+						</Offset>
+					  </li>
+					  <li>
+						<MinSeverity>5</MinSeverity>
+						<StanceIconPath>UI/Icons/Gizmo/Stance_Form5</StanceIconPath>
+						<StanceString>Form_V</StanceString>
+						<Angle>30.0</Angle>
+						<Offset>
+						  <x>0.2</x>
+						  <y>0.4</y>
+						  <z>0.6</z>
+						</Offset>
+					  </li>
+					  <li>
+						<MinSeverity>6</MinSeverity>
+						<StanceIconPath>UI/Icons/Gizmo/Stance_Form6</StanceIconPath>
+						<StanceString>Form_VI</StanceString>
+						<Angle>30.0</Angle>
+						<Offset>
+						  <x>0.2</x>
+						  <y>0.4</y>
+						  <z>0.6</z>
+						</Offset>
+					  </li>
+					  <li>
+						<MinSeverity>7</MinSeverity>
+						<StanceIconPath>UI/Icons/Gizmo/Stance_Form7</StanceIconPath>
+						<StanceString>Form_VII</StanceString>
+						<Angle>30.0</Angle>
+						<Offset>
+						  <x>0.2</x>
+						  <y>0.4</y>
+						  <z>0.6</z>
+						</Offset>
+					  </li>
+				  </stanceData>
+			</li>
+		</modExtensions>
 	</ThingDef>
 
 	<ThingDef ParentName="Force_LightsaberBase">
-		<defName>Magick_BladeOfTalzin</defName>
-		<label>Blade of Talzin</label>
-		<description>The lightsaber, also referred to as a laser sword by those who were unfamiliar with it, was a weapon usually used by the Jedi, Sith, and other Force-sensitives. Lightsabers consisted of a plasma blade, powered by a kyber crystal, that was emitted from a usually metal hilt and could be shut off at will. It was a weapon that required skill and training, and was greatly enhanced when used in conjunction with the Force.</description>
+		<defName>Force_Darksaber</defName>
+		<label>Darksaber</label>
+		<description>The Darksaber was a unique and ancient lightsaber, known for its distinctive black blade that projected a white glow along its edges. Created by the first Mandalorian Jedi, Tarre Vizsla, the Darksaber was revered as a symbol of leadership within Mandalorian culture. Unlike typical lightsabers, the Darksaber's blade was flat and curved like a traditional sword, and it produced a distinctive humming sound. The weapon's hilt was shorter than usual and featured a black, angular design. Over the centuries, the Darksaber was passed down through generations and became a sought-after artifact, symbolizing the rightful ruler of Mandalore.</description>
 		<possessionCount>1</possessionCount>
 		<smeltable>false</smeltable>
 		<graphicData>
-			<texPath>Things/Item/Special/BladeofTalzin</texPath>
-			<graphicClass>Graphic_Single</graphicClass>
-			<shaderType>TransparentPostLight</shaderType>
-			<drawSize>1,1</drawSize>
+			<texPath>Things/Item/Lightsaber/SingleSaber/SaberHilts/Darksaber</texPath>
 		</graphicData>
 		<techLevel>Ultra</techLevel>
+		<weaponTags>
+			<li>Force_Darksaber</li>
+		</weaponTags>
 		<statBases>
 			<WorkToMake>3000</WorkToMake>
 			<Mass>2</Mass>
 		</statBases>
-		<tools>
-			<li>
-				<label>hilt</label>
-				<capacities>
-					<li>Blunt</li>
-				</capacities>
-				<power>12</power>
-				<cooldownTime>2</cooldownTime>
+		<equippedStatOffsets>
+			<PsychicEntropyRecoveryRate>0.1</PsychicEntropyRecoveryRate>
+			<MeditationFocusGain>0.1</MeditationFocusGain>
+		</equippedStatOffsets>
+		<equippedAngleOffset>-45</equippedAngleOffset>
+		<generateCommonality>0.001</generateCommonality>
+		<colorGenerator IsNull="True"/>
+		<comps>
+			<li Class="TheForce_Psycast.Lightsabers.CompProperties_LightsaberBlade">
+				<graphicData>
+					<texPath>Things/Item/Lightsaber/SingleSaber/SaberOutline/DarksaberOutline</texPath>
+					<graphicClass>Graphic_Single</graphicClass>
+					<shaderType>TransparentPostLight</shaderType>
+					<drawSize>1.5</drawSize>
+				</graphicData>
+				<lightsaberCore1GraphicData>
+					<texPath>Things/Item/Lightsaber/SingleSaber/SaberCore/DarksaberCore</texPath>
+					<graphicClass>Graphic_Single</graphicClass>
+					<shaderType>TransparentPostLight</shaderType>
+					<drawSize>1.5</drawSize>
+				</lightsaberCore1GraphicData>
+				<colorable>false</colorable>
 			</li>
-			<li>
-				<label>point</label>
-				<capacities>
-					<li>Stab</li>
-				</capacities>
-				<power>21</power>
-				<cooldownTime>2.6</cooldownTime>
-			</li>
-			<li>
-				<label>blade</label>
-				<capacities>
-					<li>Cut</li>
-				</capacities>
-				<power>21</power>
-				<cooldownTime>2.6</cooldownTime>
-			</li>
-		</tools>
+		</comps>
+	</ThingDef>
+
+	<ThingDef ParentName="Force_LightsaberBase">
+		<defName>Force_Ezra_BlasterLightsaber</defName>
+		<label>Blaster Lightsaber</label>
+		<description>The lightsaber, also referred to as a laser sword by those who were unfamiliar with it, was a weapon usually used by the Jedi, Sith, and other Force-sensitives. Lightsabers consisted of a plasma blade, powered by a kyber crystal, that was emitted from a usually metal hilt and could be shut off at will. It was a weapon that required skill and training, and was greatly enhanced when used in conjunction with the Force.</description>
+		<possessionCount>1</possessionCount>
+		<smeltable>false</smeltable>
+		<graphicData>
+			<texPath>Things/Item/Lightsaber/SingleSaber/SaberHilts/EzraBlast</texPath>
+		</graphicData>
+		<techLevel>Ultra</techLevel>
+		<generateCommonality>0.001</generateCommonality>
+		<weaponTags>
+			<li>Force_Lightsaber</li>
+		</weaponTags>
+		<statBases>
+			<WorkToMake>3000</WorkToMake>
+			<Mass>2</Mass>
+		</statBases>
 		<equippedStatOffsets>
 			<PsychicEntropyRecoveryRate>0.1</PsychicEntropyRecoveryRate>
 			<MeditationFocusGain>0.1</MeditationFocusGain>
 		</equippedStatOffsets>
 		<equippedAngleOffset>-45</equippedAngleOffset>
 		<colorGenerator IsNull="True"/>
+		<comps>
+			<li Class="TheForce_Psycast.Lightsabers.CompProperties_LightsaberBlade">
+				<graphicData>
+					<texPath>Things/Item/Lightsaber/SingleSaber/SaberOutline/White_Outline</texPath>
+					<graphicClass>Graphic_Single</graphicClass>
+					<shaderType>TransparentPostLight</shaderType>
+					<drawSize>1.5</drawSize>
+				</graphicData>
+				<lightsaberCore1GraphicData>
+					<texPath>Things/Item/Lightsaber/SingleSaber/SaberCore/White_Core</texPath>
+					<graphicClass>Graphic_Single</graphicClass>
+					<shaderType>TransparentPostLight</shaderType>
+					<drawSize>1.5</drawSize>
+				</lightsaberCore1GraphicData>
+				<lightsaberGlowGraphic>
+					<texPath>Things/Item/Lightsaber/SingleSaber/SaberOutline/White_Glow</texPath>
+					<graphicClass>Graphic_Single</graphicClass>
+					<shaderType>TransparentPostLight</shaderType>
+					<drawSize>1.3</drawSize>
+				</lightsaberGlowGraphic>
+			</li>
+			<li Class="TheForce_Psycast.CompProperties_LightsaberBlasterStance"/>
+		</comps>
 	</ThingDef>
-
 </Defs>

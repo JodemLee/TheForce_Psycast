@@ -1,0 +1,15 @@
+{
+  "TextureModID": "lee.theforce.psycast",
+  "ItemDefName": "Force_Ezra_BlasterLightsaber",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.4148148,
+  "OffY": -0.0493827164,
+  "Rotation": 45.0,
+  "ScaleX": 1.5,
+  "ScaleY": 1.5,
+  "BladeEnd": 0.637037039,
+  "MeleeWeaponType": 54,
+  "CustomRendererClass": "MeleeAnimPatch_ForcePsycast.MeleeAnimPatch",
+  "SweepProviderClass": "MeleeAnimPatch_ForcePsycast.LightsaberSweepProvider"
+}

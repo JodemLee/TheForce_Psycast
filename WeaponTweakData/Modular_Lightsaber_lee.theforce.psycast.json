@@ -1,0 +1,16 @@
+{
+  "TextureModID": "lee.theforce.psycast",
+  "ItemDefName": "Modular_Lightsaber",
+  "ItemType": "ThingDef",
+  "ItemTypeNamespace": "Verse",
+  "OffX": 0.293103456,
+  "OffY": -0.00862069,
+  "Rotation": 45.0,
+  "ScaleX": 1.3,
+  "ScaleY": 1.3,
+  "FlipY": true,
+  "HandsMode": 1,
+  "BladeStart": 0.01724138,
+  "BladeEnd": 0.6465517,
+  "MeleeWeaponType": 6
+}

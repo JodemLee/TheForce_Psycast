@@ -1,0 +1,213 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Defs>
+
+  <SoundDef>
+    <defName>Force_MeleeHit_Lightsaber</defName>  
+    <context>MapOnly</context> 
+    <maxSimultaneous>1</maxSimultaneous>  
+    <subSounds>
+      <li>
+        <grains>
+          <li Class="AudioGrain_Folder">
+            <clipFolderPath>Lightsaber/Impact</clipFolderPath>
+          </li>
+        </grains>      
+        <volumeRange>17~20</volumeRange>      
+        <pitchRange>0.9152174~1.169566</pitchRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef>
+    <defName>Force_Miss_Lightsaber</defName>  
+    <context>MapOnly</context> 
+    <maxSimultaneous>1</maxSimultaneous>  
+    <subSounds>
+      <li>
+        <grains>
+          <li Class="AudioGrain_Folder">
+            <clipFolderPath>Lightsaber/Miss</clipFolderPath>
+          </li>
+        </grains>      
+        <volumeRange>17~20</volumeRange>      
+        <pitchRange>0.9152174~1.169566</pitchRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef>
+    <defName>Force_Deflection_Lightsaber</defName>  
+    <context>MapOnly</context> 
+    <maxSimultaneous>1</maxSimultaneous>  
+    <subSounds>
+      <li>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>Lightsaber/Deflection</clipPath>
+          </li>
+        </grains>      
+        <volumeRange>17~20</volumeRange>      
+        <pitchRange>0.9152174~1.169566</pitchRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef>
+    <defName>Force_Interact_Lightsaber</defName>
+    <context>MapOnly</context>
+    <maxSimultaneous>1</maxSimultaneous>
+    <subSounds>
+      <li>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>Lightsaber/Interact</clipPath>
+          </li>
+        </grains>
+        <volumeRange>34~34</volumeRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+  
+  <SoundDef>
+    <defName>Force_Drop_Lightsaber</defName>
+    <context>MapOnly</context>
+    <maxSimultaneous>1</maxSimultaneous>
+    <subSounds>
+      <li>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>Lightsaber/Drop</clipPath>
+          </li>
+        </grains>
+        <volumeRange>34~34</volumeRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef>
+    <defName>Force_ForceThrow</defName>
+    <context>MapOnly</context>
+    <sustain>True</sustain>
+    <maxSimultaneous>1</maxSimultaneous>
+    <priorityMode>PrioritizeNearest</priorityMode>
+    <subSounds>
+      <li>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>Lightsaber/LightsaberThrow/LightsaberThrow</clipPath>
+          </li>
+        </grains>
+        <volumeRange>17~17</volumeRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef>
+    <defName>Force_ForceThrow_Return</defName>
+    <context>MapOnly</context>
+    <maxSimultaneous>1</maxSimultaneous>
+    <subSounds>
+      <li>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>Lightsaber/LightsaberThrow/ReturnThrow</clipPath>
+          </li>
+        </grains>
+        <volumeRange>17~17</volumeRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef Name="Force_AnimSoundBase" Abstract="True">
+    <sustain>false</sustain>
+    <context>MapOnly</context>
+    <maxSimultaneous>8</maxSimultaneous>
+    <priorityMode>PrioritizeNearest</priorityMode>
+  </SoundDef>
+
+  <SoundDef ParentName="Force_AnimSoundBase">
+    <defName>Force_LightsaberClashOne</defName>
+    <subSounds>
+      <li>
+        <tempoAffectedByGameSpeed>true</tempoAffectedByGameSpeed>
+        <sustainLoop>false</sustainLoop>
+        <volumeRange>50~50</volumeRange>
+        <pitchRange>0.95~1.15</pitchRange>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>Lightsaber/Duel/Lightsaber Clash01</clipPath>
+          </li>
+        </grains>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef ParentName="Force_AnimSoundBase">
+    <defName>Force_LightsaberClashTwo</defName>
+    <subSounds>
+      <li>
+        <tempoAffectedByGameSpeed>true</tempoAffectedByGameSpeed>
+        <sustainLoop>false</sustainLoop>
+        <volumeRange>50~50</volumeRange>
+        <pitchRange>0.95~1.15</pitchRange>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>Lightsaber/Duel/Lightsaber Clash02</clipPath>
+          </li>
+        </grains>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef ParentName="Force_AnimSoundBase">
+    <defName>Force_LightsaberClashThree</defName>
+    <subSounds>
+      <li>
+        <tempoAffectedByGameSpeed>true</tempoAffectedByGameSpeed>
+        <sustainLoop>false</sustainLoop>
+        <volumeRange>50~50</volumeRange>
+        <pitchRange>0.95~1.15</pitchRange>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>Lightsaber/Duel/Lightsaber Clash03</clipPath>
+          </li>
+        </grains>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef ParentName="Force_AnimSoundBase">
+    <defName>Force_LightsaberClashFour</defName>
+    <subSounds>
+      <li>
+        <tempoAffectedByGameSpeed>true</tempoAffectedByGameSpeed>
+        <sustainLoop>false</sustainLoop>
+        <volumeRange>50~50</volumeRange>
+        <pitchRange>0.95~1.15</pitchRange>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>Lightsaber/Duel/Lightsaber Clash04</clipPath>
+          </li>
+        </grains>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef ParentName="Force_AnimSoundBase">
+    <defName>Force_LightsaberClashFive</defName>
+    <subSounds>
+      <li>
+        <tempoAffectedByGameSpeed>true</tempoAffectedByGameSpeed>
+        <sustainLoop>false</sustainLoop>
+        <volumeRange>50~50</volumeRange>
+        <pitchRange>0.95~1.15</pitchRange>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>Lightsaber/Duel/Lightsaber Clash05</clipPath>
+          </li>
+        </grains>
+      </li>
+    </subSounds>
+  </SoundDef>
+  
+
+</Defs>
