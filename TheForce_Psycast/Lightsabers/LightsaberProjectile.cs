@@ -14,10 +14,22 @@ namespace TheForce_Psycast
         public int ticksPerFrame = 8;
         public int TicksToImpact => ticksToImpact;
         Projectile projectile;
+        private Pawn _originalLauncher;
+        public Pawn OriginalLauncher => _originalLauncher;
 
         public float spinRate { get; set; }
 
         private static readonly Material shadowMaterial = MaterialPool.MatFrom("Things/Skyfaller/SkyfallerShadowCircle", ShaderDatabase.Transparent);
+
+        public override void Launch(Thing launcher, Vector3 origin, LocalTargetInfo usedTarget, LocalTargetInfo intendedTarget, ProjectileHitFlags hitFlags, bool preventFriendlyFire = false, Thing equipment = null, ThingDef targetCoverDef = null)
+        {
+            if (_originalLauncher == null)
+            {
+                _originalLauncher = launcher as Pawn; // Store original launcher
+            }
+
+            base.Launch(launcher, origin, usedTarget, intendedTarget, hitFlags, preventFriendlyFire); // Call base launch logic
+        }
         private float ArcHeightFactor
         {
             get
@@ -35,6 +47,7 @@ namespace TheForce_Psycast
 
         protected override void DrawAt(Vector3 drawLoc, bool flip = false)
         {
+
             float num = ArcHeightFactor * GenMath.InverseParabola(DistanceCoveredFractionArc);
             Vector3 vector = drawLoc;
 
@@ -48,7 +61,7 @@ namespace TheForce_Psycast
             Graphic graphicToDraw = def.graphic;
             Comp_LightsaberBlade compLightsaberBlade = null;
 
-            if (launcher is Pawn pawn)
+            if (_originalLauncher is Pawn pawn)
             {
                 if (pawn.equipment != null && pawn.equipment.Primary != null)
                 {
@@ -79,13 +92,10 @@ namespace TheForce_Psycast
                 DrawLightsaberGraphics(compLightsaberBlade, DrawPos,  rotation, rotationSpeed);
                 compLightsaberBlade.IsThrowingWeapon = true;
             }
-
-            
-
             Comps_PostDraw();
         }
 
-        private void DrawLightsaberGraphics(Comp_LightsaberBlade compLightsaberBlade, Vector3 drawLoc, Quaternion rotation, float rotationspeed, float drawSize = 2.0f)
+        private void DrawLightsaberGraphics(Comp_LightsaberBlade compLightsaberBlade, Vector3 drawLoc, Quaternion rotation, float rotationspeed, float drawSize = 1.5f)
         {
             if (compLightsaberBlade.Graphic?.MatSingle == null)
                 return;
@@ -157,7 +167,7 @@ namespace TheForce_Psycast
                 MoteLightSaberReturn mote = (MoteLightSaberReturn)ThingMaker.MakeThing(ThingDef.Named("Mote_LightSaberReturn"));
                 mote.exactPosition = moteSpawnPos.ToVector3Shifted();
                 mote.rotationRate = 0f;
-                mote.SetLauncher(cachedLauncher, cachedLauncher.equipment.Primary.Graphic);
+                mote.SetLauncher(_originalLauncher, _originalLauncher.equipment.Primary.Graphic);
                 GenSpawn.Spawn(mote, moteSpawnPos, map);
                 SoundDef soundDef = SoundDef.Named("Force_ForceThrow_Return");
                 soundDef.PlayOneShot(new TargetInfo(moteSpawnPos, map));
@@ -222,7 +232,7 @@ namespace TheForce_Psycast
                 if(compLightsaberBlade != null)
                 {
                     compLightsaberBlade.IsThrowingWeapon = false;
-                    SoundDef soundDef = ForceDefOf.Force_Interact_Lightsaber;
+                    SoundDef soundDef = compLightsaberBlade.selectedSoundEffect ?? null;
                     SoundStarter.PlayOneShot(soundDef, this);
                 }
                 

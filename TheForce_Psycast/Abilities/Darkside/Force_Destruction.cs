@@ -16,25 +16,13 @@ namespace TheForce_Psycast.Abilities.Darkside
         public override void Cast(params GlobalTargetInfo[] targets)
         {
             base.Cast(targets);
-
             var explosionRadius = this.GetRadiusForPawn();
-
-            // Calculate damage based on psychic sensitivity
             float sensitivityFactor = this.pawn.GetStatValue(ForceDefOf.Force_Darkside_Attunement);
-            int baseDamage = 25; // Adjust base damage as needed
-
+            int baseDamage = 25;
             int damageAmount = Mathf.RoundToInt(baseDamage * sensitivityFactor);
-
-            // Ensure minimum damage amount
             damageAmount = Mathf.Max(1, damageAmount);
-
-            // Clear all entropy after using
             this.pawn.psychicEntropy.RemoveAllEntropy();
-
-            // Spawn visual effect
             MakeStaticFleck(targets[0].Cell, targets[0].Thing.Map, ForceDefOf.Force_Burst_Bubble, explosionRadius/2, 1);
-
-            // Perform explosion with scaled     damage
             GenExplosion.DoExplosion(
                 center: targets[0].Cell,
                 map: pawn.Map,
@@ -44,7 +32,6 @@ namespace TheForce_Psycast.Abilities.Darkside
                 instigator: pawn,
                 damAmount: damageAmount,
                 ignoredThings: new List<Thing> { pawn }
-                  // Specify the SoundDef here
             );;
         }
     }

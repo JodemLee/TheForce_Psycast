@@ -13,7 +13,7 @@ namespace TheForce_Psycast.Lightsabers.Lightsaber_Combat
                 var manipulationTarget = FindManipulationTarget(target.Pawn);
                 if (manipulationTarget != null)
                 {
-                    DestroyLimb(target.Pawn, manipulationTarget);
+                    LightsaberCombatUtility.DestroyLimb(CasterPawn, target.Pawn, manipulationTarget);
                 }
                 else
                 {
@@ -24,27 +24,6 @@ namespace TheForce_Psycast.Lightsabers.Lightsaber_Combat
             {
                 Messages.Message("Invalid target.", MessageTypeDefOf.RejectInput);
             }
-        }
-
-        private void DestroyLimb(Pawn target, BodyPartRecord limb)
-        {
-            int damageAmount = CalculateDamageToDestroyLimb(limb, target);
-
-            ThingDef weaponDef = null;
-            if (this.pawn.equipment?.Primary != null)
-            {
-                weaponDef = this.pawn.equipment.Primary.def;
-            }
-
-            DamageDef cutDamage = DamageDefOf.Cut;
-            var damageInfo = new DamageInfo(cutDamage, damageAmount, 50, -1, this.pawn, limb, weaponDef);
-            target.TakeDamage(damageInfo);
-        }
-
-        private int CalculateDamageToDestroyLimb(BodyPartRecord limb, Pawn target)
-        {
-            // Example calculation, you might want to use actual health data
-            return 50;
         }
 
         private BodyPartRecord FindManipulationTarget(Pawn target)

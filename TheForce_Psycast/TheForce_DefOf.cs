@@ -18,12 +18,23 @@ namespace TheForce_Psycast
         public static ThingDef LightsaberThrow;
         public static ThingDef Force_AncientScroll;
         public static ThingDef Force_AncientResurrectorScroll;
-        public static ThingDef Force_ThrownPawn;
-        public static ThingDef Force_KyberCrystal;
 
+
+        public static ThingDef Force_ThrownPawnPush;
+        public static ThingDef Force_ThrownPawnWave;
+        public static ThingDef Force_ThrownPawnRepulse;
+        public static ThingDef Force_ThrownPawnPull;
+        public static ThingDef Force_ThrownPawnAttract;
+        public static ThingDef Force_ThrownPawnThrow;
+
+        public static ThingDef Force_KyberCrystal;
+        public static FleckDef Force_FleckStone;
+        public static FleckDef Force_LightsaberScorch_Fleck;
         // WeatherDefs
         public static WeatherDef Force_ForceStorm;
 
+        //JobDefs
+        public static JobDef Force_UpgradeLightsaber;
 
         // HediffDefs
         public static HediffDef Force_Ghost;
@@ -44,6 +55,7 @@ namespace TheForce_Psycast
         public static HediffDef Force_MindShardHediff;
         public static HediffDef Force_Sithzombie;
         public static HediffDef Force_SithArtifactWeakness;
+        public static HediffDef Force_TeachingCooldown;
         public static DamageDef Force_Lightning;
 
         // MeditationFocusDefs
@@ -60,6 +72,7 @@ namespace TheForce_Psycast
 
         // FleckDefs
         public static FleckDef Force_Burst_Bubble;
+        public static EffecterDef Force_LClashOne;
 
         // StatDefs
         public static StatDef Force_Darkside_Attunement;
@@ -76,5 +89,18 @@ namespace TheForce_Psycast
         // GameConditionDefs
         public static GameConditionDef Force_ForceStormCondition;
 
+        // BackStoryDefs
+        public static BackstoryDef Force_SithApprenticeChosen;
+        public static BackstoryDef Force_JediPadawanChosen;
+        public static BackstoryDef Force_SithMaster;
+        public static BackstoryDef Force_JediMaster;
+
+
+        public static PawnRelationDef Force_ApprenticeRelation;
+        public static PawnRelationDef Force_MasterRelation;
+
+
+        //MentalStateDefs
+        public static MentalStateDef Force_ForceFear;
     }
 }

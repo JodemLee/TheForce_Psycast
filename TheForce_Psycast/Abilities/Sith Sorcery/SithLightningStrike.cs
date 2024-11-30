@@ -87,14 +87,15 @@ namespace TheForce_Psycast
             // Apply damage and stun to all things in the current cell
             foreach (Thing thing in currentCell.GetThingList(map).ListFullCopy())
             {
+                // Skip if the thing is part of the same faction as the caster
                 if (thing.Faction == this.pawn.Faction)
                     continue;
 
                 int damage = BaseDamage + (DamageIncreasePerChain * currentChain); // Increase damage with each chain
                 thing.TakeDamage(new DamageInfo(ForceDefOf.Force_Lightning, damage, -1f, this.pawn.DrawPos.AngleToFlat(thing.DrawPos), this.pawn));
 
-                // Apply stun effect to pawns
-                if (thing is Pawn pawn)
+                // Apply stun effect only to enemy pawns
+                if (thing is Pawn pawn && pawn.Faction != this.pawn.Faction)
                 {
                     hitPawns.Add(pawn); // Add pawn to the hit list
                     pawn.stances.stunner.StunFor(BaseStunDuration, this.pawn);
@@ -103,7 +104,7 @@ namespace TheForce_Psycast
 
             // Create explosion and weather event
             GenExplosion.DoExplosion(currentCell, map, GetRadiusForPawn(), ForceDefOf.Force_Lightning, this.pawn);
-            this.pawn.Map.weatherManager.eventHandler.AddEvent(new SithLightningEvent(this.pawn.Map,currentCell, UnityEngine.Color.red));
+            this.pawn.Map.weatherManager.eventHandler.AddEvent(new SithLightningEvent(this.pawn.Map, currentCell, UnityEngine.Color.red));
         }
 
         private void FindNextTarget()

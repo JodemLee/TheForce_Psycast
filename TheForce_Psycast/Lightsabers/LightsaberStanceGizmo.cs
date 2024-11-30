@@ -1,11 +1,9 @@
-﻿using RimWorld;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using TheForce_Psycast.Lightsabers;
 using UnityEngine;
 using Verse;
-using TheForce_Psycast;
-using TheForce_Psycast.Lightsabers;
 
 namespace TheForce_Psycast
 {
@@ -20,6 +18,7 @@ namespace TheForce_Psycast
         private const float ButtonWidth = 75f;
         private const float ButtonHeight = 75f;
         private DefStanceAngles extension;
+        private Comp_LightsaberStance lightsaberComp;
 
         public Gizmo_LightsaberStance(Pawn pawn, Hediff hediff, ThingDef thingDef)
         {
@@ -357,6 +356,7 @@ namespace TheForce_Psycast
     public class DefStanceAngles : DefModExtension
     {
         public List<StanceData> stanceData;
+        public Def parentDef;
 
         public StanceData GetStanceDataForSeverity(float severity)
         {
@@ -382,14 +382,38 @@ namespace TheForce_Psycast
         }
     }
 
+    public static class StanceModExtensionInitializer
+    {
+        static StanceModExtensionInitializer()
+        {
+            foreach (var def in DefDatabase<ThingDef>.AllDefs)
+            {
+                var extension = def.GetModExtension<DefStanceAngles>();
+                if (extension != null)
+                    extension.parentDef = def;
+            }
+
+            foreach (var def in DefDatabase<HediffDef>.AllDefs)
+            {
+                var extension = def.GetModExtension<DefStanceAngles>();
+                if (extension != null)
+                    extension.parentDef = def;
+            }
+        }
+    }
+
 
     public class StanceData
     {
-        public float MinSeverity;
-        public string StanceIconPath; // Changed from Texture2D to string path
-        public string StanceString;
-        public float Angle;
-        public Vector3 Offset;
+        public string StanceID;              // Unique identifier for each stance
+        public float MinSeverity;            // Severity threshold for this stance
+        public string StanceIconPath;        // Path to the stance icon
+        public string StanceString;          // Full description of the stance
+        public float Angle;                  // Angle for the stance effect or positioning
+        public Vector3 Offset;               // Offset for visual or position adjustments
+
+        public List<string> StrongAgainst;   // List of stance IDs this stance is strong against
+        public List<string> WeakAgainst;     // List of stance IDs this stance is weak against
     }
 }
 

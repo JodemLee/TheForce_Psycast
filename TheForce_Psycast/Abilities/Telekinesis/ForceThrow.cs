@@ -33,49 +33,106 @@ namespace TheForce_Psycast
             {
                 totalMass *= thingWithComps.stackCount;
             }
-            // Scale damage based on target mass
-            float scaledDamage = baseDamage + (totalMass * 1f); // Adjust the multiplier as needed
+            float scaledDamage = baseDamage + (totalMass * 1f);
 
-            // Spawn the projectile
             ForceThrowProjectile projectile = (ForceThrowProjectile)GenSpawn.Spawn(ThingDef.Named("Force_ThrowItem"), target.Position, this.pawn.Map);
-            projectile.targetThing = target;
-            projectile.DamageAmount = (int)scaledDamage; // Assign the scaled damage to DamageAmount
+            projectile.targetThing = target; // Store targetThing in the projectile
+            projectile.DamageAmount = (int)scaledDamage;
             projectile.destCell = dest.Cell;
-            projectile.Launch(target, dest.Cell, target, ProjectileHitFlags.All, false);
+            projectile.Launch(CasterPawn, dest.Cell, target, ProjectileHitFlags.IntendedTarget, false);
+            target.DeSpawn();
+        }
+
+
+        public override bool ValidateTarget(LocalTargetInfo target, bool showMessages = true)
+        {
+            // Check if the target is a building
+            if (target.Thing is Building targetBuilding)
+            {
+                // Check if the building can be minified
+                if (!targetBuilding.def.Minifiable)
+                {
+                    // Show message that the building can't be thrown (minified)
+                    if (showMessages)
+                    {
+                        Messages.Message("This building cannot be minified and thrown.", MessageTypeDefOf.RejectInput, false);
+                    }
+                    return false;
+                }
+            }
+
+            // Call the base method to perform any other validations
+            return base.ValidateTarget(target, showMessages);
         }
 
         public override void Cast(params GlobalTargetInfo[] targets)
         {
             for (int i = 0; i < targets.Length; i += 2)
             {
-                if (targets[i].Thing is Pawn)
+                // Log the target information for each iteration
+                Log.Message($"Cast target {i}: {targets[i]}");
+
+                if (targets[i].Thing is Pawn targetPawn)
                 {
                     GlobalTargetInfo dest = targets[i + 1];
+
+                    // Log target pawn and destination information
+                    Log.Message($"Pawn target: {targetPawn}, Destination: {dest}");
 
                     // Check if the destination cell is different from the initial cell
                     if (dest.Cell != targets[i].Cell && dest.Map != null)
                     {
+                        Log.Message($"Destination is different, spawning flyer...");
+
                         var map = Caster.Map;
-                        var flyer = PawnFlyer.MakeFlyer(ForceDefOf.Force_ThrownPawn, targets[i].Thing as Pawn, dest.Cell, null, null);
+                        var flyer = PawnFlyer.MakeFlyer(ForceDefOf.Force_ThrownPawnThrow, targetPawn, dest.Cell, null, null);
                         GenSpawn.Spawn(flyer, dest.Cell, map);
+
                         float distancePushed = (dest.Cell - targets[i].Cell).LengthHorizontal;
                         float scaledDamage = baseDamage + (distancePushed * 2f); // Adjust the multiplier as needed
+                        Log.Message($"Distance pushed: {distancePushed}, Scaled damage: {scaledDamage}");
+
                         if (!dest.Cell.Walkable(dest.Map))
                         {
-                            DamageInfo damageInfo = new DamageInfo(DamageDefOf.Blunt, 5f, 0f, -1f, this.pawn, null, null, DamageInfo.SourceCategory.ThingOrUnknown);
+                            Log.Message($"Destination cell is not walkable. Applying damage...");
+                            DamageInfo damageInfo = new DamageInfo(DamageDefOf.Blunt, scaledDamage, 0f, -1f, this.pawn, null, null, DamageInfo.SourceCategory.ThingOrUnknown);
                             targets[i].Thing.TakeDamage(damageInfo);
                         }
                     }
                 }
+                else if (targets[i].Thing is Building targetBuilding)
+                {
+                    // Log building target info
+                    Log.Message($"Building target: {targetBuilding}");
+
+                    // If it's a building, uninstall and minify it
+                    MinifiedThing minifiedBuilding = targetBuilding.Uninstall();
+
+                    if (minifiedBuilding != null)
+                    {
+                        Log.Message($"Minified building: {minifiedBuilding}");
+                        // Launch the minified building as a projectile
+                        CastProjectile(targets[i + 1], minifiedBuilding);
+                    }
+                    else
+                    {
+                        Log.Message($"Failed to uninstall the building.");
+                    }
+                }
                 else
                 {
-                    // If it's not a pawn, launch a projectile instead
+                    // Log other object types being cast
+                    Log.Message($"Launching regular projectile for target: {targets[i]}");
+
+                    // If it's not a pawn or building, launch a regular projectile
                     CastProjectile(targets[i + 1], targets[i].Thing);
                 }
             }
 
+            Log.Message("Cast completed.");
             base.Cast(targets);
         }
+
     }
 
 
@@ -92,13 +149,13 @@ namespace TheForce_Psycast
 
         protected override void DrawAt(Vector3 drawLoc, bool flip = false)
         {
-            // Calculate the position of the projectile based on its current position and destination
+            // Calculate the current position of the projectile based on its travel fraction
             var position = Vector3.Lerp(origin, destCell.ToVector3(), DistanceCoveredFraction);
 
             // Check if the target thing is a corpse
             if (targetThing is Corpse corpse)
             {
-                corpse.InnerPawn.Drawer.renderer.RenderPawnAt(position, Rot4.South, neverAimWeapon: true);
+                corpse.InnerPawn.Drawer.renderer.RenderPawnAt(drawLoc, Rot4.South, neverAimWeapon: true);
             }
             else
             {
@@ -112,7 +169,7 @@ namespace TheForce_Psycast
                     Material targetMaterial = targetGraphic.MatSingle;
                     Vector2 graphicSize = targetGraphic.drawSize; // Get the original size of the graphic
                     Mesh graphicMesh = MeshPool.GridPlane(graphicSize);
-                    UnityEngine.Graphics.DrawMesh(graphicMesh, position, Quaternion.identity, targetMaterial, 0);
+                    UnityEngine.Graphics.DrawMesh(graphicMesh, drawLoc, Quaternion.identity, targetMaterial, 0);
                 }
             }
         }
@@ -125,70 +182,49 @@ namespace TheForce_Psycast
                 hitThing.TakeDamage(new DamageInfo(DamageDefOf.Blunt, DamageAmount, 0f, -1f, this.launcher, null, null, DamageInfo.SourceCategory.ThingOrUnknown));
             }
 
-            // Check if the targetThing is in the MortarShells category
-            if (targetThing.def.thingCategories != null && targetThing.def.thingCategories.Contains(ThingCategoryDef.Named("MortarShells")))
+            if (targetThing != null && this.Map != null)
             {
-                // Add 30 damage to the original target
-                targetThing.TakeDamage(new DamageInfo(DamageDefOf.Blunt, 30));
+                // Use the projectile's Map instead of targetThing.Map for safety
+                Map map = this.Map;
+
+                // Check if destCell is valid; if not, default to projectile's current cell
+                IntVec3 finalCell = (destCell.IsValid && destCell.Standable(map) && destCell.GetFirstThing(map, targetThing.def) == null)
+                                    ? destCell
+                                    : FindNearbyEmptyCell(map, this.Position);
+
+                // Place targetThing at the final position and re-spawn it on the map
+                GenPlace.TryPlaceThing(targetThing, finalCell, map, ThingPlaceMode.Near);
+
+                // Handle stacking if it lands on an existing stackable item of the same type
+                Thing occupyingThing = finalCell.GetFirstThing(map, targetThing.def);
+                if (occupyingThing != null && occupyingThing.def == targetThing.def && occupyingThing.stackCount < occupyingThing.def.stackLimit)
+                {
+                    int spaceLeft = occupyingThing.def.stackLimit - occupyingThing.stackCount;
+                    int transferAmount = Mathf.Min(spaceLeft, targetThing.stackCount);
+                    occupyingThing.stackCount += transferAmount;
+                    targetThing.stackCount -= transferAmount;
+
+                    if (targetThing.stackCount <= 0)
+                    {
+                        targetThing.Destroy(DestroyMode.Vanish);
+                    }
+                }
             }
 
             base.Impact(hitThing, blockedByShield);
-
-            if (targetThing != null)
-            {
-                // Check if the destination cell is occupied
-                Thing occupyingThing = destCell.GetFirstThing(targetThing.Map, targetThing.def);
-                if (occupyingThing != null)
-                {
-                    if (occupyingThing.def == targetThing.def && occupyingThing.stackCount < occupyingThing.def.stackLimit)
-                    {
-                        // If it's the same item and stackable, transfer to the stack
-                        int spaceLeft = occupyingThing.def.stackLimit - occupyingThing.stackCount;
-                        int transferAmount = Mathf.Min(spaceLeft, targetThing.stackCount);
-                        occupyingThing.stackCount += transferAmount;
-                        targetThing.stackCount -= transferAmount;
-
-                        // If targetThing's stack count reaches zero, destroy it to prevent spawning issues
-                        if (targetThing.stackCount <= 0)
-                        {
-                            targetThing.Destroy(DestroyMode.Vanish);
-                        }
-                        else
-                        {
-                            // Find a nearby empty spot and place the remaining stack there
-                            IntVec3 nearbyCell = FindNearbyEmptyCell(targetThing.Map, destCell);
-                            targetThing.Position = nearbyCell;
-                        }
-                    }
-                    else
-                    {
-                        // Find a nearby empty spot and place the item there
-                        IntVec3 nearbyCell = FindNearbyEmptyCell(targetThing.Map, destCell);
-                        targetThing.Position = nearbyCell;
-                    }
-                }
-                else
-                {
-                    // If the destination cell is unoccupied, just move the item there without spawning
-                    IntVec3 nearbyCell = FindNearbyEmptyCell(targetThing.Map, destCell);
-                    targetThing.Position = nearbyCell;
-                }
-            }
         }
 
         private IntVec3 FindNearbyEmptyCell(Map map, IntVec3 center)
         {
-            TargetInfo targetInfo = new TargetInfo(destCell, targetThing.Map);
-
-            foreach (IntVec3 cell in GenAdj.CellsAdjacent8Way(targetInfo))
+            foreach (IntVec3 cell in GenAdj.CellsAdjacent8Way(new TargetInfo(center, map)))
             {
-                if (cell.InBounds(map) && cell.Standable(map) && cell.GetFirstThing(map, def) == null)
+                if (cell.InBounds(map) && cell.Standable(map) && cell.GetFirstThing(map, targetThing.def) == null)
                 {
                     return cell;
                 }
             }
-            // If no adjacent empty spot found, return the original cell (this should be rare)
-            return center;
+            return center; // Default to center if no empty cell found
         }
     }
 }
+

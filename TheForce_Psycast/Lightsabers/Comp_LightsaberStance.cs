@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 using TheForce_Psycast.Lightsabers;
 using UnityEngine;
 using VanillaPsycastsExpanded;
@@ -61,11 +61,13 @@ namespace TheForce_Psycast
             if (!alreadyHad)
                 comp.GiveAbility(ability);
 
-            var hediff = HediffMaker.MakeHediff(hediffDef, pawn);
-            hediff.Severity = lastSeverity != 0f ? lastSeverity : Rand.Range(MinSeverity, MaxSeverity);
-            pawn.health.AddHediff(hediff);
+            // Create a unique hediff instance for this lightsaber
+            var uniqueHediff = HediffMaker.MakeHediff(hediffDef, pawn);
+            uniqueHediff.Severity = lastSeverity != 0f ? lastSeverity : Rand.Range(MinSeverity, MaxSeverity);
 
-            // Apply stance rotation after adding the hediff
+            // Add the unique hediff to the pawn's health
+            pawn.health.AddHediff(uniqueHediff);
+
             ApplyStanceRotation(pawn);
         }
 
@@ -80,10 +82,14 @@ namespace TheForce_Psycast
             var compAbilities = pawn.GetComp<CompAbilities>();
             compAbilities?.LearnedAbilities.RemoveAll(ab => ab.def == ability);
 
-            var hediff = pawn.health.hediffSet.GetFirstHediffOfDef(ForceDefOf.Lightsaber_Stance);
-            if (hediff != null)
+            // Find and remove the specific hediff associated with this lightsaber instance
+            var hediffs = pawn.health.hediffSet.hediffs
+                .Where(h => h.def == ForceDefOf.Lightsaber_Stance)
+                .ToList();
+
+            foreach (var hediff in hediffs)
             {
-                lastSeverity = hediff.Severity; // Store the current severity
+                lastSeverity = hediff.Severity;
                 pawn.health.RemoveHediff(hediff);
             }
 

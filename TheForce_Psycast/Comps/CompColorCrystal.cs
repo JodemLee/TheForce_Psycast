@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using HarmonyLib;
+using RimWorld;
+using UnityEngine;
 using Verse;
 
 namespace TheForce_Psycast
@@ -10,16 +12,14 @@ namespace TheForce_Psycast
         public override void Initialize(CompProperties props)
         {
             base.Initialize(props);
-
-            // Initialize with the color from CompColorable if available
             var colorableComp = parent.GetComp<CompColorable>();
             if (colorableComp != null)
             {
-                CrystalColor = new ColorInt(colorableComp.Color);
+                CrystalColor = new ColorInt(parent.DrawColor);
             }
             else
             {
-                CrystalColor = new ColorInt(Color.white); // Default to white if no colorable component is found
+                CrystalColor = new ColorInt(Color.white);
             }
         }
 
@@ -37,4 +37,8 @@ namespace TheForce_Psycast
             this.compClass = typeof(CompColorCrystal);
         }
     }
+
+
+
+   
 }

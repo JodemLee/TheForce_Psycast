@@ -1,28 +1,52 @@
-﻿using RimWorld;
-using System.Collections.Generic;
-using System.Linq;
+﻿using TheForce_Psycast.Lightsabers.Lightsaber_Combat;
 using Verse;
 
 namespace TheForce_Psycast.Lightsabers
 {
-    internal class DamageWorker_LightsaberCut: DamageWorker_AddInjury
+    internal class DamageWorker_LightsaberCut : DamageWorker_AddInjury
     {
-        protected override BodyPartRecord ChooseHitPart(DamageInfo dinfo, Pawn pawn)
+        public override DamageResult Apply(DamageInfo dinfo, Thing victim)
         {
-            // Check if there are any body parts responsible for manipulation
-            List<BodyPartRecord> manipulationSources = pawn.health.hediffSet.GetNotMissingParts(BodyPartHeight.Undefined, BodyPartDepth.Undefined)
-                .Where(part => part.def.tags.Contains(BodyPartTagDefOf.ManipulationLimbSegment)).ToList();
+            DamageResult damageResult = new DamageResult();
+            if (victim is Pawn targetPawn)
+            {
+                var lightsaberBlade = targetPawn.equipment?.Primary?.TryGetComp<Comp_LightsaberBlade>();
+                if (dinfo.Instigator is Pawn attacker)
+                {
+                    if (lightsaberBlade != null && LightsaberCombatUtility.CanParry(targetPawn, attacker)) // Check if target can parry
+                    {
+                        LightsaberCombatUtility.TriggerWeaponRotationOnParry(targetPawn, attacker);
+                        Effecter effecter = new Effecter(ForceDefOf.Force_LClashOne);
+                        effecter.Trigger(new TargetInfo(targetPawn.Position, targetPawn.Map), TargetInfo.Invalid);
+                        effecter.Cleanup();
 
-            if (manipulationSources.Any())
-            {
-                // If there are manipulation sources, return a random one
-                return manipulationSources.RandomElement();
+                        return damageResult;
+                    }
+                    else
+                    {
+                        base.Apply(dinfo, victim); 
+                        return damageResult;
+                    }
+                }
             }
-            else
-            {
-                // If there are no manipulation sources, return any other non-missing body part
-                return pawn.health.hediffSet.GetRandomNotMissingPart(dinfo.Def, dinfo.Height, BodyPartDepth.Outside);
-            }
+            base.Apply(dinfo, victim);
+
+            return damageResult;
         }
+
+        //protected override BodyPartRecord ChooseHitPart(DamageInfo dinfo, Pawn pawn)
+        //{
+        //    List<BodyPartRecord> manipulationSources = pawn.health.hediffSet.GetNotMissingParts(BodyPartHeight.Undefined, BodyPartDepth.Undefined)
+        //        .Where(part => part.def.tags.Contains(BodyPartTagDefOf.ManipulationLimbSegment)).ToList();
+
+        //    if (manipulationSources.Any())
+        //    {
+        //        return manipulationSources.RandomElement();
+        //    }
+        //    else
+        //    {
+        //        return pawn.health.hediffSet.GetRandomNotMissingPart(dinfo.Def, dinfo.Height, BodyPartDepth.Outside);
+        //    }
+        //}
     }
 }

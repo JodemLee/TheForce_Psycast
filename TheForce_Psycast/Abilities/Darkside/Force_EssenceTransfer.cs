@@ -1,11 +1,13 @@
 ﻿using RimWorld;
 using RimWorld.Planet;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using TheForce_Psycast.Hediffs;
 using VanillaPsycastsExpanded;
 using Verse;
 using VFECore.Abilities;
+using PsycastUtility = VanillaPsycastsExpanded.PsycastUtility;
 
 namespace TheForce_Psycast.Abilities.Darkside
 {
@@ -33,13 +35,11 @@ namespace TheForce_Psycast.Abilities.Darkside
 
         public static void TransferEssence(Pawn targetPawn, Pawn casterPawn)
         {
-            // Check if either pawn is a ghost
             bool isCasterGhost = IsGhost(casterPawn);
             bool isTargetGhost = IsGhost(targetPawn);
 
             if (isTargetGhost)
             {
-                // Prevent swapping if the target is a ghost
                 Find.LetterStack.ReceiveLetter(
                     "Essence Transfer Failed".Translate(),
                     "You cannot swap bodies with a ghost.".Translate(),
@@ -49,27 +49,22 @@ namespace TheForce_Psycast.Abilities.Darkside
 
             if (isCasterGhost)
             {
-                // Handle ghost-specific logic for the caster
                 HandleGhost(casterPawn);
             }
 
-            // Swap attributes between the target and caster
             SwapNames(targetPawn, casterPawn);
             SwapBackstories(targetPawn, casterPawn);
             SwapTraits(targetPawn, casterPawn);
             SwapSkills(targetPawn, casterPawn);
             SwapIdeo(targetPawn, casterPawn);
             SwapFaction(targetPawn, casterPawn);
-            SwapPsychicEntropy(targetPawn, casterPawn);
             SwapAbilities(targetPawn, casterPawn);
             TransferPsylinkAndPsycasts(targetPawn, casterPawn);
 
 
-            // Update components
             PawnComponentsUtility.AddAndRemoveDynamicComponents(targetPawn);
             PawnComponentsUtility.AddAndRemoveDynamicComponents(casterPawn);
 
-            // Notify player
             Find.LetterStack.ReceiveLetter(
                 "Essence Transfer Complete".Translate(),
                 "You have successfully swapped bodies.".Translate(casterPawn.Named("Caster"), targetPawn.Named("Target")),
@@ -78,13 +73,11 @@ namespace TheForce_Psycast.Abilities.Darkside
 
         private static bool IsGhost(Pawn pawn)
         {
-            // Check if the pawn is a ghost
             return ForceGhostUtility.IsForceGhost(pawn);
         }
 
         private static void HandleGhost(Pawn ghostPawn)
         {
-            // Unlink the object from the darkside hediff
             var ghostHediff = ghostPawn.health.hediffSet.GetFirstHediffOfDef(ForceDefOf.Force_Darkside) as HediffWithComps_DarksideGhost;
             if (ghostHediff != null)
             {
@@ -93,7 +86,6 @@ namespace TheForce_Psycast.Abilities.Darkside
                 ghostPawn.health.RemoveHediff(SithGhostHediff);
                 ghostPawn.apparel.DropAll(ghostPawn.Position);
             }
-            // Destroy the original ghost body
             ghostPawn.Destroy(DestroyMode.Vanish);
         }
 
@@ -196,12 +188,6 @@ namespace TheForce_Psycast.Abilities.Darkside
             }
         }
 
-        private static void SwapPsychicEntropy(Pawn targetPawn, Pawn casterPawn)
-        {
-            targetPawn.psychicEntropy = casterPawn.psychicEntropy;
-            casterPawn.psychicEntropy = new Pawn_PsychicEntropyTracker(casterPawn);
-        }
-
         private static void SwapAbilities(Pawn targetPawn, Pawn casterPawn)
         {
             var casterCompAbilities = casterPawn.GetComp<CompAbilities>();
@@ -221,10 +207,6 @@ namespace TheForce_Psycast.Abilities.Darkside
         {
             var sourcePsylink = casterPawn.GetMainPsylinkSource();
             var sourcePsycasts = casterPawn.Psycasts();
-            var targetPsylink = targetPawn.GetMainPsylinkSource();
-            var targetPsycasts = targetPawn.Psycasts();
-
-
 
             // Remove psylink and psycasts from caster
             if (sourcePsylink != null)
@@ -242,27 +224,39 @@ namespace TheForce_Psycast.Abilities.Darkside
             {
                 sourcePsylink.pawn = targetPawn;
                 targetPawn.health.AddHediff(sourcePsylink);
+                PsycastUtility.RecheckPaths(targetPawn);
             }
+
             if (sourcePsycasts != null)
             {
                 sourcePsycasts.pawn = targetPawn;
                 targetPawn.health.AddHediff(sourcePsycasts);
+                PsycastUtilityExtensions.AutoUnlockPsycasterPaths(targetPawn);
             }
+        }
+    }
 
-            // Remove existing psylink and psycasts from target
-            if (targetPsylink != null)
+    public static class PsycastUtilityExtensions
+    {
+        public static void AutoUnlockPsycasterPaths(this Pawn pawn)
+        {
+            var psycasts = pawn.Psycasts();
+            if (psycasts != null)
             {
-                targetPawn.health.RemoveHediff(targetPsylink);
-            }
-            if (targetPsycasts != null)
-            {
-                targetPawn.health.RemoveHediff(targetPsycasts);
-            }
+                foreach (var path in psycasts.previousUnlockedPaths.ToList())
+                {
+                    psycasts.previousUnlockedPaths.Remove(path);
+                    psycasts.unlockedPaths.Add(path);
+                }
 
-
-            // Transfer the psychic entropy values
-            targetPawn.psychicEntropy = casterPawn.psychicEntropy;
-            casterPawn.psychicEntropy = new Pawn_PsychicEntropyTracker(casterPawn);
+                foreach (var path in DefDatabase<PsycasterPathDef>.AllDefs)
+                {
+                    if (!psycasts.unlockedPaths.Contains(path))
+                    {
+                        psycasts.unlockedPaths.Add(path);
+                    }
+                }
+            }
         }
     }
 }

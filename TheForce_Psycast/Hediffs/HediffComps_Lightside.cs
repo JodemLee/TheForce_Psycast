@@ -16,30 +16,21 @@ namespace TheForce_Psycast.Hediffs
 
         public override IEnumerable<Gizmo> GetGizmos()
         {
-            if (isDead)
+            if (isDead && Severity >= 1f && !ForceGhostUtility.IsForceGhost(pawn))
             {
-                if (!ForceGhostUtility.IsForceGhost(pawn)) 
+                yield return new Command_Action
                 {
-                    if (Severity >= 1f)
+                    defaultLabel = "Force_ReturnAsGhost".Translate(),
+                    defaultDesc = "Force_ReturnAsGhost".Translate(),
+                    icon = ContentFinder<Texture2D>.Get("Abilities/Lightside/ForceGhost", true),
+                    action = () =>
                     {
-                        yield return new Command_Action
-                        {
-                            defaultLabel = "Return as Ghost",
-                            defaultDesc = "Return as a Force Ghost.",
-                            icon = ContentFinder<Texture2D>.Get("Abilities/Lightside/ForceGhost", true),
-                            action = () =>
-                            {
-                                ResurrectionUtility.TryResurrect(pawn);
-                                pawn.health.AddHediff(ForceDefOf.Force_Ghost);
-                                isDead = false;
-                                Severity = 1;
-                            }
-                        };
+                        GhostResurrectionUtility.TryReturnAsGhost(pawn, ForceDefOf.Force_Ghost, 1f);
+                        pawn.apparel.LockAll();
                     }
-                }
+                };
             }
 
-            // Yield other gizmos from base class
             foreach (var gizmo in base.GetGizmos())
             {
                 yield return gizmo;
@@ -68,6 +59,20 @@ namespace TheForce_Psycast.Hediffs
         public HediffCompProperties_ForceGhost()
         {
             this.compClass = typeof(HediffComps_ForceGhost);
+        }
+    }
+
+    public static class GhostResurrectionUtility
+    {
+        public static void TryReturnAsGhost(Pawn pawn, HediffDef ghostHediff, float severity = 1f)
+        {
+            ResurrectionUtility.TryResurrect(pawn);
+            pawn.health.AddHediff(ghostHediff);
+            Hediff ghost = pawn.health.hediffSet.GetFirstHediffOfDef(ghostHediff);
+            if (ghost != null)
+            {
+                ghost.Severity = severity;
+            }
         }
     }
 }

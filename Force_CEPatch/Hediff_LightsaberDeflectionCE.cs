@@ -1,12 +1,7 @@
 ﻿using CombatExtended;
-using CombatExtended.Compatibility;
 using RimWorld;
-using System.Collections.Generic;
-using System.Linq;
 using TheForce_Psycast;
 using TheForce_Psycast.Lightsabers;
-using TheForce_Psycast.Lightsabers.Modular_Weapon;
-using UnityEngine;
 using Verse;
 
 namespace Force_CEPatch
@@ -20,21 +15,6 @@ namespace Force_CEPatch
         private bool drawInterceptCone;
         public float entropyGain { get; set; }
         public float deflectionMultiplier { get; set; }
-
-        public virtual void DeflectProjectile(ProjectileCE projectile)
-        {
-            // Create and trigger the deflection effect
-            Effecter effecter = new Effecter(EffecterDefOf.Interceptor_BlockedProjectile);
-            effecter.Trigger(new TargetInfo(projectile.Position, pawn.Map), TargetInfo.Invalid);
-            effecter.Cleanup();
-            projectile.Launch(
-                pawn,
-                projectile.ExactPosition,
-                pawn.equipment.Primary
-            );
-            projectile.Destination = projectile.origin;
-            AddEntropy(projectile);
-        }
 
         public void AddEntropy(ProjectileCE projectile)
         {

@@ -11,20 +11,17 @@ namespace TheForce_Psycast
         public override void Initialize(CompProperties props)
         {
             base.Initialize(props);
-            if (parent is ThingWithComps thingWithComps)
+
+            if (parent != null)
             {
-                var colorableComp = thingWithComps.GetComp<CompColorable>();
-                if (colorableComp != null)
-                {
-                    ApplyColor(colorableComp.Color);
-                }
+                ApplyColor(parent.DrawColor);
             }
         }
 
         private void ApplyColor(Color color)
         {
             defaultColorInt = new ColorInt(color);
-            this.GlowColor = defaultColorInt;
+            this.GlowColor = defaultColorInt; // Update the glow color to match the parent's draw color
         }
 
         public override void PostExposeData()
@@ -32,7 +29,19 @@ namespace TheForce_Psycast
             base.PostExposeData();
             Scribe_Values.Look(ref defaultColorInt, "defaultColorInt", new ColorInt(Color.white));
         }
+
+        public void UpdateGlowerColor(ColorInt newColor)
+        {
+            // Set the new color using the GlowColor property setter.
+            GlowColor = newColor;
+
+            // Optional: Force the glow to re-register, ensuring immediate color update.
+            UpdateLit(parent.MapHeld);
+        }
     }
+
+
+
 
     public class CompProperties_GlowerOptions : CompProperties_Glower
     {

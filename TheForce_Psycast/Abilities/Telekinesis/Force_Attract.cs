@@ -31,7 +31,7 @@ namespace TheForce_Psycast
 
                 if (target.Thing is Pawn)
                 {
-                    var flyer = PawnFlyer.MakeFlyer(ForceDefOf.Force_ThrownPawn, target.Thing as Pawn, pullPosition, null, null);
+                    var flyer = PawnFlyer.MakeFlyer(ForceDefOf.Force_ThrownPawnAttract, target.Thing as Pawn, pullPosition, null, null);
                     ValidateTargetTile(pawn);
                     GenSpawn.Spawn(flyer, pullPosition, this.pawn.Map);
                 }

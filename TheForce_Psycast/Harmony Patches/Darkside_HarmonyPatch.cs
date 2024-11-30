@@ -3,6 +3,7 @@ using RimWorld;
 using RimWorld.Planet;
 using System;
 using System.Collections.Generic;
+using TheForce_Psycast.Lightsabers;
 using Verse;
 
 namespace TheForce_Psycast.Harmony_Patches
@@ -20,11 +21,7 @@ namespace TheForce_Psycast.Harmony_Patches
                     {
                         if (!attacker.HostileTo(__instance.Faction))
                         {
-                            var hediff = attacker.health.hediffSet.GetFirstHediffOfDef(ForceDefOf.Force_Darkside);
-                            if (hediff != null)
-                            {
-                                hediff.Severity += 0.01f; // Increase the severity by 0.1
-                            }
+                            DarksideUtility.AdjustHediffSeverity(attacker, ForceDefOf.Force_Darkside, 0.1f);
                         }
                     }
                 }
@@ -79,12 +76,7 @@ namespace TheForce_Psycast.Harmony_Patches
             {
                 if (DarksideThoughts.Contains(newThought.def.defName))
                 {
-                    Hediff hediff = __instance.pawn.health?.hediffSet?.GetFirstHediffOfDef(ForceDefOf.Force_Darkside);
-                    if (hediff != null)
-                    {
-                        // Adjust the severity increment as per your needs
-                        hediff.Severity += 0.1f;
-                    }
+                    DarksideUtility.AdjustHediffSeverity(__instance.pawn, ForceDefOf.Force_Darkside, 0.1f);
                 }
             }
 
@@ -96,30 +88,12 @@ namespace TheForce_Psycast.Harmony_Patches
     {
         public static void Postfix(Pawn member, DamageInfo dinfo)
         {
-            if (Force_ModSettings.IncreaseDarksideOnKill)
+            if (!Force_ModSettings.IncreaseDarksideOnKill || dinfo.Instigator is not Pawn attacker || member.HostileTo(attacker))
             {
-                if (dinfo.Instigator is Pawn attacker)
-                {
-                    // Check if the IncreaseDarksideOnKill setting is enabled
-                    bool increaseDarksideOnKill = Force_ModSettings.IncreaseDarksideOnKill;
-
-                    if (increaseDarksideOnKill)
-                    {
-                        // Check if the attacker is not hostile to the member
-                        if (!member.HostileTo(attacker))
-                        {
-                            // Get the Force_Darkside hediff of the attacker
-                            var hediff = attacker.health.hediffSet.GetFirstHediffOfDef(ForceDefOf.Force_Darkside);
-                            if (hediff != null)
-                            {
-                                // Increase the severity of the hediff
-                                hediff.Severity += 0.01f; // Increase the severity by 0.01
-                            }
-                        }
-                    }
-                }
+                return;
             }
 
+            DarksideUtility.AdjustHediffSeverity(attacker, ForceDefOf.Force_Darkside, 0.01f);
         }
     }
 
@@ -128,11 +102,8 @@ namespace TheForce_Psycast.Harmony_Patches
     {
         public static void Postfix(Pawn initiator)
         {
-            Hediff hediff = initiator.health.hediffSet.GetFirstHediffOfDef(ForceDefOf.Force_Darkside);
-            if (hediff != null)
-            {
-                hediff.Severity += 0.01f; // Increase severity by 0.01
-            }
+            var severityIncrease = 0.01f;
+            DarksideUtility.AdjustHediffSeverity(initiator, ForceDefOf.Force_Darkside, severityIncrease);
         }
     }
 
@@ -141,11 +112,8 @@ namespace TheForce_Psycast.Harmony_Patches
     {
         public static void Postfix(Pawn initiator)
         {
-            Hediff hediff = initiator.health.hediffSet.GetFirstHediffOfDef(ForceDefOf.Force_Darkside);
-            if (hediff != null)
-            {
-                hediff.Severity += 0.01f; // Increase severity by 0.01
-            }
+            var severityIncrease = 0.01f;
+            DarksideUtility.AdjustHediffSeverity(initiator, ForceDefOf.Force_Darkside, severityIncrease);
         }
     }
 
@@ -161,11 +129,7 @@ namespace TheForce_Psycast.Harmony_Patches
                 float severityIncrease = 0.01f * quality; // Adjust the base increase factor as needed
 
                 // Increase the hediff on the doctor pawn
-                Hediff hediff = doctor.health.hediffSet.GetFirstHediffOfDef(ForceDefOf.Force_Lightside);
-                if (hediff != null)
-                {
-                    hediff.Severity += severityIncrease;
-                }
+                DarksideUtility.AdjustHediffSeverity(doctor, ForceDefOf.Force_Lightside, severityIncrease);
             }
         }
     }
@@ -185,11 +149,8 @@ namespace TheForce_Psycast.Harmony_Patches
                     List<Pawn> colonists = PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_FreeColonists;
                     foreach (Pawn colonist in colonists)
                     {
-                        Hediff hediff = colonist.health.hediffSet.GetFirstHediffOfDef(ForceDefOf.Force_Lightside);
-                        if (hediff != null)
-                        {
-                            hediff.Severity += 0.3f; // Adjust the severity increase as needed
-                        }
+                        var severityIncrease = 0.01f;
+                        DarksideUtility.AdjustHediffSeverity(colonist, ForceDefOf.Force_Lightside, severityIncrease);
                     }
                 }
             }
@@ -202,7 +163,7 @@ namespace TheForce_Psycast.Harmony_Patches
             // Postfix patch for Outcome_Success
             public static void Postfix(Caravan caravan)
             {
-                ModifyHediffOnOutcome(caravan, 0.3f); // Example: Increase hediff severity by 0.5
+                ModifyHediffOnOutcome(caravan, 0.3f);
             }
 
             // Method to modify hediff
@@ -210,14 +171,13 @@ namespace TheForce_Psycast.Harmony_Patches
             {
                 foreach (Pawn pawn in caravan.PawnsListForReading)
                 {
-                    Hediff hediff = pawn.health.hediffSet.GetFirstHediffOfDef(ForceDefOf.Force_Lightside); // Replace with your actual hediff def
-                    if (hediff != null)
-                    {
-                        hediff.Severity += severityIncrease;
-                    }
+                    DarksideUtility.AdjustHediffSeverity(pawn, ForceDefOf.Force_Lightside, severityIncrease);
                 }
             }
         }
+    }
+
+       
 
         [HarmonyPatch(typeof(PeaceTalks))]
         [HarmonyPatch("Outcome_Triumph")]
@@ -229,34 +189,15 @@ namespace TheForce_Psycast.Harmony_Patches
                 ModifyHediffOnOutcome(caravan, 0.8f); // Example: Increase hediff severity by 1.0
             }
 
-            // Method to modify hediff (same as above, can reuse the existing method)
             private static void ModifyHediffOnOutcome(Caravan caravan, float severityIncrease)
             {
                 foreach (Pawn pawn in caravan.PawnsListForReading)
                 {
-                    Hediff hediff = pawn.health.hediffSet.GetFirstHediffOfDef(ForceDefOf.Force_Lightside);
-                    if (hediff != null)
-                    {
-                        hediff.Severity += severityIncrease;
-                    }
+                    DarksideUtility.AdjustHediffSeverity(pawn, ForceDefOf.Force_Lightside, severityIncrease);
                 }
             }
         }
-
-        //[HarmonyPatch(typeof(InteractionWorker_KindWords), "RandomSelectionWeight")]
-        //public static class InteractionWorker_KindWords_RandomSelectionWeight_Patch
-        //{
-        //    public static void Postfix(Pawn initiator)
-        //    {
-        //        Hediff hediff = initiator.health.hediffSet.GetFirstHediffOfDef(ForceDefOf.Force_Lightside);
-        //        if (hediff != null)
-        //        {
-        //            hediff.Severity += 0.01f; // Increase severity by 0.01
-        //        }
-        //    }
-        //}
     }
-}
 
 
 

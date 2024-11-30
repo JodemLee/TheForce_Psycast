@@ -6,7 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Emit;
 using System.Runtime.CompilerServices;
+using UnityEngine;
 using Verse;
+using Verse.AI;
 
 namespace TheForce_Psycast.Harmony_Patches
 {
@@ -86,6 +88,73 @@ namespace TheForce_Psycast.Harmony_Patches
             {
                 return;
             }
+        }
+    }
+
+    [HarmonyPatch(typeof(JobDriver_Meditate), "MeditationTick")]
+    public static class Patch_JobDriver_Meditate_MeditationTick
+    {
+        // Prefix for starting the animation during meditation
+        [HarmonyPrefix]
+        public static void Prefix(JobDriver_Meditate __instance)
+        {
+            Pawn pawn = __instance.pawn;
+
+
+            if (ModsConfig.RoyaltyActive && pawn.HasPsylink)
+            {
+                // Start the meditation animation if it's not already playing
+                AnimationDef meditationAnimation = DefDatabase<AnimationDef>.GetNamed("Force_FloatingMeditation", false);
+
+                if (meditationAnimation != null)
+                {
+                    if (pawn.Drawer.renderer.CurAnimation != meditationAnimation)
+                    {
+                        pawn.Drawer.renderer.SetAnimation(meditationAnimation);
+                    }
+                }
+                if (pawn.IsHashIntervalTick(100))
+                {
+                    IEnumerable<IntVec3> adjacentCells = GenAdj.CellsAdjacent8Way(pawn).Where(cell => cell.InBounds(pawn.Map));
+                    List<IntVec3> validCells = adjacentCells.Where(cell => cell.Walkable(pawn.Map)).ToList();
+                    IntVec3 randomCell = validCells.RandomElement();
+                    float randomRotation = Rand.Range(0f, 360f);
+                    float randomSize = Rand.Range(1f, 2.5f);
+
+                    FleckCreationData fleckData = FleckMaker.GetDataStatic(randomCell.ToVector3(), pawn.Map, ForceDefOf.Force_FleckStone, randomSize); ;
+                    fleckData.rotation = randomRotation;
+                    pawn.Map.flecks.CreateFleck(fleckData);
+                }
+            }
+        }
+    }
+
+    // A separate patch to stop the animation when the job ends
+    [HarmonyPatch(typeof(JobDriver), "Cleanup")]
+    public static class Patch_JobDriver_Notify_JobEnded
+    {
+        // Postfix for stopping the animation when the meditation job ends
+        [HarmonyPostfix]
+        public static bool Prefix(JobDriver __instance)
+        {
+            // Check if the job is a meditation job
+            if (__instance is JobDriver_Meditate)
+            {
+                Pawn pawn = __instance.pawn;
+
+                if (ModsConfig.RoyaltyActive && pawn.HasPsylink)
+                {
+                    // Stop the meditation animation when the job ends
+                    AnimationDef meditationAnimation = DefDatabase<AnimationDef>.GetNamed("Force_FloatingMeditation", false);
+
+                    if (meditationAnimation != null && pawn.Drawer.renderer.CurAnimation == meditationAnimation)
+                    {
+                        // Stop the animation
+                        pawn.Drawer.renderer.SetAnimation(null);
+                    }
+                }
+            }
+            return true;
         }
     }
 }

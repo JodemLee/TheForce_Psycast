@@ -14,6 +14,8 @@
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
     <LangVersion>preview</LangVersion>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -105,16 +107,10 @@
       <HintPath>L:\SteamLibrary\steamapps\workshop\content\294100\2023507013\1.4\Assemblies\VFECore.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="VPEPuppeteer">
-      <HintPath>L:\SteamLibrary\steamapps\workshop\content\294100\3033779606\1.4\Assemblies\VPEPuppeteer.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="zAnimationMod">
-      <HintPath>L:\SteamLibrary\steamapps\workshop\content\294100\2944488802\1.5\Assemblies\zAnimationMod.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abilities\AutocastingTweaks.cs" />
+    <Compile Include="Abilities\Command_Ability_WithFloat.cs" />
     <Compile Include="Abilities\Darkside\Force_EssenceTransfer.cs" />
     <Compile Include="Abilities\Darkside\Force_Phantom.cs" />
     <Compile Include="Abilities\Darkside\Force_Destruction.cs" />
@@ -125,6 +121,7 @@
     <Compile Include="Abilities\Jedi Training\Gizmo_Apprentice.cs" />
     <Compile Include="Abilities\Jedi Training\Hediff_Apprentice.cs" />
     <Compile Include="Abilities\Jedi Training\Hediff_Master.cs" />
+    <Compile Include="Abilities\Jedi Training\PawnRelationDefs.cs" />
     <Compile Include="Abilities\Lightside\Force_Combustion.cs" />
     <Compile Include="Abilities\Lightside\Force_Ionize.cs" />
     <Compile Include="Abilities\Lightside\Force_TransferWounds.cs" />
@@ -136,12 +133,19 @@
     <Compile Include="Abilities\Telekinesis\ForcePush_Wave.cs" />
     <Compile Include="Comps\CompColorCrystal.cs" />
     <Compile Include="Comps\CompGlower_Options.cs" />
+    <Compile Include="Comps\Comp_SwapWornApparel.cs" />
+    <Compile Include="Comps\FleckThrownSparks.cs" />
+    <Compile Include="Comps\GenStep_ScatterLightsaberCrystals .cs" />
+    <Compile Include="Comps\PawnRenderNode_ModularApparel.cs" />
+    <Compile Include="Comps\PawnRenderNode_ModularHeadgear.cs" />
+    <Compile Include="Comps\PawnRenderNode_WeaponHolster.cs" />
     <Compile Include="Hediffs\ForceGhostUtility.cs" />
     <Compile Include="Abilities\Lightside\Force_Meld.cs" />
     <Compile Include="Abilities\Lightside\Hediff_ProtectionBubble.cs" />
     <Compile Include="Abilities\Sith Sorcery\Ability_CraftSithArtifact.cs" />
     <Compile Include="Abilities\Sith Sorcery\CompObelisk_Sith.cs" />
     <Compile Include="Abilities\Telekinesis\ForceDrop.cs" />
+    <Compile Include="Ideology\GameComponent_BestPsycasterAndStatTracker.cs" />
     <Compile Include="Lightsabers\Dialog_LightsaberColorPicker.cs" />
     <Compile Include="Force_ModSettings.cs" />
     <Compile Include="Harmony Patches\AlignmentMeditation.cs" />
@@ -151,9 +155,12 @@
     <Compile Include="Hediffs\ForceAttunement.cs" />
     <Compile Include="Hediffs\HediffComp_DarksideGhost.cs" />
     <Compile Include="Hediffs\HediffComps_Lightside.cs" />
-    <Compile Include="Hediffs\SithArtifacts\Hediff_BranchofDecay.cs" />
-    <Compile Include="Hediffs\SithArtifacts\Hediff_DarkstarMedallion.cs" />
+    <Compile Include="Lightsabers\HiltDef.cs" />
+    <Compile Include="Lightsabers\JobDriver_UpgradeLightsaber.cs" />
     <Compile Include="Lightsabers\Lightsaber Combat\Lightsaber_Ability_CircleofShelter.cs" />
+    <Compile Include="Lightsabers\Lightsaber Combat\LightsaberCombatUtility.cs" />
+    <Compile Include="Lightsabers\Lightsaber Combat\StanceAbilities\FormI_SarlaccSweep.cs" />
+    <Compile Include="Lightsabers\LightsaberGraphicUtils.cs" />
     <Compile Include="Lightsabers\LightsaberStanceGizmo.cs" />
     <Compile Include="Lightsabers\Comp_LightsaberBlade.cs" />
     <Compile Include="Lightsabers\DamageWorker_Lightsaber.cs" />
@@ -185,16 +192,17 @@
     <Compile Include="Abilities\Telekinesis\Force_Repulsion.cs" />
     <Compile Include="DefCultureExtension.cs" />
     <Compile Include="Hediffs\Hediff_BattleMeditation.cs" />
-    <Compile Include="Hediffs\Hediff_DefensiveStance.cs" />
-    <Compile Include="Hediffs\Hediff_ForceDefense.cs" />
     <Compile Include="Harmony Patches\HarmonyPatch.cs" />
     <Compile Include="Hediffs\Hediff_Force_SithHeal.cs" />
     <Compile Include="Comps\LearnForceAbility.cs" />
     <Compile Include="Lightsabers\LightsaberProjectile.cs" />
+    <Compile Include="Lightsabers\ModExtension_LinkedSound.cs" />
+    <Compile Include="Lightsabers\StuffColorSelectionWIndow.cs" />
+    <Compile Include="Lightsabers\UpgradeJob.cs" />
     <Compile Include="NonPublic Fields.cs" />
     <Compile Include="PositionUtils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Abilities\Sustained Ability.cs" />
+    <Compile Include="Abilities\Ability_Continuous.cs" />
     <Compile Include="TheForce_DefOf.cs" />
     <Compile Include="Abilities\Telekinesis\ThrowLightsaber.cs" />
     <Compile Include="Yuuzhan_Vong\ThingClass_WeaponShift.cs" />

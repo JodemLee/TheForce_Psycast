@@ -1,5 +1,8 @@
 ﻿using RimWorld;
+using System;
+using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 using Verse;
 
 namespace TheForce_Psycast.Lightsabers.Lightsaber_Combat
@@ -11,10 +14,7 @@ namespace TheForce_Psycast.Lightsabers.Lightsaber_Combat
             var manipulationTarget = FindManipulationTarget(target.Pawn);
             if (manipulationTarget != null)
             {
-                // Calculate damage and destroy the limb
-                DestroyLimb(target.Pawn, manipulationTarget);
-
-                // Drop the weapon if the target has one
+                LightsaberCombatUtility.DestroyLimb(CasterPawn, target.Pawn, manipulationTarget);
                 if (target.Pawn.equipment != null && target.Pawn.equipment.Primary != null)
                 {
                     ThingWithComps weapon = target.Pawn.equipment.Primary;
@@ -27,33 +27,10 @@ namespace TheForce_Psycast.Lightsabers.Lightsaber_Combat
             }
         }
 
-        private void DestroyLimb(Pawn target, BodyPartRecord limb)
-        {
-            int damageAmount = CalculateDamageToDestroyLimb(target, limb);
-            Log.Message($"Damage needed to destroy limb: {damageAmount}");
-
-            ThingDef weaponDef = this.pawn.equipment?.Primary?.def;
-
-            DamageDef cutDamage = DamageDefOf.Cut;
-            var damageInfo = new DamageInfo(cutDamage, damageAmount, 50, -1, Caster, limb, weaponDef);
-
-            // Ensure that at least 1 damage is dealt to guarantee limb destruction
-            target.TakeDamage(damageInfo);
-        }
-
-        private int CalculateDamageToDestroyLimb(Pawn target, BodyPartRecord limb)
-        {
-            // Return a very high damage value to ensure limb destruction
-            return 50; // You can adjust this value as needed
-        }
-
         private BodyPartRecord FindManipulationTarget(Pawn target)
         {
-            // Filter body parts that can be manipulated
             var manipulationSources = target.health.hediffSet.GetNotMissingParts(BodyPartHeight.Undefined, BodyPartDepth.Undefined)
                 .Where(part => part.def.tags.Contains(BodyPartTagDefOf.ManipulationLimbSegment)).ToList();
-
-            // Return a random manipulable limb
             return manipulationSources.Any() ? manipulationSources.RandomElement() : null;
         }
     }

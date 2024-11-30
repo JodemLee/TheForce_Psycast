@@ -12,6 +12,7 @@ namespace TheForce_Psycast
         public static FieldInfo Projectile_origin = AccessTools.Field(typeof(Projectile), "origin");
         public static FieldInfo Projectile_destination = AccessTools.Field(typeof(Projectile), "destination");
         public static FieldInfo Projectile_usedTarget = AccessTools.Field(typeof(Projectile), "usedTarget");
+        
     }
 
 }

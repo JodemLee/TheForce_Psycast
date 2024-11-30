@@ -8,19 +8,33 @@ namespace TheForce_Psycast.Hediffs
     public class HediffWithComps_DarksideGhost : HediffWithComps
     {
         public Thing linkedObject;
-        private bool isDead;
+        private int tickcounter = 0;
 
         public override void Notify_PawnDied(DamageInfo? dinfo, Hediff culprit = null)
         {
             base.Notify_PawnDied(dinfo, culprit);
-            isDead = true;
         }
 
         public override void ExposeData()
         {
             base.ExposeData();
             Scribe_References.Look(ref linkedObject, "linkedObject");
-            Scribe_Values.Look(ref isDead, "isDead", false);
+        }
+
+        public override void Tick()
+        {
+            base.Tick();
+            tickcounter++;
+            if (linkedObject != null && linkedObject.Destroyed && tickcounter > 10 && def != null)
+            {
+                pawn.health.RemoveHediff(pawn.health.GetOrAddHediff(ForceDefOf.Force_SithGhost));
+                pawn.Kill(null);
+                return;
+            }
+            if (tickcounter > 10)
+            {
+                tickcounter = 0;
+            }
         }
 
         public static TargetingParameters ForLinkToObject()
@@ -59,7 +73,8 @@ namespace TheForce_Psycast.Hediffs
                 yield break;
             }
 
-            if (Severity >= 1f && linkedObject == null)
+            // Only show "Link to Object" when no object is linked and the pawn is not dead
+            if (Severity >= 1f && linkedObject == null && !pawn.Dead)
             {
                 yield return new Command_Action
                 {
@@ -79,6 +94,7 @@ namespace TheForce_Psycast.Hediffs
                 };
             }
 
+            // Show "Linked to Object" and "Unlink Object" when an object is linked
             if (linkedObject != null)
             {
                 yield return new Command_Action
@@ -92,6 +108,7 @@ namespace TheForce_Psycast.Hediffs
                     }
                 };
 
+                // Show "Unlink Object" if the pawn is not already a Force Ghost
                 if (!ForceGhostUtility.IsForceGhost(pawn))
                 {
                     yield return new Command_Action
@@ -106,25 +123,48 @@ namespace TheForce_Psycast.Hediffs
                         }
                     };
                 }
+
+                // New command: Clear linked object and kill the pawn
+                if(ForceGhostUtility.IsForceGhost(pawn))
+                {
+                    yield return new Command_Action
+                    {
+                        defaultLabel = "Clear Linked Object and Kill",
+                        defaultDesc = "Clear the linked object and kill the pawn immediately.",
+                        icon = ContentFinder<Texture2D>.Get("Abilities/Darkside/SithGhost", true), // You can use a different icon if needed
+                        action = () =>
+                        {
+                            linkedObject = null; // Clear the linked object
+                            var ghost = pawn.health.hediffSet.GetFirstHediffOfDef(ForceDefOf.Force_SithGhost); 
+                            pawn.health.RemoveHediff(ghost); // Remove the ghost hediff
+                            pawn.Kill(null); // Kill the pawn
+                            Messages.Message($"{pawn.LabelCap} has been killed and the linked object has been cleared.", MessageTypeDefOf.NegativeEvent);
+                        }
+                    };
+                } 
             }
 
-            if (isDead && linkedObject != null && !ForceGhostUtility.IsForceGhost(pawn))
+            // Show "Return as Ghost" if the pawn is dead and linked to an object, but not yet a Force Ghost
+            if (pawn.Dead && linkedObject != null && !ForceGhostUtility.IsForceGhost(pawn))
             {
                 yield return new Command_Action
                 {
-                    defaultLabel = "Return as Ghost",
-                    defaultDesc = "Return as a Force Ghost.",
-                    icon = ContentFinder<Texture2D>.Get("Abilities/Lightside/ForceGhost", true),
+                    defaultLabel = "Force_ReturnAsGhost".Translate(),
+                    defaultDesc = "Force_ReturnAsGhost".Translate(), // Ensure descriptions are properly localized
+                    icon = ContentFinder<Texture2D>.Get("Abilities/Darkside/SithGhost", true),
                     action = () =>
                     {
-                        ResurrectionUtility.TryResurrect(pawn);
-                        isDead = false;
-                        Severity = 1;
-                        pawn.health.AddHediff(ForceDefOf.Force_SithGhost);
+                        if (pawn.Dead)
+                        {
+                            // Attempt to resurrect the pawn
+                            GhostResurrectionUtility.TryReturnAsGhost(pawn, ForceDefOf.Force_SithGhost, 1f);
+                            pawn.apparel.LockAll();
+                        }
                     }
                 };
             }
 
+            // Yield any other gizmos from the base class
             foreach (var gizmo in base.GetGizmos())
             {
                 yield return gizmo;

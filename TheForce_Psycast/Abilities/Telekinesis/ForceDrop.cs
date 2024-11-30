@@ -1,6 +1,7 @@
 ﻿using RimWorld;
 using RimWorld.Planet;
 using System.Collections.Generic;
+using System.Linq;
 using Verse;
 using Ability = VFECore.Abilities.Ability;
 
@@ -29,25 +30,43 @@ namespace TheForce_Psycast.Abilities.Telekinesis
 
         private List<ThingDef> itemDefs = new List<ThingDef>
         {
-            ThingDefOf.ShipChunkIncoming,
-            ThingDefOf.ShuttleCrashing,
-            ThingDefOf.CrashedShipPartIncoming,
-        };
+        ThingDefOf.ShipChunkIncoming,
+        ThingDefOf.ShuttleCrashing,
+        ThingDefOf.CrashedShipPartIncoming,
+         };
+
+        private List<float> itemWeights = new List<float> { 1f, 3f, 1f }; // Weights for each ThingDef
 
         private void SpawnRandomChunk(IntVec3 pos, Map map)
         {
-            // Choose a random ThingDef from the list
-            ThingDef randomItemDef = itemDefs.RandomElement();
+            // Ensure the list lengths match
+            if (itemDefs.Count != itemWeights.Count)
+            {
+                Log.Error("itemDefs and itemWeights lists must have the same length.");
+                return;
+            }
 
-            // Spawn the selected item
-            if (randomItemDef != null)
+            // Calculate total weight
+            float totalWeight = itemWeights.Sum();
+
+            // Generate a random value between 0 and total weight
+            float randomValue = Rand.Range(0f, totalWeight);
+
+            // Select the ThingDef based on the weighted randomness
+            float cumulativeWeight = 0f;
+            for (int i = 0; i < itemDefs.Count; i++)
             {
-                SkyfallerMaker.SpawnSkyfaller(randomItemDef, ThingDefOf.ShipChunk, pos, map);
+                cumulativeWeight += itemWeights[i];
+                if (randomValue <= cumulativeWeight)
+                {
+                    ThingDef selectedDef = itemDefs[i];
+                    SkyfallerMaker.SpawnSkyfaller(selectedDef, ThingDefOf.ShipChunk, pos, map);
+                    return;
+                }
             }
-            else
-            {
-                Log.Error("Random item definition is null.");
-            }
+
+            // Fallback in case no item is selected (shouldn't happen)
+            Log.Error("No item selected after applying weighted randomness.");
         }
     }
 }

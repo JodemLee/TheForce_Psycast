@@ -6,29 +6,28 @@ namespace TheForce_Psycast
     public class Comp_LightsaberBlasterStance : Comp_LightsaberStance
     {
         private AbilityDef additionalAbility;
-
         private bool additionalAbilityAlreadyHad;
 
-        public new CompProperties_LightsaberStance Props => (CompProperties_LightsaberStance)props;
+        public new CompProperties_LightsaberBlasterStance Props => (CompProperties_LightsaberBlasterStance)props;
 
         private const float AdditionalMinSeverity = 1f;
-
         private const float AdditionalMaxSeverity = 7f;
 
         public AbilityDef AdditionalAbility => additionalAbility;
-
         public bool AdditionalAdded => !additionalAbilityAlreadyHad;
 
-        public Comp_LightsaberBlasterStance()
+        public override void PostSpawnSetup(bool respawningAfterLoad)
         {
-            additionalAbility = ForceDefOf.Force_BlasterShot_Stun;
+            base.PostSpawnSetup(respawningAfterLoad);
+            additionalAbility = Props.additionalAbility;
         }
+
 
         public override void PostExposeData()
         {
             base.PostExposeData();
             Scribe_Values.Look(ref additionalAbilityAlreadyHad, "additionalAbilityAlreadyHad", defaultValue: false);
-            Scribe_Defs.Look<AbilityDef>(ref additionalAbility, "additionalAbility");
+            Scribe_Defs.Look(ref additionalAbility, "additionalAbility");
         }
 
         public override void Notify_Equipped(Pawn pawn)
@@ -67,6 +66,9 @@ namespace TheForce_Psycast
 
     public class CompProperties_LightsaberBlasterStance : CompProperties
     {
+
+        public AbilityDef additionalAbility;
+
         public CompProperties_LightsaberBlasterStance()
         {
             this.compClass = typeof(Comp_LightsaberBlasterStance);

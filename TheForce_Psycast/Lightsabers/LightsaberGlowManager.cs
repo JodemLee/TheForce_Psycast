@@ -5,15 +5,13 @@ namespace TheForce_Psycast.Lightsabers
 {
     internal class LightsaberGlowManager : GameComponent
     {
-        public List<ThingComp> compsToTickNormal = new List<ThingComp>();
-
-        public List<Comp_LightsaberBlade> compGlowerToTick = new List<Comp_LightsaberBlade>();
-
-        public static LightsaberGlowManager Instance;
+        public List<ThingComp> compsToTickNormal { get; private set; } = new List<ThingComp>();
+        public List<Comp_LightsaberBlade> compGlowerToTick { get; private set; } = new List<Comp_LightsaberBlade>();
+        public static LightsaberGlowManager Instance { get; private set; }
 
         public LightsaberGlowManager(Game game)
         {
-            Init();
+            Instance = this;
         }
 
         public override void ExposeData()
@@ -30,7 +28,6 @@ namespace TheForce_Psycast.Lightsabers
 
         private void Init()
         {
-            Instance = this;
             if (compsToTickNormal == null)
             {
                 compsToTickNormal = new List<ThingComp>();
@@ -39,14 +36,25 @@ namespace TheForce_Psycast.Lightsabers
 
         public override void GameComponentTick()
         {
-            for (int num = compGlowerToTick.Count - 1; num >= 0; num--)
+            if (!Force_ModSettings.LightsaberRealGlow)
             {
-                compGlowerToTick[num].Tick();
+                return;
             }
-            for (int num2 = compsToTickNormal.Count - 1; num2 >= 0; num2--)
+            for (int i = compGlowerToTick.Count - 1; i >= 0; i--)
             {
-                compsToTickNormal[num2].CompTick();
+                if (compGlowerToTick[i].ShouldGlow())
+                {
+                    compGlowerToTick[i].CompTick();
+                }
+            }
+
+            // Update normal ticking components
+            for (int i = compsToTickNormal.Count - 1; i >= 0; i--)
+            {
+                compsToTickNormal[i].CompTick();
             }
         }
     }
 }
+
+

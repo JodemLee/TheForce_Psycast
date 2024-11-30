@@ -1,4 +1,5 @@
 ﻿using RimWorld;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Verse;
@@ -14,7 +15,7 @@ namespace TheForce_Psycast.Lightsabers.Lightsaber_Combat
             {
                 foreach (var limb in manipulationTargets)
                 {
-                    DestroyLimb(target.Pawn, limb);
+                    LightsaberCombatUtility.DestroyLimb(CasterPawn, target.Pawn, limb);
                 }
             }
             else
@@ -23,27 +24,6 @@ namespace TheForce_Psycast.Lightsabers.Lightsaber_Combat
             }
         }
 
-        private void DestroyLimb(Pawn target, BodyPartRecord limb)
-        {
-            int damageAmount = CalculateDamageToDestroyLimb(limb, target);
-
-            ThingDef weaponDef = null;
-            if (this.pawn.equipment?.Primary != null)
-            {
-                weaponDef = this.pawn.equipment.Primary.def;
-            }
-
-            DamageDef cutDamage = DamageDefOf.Cut;
-            var damageInfo = new DamageInfo(cutDamage, damageAmount, 50, -1, Caster, limb, weaponDef);
-            target.TakeDamage(damageInfo);
-        }
-
-        private int CalculateDamageToDestroyLimb(BodyPartRecord limb, Pawn target)
-        {
-            return 50; //
-        }
-
-
         private List<BodyPartRecord> FindManipulationTarget(Pawn target)
         {
             var manipulationSources = target.health.hediffSet.GetNotMissingParts(BodyPartHeight.Undefined, BodyPartDepth.Undefined)
@@ -51,12 +31,10 @@ namespace TheForce_Psycast.Lightsabers.Lightsaber_Combat
 
             if (manipulationSources.Any())
             {
-                // If there are manipulation sources, return a random one
                 return manipulationSources;
             }
             else
-            {
-                // If there are no manipulation sources, return null    
+            { 
                 return null;
             }
         }

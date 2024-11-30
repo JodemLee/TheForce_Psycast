@@ -47,21 +47,35 @@ namespace TheForce_Psycast
                 // Apply the offset multiplier
                 normalizedOffset *= offsetMultiplier;
 
-                // Calculate the new position by pushing back from the original position
-                IntVec3 pushBackPosition = target.Cell + normalizedOffset;
+                // Calculate the initial pushback position
+                IntVec3 initialPushBackPosition = target.Cell + normalizedOffset;
+                IntVec3 pushBackPosition = initialPushBackPosition;
 
-                // Check if the new position intersects with a solid object (e.g., a wall)
-                if (!PositionUtils.CheckValidPosition(pushBackPosition, Caster.Map))
+                Map map = Caster.Map;
+                IntVec3 lastValidCell = target.Cell;
+
+                // Check each cell along the line of sight to the initial pushback position
+                foreach (IntVec3 cell in GenSight.PointsOnLineOfSight(this.pawn.Position, initialPushBackPosition))
                 {
-                    // If it intersects, find a valid position closer to the target
-                    pushBackPosition = PositionUtils.FindValidPosition(target.Cell, normalizedOffset, Caster.Map);
+                    // If we hit an impassable cell, stop and set pushBackPosition to last valid cell
+                    if (!cell.InBounds(map) || cell.GetRoofHolderOrImpassable(map) is Building)
+                    {
+                        pushBackPosition = lastValidCell;
+                        break;
+                    }
+                    lastValidCell = cell; // Update last valid cell if no obstacle is found
+                }
+
+                // Check if the final pushBackPosition is valid, otherwise adjust it closer to the target
+                if (!PositionUtils.CheckValidPosition(pushBackPosition, map))
+                {
+                    pushBackPosition = PositionUtils.FindValidPosition(target.Cell, normalizedOffset, map);
                 }
 
                 // Apply explosive force to the target
                 if (target.Thing is Pawn pawn)
                 {
-                    var map = Caster.Map;
-                    var flyer = PawnFlyer.MakeFlyer(ForceDefOf.Force_ThrownPawn, pawn, pushBackPosition, null, null);
+                    var flyer = PawnFlyer.MakeFlyer(ForceDefOf.Force_ThrownPawnRepulse, pawn, pushBackPosition, null, null);
                     GenSpawn.Spawn(flyer, pushBackPosition, map);
                 }
                 else

@@ -65,7 +65,7 @@ namespace TheForce_Psycast.Abilities.Darkside
                         if (pawn.mindState != null && pawn.mindState.mentalStateHandler != null)
                         {
                             // Use a specific mental state for fear, e.g., PanicFlee
-                            var fearMentalStateDef = MentalStateDefOf.PanicFlee;
+                            var fearMentalStateDef = ForceDefOf.Force_ForceFear;
                             pawn.mindState.mentalStateHandler.TryStartMentalState(fearMentalStateDef, "Force_Fear".Translate(), true);
                         }
                     }

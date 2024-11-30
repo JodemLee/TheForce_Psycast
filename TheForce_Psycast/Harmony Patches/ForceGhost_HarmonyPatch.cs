@@ -2,6 +2,7 @@
 using RimWorld;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using TheForce_Psycast;
 using TheForce_Psycast.Hediffs;
@@ -13,44 +14,70 @@ public static class ForceGhost_HarmonyPatch
     [StaticConstructorOnStartup]
     public static class ConsolidatedGhostsPatch
     {
-        [HarmonyPatch(typeof(Pawn_StoryTracker), "get_SkinColor")]
-        public static class SkinColorPostfixPatch
+        public static class ForceGhost_HarmonyPatch
         {
-            [HarmonyPriority(Priority.Last)]
-            public static void Postfix(Pawn ___pawn, ref Color __result)
-            {
-                Color? ghostColor = ForceGhostUtility.GetGhostColor(___pawn);
-                if (ghostColor.HasValue)
-                {
-                    __result = ghostColor.Value;
-                }
-            }
-        }
+            private static readonly Dictionary<Pawn, Color?> ghostColorCache = new Dictionary<Pawn, Color?>();
 
-        [HarmonyPatch(typeof(Pawn_StoryTracker), "get_HairColor")]
-        public static class HairColorPostfixPatch
-        {
-            [HarmonyPriority(Priority.Last)]
-            public static void Postfix(Pawn ___pawn, ref Color __result)
+            public static void InvalidateCache(Pawn pawn)
             {
-                Color? ghostColor = ForceGhostUtility.GetGhostColor(___pawn);
-                if (ghostColor.HasValue)
+                // Method to invalidate the cache for a specific pawn
+                ghostColorCache.Remove(pawn);
+            }
+
+            [HarmonyPatch(typeof(Pawn_StoryTracker), "get_SkinColor")]
+            public static class SkinColorPostfixPatch
+            {
+                [HarmonyPriority(Priority.Last)]
+                public static void Postfix(Pawn ___pawn, ref Color __result)
                 {
-                    __result = ghostColor.Value;
+                    Color? ghostColor = ForceGhostUtility.GetGhostColor(___pawn);
+                    if (ghostColor.HasValue)
+                    {
+                        __result = ghostColor.Value;
+                    }
+                }
+            }
+
+            [HarmonyPatch(typeof(Pawn_StoryTracker), "get_HairColor")]
+            public static class HairColorPostfixPatch
+            {
+                [HarmonyPriority(Priority.Last)]
+                public static void Postfix(Pawn ___pawn, ref Color __result)
+                {
+                    Color? ghostColor = ForceGhostUtility.GetGhostColor(___pawn);
+                    if (ghostColor.HasValue)
+                    {
+                        __result = ghostColor.Value;
+                    }
+                }
+            }
+
+            [HarmonyPatch(typeof(Apparel), "DrawColor", MethodType.Getter)]
+            public static class Apparel_DrawColor_Patch
+            {
+                public static void Postfix(Apparel __instance, ref Color __result)
+                {
+                    // Check if the apparel has a wearer
+                    Pawn wearer = __instance.Wearer;
+                    if (wearer != null)
+                    {
+                        Color? ghostColor = ForceGhostUtility.GetGhostColor(wearer);
+                        if (ghostColor.HasValue)
+                        {
+                            __result = ghostColor.Value;
+                        }
+                    }
                 }
             }
         }
+    
 
         [HarmonyPatch(typeof(HealthCardUtility), "DrawMedOperationsTab")]
         public static class PatchDrawMedOperationsTab
         {
             public static bool Prefix(Pawn pawn)
             {
-                if (ForceGhostUtility.IsForceGhost(pawn))
-                {
-                    return false;
-                }
-                return true;
+                return !ForceGhostUtility.IsForceGhost(pawn); // Directly return the result of the condition
             }
         }
 
@@ -80,44 +107,7 @@ public static class ForceGhost_HarmonyPatch
                 }
             }
         }
-
-        [HarmonyPatch(typeof(Thing), "Destroy")]
-        public static class Thing_Destroy_Patch
-        {
-            public static void Postfix(Thing __instance)
-            {
-                // Create a list to hold the pawns that need to be processed
-                List<Pawn> pawnsToProcess = new List<Pawn>();
-
-                // Collect all pawns that need to be processed
-                foreach (var map in Find.Maps)
-                {
-                    foreach (var pawn in map.mapPawns.AllPawns)
-                    {
-                        var hediff = pawn.health.hediffSet.GetFirstHediffOfDef(ForceDefOf.Force_Darkside) as HediffWithComps_DarksideGhost;
-                        var ghostHediff = pawn.health.hediffSet.GetFirstHediffOfDef(ForceDefOf.Force_Ghost);
-
-                        if (hediff != null && ForceGhostUtility.IsForceGhost(pawn) && hediff.linkedObject == __instance)
-                        {
-                            pawnsToProcess.Add(pawn);
-                        }
-                    }
-                }
-
-                // Process the collected pawns outside of the iteration
-                foreach (var pawn in pawnsToProcess)
-                {
-                    var ghostHediff = pawn.health.hediffSet.GetFirstHediffOfDef(ForceDefOf.Force_Ghost);
-                    if (ghostHediff != null)
-                    {
-                        pawn.health.RemoveHediff(ghostHediff);
-                    }
-                    pawn.Kill(null);
-                }
-            }
-        }
-
-
+        
         [HarmonyPatch(typeof(TradeDeal), "TryExecute", new[] { typeof(bool) }, new[] { ArgumentType.Out })]
         public static class TradeDeal_TryExecute_Warning_Patch
         {
@@ -130,9 +120,6 @@ public static class ForceGhost_HarmonyPatch
                 {
                     // Display a warning to the player
                     Messages.Message("Warning: One or more items in this trade are linked objects. Selling them will result in their linked items being destroyed.", MessageTypeDefOf.RejectInput);
-
-                    // Optionally, you can return false to cancel the trade if needed
-                    // return false;
                 }
 
                 // Continue with the trade execution
@@ -159,41 +146,55 @@ public static class ForceGhost_HarmonyPatch
         [HarmonyPatch(typeof(Thing), "GetInspectString")]
         public static class Patch_Thing_GetInspectString
         {
+            private static readonly Dictionary<Thing, string> cachedResults = new Dictionary<Thing, string>();
+            private static int lastCachedTick = -1;
+
             public static void Postfix(Thing __instance, ref string __result)
             {
                 if (__instance == null || Find.CurrentMap == null)
                 {
                     return;
                 }
-
-                // Initialize the StringBuilder with the existing inspect string
-                StringBuilder stringBuilder = new StringBuilder(__result ?? "");
-
-                // Flag to check if we appended "Linked to:" information
-                bool appendedInfo = false;
-
-                // Iterate over all pawns in the current map
-                foreach (Pawn pawn in Find.CurrentMap.mapPawns.AllPawns)
+                int currentTick = Find.TickManager.TicksGame;
+                if (lastCachedTick == currentTick && cachedResults.TryGetValue(__instance, out var cachedResult))
                 {
-                    // Get the hediff and check if it is of the correct type
-                    var ghostHediff = pawn.health.hediffSet.GetFirstHediffOfDef(ForceDefOf.Force_Darkside) as HediffWithComps_DarksideGhost;
-                    if (ghostHediff != null && ghostHediff.linkedObject == __instance)
+                    __result = cachedResult;
+                    return;
+                }
+                if (lastCachedTick != currentTick)
+                {
+                    cachedResults.Clear();
+                    lastCachedTick = currentTick;
+                }
+                StringBuilder stringBuilder = null;
+                bool foundLinkedPawn = false;
+
+                foreach (var pawn in Find.CurrentMap.mapPawns.AllPawnsSpawned)
+                {
+                    var ghostHediff = pawn.health?.hediffSet?.GetFirstHediffOfDef(ForceDefOf.Force_Darkside) as HediffWithComps_DarksideGhost;
+                    if (ghostHediff?.linkedObject == __instance)
                     {
-                        // Check if we need to add a newline before appending
-                        if (stringBuilder.Length > 0 && !stringBuilder.ToString().EndsWith("\n"))
+                        if (!foundLinkedPawn)
                         {
-                            stringBuilder.AppendLine(); // Add a newline if needed
+                            stringBuilder = new StringBuilder(__result);
+                            foundLinkedPawn = true;
                         }
 
-                        // Append the "Linked to:" information
+                        if (stringBuilder.Length > 0 && !stringBuilder.ToString().EndsWith("\n"))
+                        {
+                            stringBuilder.AppendLine();
+                        }
+
                         stringBuilder.Append("SithGhost".Translate() + pawn.LabelCap);
-                        appendedInfo = true; // Mark that we've appended the info
-                        break; // Exit loop after finding the linked pawn
                     }
                 }
 
-                // Set the final result
-                __result = stringBuilder.ToString();
+                // If linked pawn was found, set the result and cache it
+                if (foundLinkedPawn)
+                {
+                    __result = stringBuilder.ToString();
+                    cachedResults[__instance] = __result;
+                }
             }
         }
     }

@@ -1,5 +1,7 @@
 ﻿using RimWorld;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Verse;
 using Verse.Sound;
@@ -19,43 +21,127 @@ namespace TheForce_Psycast.Lightsabers
         public Color lightsaberBlade2OverrideColor;
         public Color lightsaberCore2OverrideColor;
         public Color lightsaberGlowOverrideColor;
+        public Color hiltColorOneOverrideColor;
+        public Color hiltColorTwoOverrideColor;
 
         private CompGlower compGlower;
         private bool dirty;
         private Map map;
         private IntVec3 prevPosition;
         private float curRadius;
-
         private bool hasPlayedSound = false;
-
         public bool IsThrowingWeapon = false;
-
-
+        private bool colorsInitialized = false;
         public float lastInterceptAngle;
         public float LastInterceptAngle
         {
             get => lastInterceptAngle;
             set => lastInterceptAngle = value;
         }
-
-
         private int animationDeflectionTicks;
         public int AnimationDeflectionTicks
         {
             set => animationDeflectionTicks = value;
             get => animationDeflectionTicks;
         }
-        public bool IsAnimatingNow => animationDeflectionTicks >= 0;
-
+        public bool IsAnimatingNow => animationDeflectionTicks > 0;
         public CompProperties_LightsaberBlade Props => (CompProperties_LightsaberBlade)props;
-
-        private readonly MaterialPropertyBlock materialPropertyBlock = new MaterialPropertyBlock();
-
+        public readonly MaterialPropertyBlock materialPropertyBlock = new MaterialPropertyBlock();
+        public readonly MaterialPropertyBlock hiltMaterialPropertyBlock = new MaterialPropertyBlock();
         private float stanceRotation;
         private Vector3 drawOffset;
-
         public float CurrentRotation => stanceRotation;
         public Vector3 CurrentDrawOffset => drawOffset;
+        public float bladeLengthCore1AndBlade1 = 1.5f;
+        public float bladeLengthCore2AndBlade2 = 1.5f;
+
+
+        public float MinBladeLength
+        {
+            get
+            {
+                if (props is CompProperties_LightsaberBlade bladeProps)
+                {
+                    return bladeProps.minBladeLength;
+                }
+                return 1f; // Default or fallback value
+            }
+        }
+
+        public float MaxBladeLength
+        {
+            get
+            {
+                if (props is CompProperties_LightsaberBlade bladeProps)
+                {
+                    return bladeProps.maxBladeLength;
+                }
+                return 2.2f; // Default or fallback value
+            }
+        }
+        public List<SoundDef> lightsaberSound => Props.lightsaberSound ?? new List<SoundDef>();
+        public List<HiltDef> availablehilts => Props.availableHiltGraphics ?? new List<HiltDef>();
+        public List<HiltPartDef> selectedHiltParts = new List<HiltPartDef>();
+        public SoundDef selectedSoundEffect;
+        public int selectedSoundIndex = 0;
+        private bool hiltGraphicInitialized = false;
+        private HiltDef _selectedHiltGraphic;
+        public HiltDef selectedhiltgraphic
+        {
+            get => _selectedHiltGraphic;
+            set => _selectedHiltGraphic = value;
+        }
+        private float scaleTimer;
+        public Vector3 currentScaleForCore1AndBlade1 = Vector3.zero;
+        public Vector3 currentScaleForCore2AndBlade2 = Vector3.zero;
+        public Vector3 targetScaleForCore1AndBlade1;
+        public Vector3 targetScaleForCore2AndBlade2;
+
+        private int tickCounter = 0;
+        private const int TicksPerGlowerUpdate = 60;
+
+        private static float maxVibrate = 1.005f;
+        public float minVibrate = 0.999f;
+        public float vibrationrate = 0.00f;
+        public float vibrationrate2 = 0.00f;
+
+        public Vector3 currentDrawOffset; // Current offset for smooth transition
+        public Vector3 targetDrawOffset;
+
+        private CompEquippable compEquippable;
+        public CompEquippable GetEquippable
+        {
+            get
+            {
+                if (compEquippable == null)
+                {
+                    CacheComps();  // Ensure comps are cached if GetEquippable is accessed prematurely
+                }
+                return compEquippable;
+            }
+        }
+
+        public Pawn GetPawn
+        {
+            get
+            {
+                return GetEquippable?.verbTracker?.PrimaryVerb?.CasterPawn;
+            }
+        }
+
+        private void CacheComps()
+        {
+            // This method will look for and cache the necessary components.
+            var comps = parent.AllComps;
+            for (int i = 0; i < comps.Count; i++)
+            {
+                var comp = comps[i];
+                if (comp is CompEquippable equippable)
+                {
+                    compEquippable = equippable;
+                }
+            }
+        }
 
         public void UpdateRotationForStance(float angle)
         {
@@ -65,37 +151,27 @@ namespace TheForce_Psycast.Lightsabers
         public void UpdateDrawOffsetForStance(Vector3 offset)
         {
             drawOffset = offset;
-        }
+            targetDrawOffset = drawOffset;
 
+        }
         public Pawn Wearer
         {
             get
             {
-                if (parent.ParentHolder is Pawn_EquipmentTracker { pawn: var pawn })
-                {
-                    return pawn;
-                }
-                if (parent.ParentHolder is Pawn_ApparelTracker { pawn: var pawn2 })
-                {
-                    return pawn2;
-                }
-                if (parent.ParentHolder is Pawn_InventoryTracker { pawn: var pawn3 })
-                {
-                    return pawn3;
-                }
-                if (!(parent.ParentHolder is Pawn_CarryTracker { pawn: var pawn4 }))
-                {
-                    return null;
-                }
-                return pawn4;
+                return parent?.ParentHolder?.ParentHolder as Pawn;
             }
         }
 
         public override void Initialize(CompProperties props)
         {
             base.Initialize(props);
-            InitializeColors();
             InitializeGlower();
+            InitializeHilts();
+            if (lightsaberSound != null && lightsaberSound.Count > 0)
+            {
+                int randomIndex = Rand.Range(0, lightsaberSound.Count); // Generate a random index within the list
+                selectedSoundEffect = lightsaberSound[randomIndex];     // Set a random sound effect from the list
+            }
         }
 
         private void InitializeGlower()
@@ -108,19 +184,32 @@ namespace TheForce_Psycast.Lightsabers
             }
         }
 
+
         public override void PostSpawnSetup(bool respawningAfterLoad)
         {
             base.PostSpawnSetup(respawningAfterLoad);
+            if (!colorsInitialized)
+            {
+                InitializeColors();
+            }
+            InitializeHilts();
             InitializeGlower();
             dirty = true;
             map = parent.MapHeld;
             LightsaberGlowManager.Instance.compGlowerToTick.Add(this);
+            targetScaleForCore1AndBlade1 = new Vector3(bladeLengthCore1AndBlade1, 1f, bladeLengthCore1AndBlade1);
+            targetScaleForCore2AndBlade2 = new Vector3(bladeLengthCore2AndBlade2, 1f, bladeLengthCore2AndBlade2);
+            if (parent.Map != null)
+            {
+                //LightsaberSoundManager.Instance.RegisterLightsaberComponent(this);
+            }
         }
 
         public override void PostDeSpawn(Map map)
         {
             RemoveGlower(map);
             base.PostDeSpawn(map);
+            //LightsaberSoundManager.Instance.DeregisterLightsaberComponent(this);
         }
 
         public override void PostDestroy(DestroyMode mode, Map previousMap)
@@ -137,69 +226,67 @@ namespace TheForce_Psycast.Lightsabers
         {
             base.PostPostMake();
             LightsaberGlowManager.Instance.compGlowerToTick.Add(this);
+            CacheComps();
         }
 
-        private bool isDeferredInitializationPending = true;
+        private bool sustainerActive = false;
+        private Sustainer currentSustainer;
 
-        public void Tick()
+
+        private const int UpdateInterval = 10; // Adjust based on acceptable delay
+        public override void CompTick()
         {
             if (parent.MapHeld == null)
             {
                 return;
             }
-            var pawn = Wearer;
-            if (pawn != null)
-            {
-                if (isDeferredInitializationPending)
-                {
-                    InitializeColors();
-                    isDeferredInitializationPending = false;
-                    return;
-                }
-            }
 
-            if (map == null)
+            // Use a hash interval to reduce frequency of updates
+            if (this.parent.IsHashIntervalTick(UpdateInterval))
             {
-                map = parent.MapHeld;
-            }
-            if (prevPosition != parent.PositionHeld)
-            {
-                prevPosition = parent.PositionHeld;
-                dirty = true;
-            }
-            bool flag = ShouldGlow();
-            if ((compGlower == null && flag) || !flag)
-            {
-                dirty = true;
-            }
-            else if (compGlower != null && curRadius != GetRadius())
-            {
-                dirty = true;
-            }
-            if (dirty)
-            {
-                UpdateGlower();
-                dirty = false;
+                if (map == null)
+                {
+                    map = parent.MapHeld;
+                }
+                // Update glow logic
+                if (prevPosition != parent.PositionHeld)
+                {
+                    prevPosition = parent.PositionHeld;
+                    dirty = true;
+                }
+
+                bool flag = ShouldGlow();
+                if ((compGlower == null && flag) || !flag)
+                {
+                    dirty = true;
+                }
+                else if (compGlower != null && curRadius != GetRadius())
+                {
+                    dirty = true;
+                }
+                if (dirty)
+                {
+                    UpdateGlower();
+                    dirty = false;
+                }
             }
         }
 
-
-
-        private bool ShouldGlow()
+        public bool ShouldGlow()
         {
             if (Force_ModSettings.LightsaberRealGlow)
             {
-                bool result = false;
-                IntVec3 positionHeld = parent.PositionHeld;
-                if (positionHeld.InBounds(parent.MapHeld))
+                if (Wearer != null && parent.MapHeld != null)
                 {
-                    if (Wearer != null && Wearer.IsCarryingWeaponOpenly() && Wearer.equipment?.Primary == parent)
+                    IntVec3 positionHeld = Wearer.Position;
+                    if (positionHeld.InBounds(parent.MapHeld) && Wearer.IsCarryingWeaponOpenly())
                     {
-                        result = true;
+                        return true;
                     }
                 }
-                return result;
             }
+            RemoveGlower(parent.MapHeld);
+            dirty = false;
             return false;
         }
 
@@ -207,9 +294,11 @@ namespace TheForce_Psycast.Lightsabers
         {
             IntVec3 position = GetPosition();
             Map mapHeld = parent.MapHeld;
+
             if (mapHeld != null && position.IsValid)
             {
                 RemoveGlower(parent.MapHeld);
+
                 if (ShouldGlow())
                 {
                     compGlower = new CompGlower();
@@ -217,6 +306,7 @@ namespace TheForce_Psycast.Lightsabers
                     ColorInt glowColor = new ColorInt(lightsaberBlade1OverrideColor);
                     curRadius = GetRadius();
                     float glowRadius = Force_ModSettings.glowRadius;
+
                     compGlower.Initialize(new CompProperties_Glower
                     {
                         glowColor = glowColor,
@@ -273,51 +363,188 @@ namespace TheForce_Psycast.Lightsabers
             return num;
         }
 
-        public Graphic Graphic => GetOrCreateGraphic(ref graphicInt, Props.graphicData, lightsaberBlade1OverrideColor);
+        public Graphic Graphic => GetOrCreateGraphic(ref graphicInt, Props?.graphicData, lightsaberBlade1OverrideColor, Props?.graphicData?.Graphic?.Shader ?? null);
+        public Graphic LightsaberCore1Graphic => GetOrCreateGraphic(ref lightsaberCore1GraphicInt, Props?.lightsaberCore1GraphicData, lightsaberCore1OverrideColor, Props?.lightsaberCore1GraphicData?.Graphic?.Shader ?? null);
+        public Graphic LightsaberBlade2Graphic => GetOrCreateGraphic(ref lightsaberBlade2GraphicInt, Props?.lightsaberBlade2GraphicData, lightsaberBlade2OverrideColor, Props?.lightsaberBlade2GraphicData?.Graphic?.Shader ?? null);
+        public Graphic LightsaberCore2Graphic => GetOrCreateGraphic(ref lightsaberCore2GraphicInt, Props?.lightsaberCore2GraphicData, lightsaberCore2OverrideColor, Props?.lightsaberCore2GraphicData?.Graphic?.Shader ?? null);
+        public Graphic LightsaberGlowGraphic => GetOrCreateGraphic(ref lightsaberGlowGraphicInt, Props?.lightsaberGlowGraphic, lightsaberBlade1OverrideColor, Props?.lightsaberGlowGraphic?.Graphic?.Shader ?? null);
+        private Graphic cachedHiltGraphic;
+        private bool needsUpdate = true;
 
-        public Graphic LightsaberCore1Graphic => GetOrCreateGraphic(ref lightsaberCore1GraphicInt, Props.lightsaberCore1GraphicData, lightsaberCore1OverrideColor);
-
-        public Graphic LightsaberBlade2Graphic => GetOrCreateGraphic(ref lightsaberBlade2GraphicInt, Props.lightsaberBlade2GraphicData, lightsaberBlade2OverrideColor);
-
-        public Graphic LightsaberCore2Graphic => GetOrCreateGraphic(ref lightsaberCore2GraphicInt, Props.lightsaberCore2GraphicData, lightsaberCore2OverrideColor);
-
-        public Graphic LightsaberGlowGraphic => GetOrCreateGraphic(ref lightsaberGlowGraphicInt, Props.lightsaberGlowGraphic, lightsaberBlade1OverrideColor);
-
-        private Graphic GetOrCreateGraphic(ref Graphic graphicField, GraphicData graphicData, Color color)
+        public Graphic HiltGraphic
         {
-            if (graphicField == null && graphicData != null)
+            get
             {
-                var newColor = color == Color.white ? parent.DrawColor : color;
-                graphicField = graphicData.Graphic.GetColoredVersion(parent.Graphic.Shader, newColor, newColor);
+                if (needsUpdate)
+                {
+                    if (selectedhiltgraphic == null || selectedhiltgraphic.hiltgraphic == null)
+                    {
+                        cachedHiltGraphic = DefaultHiltGraphic();
+                    }
+                    else
+                    {
+                        cachedHiltGraphic = GetOrCreateHilt(ref cachedHiltGraphic, selectedhiltgraphic.hiltgraphic, hiltColorOneOverrideColor, hiltColorTwoOverrideColor);
+                    }
+                    needsUpdate = false;
+                }
+                return cachedHiltGraphic;
+            }
+        }
+        public void UpdateHiltGraphicCache()
+        {
+            needsUpdate = true;
+        }
+
+        public Graphic GetOrCreateHilt(ref Graphic graphicField, GraphicData graphicData, Color color, Color colortwo)
+        {
+            if (graphicData == null)
+            {
+                return DefaultHiltGraphic();
+            }
+
+            if (graphicField == null)
+            {
+                var primaryColor = color == hiltColorOneOverrideColor ? parent.DrawColor : color;
+                var secondaryColor = colortwo == hiltColorTwoOverrideColor ? parent.DrawColorTwo : colortwo; // Use secondary color
+                graphicField = graphicData.Graphic.GetColoredVersion(
+                    selectedhiltgraphic.hiltgraphic.Graphic.Shader,
+                    primaryColor,
+                    secondaryColor
+                );
             }
             return graphicField;
         }
 
+        private Graphic DefaultHiltGraphic()
+        {
+           return GetOrCreateHilt(ref cachedHiltGraphic, selectedhiltgraphic.hiltgraphic, hiltColorOneOverrideColor, hiltColorTwoOverrideColor); ; // Fallback to a safe default graphic
+        }
+
+        public Graphic GetOrCreateGraphic(ref Graphic graphicField, GraphicData graphicData, Color color, Shader shaderOverride)
+        {
+            if (graphicField == null && graphicData != null)
+            {
+                var newColor = color == Color.white ? parent.DrawColor : color;
+                graphicField = graphicData.Graphic.GetColoredVersion(shaderOverride ?? ShaderDatabase.TransparentPostLight, newColor, newColor);
+            }
+            return graphicField;
+        }
+
+        private void InitializeHilts()
+        {
+            if (!hiltGraphicInitialized)
+            {
+                var pawn = Wearer;
+                var hiltColors = pawn?.kindDef.GetModExtension<ModExtension_LightsaberColors>();
+
+                if (selectedhiltgraphic == null && Props.availableHiltGraphics != null && Props.availableHiltGraphics.Any())
+                {
+                    selectedhiltgraphic = Props.availableHiltGraphics.RandomElement();
+                    List<HiltPartDef> allHiltParts = DefDatabase<HiltPartDef>.AllDefsListForReading;
+                    Dictionary<HiltPartCategory, HiltPartDef> randomHiltParts = new Dictionary<HiltPartCategory, HiltPartDef>();
+
+                    // Loop through each category
+                    foreach (HiltPartCategory category in Enum.GetValues(typeof(HiltPartCategory)))
+                    {
+                        // Get all hilt parts for the current category
+                        var partsInCategory = allHiltParts.Where(part => part.category == category).ToList();
+
+                        // If there are any parts in this category, pick one randomly
+                        if (partsInCategory.Any())
+                        {
+                            var selectedPart = partsInCategory.RandomElement();
+                            randomHiltParts[category] = selectedPart;
+
+                            // Add the selected part to the hilt
+                            AddHiltPart(selectedPart);
+                        }
+                    }
+                }
+
+                if (selectedhiltgraphic != null)
+                {
+                    // Set the scales for the hilt and blade
+                    targetScaleForCore1AndBlade1 = new Vector3(bladeLengthCore1AndBlade1, 1f, bladeLengthCore1AndBlade1);
+                    targetScaleForCore2AndBlade2 = new Vector3(bladeLengthCore2AndBlade2, 1f, bladeLengthCore2AndBlade2);
+                    hiltGraphicInitialized = true;
+                }
+            }
+        }
+
         private void InitializeColors()
         {
+            if (colorsInitialized)
+            {
+                Log.Message("Colors already initialized.");
+                return;
+            }
             var pawn = Wearer;
             if (pawn != null)
             {
-
                 var modExt = pawn.kindDef.GetModExtension<ModExtension_LightsaberColors>();
                 if (modExt != null)
                 {
-
-                    // Select a random blade color, core color, and glow color from the lists
-                    lightsaberBlade1OverrideColor = modExt.bladeColors.RandomElement();
-                    lightsaberCore1OverrideColor = modExt.coreColors.RandomElement();
-                    lightsaberBlade2OverrideColor = lightsaberBlade1OverrideColor;
-                    lightsaberCore2OverrideColor = lightsaberCore1OverrideColor;
-                    lightsaberGlowOverrideColor = lightsaberBlade1OverrideColor;
+                    SetColorsFromModExtension(modExt);
+                    colorsInitialized = true;
                     return;
                 }
             }
-            // Fallback to random colors if no ModExtension is present
-            lightsaberBlade1OverrideColor = GetRandomRGBColor();
-            lightsaberCore1OverrideColor = GetBlackOrWhiteCore();
+            targetScaleForCore1AndBlade1 = new Vector3(bladeLengthCore1AndBlade1, 1f, bladeLengthCore1AndBlade1);
+            targetScaleForCore2AndBlade2 = new Vector3(bladeLengthCore2AndBlade2, 1f, bladeLengthCore2AndBlade2);
+            SetFallbackColors();
+            parent.Notify_ColorChanged();
+            colorsInitialized = true;  // Mark as initialized
+        }
+
+        private void SetColorsFromModExtension(ModExtension_LightsaberColors modExt)
+        {
+            // Select a random blade color, core color, and glow color from the lists
+            lightsaberBlade1OverrideColor = modExt.bladeColors.RandomElement();
+            lightsaberCore1OverrideColor = modExt.coreColors.RandomElement();
             lightsaberBlade2OverrideColor = lightsaberBlade1OverrideColor;
             lightsaberCore2OverrideColor = lightsaberCore1OverrideColor;
             lightsaberGlowOverrideColor = lightsaberBlade1OverrideColor;
+            hiltColorOneOverrideColor = StuffColorUtility.GetRandomColorFromStuffCategories(modExt.validStuffCategoriesHiltColorOne);
+            hiltColorTwoOverrideColor = StuffColorUtility.GetRandomColorFromStuffCategories(modExt.validStuffCategoriesHiltColorTwo);
+
+            // Set default blade lengths
+            bladeLengthCore1AndBlade1 = Props.defaultBladeLength;
+            bladeLengthCore2AndBlade2 = Props.defaultBladeLength;
+        }
+
+
+        private void SetFallbackColors()
+        {
+            // Get the selected crystal part from the hilt
+            HiltPartDef selectedCrystal = GetSelectedHiltPart(HiltPartCategory.Crystal);
+
+            // If a crystal part is selected, use its color directly
+            if (selectedCrystal != null)
+            {
+                // Set the colors based on the selected crystal's color field
+                lightsaberBlade1OverrideColor = selectedCrystal.color;
+                lightsaberCore1OverrideColor = GetBlackOrWhiteCore();  // Assuming this method doesn't need modification
+                lightsaberBlade2OverrideColor = lightsaberBlade1OverrideColor;
+                lightsaberCore2OverrideColor = lightsaberCore1OverrideColor;
+                lightsaberGlowOverrideColor = lightsaberBlade1OverrideColor;
+            }
+            else
+            {
+                // Fallback color if no crystal is selected
+                lightsaberBlade1OverrideColor = GetRandomRGBColor();
+                lightsaberCore1OverrideColor = GetBlackOrWhiteCore();
+                lightsaberBlade2OverrideColor = lightsaberBlade1OverrideColor;
+                lightsaberCore2OverrideColor = lightsaberCore1OverrideColor;
+                lightsaberGlowOverrideColor = lightsaberBlade1OverrideColor;
+            }
+
+            // Set random hilt colors (assuming you want random colors for hilt)
+            hiltColorOneOverrideColor = GetRandomRGBColor();
+            hiltColorTwoOverrideColor = GetRandomRGBColor();
+
+            // Set default blade lengths
+            bladeLengthCore1AndBlade1 = Props.defaultBladeLength;
+            bladeLengthCore2AndBlade2 = Props.defaultBladeLength;
         }
 
         private Color GetRandomRGBColor()
@@ -330,8 +557,14 @@ namespace TheForce_Psycast.Lightsabers
             return Props.colorable ? (UnityEngine.Random.value < 0.9f ? Color.white : Color.black) : Color.white;
         }
 
-        public void SetColor(Color color) => UpdateColor(ref lightsaberBlade1OverrideColor, color, UpdateGraphicsAndMaterialPropertyBlock);
+        public MaterialPropertyBlock blade1MaterialPropertyBlock = new MaterialPropertyBlock();
+        public MaterialPropertyBlock core1MaterialPropertyBlock = new MaterialPropertyBlock();
+        public MaterialPropertyBlock blade2MaterialPropertyBlock = new MaterialPropertyBlock();
+        public MaterialPropertyBlock core2MaterialPropertyBlock = new MaterialPropertyBlock();
+        public MaterialPropertyBlock glowMaterialPropertyBlock = new MaterialPropertyBlock();
 
+        public void SetLightsaberBlade1Color(Color color) => UpdateColor(ref lightsaberBlade1OverrideColor, color, () => UpdateGraphic(ref graphicInt, Props.graphicData, lightsaberBlade1OverrideColor, "_Lightsaber_Blade1Color"));
+    
         public void SetLightsaberCore1Color(Color color) => UpdateColor(ref lightsaberCore1OverrideColor, color, () => UpdateGraphic(ref lightsaberCore1GraphicInt, Props.lightsaberCore1GraphicData, lightsaberCore1OverrideColor, "_Lightsaber_Core1Color"));
 
         public void SetLightsaberBlade2Color(Color color) => UpdateColor(ref lightsaberBlade2OverrideColor, color, () => UpdateGraphic(ref lightsaberBlade2GraphicInt, Props.lightsaberBlade2GraphicData, lightsaberBlade2OverrideColor, "_Lightsaber_Blade2Color"));
@@ -349,15 +582,21 @@ namespace TheForce_Psycast.Lightsabers
             }
         }
 
-        private void UpdateGraphicsAndMaterialPropertyBlock()
+        public void SetHiltColorOne(Color color)
         {
-            if (Props.graphicData != null)
-            {
-                UpdateGraphic(ref graphicInt, Props.graphicData, lightsaberBlade1OverrideColor, "_Color");
-                materialPropertyBlock.Clear();
-                materialPropertyBlock.SetColor("_Color", lightsaberBlade1OverrideColor);
-                materialPropertyBlock.SetColor("_ColorTwo", lightsaberBlade1OverrideColor);
-            }
+            UpdateColor(ref hiltColorOneOverrideColor, color, UpdateHiltGraphics);
+        }
+
+        public void SetHiltColorTwo(Color color)
+        {
+            UpdateColor(ref hiltColorTwoOverrideColor, color, UpdateHiltGraphics);
+        }
+
+        public void UpdateHiltGraphics()
+        {
+            hiltMaterialPropertyBlock.Clear();
+            SetColorInMaterialPropertyBlock(hiltMaterialPropertyBlock, "_Color", hiltColorOneOverrideColor);
+            SetColorInMaterialPropertyBlock(hiltMaterialPropertyBlock, "_ColorTwo", hiltColorTwoOverrideColor);
         }
 
         private void UpdateGraphic(ref Graphic graphicField, GraphicData graphicData, Color color, string colorProperty)
@@ -365,10 +604,15 @@ namespace TheForce_Psycast.Lightsabers
             if (graphicData != null)
             {
                 var newColor = color == Color.white ? parent.DrawColor : color;
-                graphicField = graphicData.Graphic.GetColoredVersion(parent.Graphic.Shader, newColor, newColor);
+                graphicField = graphicData.Graphic.GetColoredVersion(ShaderDatabase.TransparentPostLight, newColor, newColor);
                 materialPropertyBlock.Clear();
                 materialPropertyBlock.SetColor(colorProperty, newColor);
             }
+        }
+
+        private void SetColorInMaterialPropertyBlock(MaterialPropertyBlock block, string colorProperty, Color color)
+        {
+            block.SetColor(colorProperty, color);
         }
 
         public override void PostExposeData()
@@ -382,58 +626,251 @@ namespace TheForce_Psycast.Lightsabers
             LightsaberGlowManager.Instance.compGlowerToTick.Add(this);
             Scribe_Values.Look(ref stanceRotation, "stanceRotation", 0f);
             Scribe_Values.Look(ref drawOffset, "drawOffset", Vector3.zero);
+            Scribe_Values.Look(ref colorsInitialized, "colorsInitialized", false);
+            Scribe_Values.Look(ref bladeLengthCore1AndBlade1, nameof(bladeLengthCore1AndBlade1), 1f);
+            Scribe_Values.Look(ref bladeLengthCore2AndBlade2, nameof(bladeLengthCore2AndBlade2), 1f);
+            Scribe_Values.Look(ref hiltColorOneOverrideColor, nameof(hiltColorOneOverrideColor), Color.white);
+            Scribe_Values.Look(ref hiltColorTwoOverrideColor, nameof(hiltColorTwoOverrideColor), Color.white);
+            Scribe_Defs.Look(ref _selectedHiltGraphic, nameof(selectedhiltgraphic));
+            if (Scribe.mode == LoadSaveMode.LoadingVars)
+            {
+                CacheComps();
+            }
 
+        }
+
+        public override IEnumerable<FloatMenuOption> CompFloatMenuOptions(Pawn selPawn)
+        {
+            if (Props.colorable)
+            {
+                yield return new FloatMenuOption(
+                    "Force_LightsaberCustomization".Translate(),
+                    () => OpenColorPicker(selPawn)
+                );
+            }
+        }
+
+        public IEnumerable<Gizmo> EquippedGizmos()
+        {
+            if (Props.colorable && Wearer != null && Wearer.Drafted)
+            {
+                var pawn = GetPawn;
+                if (pawn != null)
+                {
+                    yield return new Command_Action
+                    {
+                        defaultLabel = "Force_LightsaberCustomization".Translate(),
+                        icon = ContentFinder<Texture2D>.Get("UI/Icons/Gizmo/LightsaberCustomization", true),
+                        action = () => OpenColorPicker(pawn),
+                    };
+                }
+            }
+            if (Props.colorable && Wearer != null && !Wearer.Drafted && Force_ModSettings.lightsaberCustomizationUndrafted)
+            {
+                var pawn = GetPawn;
+                if (pawn != null)
+                {
+                    yield return new Command_Action
+                    {
+                        defaultLabel = "Force_LightsaberCustomization".Translate(),
+                        icon = ContentFinder<Texture2D>.Get("UI/Icons/Gizmo/LightsaberCustomization", true),
+                        action = () => OpenColorPicker(pawn),
+                    };
+                }
+            }
         }
 
         public override IEnumerable<Gizmo> CompGetGizmosExtra()
         {
-            foreach (var gizmo in base.CompGetGizmosExtra())
-            {
-                yield return gizmo;
-            }
-
             if (Props.colorable)
             {
-                yield return new Command_Action
+                foreach (var current in base.CompGetGizmosExtra())
                 {
-                    action = OpenColorPicker,
-                    defaultLabel = "Change Lightsaber Color",
-                    defaultDesc = "Open the color picker to change the lightsaber blade colors.",
-                    icon = ContentFinder<Texture2D>.Get("UI/Commands/ChangeColor", true)
-                };
+                    yield return current;
+                }
+
+                foreach (var current in EquippedGizmos())
+                {
+                    yield return current;
+                }
             }
         }
 
-        private void OpenColorPicker()
+        private void OpenColorPicker(Pawn selPawn)
         {
-            Find.WindowStack.Add(new Dialog_LightsaberColorPicker(this, SetColors));
+            Find.WindowStack.Add(new Dialog_LightsaberColorPicker(selPawn, this, SetColors));
+        }
+
+        public void SetSoundEffect(SoundDef soundDef)
+        {
+            if (soundDef != null)
+            {
+                selectedSoundEffect = soundDef;
+            }
+        }
+
+
+        public override void Notify_Equipped(Pawn pawn)
+        {
+            base.Notify_Equipped(pawn);
+            targetScaleForCore1AndBlade1 = new Vector3(bladeLengthCore1AndBlade1, 1f, bladeLengthCore1AndBlade1);
+            targetScaleForCore2AndBlade2 = new Vector3(bladeLengthCore2AndBlade2, 1f, bladeLengthCore2AndBlade2);
+            ResetToZero();
+            
+            if (lightsaberSound != null && lightsaberSound.Count > 0 && selectedSoundEffect != null)
+            {
+                selectedSoundEffect.PlayOneShot(pawn);
+            }
+            if (!colorsInitialized)
+            {
+                InitializeColors();
+                InitializeHilts();
+            }
+            else
+            {
+                return;
+            }
+        }
+
+        public override void Notify_UsedWeapon(Pawn pawn)
+        {
+            LightsaberScorchMark(pawn);
+        }
+
+        public void LightsaberScorchMark(Pawn pawn)
+        {
+            float chanceToSpawnFleck = .15f;
+
+            if (Rand.Value < chanceToSpawnFleck)
+            {
+                FleckDef fleckDef = Props.Fleck;
+                if (fleckDef != null)
+                {
+
+                    IEnumerable<IntVec3> adjacentCells = GenAdj.CellsAdjacent8Way(pawn).Where(cell => cell.InBounds(pawn.Map));
+                    List<IntVec3> validCells = adjacentCells.Where(cell => cell.Walkable(pawn.Map)).ToList();
+
+                    if (validCells.Count > 0)
+                    {
+                        IntVec3 randomCell = validCells.RandomElement();
+                        float randomRotation = Rand.Range(0f, 360f);
+                        FleckCreationData fleckData = FleckMaker.GetDataStatic(randomCell.ToVector3(), pawn.Map, fleckDef);
+                        fleckData.rotation = randomRotation;
+                        pawn.Map.flecks.CreateFleck(fleckData);
+                    }
+                }
+            }
         }
 
         private void SetColors(Color blade1Color, Color core1Color, Color blade2Color, Color core2Color)
         {
-            SetColor(blade1Color);
+            SetLightsaberBlade1Color(blade1Color);
             SetLightsaberCore1Color(core1Color);
             SetLightsaberBlade2Color(blade2Color);
             SetLightsaberCore2Color(core2Color);
             SetLightsaberGlowColor(blade1Color);
         }
+
+        public void SetBladeLengths(float length1, float length2)
+        {
+            bladeLengthCore1AndBlade1 = length1;
+            bladeLengthCore2AndBlade2 = length2;
+
+            // Update the target scales based on the new lengths
+            targetScaleForCore1AndBlade1 = new Vector3(length1, 1f, length1);
+            targetScaleForCore2AndBlade2 = new Vector3(length2, 1f, length2);
+        }
+
+        public void SetVibrationRate(float newLensFactor1, float newLensFactor2)
+        {
+            vibrationrate = newLensFactor1;
+            vibrationrate2 = newLensFactor2; 
+        }
+
+        public void UpdateScalingAndOffset()
+        {
+
+            scaleTimer += 5f / TicksPerGlowerUpdate;
+            float t = Mathf.Clamp(scaleTimer, 0f, 1f);
+            if (IsAnimatingNow)
+            {
+                currentScaleForCore1AndBlade1 = Vector3.Lerp(targetScaleForCore1AndBlade1, targetScaleForCore1AndBlade1, t);
+                currentScaleForCore2AndBlade2 = Vector3.Lerp(targetScaleForCore2AndBlade2, targetScaleForCore2AndBlade2, t);
+            }
+            else
+            {
+                currentScaleForCore1AndBlade1 = Vector3.Lerp(Vector3.zero, targetScaleForCore1AndBlade1, t);
+                currentScaleForCore2AndBlade2 = Vector3.Lerp(Vector3.zero, targetScaleForCore2AndBlade2, t);
+            }
+            currentDrawOffset = Vector3.Lerp(Vector3.zero, targetDrawOffset, t);
+        }
+        public void ResetToZero()
+        {
+            try
+            {
+                scaleTimer = 0f;
+                currentScaleForCore1AndBlade1 = Vector3.zero;
+                currentScaleForCore2AndBlade2 = Vector3.zero;
+                currentDrawOffset = Vector3.zero;
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        public List<HiltPartDef> GetCurrentHiltParts()
+        {
+            return selectedHiltParts ?? new List<HiltPartDef>();
+        }
+
+        public HiltPartDef GetSelectedHiltPart(HiltPartCategory category)
+        {
+            if (selectedHiltParts == null) return null;
+            return selectedHiltParts.FirstOrDefault(part => part.category == category);
+        }
+        public void AddHiltPart(HiltPartDef hiltPart)
+        {
+            if (!selectedHiltParts.Contains(hiltPart))
+            {
+                selectedHiltParts.Add(hiltPart);
+            }
+        }
+
+        public void RemoveHiltPart(HiltPartDef hiltPart)
+        {
+            if (selectedHiltParts.Contains(hiltPart))
+            {
+                selectedHiltParts.Remove(hiltPart);
+            }
+        }
     }
 
     public class CompProperties_LightsaberBlade : CompProperties
     {
-        public GraphicData graphicData;
-        public GraphicData lightsaberCore1GraphicData;
-        public GraphicData lightsaberBlade2GraphicData;
-        public GraphicData lightsaberCore2GraphicData;
-        public GraphicData lightsaberGlowGraphic;
-        public AltitudeLayer altitudeLayer;
+
+        public GraphicData graphicData;                   
+        public GraphicData lightsaberCore1GraphicData;    
+        public GraphicData lightsaberBlade2GraphicData;    
+        public GraphicData lightsaberCore2GraphicData;     
+        public GraphicData lightsaberGlowGraphic;        
+        public List<HiltDef> availableHiltGraphics;    
+        public FleckDef Fleck;                            
+        public float defaultBladeLength = 1.5f;         
+        public float maxBladeLength = 2.2f;               
+        public float minBladeLength = 1f;                
+        public AltitudeLayer altitudeLayer;               
         public float Altitude => Altitudes.AltitudeFor(altitudeLayer);
-        public bool colorable = true;
-        public float overlightRadius = 2f;  // Example overlight radius
+        public bool colorable = true;                    
+        public float overlightRadius = 2f;                
+        public List<SoundDef> lightsaberSound;
 
         public CompProperties_LightsaberBlade()
         {
             this.compClass = typeof(Comp_LightsaberBlade);
+            lightsaberSound = new List<SoundDef>();
+            availableHiltGraphics = new List<HiltDef>();
+
         }
     }
 
@@ -441,5 +878,9 @@ namespace TheForce_Psycast.Lightsabers
     {
         public List<Color> bladeColors = new List<Color> { Color.white };
         public List<Color> coreColors = new List<Color> { Color.white };
+
+        public HiltDef preferredHilt;
+        public List<StuffCategoryDef> validStuffCategoriesHiltColorOne = new List<StuffCategoryDef>();
+        public List<StuffCategoryDef> validStuffCategoriesHiltColorTwo = new List<StuffCategoryDef>();
     }
 }

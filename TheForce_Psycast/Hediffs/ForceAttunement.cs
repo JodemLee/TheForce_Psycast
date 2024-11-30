@@ -101,7 +101,7 @@ namespace TheForce_Psycast
             pawnRefer.width = 24;
         }
 
-        protected override void UpdateSize()
+        protected void UpdateSize()
         {
             size = ForceAlignmentUtility.GetSize(base.SelPawn);
         }
@@ -172,33 +172,24 @@ namespace TheForce_Psycast
 
             if (showName)
             {
+                // Draw pawn's name
                 Rect NameRect = new Rect(75f, 40, LabelWidth, LabelHeight * 2);
                 NameTriple nameTriple = pawn.Name as NameTriple;
                 if (flag && nameTriple != null)
                 {
-                    Rect rect4 = new Rect(NameRect);
-                    rect4.width *= 0.333f;
-                    Rect rect5 = new Rect(NameRect);
-                    rect5.width *= 0.333f;
-                    rect5.x += rect5.width;
-                    Rect rect6 = new Rect(NameRect);
-                    rect6.width *= 0.333f;
-                    rect6.x += rect5.width * 2f;
+                    Rect rect4 = new Rect(NameRect) { width = NameRect.width * 0.333f };
+                    Rect rect5 = new Rect(NameRect) { width = NameRect.width * 0.333f, x = rect4.x + rect4.width };
+                    Rect rect6 = new Rect(NameRect) { width = NameRect.width * 0.333f, x = rect5.x + rect5.width };
 
                     string name = nameTriple.First;
                     string name2 = nameTriple.Nick;
                     string name3 = nameTriple.Last;
 
                     DoNameInputRect(rect4, ref name, 12);
-
-                    if (nameTriple.Nick == nameTriple.First || nameTriple.Nick == nameTriple.Last)
-                    {
-                        GUI.color = new Color(1f, 1f, 1f, 0.5f);
-                    }
-
+                    GUI.color = (nameTriple.Nick == nameTriple.First || nameTriple.Nick == nameTriple.Last) ?
+                        new Color(1f, 1f, 1f, 0.5f) : Color.white;
                     DoNameInputRect(rect5, ref name2, 16);
                     GUI.color = Color.white;
-
                     DoNameInputRect(rect6, ref name3, 12);
 
                     if (nameTriple.First != name || nameTriple.Nick != name2 || nameTriple.Last != name3)
@@ -214,36 +205,30 @@ namespace TheForce_Psycast
                 {
                     NameRect.width = 999f;
                     Text.Font = GameFont.Medium;
-                    string text = pawn.Name.ToStringFull.CapitalizeFirst();
-                    Widgets.Label(NameRect, text);
+                    Widgets.Label(NameRect, pawn.Name.ToStringFull.CapitalizeFirst());
 
                     if (pawn.guilt != null && pawn.guilt.IsGuilty)
                     {
-                        float x = Text.CalcSize(text).x;
-                        Rect rect7 = new Rect(x + 10f, 0f, 32f, 32f);
-                        GUI.DrawTexture(rect7, TexUI.GuiltyTex);
-                        TooltipHandler.TipRegion(rect7, () => pawn.guilt.Tip, 6321623);
+                        float x = Text.CalcSize(pawn.Name.ToStringFull).x;
+                        Rect guiltyRect = new Rect(x + 10f, 0f, 32f, 32f);
+                        GUI.DrawTexture(guiltyRect, TexUI.GuiltyTex);
+                        TooltipHandler.TipRegion(guiltyRect, () => pawn.guilt.Tip, 6321623);
                     }
 
                     Text.Font = GameFont.Small;
                 }
 
-                Rect lightRect = new Rect(XaxisPost, YaxisPost - 20f, LabelWidth, LabelHeight);
-                string LightSideLabel = "Lightside Alignment"; // Replace with the desired stat label
-                float LightsidestatValue = pawn.GetStatValue(ForceDefOf.Force_Lightside_Attunement); // Replace with the actual stat value you want to display
+                // Lightside Alignment
+                Rect lightRect = new Rect(XaxisPost, YaxisPost - 70f, LabelWidth, LabelHeight);
+                string LightSideLabel = "Lightside Alignment";
+                float LightsideStatValue = pawn.GetStatValue(ForceDefOf.Force_Lightside_Attunement);
+                Widgets.Label(lightRect, $"{LightSideLabel}: {LightsideStatValue:P0}");
 
-                // Format the statValue as a percentage
-                string displayTextLight = $"{LightSideLabel}: {LightsidestatValue:P0}"; // P0 formats as percentage with zero decimal places
-                Widgets.Label(lightRect, displayTextLight);
-
-
-                Rect darkRect = new Rect(XaxisPost, YaxisPost, LabelWidth, LabelHeight);
-                string DarkSideLabel = "Darkside Alignment"; // Replace with the desired stat label
-                float DarksidestatValue = pawn.GetStatValue(ForceDefOf.Force_Darkside_Attunement); // Replace with the actual stat value you want to display
-
-                // Format the statValue as a percentage
-                string displayTextDark = $"{DarkSideLabel}: {DarksidestatValue:P0}"; // P0 formats as percentage with zero decimal places
-                Widgets.Label(darkRect, displayTextDark);
+                // Darkside Alignment
+                Rect darkRect = new Rect(XaxisPost, YaxisPost - 50f, LabelWidth, LabelHeight);
+                string DarkSideLabel = "Darkside Alignment";
+                float DarksideStatValue = pawn.GetStatValue(ForceDefOf.Force_Darkside_Attunement);
+                Widgets.Label(darkRect, $"{DarkSideLabel}: {DarksideStatValue:P0}");
             }
         }
 
