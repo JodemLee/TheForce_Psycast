@@ -177,27 +177,40 @@ namespace TheForce_Psycast.Harmony_Patches
         }
     }
 
-       
 
-        [HarmonyPatch(typeof(PeaceTalks))]
-        [HarmonyPatch("Outcome_Triumph")]
-        public static class PeaceTalks_Outcome_Triumph_Patch
+
+    [HarmonyPatch(typeof(PeaceTalks))]
+    [HarmonyPatch("Outcome_Triumph")]
+    public static class PeaceTalks_Outcome_Triumph_Patch
+    {
+        // Postfix patch for Outcome_Triumph
+        public static void Postfix(Caravan caravan)
         {
-            // Postfix patch for Outcome_Triumph
-            public static void Postfix(Caravan caravan)
-            {
-                ModifyHediffOnOutcome(caravan, 0.8f); // Example: Increase hediff severity by 1.0
-            }
+            ModifyHediffOnOutcome(caravan, 0.8f); // Example: Increase hediff severity by 1.0
+        }
 
-            private static void ModifyHediffOnOutcome(Caravan caravan, float severityIncrease)
+        private static void ModifyHediffOnOutcome(Caravan caravan, float severityIncrease)
+        {
+            foreach (Pawn pawn in caravan.PawnsListForReading)
             {
-                foreach (Pawn pawn in caravan.PawnsListForReading)
-                {
-                    DarksideUtility.AdjustHediffSeverity(pawn, ForceDefOf.Force_Lightside, severityIncrease);
-                }
+                DarksideUtility.AdjustHediffSeverity(pawn, ForceDefOf.Force_Lightside, severityIncrease);
             }
         }
     }
+
+    [HarmonyPatch(typeof(MechanitorUtility), "ShouldBeMechanitor")]
+    public static class ShouldBeMechanitor_Patch
+    {
+        [HarmonyPostfix]
+        public static void Postfix(ref bool __result, Pawn pawn)
+        {
+            if (pawn.health.hediffSet.HasHediff(ForceDefOf.Force_MechuLinkImplant))
+            {
+                __result = true;
+            }
+        }
+    }
+}
 
 
 

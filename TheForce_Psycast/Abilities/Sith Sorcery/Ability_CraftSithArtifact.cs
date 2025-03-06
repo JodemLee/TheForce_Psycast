@@ -8,7 +8,7 @@ using Ability = VFECore.Abilities.Ability;
 
 namespace TheForce_Psycast.Abilities.Sith_Sorcery
 {
-    internal class Ability_CraftSithArtifact : Ability
+    internal class Ability_CraftSithArtifact : Ability_WriteCombatLog
     {
         private AbilityExtension_CraftableArtifacts extension;
 
@@ -28,7 +28,7 @@ namespace TheForce_Psycast.Abilities.Sith_Sorcery
             }
             else
             {
-                Messages.Message("Force.InvalidTargetForCrafting".Translate(), MessageTypeDefOf.RejectInput, false);
+                Messages.Message("Force.InvalidTargetForCrafting".Translate(targets[0].Thing.LabelShort), MessageTypeDefOf.RejectInput, false);
             }
         }
 

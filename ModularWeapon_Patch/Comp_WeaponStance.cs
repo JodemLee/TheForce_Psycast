@@ -10,17 +10,6 @@ namespace ModularWeapon_Patch
     internal class Comp_WeaponStance : Comp_LightsaberStance
     {
         public new CompProperties_WeaponStance Props => (CompProperties_WeaponStance)props;
-
-        private AbilityDef ability;
-        private bool alreadyHad;
-
-        // Store the last hediff severity
-        private float lastSeverity = 0f;
-
-        // Constants for clarity
-        private const float MinSeverity = 1f;
-        private const float MaxSeverity = 7f;
-
         private DefStanceAngles extension;
 
         private float stanceRotation;
@@ -47,14 +36,6 @@ namespace ModularWeapon_Patch
             drawOffset = offset;
         }
 
-        public override void PostExposeData()
-        {
-            base.PostExposeData();
-            Scribe_Values.Look(ref alreadyHad, "alreadyHad", false);
-            Scribe_Values.Look(ref lastSeverity, "lastSeverity", 0f);
-            Scribe_Collections.Look(ref savedStanceAngles, "savedStanceAngles", LookMode.Value);
-            Scribe_Collections.Look(ref savedDrawOffsets, "savedDrawOffsets", LookMode.Value);
-        }
 
         public override void Notify_Equipped(Pawn pawn)
         {
@@ -93,20 +74,14 @@ namespace ModularWeapon_Patch
             if (hediff == null)
                 return (0f, Vector3.zero);
 
-            // Get the DefStanceAngles extension from the ThingDef
             var thingDef = pawn.equipment.Primary?.def; // Ensure the ThingDef is properly retrieved
             extension = thingDef.GetModExtension<DefStanceAngles>() ?? hediff.def.GetModExtension<DefStanceAngles>();
-
-
-            // Get the StanceData for the current severity
             StanceData stanceData = extension?.GetStanceDataForSeverity(hediff.Severity);
-
-            // Return both the angle and offset from the StanceData, defaulting to 0f and Vector3.zero if not found
             return (stanceData?.Angle ?? 0f, stanceData?.Offset ?? Vector3.zero);
         }
     }
 
-    public class CompProperties_WeaponStance : CompProperties
+    public class CompProperties_WeaponStance : CompProperties_LightsaberStance
     {
         public CompProperties_WeaponStance()
         {

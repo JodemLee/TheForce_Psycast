@@ -18,59 +18,78 @@ namespace TheForce_Psycast.Lightsabers.Lightsaber_Combat
                 return false;
             }
 
-            if (targetPawn == null || attacker == null || !targetPawn.health.hediffSet.HasHediff(ParryHediffDefName))
+            if (targetPawn == null || attacker == null ||
+                targetPawn.skills == null || attacker.skills == null ||
+                targetPawn.skills.GetSkill(SkillDefOf.Melee) == null ||
+                attacker.skills.GetSkill(SkillDefOf.Melee) == null)
             {
                 return false;
             }
 
-            Hediff targetStance = targetPawn.health.hediffSet.GetFirstHediffOfDef(ParryHediffDefName);
-            Hediff attackerStance = attacker.health.hediffSet.GetFirstHediffOfDef(ParryHediffDefName);
-
-            if (targetStance == null || attackerStance == null)
+            if (targetPawn.health.hediffSet.HasHediff(ParryHediffDefName))
             {
-                return false;
+                Hediff targetStance = targetPawn.health.hediffSet.GetFirstHediffOfDef(ParryHediffDefName);
+                Hediff attackerStance = attacker.health.hediffSet.GetFirstHediffOfDef(ParryHediffDefName);
+
+                if (targetStance != null && attackerStance != null)
+                {
+                    float targetSeverity = targetStance.Severity;
+                    float attackerSeverity = attackerStance.Severity;
+
+                    DefStanceAngles stanceDef = targetPawn.equipment.Primary?.def.GetModExtension<DefStanceAngles>()
+                                                ?? targetStance.def.GetModExtension<DefStanceAngles>();
+
+                    if (stanceDef != null)
+                    {
+                        StanceData targetStanceData = stanceDef.GetStanceDataForSeverity(targetSeverity);
+                        StanceData attackerStanceData = stanceDef.GetStanceDataForSeverity(attackerSeverity);
+
+                        if (targetStanceData != null && attackerStanceData != null)
+                        {
+                            float parryBonus = CalculateParryBonus(targetPawn, attacker);
+                            float adjustedTargetMeleeSkill = GetAdjustedMeleeSkill(targetPawn);
+                            float adjustedAttackerMeleeSkill = GetAdjustedMeleeSkill(attacker);
+                            int skillDifference = (int)(adjustedTargetMeleeSkill - adjustedAttackerMeleeSkill);
+                            float parryChance = Math.Min(0.95f, Math.Max(0.05f, (0.05f * skillDifference) + parryBonus));
+
+                            if (Rand.Value <= parryChance)
+                            {
+                                string stanceDescription = targetStanceData.StanceID;
+                                string parryChanceMessage = $"Parry Chance: {Math.Round(parryChance * 100, 2)}%";
+                                string fullMessage = stanceDescription + " " + parryChanceMessage;
+                                MoteMaker.ThrowText(new Vector3((float)targetPawn.Position.x + 1f, targetPawn.Position.y, (float)targetPawn.Position.z + 1f), targetPawn.Map, fullMessage, Color.white);
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                float adjustedTargetMeleeSkill = GetAdjustedMeleeSkill(targetPawn);
+                float adjustedAttackerMeleeSkill = GetAdjustedMeleeSkill(attacker);
+                int skillDifference = (int)(adjustedTargetMeleeSkill - adjustedAttackerMeleeSkill);
+                float parryChance = Math.Min(0.95f, Math.Max(0.05f, 0.05f * skillDifference));
+
+                if (Rand.Value <= parryChance)
+                {
+                    string parryChanceMessage = $"Parry Chance: {Math.Round(parryChance * 100, 2)}%";
+                    MoteMaker.ThrowText(new Vector3((float)targetPawn.Position.x + 1f, targetPawn.Position.y, (float)targetPawn.Position.z + 1f), targetPawn.Map, parryChanceMessage, Color.white);
+                    return true;
+                }
             }
 
-            float targetSeverity = targetStance.Severity;
-            float attackerSeverity = attackerStance.Severity;
-            DefStanceAngles stanceDef = targetPawn.equipment.Primary?.def.GetModExtension<DefStanceAngles>()
-                                        ?? targetStance.def.GetModExtension<DefStanceAngles>();
-
-            if (stanceDef == null)
-            {
-                return false;
-            }
-
-            StanceData targetStanceData = stanceDef.GetStanceDataForSeverity(targetSeverity);
-            StanceData attackerStanceData = stanceDef.GetStanceDataForSeverity(attackerSeverity);
-
-            if (targetStanceData == null || attackerStanceData == null)
-            {
-                return false;
-            }
-
-            float parryBonus = CalculateParryBonus(targetPawn, attacker);
-            float adjustedTargetMeleeSkill = GetAdjustedMeleeSkill(targetPawn);
-            float adjustedAttackerMeleeSkill = GetAdjustedMeleeSkill(attacker);
-            int skillDifference = (int)(adjustedTargetMeleeSkill - adjustedAttackerMeleeSkill);
-            float parryChance = Math.Min(0.95f, Math.Max(0.05f, (0.05f * skillDifference) + parryBonus));
-            if (Rand.Value <= parryChance)
-            {
-                string stanceDescription = targetStanceData.StanceID;
-                string parryChanceMessage = $"Parry Chance: {Math.Round(parryChance * 100, 2)}%";
-                string fullMessage = stanceDescription + " " + parryChanceMessage;
-                MoteMaker.ThrowText(new Vector3((float)targetPawn.Position.x + 1f, targetPawn.Position.y, (float)targetPawn.Position.z + 1f), targetPawn.Map, fullMessage, Color.white);
-                return true;
-            }
             return false;
         }
+
+
 
 
         private static float GetAdjustedMeleeSkill(Pawn pawn)
         {
             float manipulation = pawn.health.capacities.GetLevel(PawnCapacityDefOf.Manipulation);
             int meleeSkill = pawn.skills.GetSkill(SkillDefOf.Melee).Level;
-            return meleeSkill * manipulation;
+            return meleeSkill * manipulation * 600;
         }
 
         private static float CalculateParryBonus(Pawn targetPawn, Pawn attackerPawn)
@@ -146,6 +165,12 @@ namespace TheForce_Psycast.Lightsabers.Lightsaber_Combat
             target.TakeDamage(damageInfo);
         }
 
+        internal static int CalculateDamageToDestroyLimb(Pawn target, BodyPartRecord limb)
+        {
+            float partHealth = target.health.hediffSet.GetPartHealth(limb);
+            return (int)Math.Ceiling(partHealth) * 2;
+        }
+
 
         internal static Tool SelectWeightedTool(List<Tool> tools)
         {
@@ -164,41 +189,7 @@ namespace TheForce_Psycast.Lightsabers.Lightsaber_Combat
             return tools.Last(); // Fallback in case of rounding errors
         }
 
-        internal static int CalculateDamageToDestroyLimb(Pawn target, BodyPartRecord limb)
-        {
-            float partHealth = target.health.hediffSet.GetPartHealth(limb);
-            return (int)Math.Ceiling(partHealth) * 2;
-        }
-    }
 
-    public class Verb_LightsaberAttackDamage : Verb_MeleeAttackDamage
-    {
-
-        public override void DrawHighlight(LocalTargetInfo target)
-        {
-            base.DrawHighlight(target);
-            DrawCurrentStance(target);
-        }
-
-        public static void DrawCurrentStance(LocalTargetInfo target)
-        {
-            if (target.Pawn != null && !target.Pawn.IsHiddenFromPlayer())
-            {
-                Pawn pawn = target.Pawn;
-
-                // Check if the pawn has the Stance Hediff
-                if (pawn.health.hediffSet.HasHediff(ForceDefOf.Lightsaber_Stance))
-                {
-                    Hediff stanceHediff = pawn.health.hediffSet.GetFirstHediffOfDef(ForceDefOf.Lightsaber_Stance);
-                    DefStanceAngles stanceDef = stanceHediff.def.GetModExtension<DefStanceAngles>();
-                    StanceData stanceData = stanceDef.GetStanceDataForSeverity(stanceHediff.Severity);
-                    string stanceText = stanceData?.StanceID ?? "Unknown Stance";
-                    Vector3 drawPos = pawn.DrawPos;
-                    drawPos.z += 1.2f;
-                    GenMapUI.DrawText(new Vector2(drawPos.x, drawPos.z), stanceText, Color.cyan);
-                }
-            }
-        }
     }
 }
 

@@ -28,9 +28,7 @@ namespace Force_CEPatch
         public float CalculateEntropyGain(ProjectileCE projectile)
         {
             entropyGain = Force_ModSettings.entropyGain;
-
-            // Example calculation: entropy gain is proportional to the projectile's speed
-            float EntropyGain = projectile.def.projectile.speed / entropyGain; // Adjust this factor as needed
+            float EntropyGain = projectile.def.projectile.speed / entropyGain;
             return EntropyGain;
         }
 
@@ -40,11 +38,6 @@ namespace Force_CEPatch
             float deflectionMultiplier = Force_ModSettings.deflectionMultiplier;
 
             if (projectile.launcher == null || projectile.launcher.Faction == null || projectile.launcher.Faction == pawn.Faction)
-            {
-                return false;
-            }
-
-            if (!pawn.Faction.HostileTo(projectile.launcher.Faction)) // Check if the launcher's faction is hostile
             {
                 return false;
             }
@@ -62,7 +55,7 @@ namespace Force_CEPatch
             if (newEntropyValue >= (this.pawn.psychicEntropy.MaxEntropy * 0.99f))
             {
                 ;
-                return false; // Prevent deflection if it would cause entropy to go over 90% of max
+                return false;
             }
 
             float deflectionSkillChance = pawn.GetStatValue(ForceDefOf.Force_Lightsaber_Deflection);
@@ -71,11 +64,11 @@ namespace Force_CEPatch
 
             if (deflection >= randomValue)
             {
-                return true; // Deflect the projectile
+                return true;
             }
             else
             {
-                return false; // Do not deflect the projectile
+                return false;
             }
         }
 

@@ -13,18 +13,8 @@ namespace TheForce_Psycast
     {
         public CompProperties_LightsaberStance Props => (CompProperties_LightsaberStance)props;
 
-        private AbilityDef ability;
-        private bool alreadyHad;
-
-        // Store the last hediff severity
-        private float lastSeverity = 0f;
-
-        // Constants for clarity
-        private const float MinSeverity = 1f;
-        private const float MaxSeverity = 7f;
-
-        public AbilityDef Ability => ability;
-        public bool Added => !alreadyHad;
+        private Dictionary<AbilityDef, bool> alreadyHadAbilities = new Dictionary<AbilityDef, bool>();
+        private Dictionary<HediffDef, float> lastSeverities = new Dictionary<HediffDef, float>();
 
         public List<float> savedStanceAngles = new List<float>();
         public List<Vector3> savedDrawOffsets = new List<Vector3>();
@@ -33,8 +23,8 @@ namespace TheForce_Psycast
         public override void PostExposeData()
         {
             base.PostExposeData();
-            Scribe_Values.Look(ref alreadyHad, "alreadyHad", false);
-            Scribe_Values.Look(ref lastSeverity, "lastSeverity", 0f);
+            Scribe_Collections.Look(ref alreadyHadAbilities, "alreadyHadAbilities", LookMode.Def, LookMode.Value);
+            Scribe_Collections.Look(ref lastSeverities, "lastSeverities", LookMode.Def, LookMode.Value);
             Scribe_Collections.Look(ref savedStanceAngles, "savedStanceAngles", LookMode.Value);
             Scribe_Collections.Look(ref savedDrawOffsets, "savedDrawOffsets", LookMode.Value);
         }
@@ -42,74 +32,134 @@ namespace TheForce_Psycast
         public override void Notify_Equipped(Pawn pawn)
         {
             base.Notify_Equipped(pawn);
+            if (pawn == null) return;
 
-            var ability = ForceDefOf.Force_ThrowWeapon;
-            var hediffDef = ForceDefOf.Lightsaber_Stance;
+            var compAbilities = pawn.GetComp<CompAbilities>();
+            if (compAbilities == null) return;
 
-            if (pawn == null || ability == null)
-                return;
 
-            var psycastLevel = pawn.Psycasts()?.level ?? 0;
-            if (psycastLevel <= 0)
-                return;
+            bool hasPsylink = pawn.Psycasts()?.level > 0;
 
-            var comp = pawn.GetComp<CompAbilities>();
-            if (comp == null)
-                return;
+            // Assign abilities
+            AssignAbilities(pawn, compAbilities, hasPsylink);
 
-            alreadyHad = comp.HasAbility(ability);
-            if (!alreadyHad)
-                comp.GiveAbility(ability);
+            // Assign hediffs
+            AssignHediffs(pawn, hasPsylink);
 
-            // Create a unique hediff instance for this lightsaber
-            var uniqueHediff = HediffMaker.MakeHediff(hediffDef, pawn);
-            uniqueHediff.Severity = lastSeverity != 0f ? lastSeverity : Rand.Range(MinSeverity, MaxSeverity);
-
-            // Add the unique hediff to the pawn's health
-            pawn.health.AddHediff(uniqueHediff);
-
+            // Apply Stance Rotation
             ApplyStanceRotation(pawn);
         }
 
         public override void Notify_Unequipped(Pawn pawn)
         {
             base.Notify_Unequipped(pawn);
-
-            var ability = ForceDefOf.Force_ThrowWeapon;
-            if (ability == null || alreadyHad)
-                return;
+            if (pawn == null) return;
 
             var compAbilities = pawn.GetComp<CompAbilities>();
-            compAbilities?.LearnedAbilities.RemoveAll(ab => ab.def == ability);
-
-            // Find and remove the specific hediff associated with this lightsaber instance
-            var hediffs = pawn.health.hediffSet.hediffs
-                .Where(h => h.def == ForceDefOf.Lightsaber_Stance)
-                .ToList();
-
-            foreach (var hediff in hediffs)
+            if (compAbilities != null)
             {
-                lastSeverity = hediff.Severity;
-                pawn.health.RemoveHediff(hediff);
+                // Remove abilities only if they were added by this comp
+                foreach (var ability in Props.abilitiesRequiringPsylink.Concat(Props.abilitiesNotRequiringPsylink))
+                {
+                    if (alreadyHadAbilities.TryGetValue(ability, out bool had) && !had)
+                    {
+                        compAbilities.LearnedAbilities.RemoveAll(ab => ab.def == ability);
+                    }
+                }
             }
 
+            // Remove hediffs associated with this lightsaber
+            RemoveHediffs(pawn);
+
+            // Preserve stance settings if another stance-enabled weapon is equipped
             if (pawn.equipment.Primary?.GetComp<Comp_LightsaberStance>() is Comp_LightsaberStance compStance)
             {
                 compStance.savedStanceAngles = new List<float>(savedStanceAngles);
                 compStance.savedDrawOffsets = new List<Vector3>(savedDrawOffsets);
             }
 
-            alreadyHad = false;
+            alreadyHadAbilities.Clear();
         }
 
         public override void PostSpawnSetup(bool respawningAfterLoad)
         {
             base.PostSpawnSetup(respawningAfterLoad);
-
-            // Ensure we apply stance after the pawn and equipment are initialized
             if (parent is Pawn pawn && pawn.equipment?.Primary != null)
             {
                 ApplyStanceRotation(pawn);
+            }
+        }
+
+        private void AssignAbilities(Pawn pawn, CompAbilities compAbilities, bool hasPsylink)
+        {
+            // Ensure the properties are not null to prevent NullReferenceException
+            if (Props?.abilitiesRequiringPsylink == null || Props.abilitiesNotRequiringPsylink == null)
+            {
+                Log.Error($"[Comp_LightsaberStance] abilities list is null for {pawn?.Name}");
+                return;
+            }
+
+            if (compAbilities == null)
+            {
+                Log.Warning($"[Comp_LightsaberStance] {pawn?.Name} does not have CompAbilities.");
+                return;
+            }
+
+            foreach (var ability in Props.abilitiesRequiringPsylink)
+            {
+                if (ability == null) continue;
+                if (hasPsylink && !compAbilities.HasAbility(ability))
+                {
+                    alreadyHadAbilities[ability] = false;
+                    compAbilities.GiveAbility(ability);
+                }
+                else
+                {
+                    alreadyHadAbilities[ability] = true;
+                }
+            }
+
+            foreach (var ability in Props.abilitiesNotRequiringPsylink)
+            {
+                if (ability == null) continue;
+                if (!compAbilities.HasAbility(ability))
+                {
+                    alreadyHadAbilities[ability] = false;
+                    compAbilities.GiveAbility(ability);
+                }
+                else
+                {
+                    alreadyHadAbilities[ability] = true;
+                }
+            }
+        }
+
+
+        private void AssignHediffs(Pawn pawn, bool hasPsylink)
+        {
+            foreach (var hediffDef in hasPsylink ? Props.hediffsRequiringPsylink : Props.hediffsNotRequiringPsylink)
+            {
+                if (hediffDef == null) continue;
+
+                var uniqueHediff = HediffMaker.MakeHediff(hediffDef, pawn);
+                uniqueHediff.Severity = lastSeverities.ContainsKey(hediffDef)
+                    ? lastSeverities[hediffDef]
+                    : Rand.Range(1f, 7f);
+
+                pawn.health.AddHediff(uniqueHediff);
+            }
+        }
+
+        private void RemoveHediffs(Pawn pawn)
+        {
+            foreach (var hediffDef in Props.hediffsRequiringPsylink.Concat(Props.hediffsNotRequiringPsylink))
+            {
+                var hediffs = pawn.health.hediffSet.hediffs.Where(h => h.def == hediffDef).ToList();
+                foreach (var hediff in hediffs)
+                {
+                    lastSeverities[hediff.def] = hediff.Severity;
+                    pawn.health.RemoveHediff(hediff);
+                }
             }
         }
 
@@ -127,21 +177,19 @@ namespace TheForce_Psycast
 
         private (float angle, Vector3 offset) GetStanceAngleAndOffset(Pawn pawn)
         {
-            var hediffDef = ForceDefOf.Lightsaber_Stance; // Ensure this is the correct definition
-            var hediff = pawn.health.hediffSet.GetFirstHediffOfDef(hediffDef);
+            var hediffs = Props.hediffsRequiringPsylink.Concat(Props.hediffsNotRequiringPsylink)
+                .Select(hediffDef => pawn.health.hediffSet.GetFirstHediffOfDef(hediffDef))
+                .Where(h => h != null)
+                .ToList();
 
-            if (hediff == null)
-                return (0f, Vector3.zero);
+            if (!hediffs.Any()) return (0f, Vector3.zero);
 
-            // Get the DefStanceAngles extension from the ThingDef
-            var thingDef = pawn.equipment.Primary?.def; // Ensure the ThingDef is properly retrieved
-            extension = thingDef.GetModExtension<DefStanceAngles>() ?? hediff.def.GetModExtension<DefStanceAngles>();
+            var thingDef = pawn.equipment.Primary?.def;
+            extension = thingDef?.GetModExtension<DefStanceAngles>() ?? hediffs.First().def.GetModExtension<DefStanceAngles>();
 
+            var maxSeverityHediff = hediffs.OrderByDescending(h => h.Severity).First();
+            StanceData stanceData = extension?.GetStanceDataForSeverity(maxSeverityHediff.Severity);
 
-            // Get the StanceData for the current severity
-            StanceData stanceData = extension?.GetStanceDataForSeverity(hediff.Severity);
-
-            // Return both the angle and offset from the StanceData, defaulting to 0f and Vector3.zero if not found
             return (stanceData?.Angle ?? 0f, stanceData?.Offset ?? Vector3.zero);
         }
 
@@ -154,9 +202,18 @@ namespace TheForce_Psycast
 
     public class CompProperties_LightsaberStance : CompProperties
     {
+        public List<AbilityDef> abilitiesRequiringPsylink;
+        public List<AbilityDef> abilitiesNotRequiringPsylink;
+        public List<HediffDef> hediffsRequiringPsylink;
+        public List<HediffDef> hediffsNotRequiringPsylink;
+
         public CompProperties_LightsaberStance()
         {
             this.compClass = typeof(Comp_LightsaberStance);
+            this.hediffsRequiringPsylink = new List<HediffDef>();
+            this.hediffsNotRequiringPsylink = new List<HediffDef>();
+            this.abilitiesRequiringPsylink = new List<AbilityDef>();
+            this.abilitiesNotRequiringPsylink = new List<AbilityDef>();
         }
     }
 }

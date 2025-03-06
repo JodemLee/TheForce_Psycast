@@ -20,12 +20,12 @@ namespace Force_CEPatch
 
         public static Harmony harmony;
 
-        [HarmonyPatch(typeof(BulletCE), "Impact", new Type[] { typeof(Thing) })]
+        [HarmonyPatch(typeof(BulletCE), nameof(ProjectileCE.Impact), typeof(Thing))]
         public static class BulletCE_Impact
         {
             public static bool Prefix(Thing hitThing, BulletCE __instance, ref Thing ___launcher, ref Thing ___intendedTarget, ref Ray ___shotLine, ref float ___shotRotation, ref Vector2 ___origin, ref bool ___landed)
             {
-                if (!(hitThing is Pawn pawn) || pawn.kindDef.RaceProps.IsMechanoid )
+                if (!(hitThing is Pawn pawn))
                 {
                     return true;
                 }
@@ -34,21 +34,37 @@ namespace Force_CEPatch
                 {
                     return true;
                 }
+
+                if (!hediff.ShouldDeflectProjectile(__instance))
+                {
+                    return true;
+                }
+
                 Effecter effecter = new Effecter(EffecterDefOf.Interceptor_BlockedProjectile);
-                Traverse.Create(pawn).Field("drawer").GetValue<Pawn_DrawTracker>()
-            .Notify_DamageDeflected(new DamageInfo(((Thing)(object)__instance).def.projectile.damageDef, (__instance).def.projectile.damageDef.defaultDamage));
+
                 effecter.Trigger(new TargetInfo(__instance.Position, pawn.Map), TargetInfo.Invalid);
+
+                var value2 = Traverse.Create(pawn).Field("drawer").GetValue<Pawn_DrawTracker>();
+                value2.Notify_DamageDeflected(new DamageInfo(__instance.def.projectile.damageDef, 1f));
+
                 effecter.Cleanup();
-                if (hediff.ShouldDeflectProjectile(__instance))
+
+                if (___launcher != null)
                 {
                     ___intendedTarget = ___launcher;
                     ___launcher = hitThing;
-                    ___shotRotation = (___shotRotation + 180f) % 360f;
+                    ___shotRotation = (___shotRotation + 180) % 360;
                     ___shotLine = new Ray(___shotLine.direction, ___shotLine.origin);
-                    ((ProjectileCE)__instance).Destination = ___origin;
-                    ___origin = new Vector2(((Thing)(object)__instance).Position.x, ((Thing)(object)__instance).Position.z);
+                    __instance.Destination = ___origin;
+                    ___origin = new Vector2(__instance.Position.x, __instance.Position.z);
                     ___landed = false;
                     hediff.AddEntropy(__instance);
+                }
+
+                else
+                {
+                    __instance.Destroy();
+
                 }
                 return false;
             }

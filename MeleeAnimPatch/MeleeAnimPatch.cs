@@ -3,6 +3,7 @@ using AM.Reqs;
 using AM.Sweep;
 using AM.Tweaks;
 using LudeonTK;
+using RimWorld;
 using System;
 using TheForce_Psycast;
 using TheForce_Psycast.Lightsabers;
@@ -11,78 +12,104 @@ using Verse;
 
 namespace MeleeAnimPatch_ForcePsycast
 {
+    internal class MeleeAnimPatch : PartRenderer
+    {
+        private Comp_LightsaberBlade compLightsaberBlade;
 
-        internal class MeleeAnimPatch : PartRenderer
+        private const float HiltYOffset = 0f;
+        private const float GlowYOffset = -1f;
+        private const float CoreYOffset = -0.001f;
+        private const float BladeYOffset = -0.003f;
+
+        private static readonly Vector3 coreOffset = new Vector3(0f, CoreYOffset, 0f);
+        private static readonly Vector3 bladeOffset = new Vector3(0f, BladeYOffset, 0f);
+        private static readonly Vector3 hiltOffset = new Vector3(0f, HiltYOffset, 0f);
+        private static readonly Vector3 glowOffset = new Vector3(0f, GlowYOffset, 0f);
+
+        private static Quaternion rotationCache;
+        private static float? previousAngle;
+
+        public override bool Draw()
         {
-            private Comp_LightsaberBlade lightsaberComp;
+            // Draw lightsaber base
+            var weapon = Item;
+            if (weapon == null)
+                return true;
 
-            [TweakValue("aaa_LightsaberBladeMinJitter", 0, 2f)]
-            private static float minVibrate = 0.999f;
+            // Fetch the lightsaber component once
+            compLightsaberBlade = weapon.GetComp<Comp_LightsaberBlade>();
+            if (compLightsaberBlade == null)
+                return true;
 
-            [TweakValue("aaa_LightsaberBladeMaxJitter", 0, 2f)]
-            private static float maxVibrate = 1.005f;
-            public override bool Draw()
-            {
-                // Draw lightsaber base
+            compLightsaberBlade.UpdateScalingAndOffset();
+            Vector3 coreDrawLoc = weapon.DrawPos + coreOffset;
+            Vector3 bladeDrawLoc = weapon.DrawPos + bladeOffset;
+            Vector3 hiltDrawLoc = weapon.DrawPos + hiltOffset;
+            Vector3 glowDrawLoc = weapon.DrawPos + glowOffset;
+
+            // Retrieve material references for the lightsaber parts
+            var bladeMat = compLightsaberBlade.Graphic?.MatSingle;
+            var coreMat = compLightsaberBlade.LightsaberCore1Graphic?.MatSingle;
+            var blade2Mat = compLightsaberBlade.LightsaberBlade2Graphic?.MatSingle;
+            var core2Mat = compLightsaberBlade.LightsaberCore2Graphic?.MatSingle;
+            var hiltMat = compLightsaberBlade.selectedhiltgraphic.hiltgraphic.Graphic.MatSingle;
+            var glowMat = compLightsaberBlade.LightsaberGlowGraphic?.MatSingle;
+
+            if (bladeMat == null)
+                return true;
+
+            // Use the lenFactor from LightsaberGraphicsUtil
+            float lenFactor = Rand.Range(compLightsaberBlade.minVibrate, compLightsaberBlade.minVibrate + compLightsaberBlade.vibrationrate);
+            Vector3 scale = new Vector3(lenFactor, 1, 1);
+            var scaleMatrix = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, scale);
 
 
-                var weapon = Item;
-                if (weapon == null)
-                    return true;
+            float lenFactor2 = Rand.Range(compLightsaberBlade.minVibrate, compLightsaberBlade.minVibrate + compLightsaberBlade.vibrationrate2);
+            Vector3 scale2 = new Vector3(lenFactor2, 1, 1);
+            var scaleMatrix2 = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, scale2);
 
-                // Fetch the lightsaber component once
-                lightsaberComp = weapon.GetComp<Comp_LightsaberBlade>();
-                if (lightsaberComp == null)
-                    return true;
 
-                // Retrieve material references for the lightsaber parts
-                var bladeMat = lightsaberComp.Graphic?.MatSingle;
-                var coreMat = lightsaberComp.LightsaberCore1Graphic?.MatSingle;
-                var blade2Mat = lightsaberComp.LightsaberBlade2Graphic?.MatSingle;
-                var core2Mat = lightsaberComp.LightsaberCore2Graphic?.MatSingle;
-                var hiltMat = lightsaberComp.selectedhiltgraphic.hiltgraphic.Graphic.MatSingle;
-                var glowMat = lightsaberComp.LightsaberGlowGraphic?.MatSingle;
+            var glowMatrix = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, Force_ModSettings.glowRadius * scale);
 
-                if (bladeMat == null)
-                    return true;
+            // Slightly offset the blade and core matrices
+            var bladeMatrix1 = Matrix4x4.TRS(bladeDrawLoc, rotationCache, compLightsaberBlade.currentScaleForCore1AndBlade1);
+            var bladeMatrix2 = Matrix4x4.TRS(bladeDrawLoc, rotationCache, compLightsaberBlade.currentScaleForCore2AndBlade2);
+            var coreMatrix1 = Matrix4x4.TRS(coreDrawLoc, rotationCache, compLightsaberBlade.currentScaleForCore1AndBlade1);
+            var coreMatrix2 = Matrix4x4.TRS(coreDrawLoc, rotationCache, compLightsaberBlade.currentScaleForCore2AndBlade2);
 
-                float lenFactor = Rand.Range(0.999f, 1.005f);
-                Vector3 scale = new Vector3(lenFactor, 1, 1);
-                var scaleMatrix = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, scale);
-                var glowMatrix = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, Force_ModSettings.glowRadius * scale);
 
-                // Slightly offset the blade and core matrices
-                Matrix4x4 TRSBlade = TRS;
-                TRSBlade.m13 -= 0.002f;  // Adjust this as needed to avoid z-fighting
-                Matrix4x4 TRSCore = TRS;
-                TRSCore.m13 -= 0.001f;
-                Matrix4x4 TRSHilt = TRS;
-                TRSHilt.m13 -= 0.00f;
+            Matrix4x4 TRSBlade = TRS;
+            TRSBlade.m13 -= 0.002f;  // Adjust this as needed to avoid z-fighting
+            Matrix4x4 TRSCore = TRS;
+            TRSCore.m13 -= 0.001f;
+            Matrix4x4 TRSHilt = TRS;
+            TRSHilt.m13 -= 0.00f;
 
             // Draw each part conditionally
             if (bladeMat != null)
-                    Graphics.DrawMesh(Mesh, TRSBlade * scaleMatrix, bladeMat, 0);
+                Graphics.DrawMesh(Mesh, TRSBlade * scaleMatrix, bladeMat, 0);
 
-                if (coreMat != null)
-                    Graphics.DrawMesh(Mesh, TRSCore * scaleMatrix, coreMat, 0);
+            if (coreMat != null)
+                Graphics.DrawMesh(Mesh, TRSCore * scaleMatrix, coreMat, 0);
 
-                if (blade2Mat != null)
-                    Graphics.DrawMesh(Mesh, TRSBlade * scaleMatrix, blade2Mat, 0);
+            if (blade2Mat != null)
+                Graphics.DrawMesh(Mesh, TRSBlade * scaleMatrix2, blade2Mat, 0);
 
-                if (core2Mat != null)
-                    Graphics.DrawMesh(Mesh, TRSCore * scaleMatrix, core2Mat, 0);
-                if (hiltMat != null)
-                    Graphics.DrawMesh(Mesh, TRS, lightsaberComp.selectedhiltgraphic.hiltgraphic.Graphic.MatSingle, 0, null, 0, lightsaberComp.hiltMaterialPropertyBlock);
+            if (core2Mat != null)
+                Graphics.DrawMesh(Mesh, TRSCore * scaleMatrix2, core2Mat, 0);
 
-                // Draw glow if enabled in settings
-                if (glowMat != null && Force_ModSettings.LightsaberFakeGlow)
-                {
-                    Graphics.DrawMesh(Mesh, TRSCore * glowMatrix, glowMat, 0);
-                }
+            if (hiltMat != null)
+                Graphics.DrawMesh(Mesh, TRS, hiltMat, 0, null, 0, compLightsaberBlade.hiltMaterialPropertyBlock);
 
-                return true;
+            // Draw glow if enabled in settings
+            if (glowMat != null && Force_ModSettings.LightsaberFakeGlow)
+            {
+                Graphics.DrawMesh(Mesh, TRSCore * glowMatrix, glowMat, 0);
             }
+
+            return true;
         }
+    }
 
         public static class Extensions
         {
@@ -96,8 +123,7 @@ namespace MeleeAnimPatch_ForcePsycast
                 Color color = comp.lightsaberBlade1OverrideColor;
 
                 // Check if the color is default (usually Color.white), return null if so
-                if (color == Color.white)
-                    return null;
+                
 
                 return color;
             }

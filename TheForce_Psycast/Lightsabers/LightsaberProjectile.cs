@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using RimWorld;
+using System.Collections.Generic;
 using TheForce_Psycast.Lightsabers;
 using UnityEngine;
 using Verse;
@@ -28,7 +29,7 @@ namespace TheForce_Psycast
                 _originalLauncher = launcher as Pawn; // Store original launcher
             }
 
-            base.Launch(launcher, origin, usedTarget, intendedTarget, hitFlags, preventFriendlyFire); // Call base launch logic
+            base.Launch(launcher, origin, usedTarget, intendedTarget, hitFlags, preventFriendlyFire);
         }
         private float ArcHeightFactor
         {
@@ -45,62 +46,112 @@ namespace TheForce_Psycast
             }
         }
 
+        public override void Tick()
+        {
+            base.Tick();
+
+            if (DestinationIsValid() && DestinationIsMoving())
+            {
+                UpdateTrajectory();
+            }
+            else
+            {
+                return;
+            }
+        }
+
+        private bool DestinationIsValid()
+        {
+            return usedTarget.HasThing && usedTarget.Thing.Map == Map;
+        }
+
+        private bool DestinationIsMoving()
+        {
+            if (usedTarget == null || !usedTarget.HasThing) return false;
+
+            var thing = usedTarget.Thing;
+            if (thing is not Pawn pawn) return false;
+
+            return pawn.pather?.MovingNow ?? false;
+        }
+
+        private void DestroyProjectile()
+        {
+            Destroy();
+        }
+
+        private void UpdateTrajectory()
+        {
+            if (!DestinationIsValid() || usedTarget.Thing == null)
+            {
+                return;
+            }
+
+            Vector3 targetPosition = usedTarget.CenterVector3;
+            Vector3 currentPosition = ExactPosition;
+            Vector3 directionToTarget = (targetPosition - currentPosition).normalized;
+            float adjustedSpeed = def.projectile.speed * 0.5f;
+            origin += directionToTarget * adjustedSpeed * Time.deltaTime;
+            destination = targetPosition;
+        }
+
         protected override void DrawAt(Vector3 drawLoc, bool flip = false)
         {
 
-            float num = ArcHeightFactor * GenMath.InverseParabola(DistanceCoveredFractionArc);
-            Vector3 vector = drawLoc;
-
+            float arcHeight = ArcHeightFactor * GenMath.InverseParabola(DistanceCoveredFractionArc);
             if (def.projectile.shadowSize > 0f)
             {
-                DrawShadow(drawLoc, num);
+                DrawShadow(DrawPos, arcHeight);
             }
-
+            Vector3 direction = (destination - origin).normalized;
             Quaternion rotation = ExactRotation;
-
             Graphic graphicToDraw = def.graphic;
             Comp_LightsaberBlade compLightsaberBlade = null;
-
-            if (_originalLauncher is Pawn pawn)
-            {
-                if (pawn.equipment != null && pawn.equipment.Primary != null)
-                {
-                    ThingWithComps equippedWeapon = pawn.equipment.Primary;
-                    graphicToDraw = equippedWeapon.Graphic;
-
-                    compLightsaberBlade = equippedWeapon.TryGetComp<Comp_LightsaberBlade>();
-                }
-            }
-
             float spinRate = Force_ModSettings.spinRate;
             float rotationSpeed = 100f * spinRate;
             float rotationAngle = Time.time * rotationSpeed;
             rotation *= Quaternion.Euler(0f, rotationAngle, 0f);
 
+            if (_originalLauncher is Pawn pawn && pawn.equipment?.Primary != null)
+            {
+                ThingWithComps equippedWeapon = pawn.equipment.Primary;
+                graphicToDraw = equippedWeapon.Graphic;
+
+                compLightsaberBlade = equippedWeapon.TryGetComp<Comp_LightsaberBlade>();
+                if (compLightsaberBlade != null)
+                {
+                    graphicToDraw = compLightsaberBlade.selectedhiltgraphic?.graphicData?.Graphic ?? graphicToDraw;
+                }
+            }
+
+            if (graphicToDraw == null)
+            {
+                return;
+            }
+
             if (def.projectile.useGraphicClass)
             {
-                Graphic.Draw(vector, Rotation, this, rotation.eulerAngles.y);
+                graphicToDraw.Draw(DrawPos, Rotation, this, rotationSpeed);
             }
             else
             {
-                Graphics.DrawMesh(MeshPool.GridPlane(graphicToDraw.drawSize), vector, rotation, graphicToDraw.MatSingle, 0);
+                Graphics.DrawMesh(MeshPool.GridPlane(graphicToDraw.drawSize), DrawPos, rotation, graphicToDraw.MatSingle, 0);
             }
-
-
             if (compLightsaberBlade != null)
             {
-                DrawLightsaberGraphics(compLightsaberBlade, DrawPos,  rotation, rotationSpeed);
+                DrawLightsaberGraphics(compLightsaberBlade, DrawPos, rotation, rotationSpeed);
                 compLightsaberBlade.IsThrowingWeapon = true;
             }
+
             Comps_PostDraw();
         }
 
         private void DrawLightsaberGraphics(Comp_LightsaberBlade compLightsaberBlade, Vector3 drawLoc, Quaternion rotation, float rotationspeed, float drawSize = 1.5f)
         {
-            if (compLightsaberBlade.Graphic?.MatSingle == null)
+            if (compLightsaberBlade?.Graphic?.MatSingle == null)
+            {
                 return;
-
-            // Adjust y-axis for blade and core offsets
+            }
             float coreYOffset = -0.001f;
             float bladeYOffset = -0.002f;
 
@@ -136,10 +187,7 @@ namespace TheForce_Psycast
 
             for (int i = 0; i < materialsToDraw.Count; i++)
             {
-                // Create a scaling matrix with the desired draw size
                 Matrix4x4 matrix = Matrix4x4.TRS(drawLocations[i], rotation, new Vector3(drawSize, 1, drawSize));
-
-                // Draw the mesh with scaling applied
                 Graphics.DrawMesh(MeshPool.plane10, matrix, materialsToDraw[i], -2 + i);
             }
         }
@@ -158,24 +206,42 @@ namespace TheForce_Psycast
 
         protected override void Impact(Thing hitThing, bool blockedByShield = false)
         {
-            Map map = base.Map;
+            if (launcher == null || _originalLauncher == null)
+            {
+                return;
+            }
+
+            Map map = this.Map;
+            if (map == null)
+            {
+                return;
+            }
+
             base.Impact(hitThing, blockedByShield);
+
             DoImpact(hitThing, map);
+
             if (launcher is Pawn cachedLauncher && cachedLauncher.equipment?.Primary != null)
             {
                 IntVec3 moteSpawnPos = hitThing != null ? hitThing.Position : Position;
+
                 MoteLightSaberReturn mote = (MoteLightSaberReturn)ThingMaker.MakeThing(ThingDef.Named("Mote_LightSaberReturn"));
+                if (mote == null)
+                {
+                    return;
+                }
+
                 mote.exactPosition = moteSpawnPos.ToVector3Shifted();
                 mote.rotationRate = 0f;
                 mote.SetLauncher(_originalLauncher, _originalLauncher.equipment.Primary.Graphic);
+
                 GenSpawn.Spawn(mote, moteSpawnPos, map);
+
                 SoundDef soundDef = SoundDef.Named("Force_ForceThrow_Return");
-                soundDef.PlayOneShot(new TargetInfo(moteSpawnPos, map));
-                
-            }
-            else
-            {
-                Log.Warning("Attempted to launch LightSaberProjectile without a primary weapon equipped.");
+                if (soundDef != null)
+                {
+                    soundDef.PlayOneShot(new TargetInfo(moteSpawnPos, map));
+                }
             }
         }
     }
@@ -229,13 +295,13 @@ namespace TheForce_Psycast
             {
                 this.Destroy(DestroyMode.Vanish);
                 Comp_LightsaberBlade compLightsaberBlade = originalLauncher.equipment.Primary.TryGetComp<Comp_LightsaberBlade>();
-                if(compLightsaberBlade != null)
+                if (compLightsaberBlade != null)
                 {
                     compLightsaberBlade.IsThrowingWeapon = false;
                     SoundDef soundDef = compLightsaberBlade.selectedSoundEffect ?? null;
                     SoundStarter.PlayOneShot(soundDef, this);
                 }
-                
+
             }
         }
 
@@ -272,5 +338,10 @@ namespace TheForce_Psycast
 
             return false;
         }
+    }
+
+    public class MoteLightSaberTrail : MoteThrown
+    {
+
     }
 }

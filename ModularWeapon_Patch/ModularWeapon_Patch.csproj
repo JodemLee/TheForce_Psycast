@@ -61,12 +61,15 @@
     </Reference>
     <Reference Include="UnityEngine.IMGUIModule">
       <HintPath>L:\SteamLibrary\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.IMGUIModule.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.TextRenderingModule">
       <HintPath>L:\SteamLibrary\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.UIElementsModule">
       <HintPath>L:\SteamLibrary\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.UIElementsModule.dll</HintPath>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>

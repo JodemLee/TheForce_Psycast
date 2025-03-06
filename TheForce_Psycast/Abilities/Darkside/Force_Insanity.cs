@@ -6,7 +6,7 @@ using Ability = VFECore.Abilities.Ability;
 
 namespace TheForce_Psycast.Abilities.Darkside
 {
-    public class Ability_ForceInsanity : Ability
+    public class Ability_ForceInsanity : Ability_WriteCombatLog
     {
         public override bool ValidateTarget(LocalTargetInfo target, bool showMessages = true)
         {

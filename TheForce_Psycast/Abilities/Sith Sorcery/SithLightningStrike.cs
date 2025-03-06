@@ -2,13 +2,14 @@
 using RimWorld.Planet;
 using System.Collections.Generic;
 using System.Linq;
+using TheForce_Psycast.Abilities;
 using TheForce_Psycast.Abilities.Sith_Sorcery;
 using Verse;
 using Ability = VFECore.Abilities.Ability;
 
 namespace TheForce_Psycast
 {
-    internal class SithLightningStrike : Ability
+    internal class SithLightningStrike : Ability_WriteCombatLog
     {
 
         public override void Cast(params GlobalTargetInfo[] targets)

@@ -114,32 +114,26 @@ namespace ModularWeapon_Patch
                 // Log the pawn and equipment state
                 if (__instance.pawn == null || __instance.pawn.equipment == null || __instance.pawn.equipment.Primary == null)
                 {
-                    return true; // Continue to the original method
+                    return true;
                 }
 
-                // Log the ThingDef of the primary weapon
-                ThingDef primaryDef = __instance.pawn.equipment.Primary.def;
-                if (primaryDef == null)
+                // Get the primary weapon (Thing) instead of its ThingDef
+                Thing primaryWeapon = __instance.pawn.equipment.Primary;
+                if (primaryWeapon == null)
                 {
-                    return true; // Continue to the original method
+                    return true;
                 }
 
-                // Check if the primary weapon has a CompProperties_WeaponStance
-                var compLightsaber = primaryDef.GetCompProperties<CompProperties_WeaponStance>();
+                var compLightsaber = primaryWeapon.def.GetCompProperties<CompProperties_WeaponStance>();
                 if (compLightsaber == null)
                 {
-                    return true; // Continue to the original method if the component is not present
+                    return true;
                 }
 
-                // Create a new list for the gizmos
                 List<Gizmo> gizmos = new List<Gizmo>();
-
-                // Add the custom weapon stance gizmo
-                gizmos.Add(new Gizmo_WeaponStance(__instance.pawn, __instance, primaryDef));
-
-                // Set the result to the modified gizmo list and skip the original method
+                gizmos.Add(new Gizmo_WeaponStance(__instance.pawn, __instance, primaryWeapon));
                 __result = gizmos;
-                return false; // Skip the original method
+                return false;
             }
         }
     }

@@ -7,7 +7,7 @@ using Ability = VFECore.Abilities.Ability;
 
 namespace TheForce_Psycast.Abilities.Lightside
 {
-    internal class Force_TransferWounds : Ability
+    internal class Force_TransferWounds : Ability_WriteCombatLog
     {
         public override void Cast(params GlobalTargetInfo[] targets)
         {

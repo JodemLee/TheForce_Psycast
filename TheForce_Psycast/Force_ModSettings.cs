@@ -223,7 +223,7 @@ namespace TheForce_Psycast
                 listingStandard.CheckboxLabeled("Force.LightsaberRealGlow".Translate(), ref Force_ModSettings.LightsaberRealGlow, "Force.LightsaberRealGlowDesc".Translate());
                 listingStandard.CheckboxLabeled("Force.LightsaberFakeGlow".Translate(), ref Force_ModSettings.LightsaberFakeGlow, "Force.LightsaberFakeGlowDesc".Translate());
                 listingStandard.Label("Force_GlowRadius".Translate() + ": " + Force_ModSettings.glowRadius);
-                Force_ModSettings.glowRadius = listingStandard.Slider(Force_ModSettings.glowRadius, 1, 10);
+                Force_ModSettings.glowRadius = listingStandard.Slider(Force_ModSettings.glowRadius, 0, 10);
             }
             else
             {
@@ -277,7 +277,7 @@ namespace TheForce_Psycast
                 projectileGroups[modName].Add(projectileDef);
             }
 
-            // Button to enable all projectiles as deflectable
+            // Buttons for enabling/disabling all projectiles
             Rect enableAllButtonRect = new Rect(inRect.x, inRect.y, 120f, 30f);
             Rect disableAllButtonRect = new Rect(inRect.x + 130f, inRect.y, 120f, 30f);
 
@@ -314,48 +314,68 @@ namespace TheForce_Psycast
             Rect viewRect = new Rect(0f, 0f, inRect.width - 16f, scrollViewHeight);
 
             // Begin scrollable view
-            Rect outRect = new Rect(inRect.x, inRect.y + 36f, inRect.width, inRect.height - 36f); // Adjust for tab height
+            Rect outRect = new Rect(inRect.x, inRect.y + 36f, inRect.width, inRect.height - 36f);
             Widgets.BeginScrollView(outRect, ref scrollPosition, viewRect);
 
             float y = 0f;
             foreach (var group in projectileGroups)
             {
-                Rect labelRect = new Rect(30f, y, viewRect.width, 40f); // Space for mod header
+                // Draw mod group header with background
+                Rect headerRect = new Rect(0f, y, viewRect.width, 40f);
+                Widgets.DrawBoxSolid(headerRect, new Color(0.2f, 0.2f, 0.2f, 0.6f)); // Header background
                 bool isExpanded = modExpandedStates.TryGetValue(group.Key, out bool expanded) && expanded;
 
-                if (Widgets.ButtonText(new Rect(labelRect.x, labelRect.y, 20f, 40f), isExpanded ? "▼" : "▶"))
+                if (Widgets.ButtonText(new Rect(headerRect.x + 5f, headerRect.y + 5f, 30f, 30f), isExpanded ? "▼" : "▶"))
                 {
                     modExpandedStates[group.Key] = !isExpanded;
                 }
 
                 Text.Font = GameFont.Medium;
-                Widgets.Label(new Rect(labelRect.x + 25f, labelRect.y, labelRect.width - 25f, labelRect.height), group.Key);
+                Widgets.Label(new Rect(headerRect.x + 40f, headerRect.y + 5f, headerRect.width - 45f, 30f), group.Key);
                 Text.Font = GameFont.Small;
 
                 y += 40f; // Increase y for the next group
 
                 if (isExpanded)
                 {
+                    bool isOddRow = false;
+
                     foreach (var projectileDef in group.Value)
                     {
+                        // Alternate row background colors
+                        Rect rowRect = new Rect(0f, y, viewRect.width, 40f);
+                        Widgets.DrawBoxSolid(rowRect, isOddRow ? new Color(0.9f, 0.9f, 0.9f, 0.2f) : new Color(0.8f, 0.8f, 0.8f, 0.2f));
+                        isOddRow = !isOddRow;
+
+                        // Draw icon if available
+                        Rect iconRect = new Rect(rowRect.x + 5f, rowRect.y + 5f, 30f, 30f);
+                        if (projectileDef.uiIcon != null)
+                        {
+                            GUI.DrawTexture(iconRect, projectileDef.uiIcon);
+                        }
+                        else
+                        {
+                            Widgets.DrawBoxSolid(iconRect, new Color(0.5f, 0.5f, 0.5f)); // Placeholder box for missing icon
+                        }
+
+                        // Checkbox and label
+                        Rect labelRect = new Rect(iconRect.xMax + 10f, rowRect.y, rowRect.width - iconRect.width - 20f, 40f);
                         bool isDeflectable = Force_ModSettings.deflectableProjectileHashes.Contains(projectileDef.shortHash);
                         bool checkboxValue = isDeflectable;
 
-                        // Create a rectangle for the projectile checkbox
-                        Rect projectileRect = new Rect(10f, y, viewRect.width - 30f, 30f);
-                        Widgets.CheckboxLabeled(projectileRect, projectileDef.label ?? projectileDef.defName, ref checkboxValue);
+                        Widgets.CheckboxLabeled(labelRect, projectileDef.label ?? projectileDef.defName, ref checkboxValue);
 
                         // Add or remove the projectile based on checkbox state
                         if (checkboxValue && !isDeflectable)
                         {
-                            Force_ModSettings.AddDeflectableProjectile(projectileDef); // Adds the projectile to deflectable list
+                            Force_ModSettings.AddDeflectableProjectile(projectileDef);
                         }
                         else if (!checkboxValue && isDeflectable)
                         {
-                            Force_ModSettings.RemoveDeflectableProjectile(projectileDef); // Removes it from the deflectable list
+                            Force_ModSettings.RemoveDeflectableProjectile(projectileDef);
                         }
 
-                        y += 40f; // Increase y for the next projectile option
+                        y += 40f; // Increase y for the next projectile
                     }
                 }
 
@@ -364,6 +384,7 @@ namespace TheForce_Psycast
 
             Widgets.EndScrollView();
         }
+
         private float CalculateScrollViewHeight(Dictionary<string, List<ThingDef>> projectileGroups, float viewWidth)
         {
             float height = 0f;

@@ -7,7 +7,7 @@ using VFECore.Abilities;
 
 namespace TheForce_Psycast.Abilities.Sith_Sorcery
 {
-    internal class SithRitual_DrainEssence : VFECore.Abilities.Ability
+    internal class SithRitual_DrainEssence : Ability_WriteCombatLog
     {
         private const float DrainAmount = 0.02f;  // Amount of energy drained per tick
         private const int DurationTicks = 600;  // Duration of the ability in ticks (10 seconds)

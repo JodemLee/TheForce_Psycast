@@ -1,11 +1,12 @@
 ﻿using RimWorld;
 using RimWorld.Planet;
+using TheForce_Psycast.Abilities;
 using UnityEngine;
 using Verse;
 
 namespace TheForce_Psycast
 {
-    public class Ability_ForceRepulsion : VFECore.Abilities.Ability
+    public class Ability_ForceRepulsion : Ability_WriteCombatLog
     {
         Force_ModSettings modSettings = new Force_ModSettings();
         public bool usePsycastStat = false;

@@ -116,10 +116,21 @@ namespace TheForce_Psycast.Abilities.Jedi_Training
         public void ChangeApprenticeCapacitySetting(int newCapacity)
         {
             Force_ModSettings.apprenticeCapacity = newCapacity; // Update the setting
-            foreach (var hediff in Find.CurrentMap.mapPawns.AllPawns.Where(p => p.health.hediffSet.HasHediff(ForceDefOf.Force_Master)))
+            var currentMap = Find.CurrentMap;
+            if (currentMap == null) return;
+
+            foreach (var pawn in currentMap.mapPawns.AllPawns)
             {
-                var masterHediff = hediff.health.hediffSet.GetFirstHediffOfDef(ForceDefOf.Force_Master) as Hediff_Master;
-                masterHediff?.UpdateApprenticeCapacity(newCapacity); // Update each relevant Hediff_Master
+                if (pawn?.health?.hediffSet == null) continue;
+
+                if (pawn.health.hediffSet.HasHediff(ForceDefOf.Force_Master))
+                {
+                    var masterHediff = pawn.health.hediffSet.GetFirstHediffOfDef(ForceDefOf.Force_Master) as Hediff_Master;
+                    if (masterHediff != null)
+                    {
+                        masterHediff.UpdateApprenticeCapacity(newCapacity);
+                    }
+                }
             }
         }
 

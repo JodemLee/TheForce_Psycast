@@ -6,7 +6,7 @@ using Verse;
 
 namespace TheForce_Psycast.Abilities.Telekinesis
 {
-    public class Ability_ForceWave : VFECore.Abilities.Ability
+    public class Ability_ForceWave : Ability_WriteCombatLog
     {
         public float baseDamage = 1f;
         Force_ModSettings modSettings = new Force_ModSettings();
@@ -38,13 +38,30 @@ namespace TheForce_Psycast.Abilities.Telekinesis
             int offsetMultiplier = GetOffsetMultiplier();
             var map = pawn.Map;
 
+            if (map == null)
+            {
+                Log.Error("Ability_ForceWave.Cast: Map is null.");
+                return;
+            }
+
             foreach (var target in targets)
             {
+                if (!target.IsValid)
+                {
+                    Log.Warning("Ability_ForceWave.Cast: Invalid target.");
+                    continue;
+                }
+
                 // Calculate the affected cells in the cone area
                 List<IntVec3> affectedCells = AffectedCells(target.Cell);
 
                 foreach (IntVec3 cell in affectedCells)
                 {
+                    if (!cell.IsValid || !cell.InBounds(map))
+                    {
+                        continue;
+                    }
+
                     Pawn targetPawn = cell.GetFirstPawn(map);
                     if (targetPawn == null)
                     {
@@ -82,6 +99,12 @@ namespace TheForce_Psycast.Abilities.Telekinesis
                         pushBackPosition = PositionUtils.FindValidPosition(cell, offset, map);
                     }
 
+                    if (!pushBackPosition.InBounds(map))
+                    {
+                        Log.Warning("Ability_ForceWave.Cast: pushBackPosition is out of bounds.");
+                        continue;
+                    }
+
                     // Calculate damage based on distance pushed
                     float distancePushed = (pushBackPosition - cell).LengthHorizontal;
                     float scaledDamage = baseDamage + (distancePushed * 2f); // Adjust the multiplier as needed
@@ -89,15 +112,20 @@ namespace TheForce_Psycast.Abilities.Telekinesis
                     targetPawn.TakeDamage(damageInfo);
 
                     // Move or throw the target to the calculated position
-                    if (targetPawn != null)
+                    if (ForceDefOf.Force_ThrownPawnWave == null || targetPawn == null || !pushBackPosition.IsValid)
                     {
-                        var flyer = PawnFlyer.MakeFlyer(ForceDefOf.Force_ThrownPawnWave, targetPawn, pushBackPosition, null, null);
-                        GenSpawn.Spawn(flyer, pushBackPosition, map);
+                        Log.Error("Ability_ForceWave.Cast: Invalid parameters for MakeFlyer.");
+                        continue;
                     }
-                    else
+
+                    var flyer = PawnFlyer.MakeFlyer(ForceDefOf.Force_ThrownPawnWave, targetPawn, pushBackPosition, null, null);
+                    if (flyer == null)
                     {
-                        targetPawn.Position = pushBackPosition;
+                        Log.Error("Ability_ForceWave.Cast: Failed to create PawnFlyer.");
+                        continue;
                     }
+
+                    GenSpawn.Spawn(flyer, pushBackPosition, map);
                 }
             }
 

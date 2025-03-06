@@ -11,7 +11,7 @@ using PsycastUtility = VanillaPsycastsExpanded.PsycastUtility;
 
 namespace TheForce_Psycast.Abilities.Darkside
 {
-    internal class Force_EssenceTransfer : VFECore.Abilities.Ability
+    internal class Force_EssenceTransfer : Ability_WriteCombatLog
     {
         public override void Cast(params GlobalTargetInfo[] targets)
         {
@@ -27,7 +27,6 @@ namespace TheForce_Psycast.Abilities.Darkside
             Hediff hediff = targetPawn.health.hediffSet.GetFirstHediffOfDef(ForceDefOf.Force_MindShardHediff);
             if (hediff != null)
             {
-                // Remove the hediff
                 targetPawn.health.RemoveHediff(hediff);
             }
             this.pawn.psychicEntropy.RemoveAllEntropy();
@@ -78,15 +77,36 @@ namespace TheForce_Psycast.Abilities.Darkside
 
         private static void HandleGhost(Pawn ghostPawn)
         {
-            var ghostHediff = ghostPawn.health.hediffSet.GetFirstHediffOfDef(ForceDefOf.Force_Darkside) as HediffWithComps_DarksideGhost;
+            // Check if the pawn has any hediff with the Ghost comp
+            var ghostHediff = ghostPawn.health.hediffSet.hediffs
+                .FirstOrDefault(h => h.TryGetComp<HediffComp_Ghost>() != null);
+
             if (ghostHediff != null)
             {
-                ghostHediff.linkedObject = null;
-                var SithGhostHediff = ghostPawn.health.hediffSet.GetFirstHediffOfDef(ForceDefOf.Force_SithGhost);
-                ghostPawn.health.RemoveHediff(SithGhostHediff);
-                ghostPawn.apparel.DropAll(ghostPawn.Position);
+                var ghostComp = ghostHediff.TryGetComp<HediffComp_Ghost>();
+                if (!ghostComp.Props.isLightSide)
+                {
+                    ghostComp.LinkedObject = null;
+                    ghostPawn.health.RemoveHediff(ghostHediff);
+                    ghostPawn.apparel.DropAll(ghostPawn.Position);
+                    ghostPawn.Destroy(DestroyMode.Vanish);
+                }
+                else
+                {
+                    ghostPawn.health.RemoveHediff(ghostHediff);
+                    ghostPawn.apparel.DropAll(ghostPawn.Position);
+                    ghostPawn.Destroy(DestroyMode.Vanish);
+                }
             }
-            ghostPawn.Destroy(DestroyMode.Vanish);
+
+            // Handle Sith Zombie logic
+            var zombieHediff = ghostPawn.health.hediffSet.GetFirstHediffOfDef(ForceDefOf.Force_Sithzombie);
+            if (zombieHediff != null)
+            {
+                ghostPawn.health.RemoveHediff(zombieHediff);
+                return;
+            }
+
         }
 
         private static void SwapNames(Pawn targetPawn, Pawn casterPawn)
@@ -116,10 +136,9 @@ namespace TheForce_Psycast.Abilities.Darkside
 
         private static void SwapTraits(Pawn targetPawn, Pawn casterPawn)
         {
-            var targetTraits = targetPawn.story.traits.allTraits.ToList();
-            var casterTraits = casterPawn.story.traits.allTraits.ToList();
+            var targetTraits = new List<Trait>(targetPawn.story.traits.allTraits);
+            var casterTraits = new List<Trait>(casterPawn.story.traits.allTraits);
 
-            // Clear existing traits and re-add swapped traits
             targetPawn.story.traits.allTraits.Clear();
             casterPawn.story.traits.allTraits.Clear();
 
@@ -155,7 +174,6 @@ namespace TheForce_Psycast.Abilities.Darkside
                     skill.xpSinceMidnight));
             }
 
-            // Transfer target's skills to caster
             foreach (var skill in targetPawn.skills.skills)
             {
                 var casterSkill = casterPawn.skills.GetSkill(skill.def);
@@ -166,7 +184,6 @@ namespace TheForce_Psycast.Abilities.Darkside
 
             }
 
-            // Transfer caster's stored skills to target
             foreach (var tempSkill in tempSkills)
             {
                 var targetSkill = targetPawn.skills.GetSkill(tempSkill.def);
@@ -177,8 +194,6 @@ namespace TheForce_Psycast.Abilities.Darkside
 
             }
         }
-
-
 
         private static void SwapIdeo(Pawn targetPawn, Pawn casterPawn)
         {
@@ -205,10 +220,16 @@ namespace TheForce_Psycast.Abilities.Darkside
 
         private static void TransferPsylinkAndPsycasts(Pawn targetPawn, Pawn casterPawn)
         {
+            int originalCasterPoints;
+            int originalTargetPoints;
+
+            casterPawn.ResetPsyPoints(out originalCasterPoints);
+
+            targetPawn.ResetPsyPoints(out originalTargetPoints);
+
             var sourcePsylink = casterPawn.GetMainPsylinkSource();
             var sourcePsycasts = casterPawn.Psycasts();
 
-            // Remove psylink and psycasts from caster
             if (sourcePsylink != null)
             {
                 casterPawn.health.RemoveHediff(sourcePsylink);
@@ -218,8 +239,6 @@ namespace TheForce_Psycast.Abilities.Darkside
                 casterPawn.health.RemoveHediff(sourcePsycasts);
             }
 
-
-            // Transfer psylink and psycasts from caster to target
             if (sourcePsylink != null)
             {
                 sourcePsylink.pawn = targetPawn;
@@ -233,6 +252,9 @@ namespace TheForce_Psycast.Abilities.Darkside
                 targetPawn.health.AddHediff(sourcePsycasts);
                 PsycastUtilityExtensions.AutoUnlockPsycasterPaths(targetPawn);
             }
+
+            targetPawn.RestorePsyPoints(originalCasterPoints);
+            casterPawn.RestorePsyPoints(originalTargetPoints);
         }
     }
 
@@ -243,20 +265,50 @@ namespace TheForce_Psycast.Abilities.Darkside
             var psycasts = pawn.Psycasts();
             if (psycasts != null)
             {
-                foreach (var path in psycasts.previousUnlockedPaths.ToList())
+                psycasts.unlockedPaths.Clear();
+                var compAbilities = pawn.GetComp<CompAbilities>();
+                if (compAbilities != null)
                 {
-                    psycasts.previousUnlockedPaths.Remove(path);
-                    psycasts.unlockedPaths.Add(path);
-                }
-
-                foreach (var path in DefDatabase<PsycasterPathDef>.AllDefs)
-                {
-                    if (!psycasts.unlockedPaths.Contains(path))
+                    foreach (var ability in compAbilities.LearnedAbilities)
                     {
-                        psycasts.unlockedPaths.Add(path);
+                        var psycastExtension = ability.def.GetModExtension<AbilityExtension_Psycast>();
+                        if (psycastExtension != null && psycastExtension.path != null)
+                        {
+                            if (!psycasts.unlockedPaths.Contains(psycastExtension.path))
+                            {
+                                psycasts.unlockedPaths.Add(psycastExtension.path);
+                            }
+                        }
                     }
                 }
+                PsycastUtility.RecheckPaths(pawn);
+            }
+        }
+
+        public static void ResetPsyPoints(this Pawn pawn, out int originalPoints)
+        {
+            var psycasts = pawn.Psycasts();
+            if (psycasts != null)
+            {
+                originalPoints = psycasts.points;
+                psycasts.points = 0;
+                PsycastUtility.RecheckPaths(pawn);
+            }
+            else
+            {
+                originalPoints = 0;
+            }
+        }
+
+        public static void RestorePsyPoints(this Pawn pawn, int originalPoints)
+        {
+            var psycasts = pawn.Psycasts();
+            if (psycasts != null)
+            {
+                psycasts.points = originalPoints;
+                PsycastUtility.RecheckPaths(pawn);
             }
         }
     }
 }
+

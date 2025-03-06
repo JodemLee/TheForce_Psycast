@@ -80,10 +80,10 @@ namespace TheForce_Psycast.Comps
                 if (primaryGraphic != null && lightsaberhilt != null)
                 {
                     var hiltDef = lightsaberhilt.selectedhiltgraphic;
-                    if (hiltDef.hiltgraphic != null)
+                    if (hiltDef.graphicData != null)
                     {
-                        primaryGraphic = hiltDef.hiltgraphic.Graphic.GetColoredVersion(
-                            hiltDef.hiltgraphic.Graphic.Shader,
+                        primaryGraphic = hiltDef.graphicData.Graphic.GetColoredVersion(
+                            hiltDef.graphicData.Graphic.Shader,
                             lightsaberhilt.hiltColorOneOverrideColor,
                             lightsaberhilt.hiltColorTwoOverrideColor
                         );

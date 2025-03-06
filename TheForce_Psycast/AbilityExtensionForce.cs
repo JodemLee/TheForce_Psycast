@@ -66,7 +66,7 @@ namespace TheForce_Psycast
             {
                 if (throwMessages)
                 {
-                    Messages.Message("Force_MindControlFailed".Translate(target.Pawn.Name), target.Thing, MessageTypeDefOf.NegativeEvent, true);
+                    Messages.Message("Force_MindControlFailed".Translate(target.Pawn.Name.ToStringShort), target.Thing, MessageTypeDefOf.NegativeEvent, true);
                 }
                 return false;
             }

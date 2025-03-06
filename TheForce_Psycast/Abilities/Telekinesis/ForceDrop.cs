@@ -7,7 +7,7 @@ using Ability = VFECore.Abilities.Ability;
 
 namespace TheForce_Psycast.Abilities.Telekinesis
 {
-    internal class ForceDrop : Ability
+    internal class ForceDrop : Ability_WriteCombatLog
     {
         public override void Cast(params GlobalTargetInfo[] targets)
         {

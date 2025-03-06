@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using RimWorld;
+using System.Collections.Generic;
 using Verse;
 using Verse.AI;
 
@@ -46,6 +47,15 @@ namespace TheForce_Psycast.Lightsabers
                 return false;
             }
 
+            // Check if the pawn is holding a lightsaber
+            Comp_LightsaberBlade lightsaberComp = pawn.equipment?.Primary?.GetComp<Comp_LightsaberBlade>();
+            if (lightsaberComp == null)
+            {
+                Log.Warning($"Pawn {pawn.Name} does not have a lightsaber equipped. Job cannot proceed.");
+                Messages.Message($"Pawn {pawn.Name} does not have a lightsaber equipped. Job cannot proceed.", MessageTypeDefOf.RejectInput, false);
+                return false;
+            }
+
             return true;
         }
 
@@ -59,7 +69,18 @@ namespace TheForce_Psycast.Lightsabers
                 EndJobWith(JobCondition.Incompletable);
                 yield break;
             }
+
+            // Ensure the pawn has a lightsaber equipped
+            Comp_LightsaberBlade lightsaberComp = pawn.equipment?.Primary?.GetComp<Comp_LightsaberBlade>();
+            if (lightsaberComp == null)
+            {
+                Log.Error($"[TheForce_Psycast] Pawn {pawn.Name} does not have a lightsaber equipped. Ending job.");
+                EndJobWith(JobCondition.Incompletable);
+                yield break;
+            }
+
             yield return Toils_Goto.GotoThing(TargetIndex.A, PathEndMode.Touch);
+
             Toil waitToil = Toils_General.WaitWith(TargetIndex.A, WorkTimeTicks, useProgressBar: true);
             yield return waitToil;
 
@@ -82,27 +103,23 @@ namespace TheForce_Psycast.Lightsabers
                     requiredComponent.Destroy(DestroyMode.Vanish);
                 }
 
-                Log.Message($"Pawn {pawn.Name} has upgraded their lightsaber with the {selectedHiltPart.label}.");
+                Messages.Message($"Pawn {pawn.Name} has upgraded their lightsaber with the {selectedHiltPart.label}.", MessageTypeDefOf.PositiveEvent, false);
 
-                Comp_LightsaberBlade lightsaberComp = pawn.equipment?.Primary?.GetComp<Comp_LightsaberBlade>();
-                if (lightsaberComp != null)
+                lightsaberComp.AddHiltPart(selectedHiltPart);
+
+                if (previousHiltPart != null)
                 {
-                    lightsaberComp.AddHiltPart(selectedHiltPart);
+                    lightsaberComp.RemoveHiltPart(previousHiltPart);
 
-                    if (previousHiltPart != null)
+                    // Drop the previous component
+                    Thing droppedComponent = ThingMaker.MakeThing(previousHiltPart.droppedComponent);
+                    if (droppedComponent != null)
                     {
-                        lightsaberComp.RemoveHiltPart(previousHiltPart);
-
-                        // Drop the previous component
-                        Thing droppedComponent = ThingMaker.MakeThing(previousHiltPart.droppedComponent);
-                        if (droppedComponent != null)
-                        {
-                            GenPlace.TryPlaceThing(
-                                droppedComponent,
-                                lightsaberComp.Wearer.Position,
-                                lightsaberComp.Wearer.Map,
-                                ThingPlaceMode.Near);
-                        }
+                        GenPlace.TryPlaceThing(
+                            droppedComponent,
+                            lightsaberComp.Wearer.Position,
+                            lightsaberComp.Wearer.Map,
+                            ThingPlaceMode.Near);
                     }
                 }
             });

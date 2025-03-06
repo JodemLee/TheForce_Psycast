@@ -4,9 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using TheForce_Psycast.Lightsabers;
+using TheForce_Psycast.Lightsabers.Lightsaber_Combat;
 using UnityEngine;
 using Verse;
 using static TheForce_Psycast.Lightsabers.LightsaberGraphicsUtil;
+using static Verse.DamageWorker;
 
 
 
@@ -23,7 +25,6 @@ namespace TheForce_Psycast
             harmonyPatch.Patch(AccessTools.Method(typeof(PawnRenderUtility), nameof(PawnRenderUtility.DrawEquipmentAiming)),
                prefix: new HarmonyMethod(type, nameof(DrawEquipmentAimingPreFix)));
             harmonyPatch.PatchAll();
-            meleeAnimationModActive = ModsConfig.ActiveModsInLoadOrder.Any(mod => mod.Name == "Melee Animation");
         }
 
         public static Harmony harmonyPatch;
@@ -92,17 +93,10 @@ namespace TheForce_Psycast
             [HarmonyPostfix]
             static void HideLightsaberWhenThrown(ref bool __result, Pawn pawn)
             {
-                // Short-circuit if result is already false
                 if (!__result) return;
-
-                // Cache primary equipment
                 var primaryEquipment = pawn.equipment?.Primary;
                 if (primaryEquipment == null) return;
-
-                // Cache lightsaber component
                 var compLightsaberBlade = compCache.GetCachedComp(primaryEquipment);
-
-                // Check if lightsaber is throwing weapon
                 if (compLightsaberBlade?.IsThrowingWeapon == true)
                 {
                     compLightsaberBlade.ResetToZero();
@@ -117,7 +111,6 @@ namespace TheForce_Psycast
             [HarmonyPostfix]
             static void IgniteLightsaberWhenDeflecting(ref bool __result, Pawn pawn)
             {
-                // Short-circuit if result is already false
                 if (__result) return;
                 var primaryEquipment = pawn.equipment?.Primary;
                 if (primaryEquipment == null) return;
@@ -130,56 +123,56 @@ namespace TheForce_Psycast
             }
         }
 
-        [HarmonyPatch(typeof(Thing), "Graphic", MethodType.Getter)]
-        public static class Thing_DefaultGraphic_Patch
-        {
-            public static bool Prefix(ref Graphic __result, ref Thing __instance)
-            {
-                var graphicComp = compCacheGraphic.GetCachedComp(__instance);
-                if (__instance == null || graphicComp != null) return true;
-                var thingEq = __instance;
-                var lightsaberComp = compCache.GetCachedComp(__instance);
-                if (lightsaberComp != null && lightsaberComp.selectedhiltgraphic != null)
-                {
-                    var hiltDef = lightsaberComp.selectedhiltgraphic.hiltgraphic.Graphic;
-                    if (hiltDef != null)
-                    {
-                        __result = hiltDef.GetColoredVersion(
-                            hiltDef.Shader,
-                            lightsaberComp.hiltColorOneOverrideColor,
-                            lightsaberComp.hiltColorTwoOverrideColor
-                        );
-                        __instance.Notify_ColorChanged();
-                        return false;
-                    }
-                }
+        //[HarmonyPatch(typeof(Thing), "Graphic", MethodType.Getter)]
+        //public static class Thing_DefaultGraphic_Patch
+        //{
+        //    public static bool Prefix(ref Graphic __result, ref Thing __instance)
+        //    {
+        //        var graphicComp = compCacheGraphic.GetCachedComp(__instance);
+        //        if (__instance == null || graphicComp != null) return true;
+        //        var thingEq = __instance;
+        //        var lightsaberComp = compCache.GetCachedComp(__instance);
+        //        if (lightsaberComp != null && lightsaberComp.selectedhiltgraphic != null)
+        //        {
+        //            var hiltDef = lightsaberComp.selectedhiltgraphic.hiltgraphic.Graphic;
+        //            if (hiltDef != null)
+        //            {
+        //                __result = hiltDef.GetColoredVersion(
+        //                    hiltDef.Shader,
+        //                    lightsaberComp.hiltColorOneOverrideColor,
+        //                    lightsaberComp.hiltColorTwoOverrideColor
+        //                );
+        //                __instance.Notify_ColorChanged();
+        //                return false;
+        //            }
+        //        }
 
-                return true;
-            }
-        }
+        //        return true;
+        //    }
+        //}
 
 
-        [HarmonyPatch(typeof(Thing), "get_UIIconOverride")]
-        public static class Patch_UIIconOverride
-        {
-            static bool Prefix(ref Texture __result, ref Thing __instance)
-            {
-                var graphicComp = compCacheGraphic.GetCachedComp(__instance);
-                if (__instance == null || graphicComp != null)
-                {
-                    return true;
-                }
-                var thingEq = __instance;
-                var lightsabercomp = compCache.GetCachedComp(thingEq);
-                if (lightsabercomp != null && lightsabercomp.selectedhiltgraphic != null)
-                {
-                    var hiltDef = lightsabercomp.selectedhiltgraphic.hiltgraphic.Graphic.MatSingle;
-                    __result = hiltDef.mainTexture;
-                    return false;
-                }
-                return true;
-            }
-        }
+        //[HarmonyPatch(typeof(Thing), "get_UIIconOverride")]
+        //public static class Patch_UIIconOverride
+        //{
+        //    static bool Prefix(ref Texture __result, ref Thing __instance)
+        //    {
+        //        var graphicComp = compCacheGraphic.GetCachedComp(__instance);
+        //        if (__instance == null || graphicComp != null)
+        //        {
+        //            return true;
+        //        }
+        //        var thingEq = __instance;
+        //        var lightsabercomp = compCache.GetCachedComp(thingEq);
+        //        if (lightsabercomp != null && lightsabercomp.selectedhiltgraphic != null)
+        //        {
+        //            var hiltDef = lightsabercomp.selectedhiltgraphic.hiltgraphic.Graphic.MatSingle;
+        //            __result = hiltDef.mainTexture;
+        //            return false;
+        //        }
+        //        return true;
+        //    }
+        //}
 
         [HarmonyPatch(typeof(Pawn_DraftController), "set_Drafted")]
         public static class Pawn_DraftedPatch
@@ -334,6 +327,59 @@ namespace TheForce_Psycast
                     // Update the glow color based on the parent’s DrawColor
                     ColorInt newGlowColor = new ColorInt(__instance.DrawColor);
                     glowerComp.UpdateGlowerColor(newGlowColor);
+                }
+            }
+        }
+
+        [HarmonyPatch(typeof(DamageWorker_AddInjury), "ApplyToPawn")]
+        public static class Patch_DamageWorker_AddInjury
+        {
+            public static bool Prefix(DamageInfo dinfo, Pawn pawn, ref DamageResult __result)
+            {
+                if (pawn == null || dinfo.Weapon == null || dinfo.Instigator == null)
+                {
+                    return true;
+                }
+                if (!dinfo.Weapon.IsMeleeWeapon)
+                {
+                    return true;
+                }
+                if (LightsaberCombatUtility.CanParry(pawn, dinfo.Instigator as Pawn))
+                {
+                    __result = HandleParry(dinfo, pawn);
+                    return false;
+                }
+                return true;
+            }
+
+            private static DamageResult HandleParry(DamageInfo dinfo, Pawn pawn)
+            {
+                Effecter effecter = new Effecter(EffecterDefOf.Deflect_General);
+                effecter.Trigger(new TargetInfo(pawn.Position, pawn.Map), TargetInfo.Invalid);
+                effecter.Cleanup();
+                return new DamageResult();
+            }
+        }
+
+        [HarmonyPatch(typeof(TraitSet), "GainTrait")]
+        public static class TraitSet_GainTraitForceSensitivty
+        {
+            public static void Postfix(Pawn ___pawn, Trait trait)
+            {
+                if ((___pawn.story?.traits?.HasTrait(TraitDef.Named("Force_NeutralSensitivty")) ?? false)
+                    || (___pawn.story?.traits?.HasTrait(TraitDef.Named("Force_LightAffinity")) ?? false)
+                    || (___pawn.story?.traits?.HasTrait(TraitDef.Named("Force_DarkAffinity")) ?? false))
+                {
+                    int traitDegree = trait.Degree;
+                    if (!___pawn.health.hediffSet.HasHediff(HediffDefOf.PsychicAmplifier))
+                    {
+                        BodyPartRecord brain = ___pawn.health.hediffSet.GetBrain();
+                        Hediff hediff = HediffMaker.MakeHediff(HediffDefOf.PsychicAmplifier, ___pawn, brain);
+                        if (traitDegree >= 0)
+                        {
+                            ___pawn.health.AddHediff(hediff);
+                        }
+                    }
                 }
             }
         }

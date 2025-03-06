@@ -1,10 +1,11 @@
 ﻿using RimWorld;
 using RimWorld.Planet;
+using TheForce_Psycast.Abilities;
 using Verse;
 
 namespace TheForce_Psycast
 {
-    public class Ability_Forcepush : VFECore.Abilities.Ability
+    public class Ability_Forcepush : Ability_WriteCombatLog
     {
         // Add a variable to store the base damage amount
         public float baseDamage = 1f;
@@ -79,6 +80,42 @@ namespace TheForce_Psycast
             }
 
             base.Cast(targets);
+        }
+
+        public override void DrawHighlight(LocalTargetInfo target)
+        {
+            base.DrawHighlight(target);
+
+            // Calculate the pushBackPosition (where the target will land)
+            int offsetMultiplier = GetOffsetMultiplier();
+            IntVec3 offset = target.Cell - this.pawn.Position;
+            if (offset.LengthHorizontal < 3)
+            {
+                offset = offset * 3;
+            }
+            offset *= offsetMultiplier;
+            IntVec3 initialPushBackPosition = target.Cell + offset;
+            IntVec3 pushBackPosition = initialPushBackPosition;
+            Map map = Caster.Map;
+            IntVec3 lastValidCell = this.pawn.Position;
+
+            // Determine the final pushBackPosition by checking for obstacles
+            foreach (IntVec3 cell in GenSight.PointsOnLineOfSight(this.pawn.Position, initialPushBackPosition))
+            {
+                if (!cell.InBounds(map) || cell.GetRoofHolderOrImpassable(map) is Building)
+                {
+                    pushBackPosition = lastValidCell;
+                    break;
+                }
+                lastValidCell = cell;
+            }
+
+            if (!PositionUtils.CheckValidPosition(pushBackPosition, map))
+            {
+                pushBackPosition = PositionUtils.FindValidPosition(target.Cell, offset, map);
+            }
+            GenDraw.DrawLineBetween(target.CenterVector3, pushBackPosition.ToVector3Shifted());
+            GenDraw.DrawTargetHighlight(pushBackPosition);
         }
     }
 }

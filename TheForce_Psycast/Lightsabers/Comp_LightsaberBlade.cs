@@ -52,10 +52,8 @@ namespace TheForce_Psycast.Lightsabers
         private Vector3 drawOffset;
         public float CurrentRotation => stanceRotation;
         public Vector3 CurrentDrawOffset => drawOffset;
-        public float bladeLengthCore1AndBlade1 = 1.5f;
-        public float bladeLengthCore2AndBlade2 = 1.5f;
-
-
+        public float bladeLengthCore1AndBlade1;
+        public float bladeLengthCore2AndBlade2;
         public float MinBladeLength
         {
             get
@@ -92,6 +90,7 @@ namespace TheForce_Psycast.Lightsabers
             set => _selectedHiltGraphic = value;
         }
         private float scaleTimer;
+
         public Vector3 currentScaleForCore1AndBlade1 = Vector3.zero;
         public Vector3 currentScaleForCore2AndBlade2 = Vector3.zero;
         public Vector3 targetScaleForCore1AndBlade1;
@@ -129,9 +128,25 @@ namespace TheForce_Psycast.Lightsabers
             }
         }
 
+        public Graphic Graphic => GetOrCreateGraphic(ref graphicInt, Props?.graphicData, lightsaberBlade1OverrideColor, Props?.graphicData?.Graphic?.Shader ?? null);
+        public Graphic LightsaberCore1Graphic => GetOrCreateGraphic(ref lightsaberCore1GraphicInt, Props?.lightsaberCore1GraphicData, lightsaberCore1OverrideColor, Props?.lightsaberCore1GraphicData?.Graphic?.Shader ?? null);
+        public Graphic LightsaberBlade2Graphic => GetOrCreateGraphic(ref lightsaberBlade2GraphicInt, Props?.lightsaberBlade2GraphicData, lightsaberBlade2OverrideColor, Props?.lightsaberBlade2GraphicData?.Graphic?.Shader ?? null);
+        public Graphic LightsaberCore2Graphic => GetOrCreateGraphic(ref lightsaberCore2GraphicInt, Props?.lightsaberCore2GraphicData, lightsaberCore2OverrideColor, Props?.lightsaberCore2GraphicData?.Graphic?.Shader ?? null);
+        public Graphic LightsaberGlowGraphic => GetOrCreateGraphic(ref lightsaberGlowGraphicInt, Props?.lightsaberGlowGraphic, lightsaberBlade1OverrideColor, Props?.lightsaberGlowGraphic?.Graphic?.Shader ?? null);
+        private Graphic cachedHiltGraphic;
+        private bool needsUpdate = true;
+
+        public void UpdateHiltGraphic()
+        {
+            if (parent.Graphic is Graphic_Hilts graphicHilts)
+            {
+                graphicHilts.MatSingleFor(parent);
+            }
+            parent.Notify_ColorChanged();
+        }
+
         private void CacheComps()
         {
-            // This method will look for and cache the necessary components.
             var comps = parent.AllComps;
             for (int i = 0; i < comps.Count; i++)
             {
@@ -145,15 +160,30 @@ namespace TheForce_Psycast.Lightsabers
 
         public void UpdateRotationForStance(float angle)
         {
-            stanceRotation = angle;
+            if (isFlipped)
+            {
+                float standardAngle = (angle - 45) % 360;
+                if (standardAngle < 0) standardAngle += 360;
+
+                float mirroredStandardAngle = (180 - standardAngle) % 360;
+                if (mirroredStandardAngle < 0) mirroredStandardAngle += 360;
+
+                float mirroredAngle = (mirroredStandardAngle + 45) % 360;
+                if (mirroredAngle < 0) mirroredAngle += 360;
+                stanceRotation = mirroredAngle;
+            }
+            else
+            {
+                stanceRotation = angle;
+            }
         }
 
         public void UpdateDrawOffsetForStance(Vector3 offset)
         {
-            drawOffset = offset;
+            drawOffset = new Vector3(isFlipped ? -offset.x : offset.x, offset.y, offset.z);
             targetDrawOffset = drawOffset;
-
         }
+
         public Pawn Wearer
         {
             get
@@ -167,6 +197,8 @@ namespace TheForce_Psycast.Lightsabers
             base.Initialize(props);
             InitializeGlower();
             InitializeHilts();
+            bladeLengthCore1AndBlade1 = Rand.Range(Props.minBladeLength, Props.maxBladeLength);
+            bladeLengthCore2AndBlade2 = Rand.Range(Props.minBladeLength, Props.maxBladeLength);
             if (lightsaberSound != null && lightsaberSound.Count > 0)
             {
                 int randomIndex = Rand.Range(0, lightsaberSound.Count); // Generate a random index within the list
@@ -209,7 +241,6 @@ namespace TheForce_Psycast.Lightsabers
         {
             RemoveGlower(map);
             base.PostDeSpawn(map);
-            //LightsaberSoundManager.Instance.DeregisterLightsaberComponent(this);
         }
 
         public override void PostDestroy(DestroyMode mode, Map previousMap)
@@ -363,27 +394,19 @@ namespace TheForce_Psycast.Lightsabers
             return num;
         }
 
-        public Graphic Graphic => GetOrCreateGraphic(ref graphicInt, Props?.graphicData, lightsaberBlade1OverrideColor, Props?.graphicData?.Graphic?.Shader ?? null);
-        public Graphic LightsaberCore1Graphic => GetOrCreateGraphic(ref lightsaberCore1GraphicInt, Props?.lightsaberCore1GraphicData, lightsaberCore1OverrideColor, Props?.lightsaberCore1GraphicData?.Graphic?.Shader ?? null);
-        public Graphic LightsaberBlade2Graphic => GetOrCreateGraphic(ref lightsaberBlade2GraphicInt, Props?.lightsaberBlade2GraphicData, lightsaberBlade2OverrideColor, Props?.lightsaberBlade2GraphicData?.Graphic?.Shader ?? null);
-        public Graphic LightsaberCore2Graphic => GetOrCreateGraphic(ref lightsaberCore2GraphicInt, Props?.lightsaberCore2GraphicData, lightsaberCore2OverrideColor, Props?.lightsaberCore2GraphicData?.Graphic?.Shader ?? null);
-        public Graphic LightsaberGlowGraphic => GetOrCreateGraphic(ref lightsaberGlowGraphicInt, Props?.lightsaberGlowGraphic, lightsaberBlade1OverrideColor, Props?.lightsaberGlowGraphic?.Graphic?.Shader ?? null);
-        private Graphic cachedHiltGraphic;
-        private bool needsUpdate = true;
-
         public Graphic HiltGraphic
         {
             get
             {
                 if (needsUpdate)
                 {
-                    if (selectedhiltgraphic == null || selectedhiltgraphic.hiltgraphic == null)
+                    if (selectedhiltgraphic == null || selectedhiltgraphic.graphicData == null)
                     {
                         cachedHiltGraphic = DefaultHiltGraphic();
                     }
                     else
                     {
-                        cachedHiltGraphic = GetOrCreateHilt(ref cachedHiltGraphic, selectedhiltgraphic.hiltgraphic, hiltColorOneOverrideColor, hiltColorTwoOverrideColor);
+                        cachedHiltGraphic = GetOrCreateHilt(ref cachedHiltGraphic, selectedhiltgraphic.graphicData, hiltColorOneOverrideColor, hiltColorTwoOverrideColor);
                     }
                     needsUpdate = false;
                 }
@@ -407,7 +430,7 @@ namespace TheForce_Psycast.Lightsabers
                 var primaryColor = color == hiltColorOneOverrideColor ? parent.DrawColor : color;
                 var secondaryColor = colortwo == hiltColorTwoOverrideColor ? parent.DrawColorTwo : colortwo; // Use secondary color
                 graphicField = graphicData.Graphic.GetColoredVersion(
-                    selectedhiltgraphic.hiltgraphic.Graphic.Shader,
+                    selectedhiltgraphic.graphicData.Graphic.Shader,
                     primaryColor,
                     secondaryColor
                 );
@@ -417,7 +440,7 @@ namespace TheForce_Psycast.Lightsabers
 
         private Graphic DefaultHiltGraphic()
         {
-           return GetOrCreateHilt(ref cachedHiltGraphic, selectedhiltgraphic.hiltgraphic, hiltColorOneOverrideColor, hiltColorTwoOverrideColor); ; // Fallback to a safe default graphic
+            return GetOrCreateHilt(ref cachedHiltGraphic, selectedhiltgraphic.graphicData, hiltColorOneOverrideColor, hiltColorTwoOverrideColor);  // Fallback to a safe default graphic
         }
 
         public Graphic GetOrCreateGraphic(ref Graphic graphicField, GraphicData graphicData, Color color, Shader shaderOverride)
@@ -425,7 +448,8 @@ namespace TheForce_Psycast.Lightsabers
             if (graphicField == null && graphicData != null)
             {
                 var newColor = color == Color.white ? parent.DrawColor : color;
-                graphicField = graphicData.Graphic.GetColoredVersion(shaderOverride ?? ShaderDatabase.TransparentPostLight, newColor, newColor);
+                var shader = graphicData.Graphic.Shader ?? shaderOverride;
+                graphicField = graphicData.Graphic.GetColoredVersion(shader, newColor, newColor);
             }
             return graphicField;
         }
@@ -434,40 +458,23 @@ namespace TheForce_Psycast.Lightsabers
         {
             if (!hiltGraphicInitialized)
             {
+                selectedHiltParts = DefaultHiltParts();
                 var pawn = Wearer;
-                var hiltColors = pawn?.kindDef.GetModExtension<ModExtension_LightsaberColors>();
-
+                if (pawn != null)
+                {
+                    var modExt = pawn.kindDef.GetModExtension<ModExtension_LightsaberColors>();
+                    if (modExt != null)
+                    {
+                        SetColorsFromModExtension(modExt);
+                    }
+                }
                 if (selectedhiltgraphic == null && Props.availableHiltGraphics != null && Props.availableHiltGraphics.Any())
                 {
                     selectedhiltgraphic = Props.availableHiltGraphics.RandomElement();
-                    List<HiltPartDef> allHiltParts = DefDatabase<HiltPartDef>.AllDefsListForReading;
-                    Dictionary<HiltPartCategory, HiltPartDef> randomHiltParts = new Dictionary<HiltPartCategory, HiltPartDef>();
-
-                    // Loop through each category
-                    foreach (HiltPartCategory category in Enum.GetValues(typeof(HiltPartCategory)))
-                    {
-                        // Get all hilt parts for the current category
-                        var partsInCategory = allHiltParts.Where(part => part.category == category).ToList();
-
-                        // If there are any parts in this category, pick one randomly
-                        if (partsInCategory.Any())
-                        {
-                            var selectedPart = partsInCategory.RandomElement();
-                            randomHiltParts[category] = selectedPart;
-
-                            // Add the selected part to the hilt
-                            AddHiltPart(selectedPart);
-                        }
-                    }
                 }
 
-                if (selectedhiltgraphic != null)
-                {
-                    // Set the scales for the hilt and blade
-                    targetScaleForCore1AndBlade1 = new Vector3(bladeLengthCore1AndBlade1, 1f, bladeLengthCore1AndBlade1);
-                    targetScaleForCore2AndBlade2 = new Vector3(bladeLengthCore2AndBlade2, 1f, bladeLengthCore2AndBlade2);
-                    hiltGraphicInitialized = true;
-                }
+                UpdateHiltGraphicCache();
+                hiltGraphicInitialized = true;
             }
         }
 
@@ -489,6 +496,9 @@ namespace TheForce_Psycast.Lightsabers
                     return;
                 }
             }
+            isFlipped = Rand.Chance(0.5f);
+            bladeLengthCore1AndBlade1 = Rand.Range(Props.minBladeLength, Props.maxBladeLength);
+            bladeLengthCore2AndBlade2 = Rand.Range(Props.minBladeLength, Props.maxBladeLength);
             targetScaleForCore1AndBlade1 = new Vector3(bladeLengthCore1AndBlade1, 1f, bladeLengthCore1AndBlade1);
             targetScaleForCore2AndBlade2 = new Vector3(bladeLengthCore2AndBlade2, 1f, bladeLengthCore2AndBlade2);
             SetFallbackColors();
@@ -506,10 +516,34 @@ namespace TheForce_Psycast.Lightsabers
             lightsaberGlowOverrideColor = lightsaberBlade1OverrideColor;
             hiltColorOneOverrideColor = StuffColorUtility.GetRandomColorFromStuffCategories(modExt.validStuffCategoriesHiltColorOne);
             hiltColorTwoOverrideColor = StuffColorUtility.GetRandomColorFromStuffCategories(modExt.validStuffCategoriesHiltColorTwo);
+            bladeLengthCore1AndBlade1 = Rand.Range(Props.minBladeLength, Props.maxBladeLength);
+            bladeLengthCore2AndBlade2 = Rand.Range(Props.minBladeLength, Props.maxBladeLength);
+            if (modExt.preferredHilts != null && Props.availableHiltGraphics != null)
+            {
+                var matchingHilts = modExt.preferredHilts
+                    .Where(hilt => Props.availableHiltGraphics.Contains(hilt))
+                    .ToList();
 
-            // Set default blade lengths
-            bladeLengthCore1AndBlade1 = Props.defaultBladeLength;
-            bladeLengthCore2AndBlade2 = Props.defaultBladeLength;
+                if (matchingHilts.Any())
+                {
+                    selectedhiltgraphic = matchingHilts.RandomElement();
+                }
+            }
+            if (selectedhiltgraphic == null && Props.availableHiltGraphics != null && Props.availableHiltGraphics.Any())
+            {
+                selectedhiltgraphic = Props.availableHiltGraphics.RandomElement();
+            }
+        }
+
+        private List<HiltPartDef> DefaultHiltParts()
+        {
+            return Enum.GetValues(typeof(HiltPartCategory))
+                       .Cast<HiltPartCategory>()
+                       .Select(category => DefDatabase<HiltPartDef>.AllDefsListForReading
+                                          .Where(def => def.category == category)
+                                          .RandomElement())
+                       .Where(part => part != null)
+                       .ToList();
         }
 
 
@@ -530,21 +564,16 @@ namespace TheForce_Psycast.Lightsabers
             }
             else
             {
-                // Fallback color if no crystal is selected
                 lightsaberBlade1OverrideColor = GetRandomRGBColor();
                 lightsaberCore1OverrideColor = GetBlackOrWhiteCore();
                 lightsaberBlade2OverrideColor = lightsaberBlade1OverrideColor;
                 lightsaberCore2OverrideColor = lightsaberCore1OverrideColor;
                 lightsaberGlowOverrideColor = lightsaberBlade1OverrideColor;
             }
-
-            // Set random hilt colors (assuming you want random colors for hilt)
             hiltColorOneOverrideColor = GetRandomRGBColor();
             hiltColorTwoOverrideColor = GetRandomRGBColor();
-
-            // Set default blade lengths
-            bladeLengthCore1AndBlade1 = Props.defaultBladeLength;
-            bladeLengthCore2AndBlade2 = Props.defaultBladeLength;
+            bladeLengthCore1AndBlade1 = Rand.Range(Props.minBladeLength, Props.maxBladeLength);
+            bladeLengthCore2AndBlade2 = Rand.Range(Props.minBladeLength, Props.maxBladeLength);
         }
 
         private Color GetRandomRGBColor()
@@ -564,13 +593,9 @@ namespace TheForce_Psycast.Lightsabers
         public MaterialPropertyBlock glowMaterialPropertyBlock = new MaterialPropertyBlock();
 
         public void SetLightsaberBlade1Color(Color color) => UpdateColor(ref lightsaberBlade1OverrideColor, color, () => UpdateGraphic(ref graphicInt, Props.graphicData, lightsaberBlade1OverrideColor, "_Lightsaber_Blade1Color"));
-    
         public void SetLightsaberCore1Color(Color color) => UpdateColor(ref lightsaberCore1OverrideColor, color, () => UpdateGraphic(ref lightsaberCore1GraphicInt, Props.lightsaberCore1GraphicData, lightsaberCore1OverrideColor, "_Lightsaber_Core1Color"));
-
         public void SetLightsaberBlade2Color(Color color) => UpdateColor(ref lightsaberBlade2OverrideColor, color, () => UpdateGraphic(ref lightsaberBlade2GraphicInt, Props.lightsaberBlade2GraphicData, lightsaberBlade2OverrideColor, "_Lightsaber_Blade2Color"));
-
         public void SetLightsaberCore2Color(Color color) => UpdateColor(ref lightsaberCore2OverrideColor, color, () => UpdateGraphic(ref lightsaberCore2GraphicInt, Props.lightsaberCore2GraphicData, lightsaberCore2OverrideColor, "_Lightsaber_Core2Color"));
-
         public void SetLightsaberGlowColor(Color color) => UpdateColor(ref lightsaberGlowOverrideColor, color, () => UpdateGraphic(ref lightsaberGlowGraphicInt, Props.lightsaberGlowGraphic, lightsaberGlowOverrideColor, "_Lightsaber_GlowColor"));
 
         private void UpdateColor(ref Color overrideColor, Color newColor, System.Action updateAction)
@@ -604,7 +629,8 @@ namespace TheForce_Psycast.Lightsabers
             if (graphicData != null)
             {
                 var newColor = color == Color.white ? parent.DrawColor : color;
-                graphicField = graphicData.Graphic.GetColoredVersion(ShaderDatabase.TransparentPostLight, newColor, newColor);
+                var shader = graphicData.Graphic.Shader ?? ShaderDatabase.TransparentPostLight;
+                graphicField = graphicData.Graphic.GetColoredVersion(shader, newColor, newColor);
                 materialPropertyBlock.Clear();
                 materialPropertyBlock.SetColor(colorProperty, newColor);
             }
@@ -632,11 +658,15 @@ namespace TheForce_Psycast.Lightsabers
             Scribe_Values.Look(ref hiltColorOneOverrideColor, nameof(hiltColorOneOverrideColor), Color.white);
             Scribe_Values.Look(ref hiltColorTwoOverrideColor, nameof(hiltColorTwoOverrideColor), Color.white);
             Scribe_Defs.Look(ref _selectedHiltGraphic, nameof(selectedhiltgraphic));
+            Scribe_Collections.Look(ref selectedHiltParts, "selectedHiltParts", LookMode.Def);
             if (Scribe.mode == LoadSaveMode.LoadingVars)
             {
                 CacheComps();
             }
-
+            if (Scribe.mode == LoadSaveMode.PostLoadInit)
+            {
+                SetBladeLengths(bladeLengthCore1AndBlade1, bladeLengthCore2AndBlade2);
+            }
         }
 
         public override IEnumerable<FloatMenuOption> CompFloatMenuOptions(Pawn selPawn)
@@ -709,14 +739,13 @@ namespace TheForce_Psycast.Lightsabers
             }
         }
 
-
         public override void Notify_Equipped(Pawn pawn)
         {
             base.Notify_Equipped(pawn);
             targetScaleForCore1AndBlade1 = new Vector3(bladeLengthCore1AndBlade1, 1f, bladeLengthCore1AndBlade1);
             targetScaleForCore2AndBlade2 = new Vector3(bladeLengthCore2AndBlade2, 1f, bladeLengthCore2AndBlade2);
             ResetToZero();
-            
+
             if (lightsaberSound != null && lightsaberSound.Count > 0 && selectedSoundEffect != null)
             {
                 selectedSoundEffect.PlayOneShot(pawn);
@@ -784,7 +813,7 @@ namespace TheForce_Psycast.Lightsabers
         public void SetVibrationRate(float newLensFactor1, float newLensFactor2)
         {
             vibrationrate = newLensFactor1;
-            vibrationrate2 = newLensFactor2; 
+            vibrationrate2 = newLensFactor2;
         }
 
         public void UpdateScalingAndOffset()
@@ -819,6 +848,13 @@ namespace TheForce_Psycast.Lightsabers
             }
         }
 
+        public bool isFlipped = false;
+
+        public void SetFlipped(bool flipped)
+        {
+            isFlipped = flipped;
+        }
+
         public List<HiltPartDef> GetCurrentHiltParts()
         {
             return selectedHiltParts ?? new List<HiltPartDef>();
@@ -836,7 +872,6 @@ namespace TheForce_Psycast.Lightsabers
                 selectedHiltParts.Add(hiltPart);
             }
         }
-
         public void RemoveHiltPart(HiltPartDef hiltPart)
         {
             if (selectedHiltParts.Contains(hiltPart))
@@ -848,29 +883,26 @@ namespace TheForce_Psycast.Lightsabers
 
     public class CompProperties_LightsaberBlade : CompProperties
     {
-
-        public GraphicData graphicData;                   
-        public GraphicData lightsaberCore1GraphicData;    
-        public GraphicData lightsaberBlade2GraphicData;    
-        public GraphicData lightsaberCore2GraphicData;     
-        public GraphicData lightsaberGlowGraphic;        
-        public List<HiltDef> availableHiltGraphics;    
-        public FleckDef Fleck;                            
-        public float defaultBladeLength = 1.5f;         
-        public float maxBladeLength = 2.2f;               
-        public float minBladeLength = 1f;                
-        public AltitudeLayer altitudeLayer;               
+        public GraphicData graphicData;
+        public GraphicData lightsaberCore1GraphicData;
+        public GraphicData lightsaberBlade2GraphicData;
+        public GraphicData lightsaberCore2GraphicData;
+        public GraphicData lightsaberGlowGraphic;
+        public List<HiltDef> availableHiltGraphics;
+        public FleckDef Fleck;
+        public float defaultBladeLength = 1.5f;
+        public float maxBladeLength = 2.2f;
+        public float minBladeLength = 1f;
+        public AltitudeLayer altitudeLayer;
         public float Altitude => Altitudes.AltitudeFor(altitudeLayer);
-        public bool colorable = true;                    
-        public float overlightRadius = 2f;                
+        public bool colorable = true;
+        public float overlightRadius = 2f;
         public List<SoundDef> lightsaberSound;
-
         public CompProperties_LightsaberBlade()
         {
             this.compClass = typeof(Comp_LightsaberBlade);
             lightsaberSound = new List<SoundDef>();
             availableHiltGraphics = new List<HiltDef>();
-
         }
     }
 
@@ -878,9 +910,8 @@ namespace TheForce_Psycast.Lightsabers
     {
         public List<Color> bladeColors = new List<Color> { Color.white };
         public List<Color> coreColors = new List<Color> { Color.white };
-
-        public HiltDef preferredHilt;
         public List<StuffCategoryDef> validStuffCategoriesHiltColorOne = new List<StuffCategoryDef>();
         public List<StuffCategoryDef> validStuffCategoriesHiltColorTwo = new List<StuffCategoryDef>();
+        public List<HiltDef> preferredHilts = new List<HiltDef>();
     }
 }

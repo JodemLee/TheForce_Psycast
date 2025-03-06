@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using RimWorld;
+using UnityEngine;
 using Verse;
 
 namespace TheForce_Psycast.Hediffs
@@ -17,7 +18,7 @@ namespace TheForce_Psycast.Hediffs
             }
             if (pawn.health.hediffSet.GetFirstHediffOfDef(ForceDefOf.Force_Sithzombie) != null)
             {
-                return new Color(0.8f, 0.8f, 0.8f, 1f);
+                return new Color(0.6f, 0.6f, 0.6f, 1f);
             }
             return null;
         }
@@ -25,6 +26,17 @@ namespace TheForce_Psycast.Hediffs
         public static bool IsForceGhost(Pawn pawn)
         {
             return GetGhostColor(pawn) != null;
+        }
+
+        public static void TryReturnAsGhost(Pawn pawn, HediffDef ghostHediff, float severity = 1f)
+        {
+            ResurrectionUtility.TryResurrect(pawn);
+            pawn.health.AddHediff(ghostHediff);
+            Hediff ghost = pawn.health.hediffSet.GetFirstHediffOfDef(ghostHediff);
+            if (ghost != null)
+            {
+                ghost.Severity = severity;
+            }
         }
     }
 }

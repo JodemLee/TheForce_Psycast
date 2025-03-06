@@ -6,7 +6,7 @@ using Ability = VFECore.Abilities.Ability;
 
 namespace TheForce_Psycast.Abilities.Darkside
 {
-    public class Ability_ForceFear : Ability
+    public class Ability_ForceFear : Ability_WriteCombatLog
     {
         public override bool ValidateTarget(LocalTargetInfo target, bool showMessages = true)
         {
@@ -44,7 +44,7 @@ namespace TheForce_Psycast.Abilities.Darkside
                         // Ensure the ability fails if the target has higher psychic sensitivity
                         if (pawn.Spawned && pawn.Map != null)
                         {
-                            Messages.Message("Force_HigherConnection".Translate(target.Pawn.Name), pawn, MessageTypeDefOf.NegativeEvent, true);
+                            Messages.Message("Force_HigherConnection".Translate(target.Pawn.Name.ToStringShort), pawn, MessageTypeDefOf.NegativeEvent, true);
                         }
                         continue;
                     }
@@ -74,7 +74,7 @@ namespace TheForce_Psycast.Abilities.Darkside
                         // Target overcomes fear
                         if (pawn.Spawned && pawn.Map != null)
                         {
-                            Messages.Message("Force_FearFailed".Translate(target.Pawn.Name), pawn, MessageTypeDefOf.NeutralEvent, true);
+                            Messages.Message("Force_FearFailed".Translate(target.Pawn.Name.ToStringShort), pawn, MessageTypeDefOf.NeutralEvent, true);
                         }
                     }
                 }

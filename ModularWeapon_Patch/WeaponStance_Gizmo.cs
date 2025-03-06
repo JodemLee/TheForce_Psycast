@@ -14,27 +14,31 @@ namespace ModularWeapon_Patch
     {
         private readonly Pawn pawn;
         private readonly Hediff hediff;
-        private readonly ThingDef thingDef;
-        private readonly List<StanceData> stanceDataList;
+        private readonly Thing weapon;
+        public List<StanceData> stanceDataList;
         private string[] severityTips;
         private const float ButtonWidth = 75f;
         private const float ButtonHeight = 75f;
         private DefStanceAngles extension;
+        private Comp_WeaponStance weaponComp;
 
-        public Gizmo_WeaponStance(Pawn pawn, Hediff hediff, ThingDef thingDef)
+        public Gizmo_WeaponStance(Pawn pawn, Hediff hediff, Thing weapon)
         {
             this.pawn = pawn;
             this.hediff = hediff;
-            this.thingDef = thingDef;
+            this.weapon = weapon;
 
             // Cache the extension
-            extension = thingDef.GetModExtension<DefStanceAngles>() ?? hediff.def.GetModExtension<DefStanceAngles>();
+            extension = weapon.def.GetModExtension<DefStanceAngles>() ?? hediff.def.GetModExtension<DefStanceAngles>();
             stanceDataList = extension?.stanceData ?? new List<StanceData>();
 
             // Initialize severityTips
             severityTips = stanceDataList.Count > 0
                 ? stanceDataList.Select(s => s.StanceString ?? "Unknown").ToArray()
                 : new string[] { "Default Tooltip" };
+
+            // Cache the weapon comp
+            weaponComp = weapon.TryGetComp<Comp_WeaponStance>();
         }
 
         public override float GetWidth(float maxWidth) => ButtonWidth;
@@ -82,10 +86,15 @@ namespace ModularWeapon_Patch
 
             if (Widgets.ButtonInvisible(new Rect(rect.x, rect.y, ButtonWidth, ButtonHeight)))
             {
-                Find.WindowStack.Add(new Dialog_WeaponStance(pawn, hediff, thingDef, stanceDataList, severityTips));
+                Find.WindowStack.Add(new Dialog_WeaponStance(pawn, hediff, weapon, stanceDataList, severityTips));
             }
 
             return new GizmoResult(GizmoState.Clear);
+        }
+
+        public override bool GroupsWith(Gizmo other)
+        {
+            return other is Gizmo_WeaponStance otherGizmo && otherGizmo.weapon == this.weapon;
         }
 
         public float GetCurrentSeverity()
@@ -99,7 +108,7 @@ namespace ModularWeapon_Patch
     {
         private readonly Pawn pawn;
         private readonly Hediff hediff;
-        private readonly ThingDef thingDef;
+        private readonly Thing weapon;
         private readonly string[] severityTips;
         private readonly List<StanceData> stanceDataList;
 
@@ -116,11 +125,11 @@ namespace ModularWeapon_Patch
         private List<float> lastSavedStanceAngles;
         private List<Vector3> lastSavedDrawOffsets;
 
-        public Dialog_WeaponStance(Pawn pawn, Hediff hediff, ThingDef thingDef, List<StanceData> stanceDataList, string[] severityTips)
+        public Dialog_WeaponStance(Pawn pawn, Hediff hediff, Thing weapon, List<StanceData> stanceDataList, string[] severityTips)
         {
             this.pawn = pawn;
             this.hediff = hediff;
-            this.thingDef = thingDef;
+            this.weapon = weapon;
             this.stanceDataList = stanceDataList ?? throw new ArgumentNullException(nameof(stanceDataList));
             this.severityTips = severityTips ?? throw new ArgumentNullException(nameof(severityTips));
 
@@ -131,9 +140,9 @@ namespace ModularWeapon_Patch
             defaultDrawOffsets = stanceDataList.Select(s => s.Offset).ToList();
 
             // Initialize saved angles and offsets
-            var lightsaberStanceComp = pawn.equipment?.Primary?.GetComp<Comp_WeaponStance>();
-            stanceAngles = lightsaberStanceComp?.savedStanceAngles ?? new List<float>(defaultStanceAngles);
-            drawOffsets = lightsaberStanceComp?.savedDrawOffsets ?? new List<Vector3>(defaultDrawOffsets);
+            var weaponStanceComp = weapon.TryGetComp<Comp_WeaponStance>();
+            stanceAngles = weaponStanceComp?.savedStanceAngles ?? new List<float>(defaultStanceAngles);
+            drawOffsets = weaponStanceComp?.savedDrawOffsets ?? new List<Vector3>(defaultDrawOffsets);
 
             // Initialize last saved angles and offsets
             lastSavedStanceAngles = new List<float>(stanceAngles);
@@ -169,32 +178,26 @@ namespace ModularWeapon_Patch
 
         private float GetCurrentSeverity()
         {
-            // Get the current severity of the pawn's hediff
             return pawn.health.hediffSet.GetFirstHediffOfDef(hediff.def)?.Severity ?? 0f;
         }
 
         private void InitializeLists()
         {
-            // Ensure stanceAngles and drawOffsets match the stanceDataList count
             while (stanceAngles.Count < stanceDataList.Count)
             {
-                // Use last saved angles or default angles if out of bounds
                 stanceAngles.Add(lastSavedStanceAngles.Count > stanceAngles.Count ? lastSavedStanceAngles[stanceAngles.Count] : defaultStanceAngles[stanceAngles.Count]);
             }
 
             while (drawOffsets.Count < stanceDataList.Count)
             {
-                // Use last saved offsets or default offsets if out of bounds
                 drawOffsets.Add(lastSavedDrawOffsets.Count > drawOffsets.Count ? lastSavedDrawOffsets[drawOffsets.Count] : defaultDrawOffsets[drawOffsets.Count]);
             }
         }
-
 
         public override void DoWindowContents(Rect inRect)
         {
             Text.Font = GameFont.Small;
             this.forcePause = false;
-
 
             if (stanceTextures.Length == 0 || stanceDataList.Count == 0)
             {
@@ -234,7 +237,6 @@ namespace ModularWeapon_Patch
                 Vector3 currentOffset = drawOffsets[selectedStance];
                 float angleRotation = stanceAngles[selectedStance];
 
-
                 if (Force_ModSettings.customStance)
                 {
                     // Adjust sliders and modify offsetSliderRect
@@ -273,7 +275,10 @@ namespace ModularWeapon_Patch
                     }
                 }
             }
-            else { Log.Warning("Selected stance is out of bounds."); }
+            else
+            {
+                Log.Warning("Selected stance is out of bounds.");
+            }
         }
 
         private void DrawApplyAndResetButtons(Rect inRect, Rect offsetSliderRect)
@@ -316,8 +321,8 @@ namespace ModularWeapon_Patch
 
         private void ApplyStanceRotationAndOffset()
         {
-            Comp_WeaponStance lightsaberStanceComp = pawn.equipment?.Primary?.GetComp<Comp_WeaponStance>();
-            if (lightsaberStanceComp != null)
+            Comp_WeaponStance weaponStanceComp = weapon.TryGetComp<Comp_WeaponStance>();
+            if (weaponStanceComp != null)
             {
                 InitializeLists();
 
@@ -336,15 +341,15 @@ namespace ModularWeapon_Patch
                 }
 
                 // Update the saved stance angles and offsets
-                lightsaberStanceComp.savedStanceAngles[selectedStance] = stanceAngles[selectedStance];
-                lightsaberStanceComp.savedDrawOffsets[selectedStance] = drawOffsets[selectedStance];
+                weaponStanceComp.savedStanceAngles[selectedStance] = stanceAngles[selectedStance];
+                weaponStanceComp.savedDrawOffsets[selectedStance] = drawOffsets[selectedStance];
 
-                // Update the lightsaber's visuals
-                Comp_WeaponStance lightsaberComp = pawn.equipment?.Primary?.GetComp<Comp_WeaponStance>();
-                if (lightsaberComp != null)
+                // Update the weapon's visuals
+                Comp_WeaponStance weaponComp = weapon.TryGetComp<Comp_WeaponStance>();
+                if (weaponComp != null)
                 {
-                    lightsaberComp.UpdateRotationForStance(lightsaberStanceComp.savedStanceAngles[selectedStance]);
-                    lightsaberComp.UpdateDrawOffsetForStance(lightsaberStanceComp.savedDrawOffsets[selectedStance]);
+                    weaponComp.UpdateRotationForStance(weaponStanceComp.savedStanceAngles[selectedStance]);
+                    weaponComp.UpdateDrawOffsetForStance(weaponStanceComp.savedDrawOffsets[selectedStance]);
                 }
             }
         }

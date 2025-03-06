@@ -114,9 +114,9 @@ public static class ForceGhost_HarmonyPatch
             public static bool Prefix(List<Tradeable> ___tradeables)
             {
                 // Check if any tradeable is a linked object
-                bool linkedObjectFound = ___tradeables.Any(tradeable => IsLinkedObject(tradeable.ThingDef));
+                bool LinkedObjectFound = ___tradeables.Any(tradeable => IsLinkedObject(tradeable.ThingDef));
 
-                if (linkedObjectFound)
+                if (LinkedObjectFound)
                 {
                     // Display a warning to the player
                     Messages.Message("Warning: One or more items in this trade are linked objects. Selling them will result in their linked items being destroyed.", MessageTypeDefOf.RejectInput);
@@ -128,14 +128,20 @@ public static class ForceGhost_HarmonyPatch
 
             private static bool IsLinkedObject(ThingDef def)
             {
-                foreach (var map in Find.Maps) // Iterate through all maps
+                foreach (var map in Find.Maps)
                 {
-                    foreach (var pawn in map.mapPawns.AllPawns) // Get all pawns on each map
+                    foreach (var pawn in map.mapPawns.AllPawns)
                     {
-                        var hediff = pawn.health.hediffSet.GetFirstHediffOfDef(ForceDefOf.Force_Darkside) as HediffWithComps_DarksideGhost;
-                        if (hediff != null && hediff.linkedObject != null && hediff.linkedObject.def == def)
+                        var ghostHediff = pawn.health.hediffSet.hediffs
+                            .FirstOrDefault(h => h.TryGetComp<HediffComp_Ghost>() != null);
+
+                        if (ghostHediff != null)
                         {
-                            return true;
+                            var ghostComp = ghostHediff.TryGetComp<HediffComp_Ghost>();
+                            if (!ghostComp.Props.isLightSide && ghostComp.LinkedObject != null && ghostComp.LinkedObject.def == def)
+                            {
+                                return true;
+                            }
                         }
                     }
                 }
@@ -171,21 +177,26 @@ public static class ForceGhost_HarmonyPatch
 
                 foreach (var pawn in Find.CurrentMap.mapPawns.AllPawnsSpawned)
                 {
-                    var ghostHediff = pawn.health?.hediffSet?.GetFirstHediffOfDef(ForceDefOf.Force_Darkside) as HediffWithComps_DarksideGhost;
-                    if (ghostHediff?.linkedObject == __instance)
+                    // Check if the pawn has any hediff with the Ghost comp
+                    var ghostHediff = pawn.health?.hediffSet?.hediffs
+                        .FirstOrDefault(h => h.TryGetComp<HediffComp_Ghost>() != null);
+
+                    if (ghostHediff != null)
                     {
-                        if (!foundLinkedPawn)
+                        var ghostComp = ghostHediff.TryGetComp<HediffComp_Ghost>();
+                        if (!ghostComp.Props.isLightSide && ghostComp.LinkedObject == __instance)
                         {
-                            stringBuilder = new StringBuilder(__result);
-                            foundLinkedPawn = true;
+                            if (!foundLinkedPawn)
+                            {
+                                stringBuilder = new StringBuilder(__result);
+                                foundLinkedPawn = true;
+                            }
+                            if (stringBuilder.Length > 0 && !stringBuilder.ToString().EndsWith("\n"))
+                            {
+                                stringBuilder.AppendLine();
+                            }
+                            stringBuilder.Append("SithGhost".Translate() + pawn.LabelCap);
                         }
-
-                        if (stringBuilder.Length > 0 && !stringBuilder.ToString().EndsWith("\n"))
-                        {
-                            stringBuilder.AppendLine();
-                        }
-
-                        stringBuilder.Append("SithGhost".Translate() + pawn.LabelCap);
                     }
                 }
 

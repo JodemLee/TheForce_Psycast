@@ -7,7 +7,7 @@ using Ability = VFECore.Abilities.Ability;
 
 namespace TheForce_Psycast.Abilities.Lightside
 {
-    public class Ability_ForceMeld : Ability
+    public class Ability_ForceMeld : Ability_WriteCombatLog
     {
         public override Hediff ApplyHediff(Pawn targetPawn, HediffDef hediffDef, BodyPartRecord bodyPart, int duration, float severity)
         {

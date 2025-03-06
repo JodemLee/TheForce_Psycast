@@ -1,5 +1,6 @@
 ﻿using RimWorld;
 using RimWorld.Planet;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Verse;
@@ -36,6 +37,13 @@ namespace TheForce_Psycast.Abilities.Darkside
                     }
                 }
             }
+        }
+
+        public override void PreCast(GlobalTargetInfo[] target, ref bool startAbilityJobImmediately, Action startJobAction)
+        {
+            base.PreCast(target, ref startAbilityJobImmediately, startJobAction);
+
+            Find.BattleLog.Add(new BattleLogEntry_VFEAbilityUsed(this.pawn, target[0].Thing, this.def, RulePackDefOf.Event_AbilityUsed));
         }
 
         protected override Projectile ShootProjectile(GlobalTargetInfo target)

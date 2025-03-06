@@ -4,6 +4,7 @@ using System.Linq;
 using TheForce_Psycast.Lightsabers;
 using UnityEngine;
 using Verse;
+using VFECore;
 
 namespace TheForce_Psycast
 {
@@ -12,22 +13,23 @@ namespace TheForce_Psycast
     {
         private readonly Pawn pawn;
         private readonly Hediff hediff;
-        private readonly ThingDef thingDef;
-        private readonly List<StanceData> stanceDataList;
+        private readonly Thing weapon;
+        public List<StanceData> stanceDataList;
         private string[] severityTips;
         private const float ButtonWidth = 75f;
         private const float ButtonHeight = 75f;
         private DefStanceAngles extension;
         private Comp_LightsaberStance lightsaberComp;
 
-        public Gizmo_LightsaberStance(Pawn pawn, Hediff hediff, ThingDef thingDef)
+
+        public Gizmo_LightsaberStance(Pawn pawn, Hediff hediff, Thing weapon)
         {
             this.pawn = pawn;
             this.hediff = hediff;
-            this.thingDef = thingDef;
+            this.weapon = weapon;
 
             // Cache the extension
-            extension = thingDef.GetModExtension<DefStanceAngles>() ?? hediff.def.GetModExtension<DefStanceAngles>();
+            extension = weapon.def.GetModExtension<DefStanceAngles>() ?? hediff.def.GetModExtension<DefStanceAngles>();
             stanceDataList = extension?.stanceData ?? new List<StanceData>();
 
             // Initialize severityTips
@@ -81,10 +83,15 @@ namespace TheForce_Psycast
 
             if (Widgets.ButtonInvisible(new Rect(rect.x, rect.y, ButtonWidth, ButtonHeight)))
             {
-                Find.WindowStack.Add(new Dialog_LightsaberStance(pawn, hediff, thingDef, stanceDataList, severityTips));
+                Find.WindowStack.Add(new Dialog_LightsaberStance(pawn, hediff, weapon, stanceDataList, severityTips));
             }
 
             return new GizmoResult(GizmoState.Clear);
+        }
+
+        public override bool GroupsWith(Gizmo other)
+        {
+            return other is Gizmo_LightsaberStance otherGizmo && otherGizmo.weapon == this.weapon;
         }
 
         public float GetCurrentSeverity()
@@ -94,15 +101,11 @@ namespace TheForce_Psycast
         }
     }
 
-
-
-
-
     public class Dialog_LightsaberStance : Window
     {
         private readonly Pawn pawn;
         private readonly Hediff hediff;
-        private readonly ThingDef thingDef;
+        private readonly Thing weapon;
         private readonly string[] severityTips;
         private readonly List<StanceData> stanceDataList;
 
@@ -119,11 +122,11 @@ namespace TheForce_Psycast
         private List<float> lastSavedStanceAngles;
         private List<Vector3> lastSavedDrawOffsets;
 
-        public Dialog_LightsaberStance(Pawn pawn, Hediff hediff, ThingDef thingDef, List<StanceData> stanceDataList, string[] severityTips)
+        public Dialog_LightsaberStance(Pawn pawn, Hediff hediff, Thing weapon, List<StanceData> stanceDataList, string[] severityTips)
         {
             this.pawn = pawn;
             this.hediff = hediff;
-            this.thingDef = thingDef;
+            this.weapon = weapon;
             this.stanceDataList = stanceDataList ?? throw new ArgumentNullException(nameof(stanceDataList));
             this.severityTips = severityTips ?? throw new ArgumentNullException(nameof(severityTips));
 
@@ -134,7 +137,7 @@ namespace TheForce_Psycast
             defaultDrawOffsets = stanceDataList.Select(s => s.Offset).ToList();
 
             // Initialize saved angles and offsets
-            var lightsaberStanceComp = pawn.equipment?.Primary?.GetComp<Comp_LightsaberStance>();
+            var lightsaberStanceComp = weapon.TryGetComp<Comp_LightsaberStance>();
             stanceAngles = lightsaberStanceComp?.savedStanceAngles ?? new List<float>(defaultStanceAngles);
             drawOffsets = lightsaberStanceComp?.savedDrawOffsets ?? new List<Vector3>(defaultDrawOffsets);
 
@@ -172,32 +175,26 @@ namespace TheForce_Psycast
 
         private float GetCurrentSeverity()
         {
-            // Get the current severity of the pawn's hediff
             return pawn.health.hediffSet.GetFirstHediffOfDef(hediff.def)?.Severity ?? 0f;
         }
 
         private void InitializeLists()
         {
-            // Ensure stanceAngles and drawOffsets match the stanceDataList count
             while (stanceAngles.Count < stanceDataList.Count)
             {
-                // Use last saved angles or default angles if out of bounds
                 stanceAngles.Add(lastSavedStanceAngles.Count > stanceAngles.Count ? lastSavedStanceAngles[stanceAngles.Count] : defaultStanceAngles[stanceAngles.Count]);
             }
 
             while (drawOffsets.Count < stanceDataList.Count)
             {
-                // Use last saved offsets or default offsets if out of bounds
                 drawOffsets.Add(lastSavedDrawOffsets.Count > drawOffsets.Count ? lastSavedDrawOffsets[drawOffsets.Count] : defaultDrawOffsets[drawOffsets.Count]);
             }
         }
-
 
         public override void DoWindowContents(Rect inRect)
         {
             Text.Font = GameFont.Small;
             this.forcePause = false;
-
 
             if (stanceTextures.Length == 0 || stanceDataList.Count == 0)
             {
@@ -237,7 +234,6 @@ namespace TheForce_Psycast
                 Vector3 currentOffset = drawOffsets[selectedStance];
                 float angleRotation = stanceAngles[selectedStance];
 
-
                 if (Force_ModSettings.customStance)
                 {
                     // Adjust sliders and modify offsetSliderRect
@@ -250,6 +246,7 @@ namespace TheForce_Psycast
                     stanceAngles[selectedStance] = angleRotation;
                     ApplyStanceRotationAndOffset();
                     DrawApplyAndResetButtons(inRect, offsetSliderRect);
+                    DrawFlipButton(inRect, offsetSliderRect); // Draw flip button after "Apply" and "Reset"
                 }
                 else
                 {
@@ -274,9 +271,13 @@ namespace TheForce_Psycast
                         ApplyStanceRotationAndOffset();
                         Close();
                     }
+                    DrawFlipButton(inRect, offsetSliderRect); // Draw flip button after "Apply"
                 }
             }
-            else { Log.Warning("Selected stance is out of bounds."); }
+            else
+            {
+                Log.Warning("Selected stance is out of bounds.");
+            }
         }
 
         private void DrawApplyAndResetButtons(Rect inRect, Rect offsetSliderRect)
@@ -317,9 +318,24 @@ namespace TheForce_Psycast
             ApplyStanceRotationAndOffset();
         }
 
+        private void DrawFlipButton(Rect inRect, Rect offsetSliderRect)
+        {
+            float buttonWidth = 120f;
+            float buttonHeight = 40f;
+            float spacing = 10f;
+            Comp_LightsaberBlade lightsaberComp = weapon.TryGetComp<Comp_LightsaberBlade>();
+            if (lightsaberComp == null) return;
+            Rect flipButtonRect = new Rect((inRect.width - buttonWidth) / 2f, offsetSliderRect.yMax + 20f + buttonHeight + spacing, buttonWidth, buttonHeight);
+            if (Widgets.ButtonText(flipButtonRect, lightsaberComp.isFlipped ? "Flip Right" : "Flip Left"))
+            {
+                lightsaberComp.SetFlipped(!lightsaberComp.isFlipped);
+                ApplyStanceRotationAndOffset();
+            }
+        }
+
         private void ApplyStanceRotationAndOffset()
         {
-            Comp_LightsaberStance lightsaberStanceComp = pawn.equipment?.Primary?.GetComp<Comp_LightsaberStance>();
+            Comp_LightsaberStance lightsaberStanceComp = weapon.TryGetComp<Comp_LightsaberStance>();
             if (lightsaberStanceComp != null)
             {
                 InitializeLists();
@@ -343,7 +359,7 @@ namespace TheForce_Psycast
                 lightsaberStanceComp.savedDrawOffsets[selectedStance] = drawOffsets[selectedStance];
 
                 // Update the lightsaber's visuals
-                Comp_LightsaberBlade lightsaberComp = pawn.equipment?.Primary?.GetComp<Comp_LightsaberBlade>();
+                Comp_LightsaberBlade lightsaberComp = weapon.TryGetComp<Comp_LightsaberBlade>();
                 if (lightsaberComp != null)
                 {
                     lightsaberComp.UpdateRotationForStance(lightsaberStanceComp.savedStanceAngles[selectedStance]);
@@ -356,7 +372,6 @@ namespace TheForce_Psycast
     public class DefStanceAngles : DefModExtension
     {
         public List<StanceData> stanceData;
-        public Def parentDef;
 
         public StanceData GetStanceDataForSeverity(float severity)
         {
@@ -382,28 +397,7 @@ namespace TheForce_Psycast
         }
     }
 
-    public static class StanceModExtensionInitializer
-    {
-        static StanceModExtensionInitializer()
-        {
-            foreach (var def in DefDatabase<ThingDef>.AllDefs)
-            {
-                var extension = def.GetModExtension<DefStanceAngles>();
-                if (extension != null)
-                    extension.parentDef = def;
-            }
-
-            foreach (var def in DefDatabase<HediffDef>.AllDefs)
-            {
-                var extension = def.GetModExtension<DefStanceAngles>();
-                if (extension != null)
-                    extension.parentDef = def;
-            }
-        }
-    }
-
-
-    public class StanceData
+    public class StanceData : IExposable
     {
         public string StanceID;              // Unique identifier for each stance
         public float MinSeverity;            // Severity threshold for this stance
@@ -412,8 +406,23 @@ namespace TheForce_Psycast
         public float Angle;                  // Angle for the stance effect or positioning
         public Vector3 Offset;               // Offset for visual or position adjustments
 
-        public List<string> StrongAgainst;   // List of stance IDs this stance is strong against
-        public List<string> WeakAgainst;     // List of stance IDs this stance is weak against
+        public List<string> StrongAgainst = new List<string>();   // List of stance IDs this stance is strong against
+        public List<string> WeakAgainst = new List<string>();     // List of stance IDs this stance is weak against
+
+        public void ExposeData()
+        {
+            // Save/Load simple fields
+            Scribe_Values.Look(ref StanceID, "StanceID");
+            Scribe_Values.Look(ref MinSeverity, "MinSeverity");
+            Scribe_Values.Look(ref StanceIconPath, "StanceIconPath");
+            Scribe_Values.Look(ref StanceString, "StanceString");
+            Scribe_Values.Look(ref Angle, "Angle");
+            Scribe_Values.Look(ref Offset, "Offset");
+
+            // Save/Load lists
+            Scribe_Collections.Look(ref StrongAgainst, "StrongAgainst", LookMode.Value);
+            Scribe_Collections.Look(ref WeakAgainst, "WeakAgainst", LookMode.Value);
+        }
     }
 }
 

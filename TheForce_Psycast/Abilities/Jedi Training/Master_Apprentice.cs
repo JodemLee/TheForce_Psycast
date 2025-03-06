@@ -11,7 +11,7 @@ using Ability = VFECore.Abilities.Ability;
 
 namespace TheForce_Psycast.Abilities
 {
-    internal class Master_Apprentice : Ability
+    internal class Master_Apprentice : Ability_WriteCombatLog
     {
         private Hediff_Master masterHediff;
 

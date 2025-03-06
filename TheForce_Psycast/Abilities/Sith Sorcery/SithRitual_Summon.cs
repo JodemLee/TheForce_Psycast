@@ -8,7 +8,7 @@ using VFECore.Abilities;
 
 namespace TheForce_Psycast.Abilities.Sith_Sorcery
 {
-    internal class SithRitual_Summon : VFECore.Abilities.Ability
+    internal class SithRitual_Summon : Ability_WriteCombatLog
     {
         public override void Cast(params GlobalTargetInfo[] targets)
         {

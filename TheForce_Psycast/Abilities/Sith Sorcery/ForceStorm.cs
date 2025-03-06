@@ -46,7 +46,7 @@ namespace TheForce_Psycast.Abilities
         }
     }
 
-    public class Ability_ForceStorm : Ability, IAbilityToggle, IChannelledPsycast
+    public class Ability_ForceStorm : Ability_WriteCombatLog, IAbilityToggle, IChannelledPsycast
     {
         private ForceStormMaker maker;
         public bool Toggle

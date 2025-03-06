@@ -1,12 +1,13 @@
 ﻿using RimWorld;
 using RimWorld.Planet;
+using TheForce_Psycast.Abilities;
 using UnityEngine;
 using Verse;
 using Verse.Sound;
 
 namespace TheForce_Psycast
 {
-    public class Ability_ForcePull : VFECore.Abilities.Ability
+    public class Ability_ForcePull : Ability_WriteCombatLog
     {
         // Set your desired maximum pull distance
         private float maxPullDistance = 10f;

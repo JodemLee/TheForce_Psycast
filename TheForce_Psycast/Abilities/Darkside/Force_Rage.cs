@@ -5,10 +5,8 @@ using VFECore.Abilities;
 
 namespace TheForce_Psycast.Abilities.Darkside
 {
-    internal class Force_Rage : Ability, IChannelledPsycast
+    internal class Force_Rage : Ability_ChanneledPsycast
     {
-        public bool IsActive => pawn.health.hediffSet.HasHediff(ForceDefOf.Force_Rage);
-
         public override Gizmo GetGizmo()
         {
             var hediff = pawn.health.hediffSet.GetFirstHediffOfDef(ForceDefOf.Force_Rage);

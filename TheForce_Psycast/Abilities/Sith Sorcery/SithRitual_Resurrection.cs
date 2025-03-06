@@ -6,7 +6,7 @@ using Ability = VFECore.Abilities.Ability;
 
 namespace TheForce_Psycast.Abilities.Sith_Sorcery
 {
-    internal class SithRitual_Resurrection : Ability
+    internal class SithRitual_Resurrection : Ability_WriteCombatLog
     {
         public override void Cast(params GlobalTargetInfo[] targets)
         {

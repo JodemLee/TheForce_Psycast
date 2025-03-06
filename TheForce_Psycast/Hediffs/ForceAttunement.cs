@@ -42,16 +42,15 @@ namespace TheForce_Psycast
         {
             get
             {
-                if (base.SelPawn == null)
+                if (base.SelPawn == null &&  base.SelPawn.Faction != Faction.OfPlayer)
                 {
                     return false; // Return false if SelPawn is null
                 }
-
                 if (base.SelPawn.RaceProps.Animal && base.SelPawn.Faction == null)
                 {
                     return false;
                 }
-                if (base.SelPawn.RaceProps.Insect && base.SelPawn.Faction != Faction.OfPlayer)
+                if (base.SelPawn.RaceProps.Insect)
                 {
                     return false;
                 }
@@ -106,6 +105,8 @@ namespace TheForce_Psycast
             size = ForceAlignmentUtility.GetSize(base.SelPawn);
         }
     }
+
+
     [StaticConstructorOnStartup]
     public static class ForceAlignmentUtility
     {
@@ -240,5 +241,11 @@ namespace TheForce_Psycast
                 name = text;
             }
         }
+    }
+
+    public class MeditationBuilding_Alignment : DefModExtension
+    {
+        public HediffDef hedifftoIncrease;
+        public HediffDef hedifftoDecrease;
     }
 }

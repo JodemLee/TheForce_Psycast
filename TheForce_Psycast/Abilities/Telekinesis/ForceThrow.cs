@@ -2,13 +2,14 @@
 using RimWorld;
 using RimWorld.Planet;
 using System;
+using TheForce_Psycast.Abilities;
 using UnityEngine;
 using Verse;
 using Verse.AI;
 
 namespace TheForce_Psycast
 {
-    public class Ability_ForceThrow : VFECore.Abilities.Ability
+    public class Ability_ForceThrow : Ability_WriteCombatLog
     {
         public float baseDamage = 1f;
 

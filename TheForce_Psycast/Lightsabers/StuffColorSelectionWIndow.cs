@@ -9,25 +9,43 @@ namespace TheForce_Psycast.Lightsabers
 {
     public class StuffColorSelectionWindow : Window
     {
-        private Action<Color> onColorSelected;
-        private Dictionary<StuffCategoryDef, List<ThingDef>> categorizedStuffDefs;
-        private List<StuffCategoryDef> categories;
-        private StuffCategoryDef selectedCategory;  // Current selected tab
-        private string searchString = "";  // Search field
+        private readonly Action<Color> onColorSelected;
+        private readonly Dictionary<StuffCategoryDef, List<ThingDef>> categorizedStuffDefs;
+        private readonly List<StuffCategoryDef> categories;
+        private StuffCategoryDef selectedCategory;
+        private string searchString = "";
+        private Vector2 scrollPosition = Vector2.zero;
+
+        // Custom RGBA values
+        private float customRed = 1f;
+        private float customGreen = 1f;
+        private float customBlue = 1f;
+        private float customAlpha = 1f;
 
         public StuffColorSelectionWindow(Action<Color> onColorSelected)
         {
             this.onColorSelected = onColorSelected;
-
-            // Group ThingDefs by their stuffProps categories
             categorizedStuffDefs = new Dictionary<StuffCategoryDef, List<ThingDef>>();
-            List<ThingDef> allStuffedDefs = StuffColorUtility.GetAllStuffed();
+            InitializeStuffDefs();
+            categories = categorizedStuffDefs.Keys.ToList();
+            selectedCategory = categories.FirstOrDefault();
 
-            foreach (ThingDef def in allStuffedDefs)
+            // Window properties
+            forcePause = false;
+            draggable = true;
+            doCloseButton = false;
+            closeOnClickedOutside = true;
+        }
+
+        public override Vector2 InitialSize => new Vector2(500f, 600f);
+
+        private void InitializeStuffDefs()
+        {
+            foreach (var def in StuffColorUtility.GetAllStuffed())
             {
-                if (def.stuffProps != null && def.stuffProps.categories != null)
+                if (def.stuffProps?.categories != null)
                 {
-                    foreach (StuffCategoryDef category in def.stuffProps.categories)
+                    foreach (var category in def.stuffProps.categories)
                     {
                         if (!categorizedStuffDefs.ContainsKey(category))
                         {
@@ -37,147 +55,149 @@ namespace TheForce_Psycast.Lightsabers
                     }
                 }
             }
-
-            // Store the list of categories for tab display
-            categories = categorizedStuffDefs.Keys.ToList();
-
-            // Initialize with the first category as selected
-            if (categories.Count > 0)
-            {
-                selectedCategory = categories[0];
-            }
-
-            // Set window properties
-            this.forcePause = false;
-            this.draggable = true;
-            this.doCloseButton = false;
-            this.closeOnClickedOutside = true;
         }
-
-        public override Vector2 InitialSize => new Vector2(500f, 600f);
 
         public override void DoWindowContents(Rect inRect)
         {
-            // Set the height for the tabs
-            float tabHeight = 40f;
+            // Draw tabs at the top
+            DrawTabs(new Rect(0f, 0f, inRect.width, 40f));
 
-            // Draw Tabs at the top
-            Rect tabsRect = new Rect(0f, 0f, inRect.width, tabHeight);
-            DrawTabs(tabsRect);
-
-            // Draw the search bar just below the tabs
-            float searchBarHeight = 30f;
-            Rect searchRect = new Rect(0f, tabHeight + 10f, inRect.width - 20f, searchBarHeight);
-            searchString = Widgets.TextField(searchRect, searchString);
-
-            // Adjust the starting position for the content after the tabs and search bar
-            float contentStartY = tabHeight + searchBarHeight + 20f; // Adds space for tabs + search bar + padding
-            Rect scrollRect = new Rect(0f, contentStartY, inRect.width - 16f, GetScrollHeight());
-            Rect viewRect = new Rect(inRect.x, inRect.y + contentStartY, inRect.width, inRect.height - contentStartY);
-            Widgets.BeginScrollView(viewRect, ref scrollPosition, scrollRect);
-
-            float yPos = 90f;
-
-            // Show the ThingDefs for the selected category
             if (selectedCategory != null)
             {
-                var filteredDefs = categorizedStuffDefs[selectedCategory]
-                    .Where(def => string.IsNullOrEmpty(searchString) || def.label.ToLower().Contains(searchString.ToLower()))
-                    .ToList();
-
-                if (filteredDefs.Count > 0)
+                if (selectedCategory.defName == "CustomRGBA")
                 {
-                    foreach (ThingDef def in filteredDefs)
-                    {
-                        // Get the color and graphic of the ThingDef
-                        Color defColor = StuffColorUtility.GetStuffColor(def);
-                        Material defMaterial = def.graphic?.MatSingleFor(null) ?? BaseContent.BadMat; // Use MatSingle with color
-
-                        // Draw the graphic on the left side with the correct color
-                        Rect graphicRect = new Rect(10f, yPos + 5f, 30f, 30f);
-                        if (defMaterial != null && defMaterial != BaseContent.BadMat)
-                        {
-                            GUI.color = defColor; // Apply the color to the GUI
-                            GUI.DrawTexture(graphicRect, defMaterial.mainTexture); // Draw the texture
-                            GUI.color = Color.white; // Reset GUI color to default
-                        }
-                        else
-                        {
-                            Widgets.DrawTextureFitted(graphicRect, BaseContent.BadTex, 1f);
-                        }
-
-                        // Create a button for each ThingDef with the label and color
-                        Rect buttonRect = new Rect(graphicRect.xMax + 10f, yPos, inRect.width - 120f, 30f);
-                        if (Widgets.ButtonText(buttonRect, def.label, true, true, true))
-                        {
-                            // Invoke the color selection action when a button is clicked
-                            onColorSelected(defColor);
-                        }
-
-                        // Draw a small color box beside the label
-                        Rect colorRect = new Rect(buttonRect.xMax + 5f, yPos + 5f, 20f, 20f);
-                        Widgets.DrawBoxSolid(colorRect, defColor);
-
-                        yPos += 35f;
-                    }
-
-                    yPos += 10f; // Add some space between categories
+                    // Draw custom RGBA panel
+                    DrawCustomRGBAPanel(new Rect(0f, 50f, inRect.width, inRect.height - 50f));
                 }
+                else
+                {
+                    // Draw search bar
+                    DrawSearchBar(new Rect(0f, 50f, inRect.width - 20f, 30f));
+
+                    // Draw content below the search bar
+                    Rect contentRect = new Rect(0f, 90f, inRect.width, inRect.height - 90f); // Adjusted y-position for offset
+                    DrawContent(contentRect);
+                }
+            }
+        }
+
+        private void DrawTabs(Rect rect)
+        {
+            // Add a new tab for custom RGBA
+            var allCategories = new List<StuffCategoryDef>(categories);
+            allCategories.Add(new StuffCategoryDef { defName = "CustomRGBA", label = "Custom RGBA" });
+
+            float tabWidth = rect.width / allCategories.Count;
+            for (int i = 0; i < allCategories.Count; i++)
+            {
+                var category = allCategories[i];
+                var tabRect = new Rect(i * tabWidth, rect.y, tabWidth, 40f);
+                var isActiveTab = selectedCategory == category;
+
+                if (isActiveTab)
+                {
+                    Widgets.DrawHighlight(tabRect);
+                }
+
+                if (Widgets.ButtonText(tabRect, category.label))
+                {
+                    selectedCategory = category;
+                    scrollPosition = Vector2.zero;
+                }
+            }
+        }
+
+        private void DrawSearchBar(Rect rect)
+        {
+            // Draw the text field
+            searchString = Widgets.TextField(rect, searchString, 25);
+
+            // Draw placeholder text if the search string is empty
+            if (string.IsNullOrEmpty(searchString))
+            {
+                Text.Anchor = TextAnchor.MiddleLeft;
+                GUI.color = Color.gray;
+                Widgets.Label(rect, "Search materials...");
+                GUI.color = Color.white;
+                Text.Anchor = TextAnchor.UpperLeft;
+            }
+        }
+
+        private void DrawContent(Rect rect)
+        {
+            if (selectedCategory == null) return;
+
+            var filteredDefs = categorizedStuffDefs[selectedCategory]
+                .Where(def => string.IsNullOrEmpty(searchString) || def.label.ToLower().Contains(searchString.ToLower()))
+                .ToList();
+
+            if (filteredDefs.Count == 0)
+            {
+                Widgets.Label(rect, "No materials found.");
+                return;
+            }
+
+            // Adjust the viewRect to account for the offset
+            var viewRect = new Rect(0f, 0f, rect.width - 16f, filteredDefs.Count * 35f + 10f); // Start at y = 0f inside the scroll view
+            Widgets.BeginScrollView(rect, ref scrollPosition, viewRect);
+
+            float yPos = 0f;
+            foreach (var def in filteredDefs)
+            {
+                var defColor = StuffColorUtility.GetStuffColor(def);
+                var defMaterial = def.graphic?.MatSingleFor(null) ?? BaseContent.BadMat;
+
+                DrawThingDefRow(new Rect(10f, yPos, viewRect.width - 20f, 30f), def, defColor, defMaterial);
+                yPos += 35f;
             }
 
             Widgets.EndScrollView();
         }
 
-        private Vector2 scrollPosition = Vector2.zero;
-
-        // Draw tabs for each category
-        private void DrawTabs(Rect rect)
+        private void DrawThingDefRow(Rect rect, ThingDef def, Color defColor, Material defMaterial)
         {
-            float tabWidth = rect.width / categories.Count;
-            for (int i = 0; i < categories.Count; i++)
+            // Draw graphic
+            var graphicRect = new Rect(rect.x, rect.y + 5f, 30f, 30f);
+            if (defMaterial != BaseContent.BadMat)
             {
-                StuffCategoryDef category = categories[i];
-                Rect tabRect = new Rect(i * tabWidth, rect.y, tabWidth, 40f);
-
-                // Is this the currently selected category?
-                bool isActiveTab = selectedCategory == category;
-
-                // Draw tab label (without button text functionality)
-                Text.Anchor = TextAnchor.MiddleCenter;
-                Widgets.Label(tabRect, category.label);
-                Text.Anchor = TextAnchor.UpperLeft; // Reset text anchor
-                if (Widgets.ButtonText(tabRect, category.label))
-                {
-                    Log.Message($"Tab clicked: {category.label}");
-                    selectedCategory = category;
-                    scrollPosition = Vector2.zero;
-                }
-
-                // Highlight active tab
-                if (isActiveTab)
-                {
-                    Widgets.DrawHighlight(tabRect);
-                }
+                GUI.color = defColor;
+                GUI.DrawTexture(graphicRect, defMaterial.mainTexture);
+                GUI.color = Color.white;
             }
+            else
+            {
+                Widgets.DrawTextureFitted(graphicRect, BaseContent.BadTex, 1f);
+            }
+
+            // Draw button
+            var buttonRect = new Rect(graphicRect.xMax + 10f, rect.y, rect.width - 120f, 30f);
+            if (Widgets.ButtonText(buttonRect, def.label))
+            {
+                onColorSelected(defColor);
+            }
+
+            // Draw color box
+            var colorRect = new Rect(buttonRect.xMax + 5f, rect.y + 5f, 20f, 20f);
+            Widgets.DrawBoxSolid(colorRect, defColor);
         }
 
-        private float GetScrollHeight()
+        private void DrawCustomRGBAPanel(Rect rect)
         {
-            float height = 0f;
-            if (selectedCategory != null)
-            {
-                var filteredDefs = categorizedStuffDefs[selectedCategory]
-                    .Where(def => string.IsNullOrEmpty(searchString) || def.label.ToLower().Contains(searchString.ToLower()))
-                    .ToList();
+            // Draw sliders for RGBA values
+            customRed = Widgets.HorizontalSlider(new Rect(rect.x + 10f, rect.y + 20f, rect.width - 20f, 30f), customRed, 0f, 1f, label: $"Red: {customRed:F2}");
+            customGreen = Widgets.HorizontalSlider(new Rect(rect.x + 10f, rect.y + 60f, rect.width - 20f, 30f), customGreen, 0f, 1f, label: $"Green: {customGreen:F2}");
+            customBlue = Widgets.HorizontalSlider(new Rect(rect.x + 10f, rect.y + 100f, rect.width - 20f, 30f), customBlue, 0f, 1f, label: $"Blue: {customBlue:F2}");
+            customAlpha = Widgets.HorizontalSlider(new Rect(rect.x + 10f, rect.y + 140f, rect.width - 20f, 30f), customAlpha, 0f, 1f, label: $"Alpha: {customAlpha:F2}");
 
-                if (filteredDefs.Count > 0)
-                {
-                    height += filteredDefs.Count * 35f;
-                    height += 10f;
-                }
+            // Draw preview of the custom color
+            var previewColor = new Color(customRed, customGreen, customBlue, customAlpha);
+            Widgets.DrawBoxSolid(new Rect(rect.x + 10f, rect.y + 180f, rect.width - 20f, 30f), previewColor);
+
+            // Draw confirm button
+            if (Widgets.ButtonText(new Rect(rect.x + 10f, rect.y + 220f, rect.width - 20f, 30f), "Confirm Custom Color"))
+            {
+                onColorSelected(previewColor);
             }
-            return height;
         }
     }
 }
-

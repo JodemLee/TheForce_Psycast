@@ -26,6 +26,7 @@ namespace TheForce_Psycast
         public static ThingDef Force_ThrownPawnPull;
         public static ThingDef Force_ThrownPawnAttract;
         public static ThingDef Force_ThrownPawnThrow;
+        public static ThingDef Force_ChokedPawn;
 
         public static ThingDef Force_KyberCrystal;
         public static FleckDef Force_FleckStone;
@@ -35,6 +36,7 @@ namespace TheForce_Psycast
 
         //JobDefs
         public static JobDef Force_UpgradeLightsaber;
+        // public static JobDef CarryToPrisonerCell;
 
         // HediffDefs
         public static HediffDef Force_Ghost;
@@ -56,7 +58,16 @@ namespace TheForce_Psycast
         public static HediffDef Force_Sithzombie;
         public static HediffDef Force_SithArtifactWeakness;
         public static HediffDef Force_TeachingCooldown;
+        
         public static DamageDef Force_Lightning;
+
+        [MayRequireBiotech]
+        public static HediffDef Force_MechControl;
+        public static HediffDef Force_ImplantFlare;
+        public static HediffDef Force_MechuTuneOverclocking;
+
+        [MayRequireBiotech]
+        public static HediffDef Force_MechuLinkImplant;
 
         // MeditationFocusDefs
         public static MeditationFocusDef Force_LightsideMeditation;
@@ -78,7 +89,7 @@ namespace TheForce_Psycast
         public static StatDef Force_Darkside_Attunement;
         public static StatDef Force_Lightside_Attunement;
         public static StatDef Force_Lightsaber_Deflection;
-        
+
         // AbilityDefs
         public static VFECore.Abilities.AbilityDef Force_ThrowWeapon;
         public static VFECore.Abilities.AbilityDef Force_BlasterShot_Stun;
@@ -102,5 +113,8 @@ namespace TheForce_Psycast
 
         //MentalStateDefs
         public static MentalStateDef Force_ForceFear;
+
+        //ArmorCategoryDefs
+        public static DamageArmorCategoryDef Heat;
     }
 }

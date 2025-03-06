@@ -1,12 +1,13 @@
 ﻿using RimWorld.Planet;
 using System.Linq;
+using TheForce_Psycast.Abilities;
 using VanillaPsycastsExpanded;
 using Verse;
 using VFECore.Abilities;
 
 namespace TheForce_Psycast
 {
-    internal class Force_BattleMeditation : Ability
+    internal class Force_BattleMeditation : Ability_WriteCombatLog
     {
         public override void Cast(params GlobalTargetInfo[] targets)
         {

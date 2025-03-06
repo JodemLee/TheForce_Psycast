@@ -1,6 +1,7 @@
 ﻿using RimWorld;
 using RimWorld.Planet;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Cryptography;
 using UnityEngine;
 using Verse;
@@ -11,7 +12,7 @@ using Ability = VFECore.Abilities.Ability;
 
 namespace TheForce_Psycast.Abilities.Lightside
 {
-    internal class Force_Ionize : Ability
+    internal class Force_Ionize : Ability_WriteCombatLog
     {
         public float coneAngle = 15f; // Angle of the cone
 
@@ -24,13 +25,44 @@ namespace TheForce_Psycast.Abilities.Lightside
                 foreach (GlobalTargetInfo globalTargetInfo in targets)
                 {
                     List<IntVec3> affectedCells = AffectedCells(globalTargetInfo.Cell);
+                    StunPawnsInArea(affectedCells);
+
                     foreach (IntVec3 cell in affectedCells)
                     {
-                        GenExplosion.DoExplosion(cell, pawn.Map, 0f, modExtension.explosionDamageDef, (Thing)pawn, modExtension.explosionDamageAmount, modExtension.explosionArmorPenetration, modExtension.explosionSound, (ThingDef)null, (ThingDef)null, (Thing)null, modExtension.postExplosionSpawnThingDef, modExtension.postExplosionSpawnChance, modExtension.postExplosionSpawnThingCount, modExtension.postExplosionGasType, modExtension.applyDamageToExplosionCellsNeighbors, modExtension.preExplosionSpawnThingDef, modExtension.preExplosionSpawnChance, modExtension.preExplosionSpawnThingCount, modExtension.chanceToStartFire, modExtension.damageFalloff, modExtension.explosionDirection, modExtension.casterImmune ? new List<Thing> { pawn } : null, (FloatRange?)null, true, 1f, 0f, true, (ThingDef)null, 1f, overrideCells: AffectedCells(cell));                  
+                        GenExplosion.DoExplosion(cell, pawn.Map, 0f, modExtension.explosionDamageDef, (Thing)pawn,
+                            modExtension.explosionDamageAmount, modExtension.explosionArmorPenetration, modExtension.explosionSound,
+                            (ThingDef)null, (ThingDef)null, (Thing)null, modExtension.postExplosionSpawnThingDef, modExtension.postExplosionSpawnChance,
+                            modExtension.postExplosionSpawnThingCount, modExtension.postExplosionGasType, modExtension.applyDamageToExplosionCellsNeighbors,
+                            modExtension.preExplosionSpawnThingDef, modExtension.preExplosionSpawnChance, modExtension.preExplosionSpawnThingCount,
+                            modExtension.chanceToStartFire, modExtension.damageFalloff, modExtension.explosionDirection,
+                            modExtension.casterImmune ? new List<Thing> { pawn } : null, (FloatRange?)null, true, 1f, 0f, true,
+                            (ThingDef)null, 1f, overrideCells: AffectedCells(cell));
                     }
                 }
             }
         }
+
+        private void StunPawnsInArea(List<IntVec3> affectedCells)
+        {
+            if (pawn?.Map == null) return;
+
+            float stunDuration = 3f;
+
+            foreach (IntVec3 cell in affectedCells)
+            {
+                List<Pawn> pawnsInCell = cell.GetThingList(pawn.Map)
+                                            .OfType<Pawn>()
+                                            .Where(pawn => pawn.health?.hediffSet?.hediffs.Any(h => h.def.countsAsAddedPartOrImplant) == true)
+                                            .ToList();
+
+                foreach (Pawn targetPawn in pawnsInCell)
+                {
+                    targetPawn.stances.stunner.StunFor((int)(stunDuration * 60), pawn);
+                    Log.Message($"{targetPawn.Name} was stunned due to having implants.");
+                }
+            }
+        }
+
         private List<IntVec3> AffectedCells(IntVec3 targetCell)
         {
             List<IntVec3> cells = new List<IntVec3>();

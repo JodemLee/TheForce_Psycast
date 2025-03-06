@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="MeleeAnimPatch.cs" />
     <Compile Include="MeleeAnim_DuelSoundPatch.cs" />
+    <Compile Include="MeleeAnim_MustHaveWeaponPromotionWorker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -9,7 +9,11 @@ namespace TheForce_Psycast.Lightsabers
 {
     public class HiltDef : Def
     {
-        public GraphicData hiltgraphic;
+        public GraphicData graphicData;
+        public Graphic GetColoredVersion(Shader shader, Color colorOne, Color colorTwo)
+        {
+            return graphicData.Graphic.GetColoredVersion(shader, colorOne, colorTwo);
+        }
     }
 
     public class HiltPartDef : Def
@@ -19,6 +23,7 @@ namespace TheForce_Psycast.Lightsabers
         public Color color;
         public ThingDef requiredComponent;
         public ThingDef droppedComponent => requiredComponent;
+        public List<HediffDef> bonusDamageHediff;
     }
 
     public enum HiltPartCategory
@@ -32,62 +37,81 @@ namespace TheForce_Psycast.Lightsabers
 
     public class StatPart_EquippedStatOffsetIncrease : StatPart
     {
-        // Optional filter for a specific category (nullable to allow all categories when not defined)
         public HiltPartCategory? category;
         private static CompCache compCache = new CompCache();
 
         public override void TransformValue(StatRequest req, ref float val)
         {
             if (req.Thing is not Pawn pawn || pawn.equipment?.Primary == null) return;
-            var lightsaberComp = compCache.GetCachedComp(pawn.equipment.Primary);
-            if (lightsaberComp == null || lightsaberComp.parent.ParentHolder?.ParentHolder is not Pawn weaponWearer || weaponWearer != pawn)
-                return;
-            var hiltParts = lightsaberComp.GetCurrentHiltParts();
-            if (category.HasValue)
-            {
-                hiltParts = hiltParts.Where(part => part.category == category.Value).ToList();
-            }
-            float totalOffset = 0f;
-            foreach (var part in hiltParts)
-            {
-                totalOffset += part.equippedStatOffsets?.Where(mod => mod.stat == parentStat).Sum(mod => mod.value) ?? 0f;
-            }
 
-            val += totalOffset;
+            var hiltParts = GetRelevantHiltParts(pawn);
+            if (hiltParts == null) return;
+
+            val += CalculateStatOffset(hiltParts);
         }
 
         public override string ExplanationPart(StatRequest req)
         {
             if (req.Thing is not Pawn pawn || pawn.equipment?.Primary == null) return null;
 
-            var lightsaberComp = compCache.GetCachedComp(pawn.equipment.Primary);
-            if (lightsaberComp == null || lightsaberComp.parent.ParentHolder?.ParentHolder is not Pawn weaponWearer || weaponWearer != pawn)
-                return null;
-            var hiltParts = lightsaberComp.GetCurrentHiltParts();
-            if (category.HasValue)
-            {
-                hiltParts = hiltParts.Where(part => part.category == category.Value).ToList();
-            }
-            StringBuilder explanation = new StringBuilder();
-            float totalOffset = 0f;
-            foreach (var part in hiltParts)
-            {
-                float partOffset = part.equippedStatOffsets?
-                    .Where(mod => mod.stat == parentStat)
-                    .Sum(mod => mod.value) ?? 0f;
+            var hiltParts = GetRelevantHiltParts(pawn);
+            if (hiltParts == null) return null;
 
-                if (partOffset != 0f)
-                {
-                    explanation.AppendLine($"{part.label}: {partOffset:+0.##;-0.##} to {parentStat.label}");
-                    totalOffset += partOffset;
-                }
-            }
+            StringBuilder explanation = new StringBuilder();
+            float totalOffset = CalculateStatOffset(hiltParts, explanation);
+
             if (totalOffset != 0f)
             {
                 explanation.AppendLine($"Total: {totalOffset:+0.##;-0.##} to {parentStat.label}");
                 return explanation.ToString();
             }
+
             return null;
+        }
+
+        private float CalculateStatOffset(List<HiltPartDef> hiltParts, StringBuilder explanation = null)
+        {
+            float totalOffset = 0f;
+
+            foreach (var part in hiltParts)
+            {
+                float partOffset = 0f;
+
+                if (part.equippedStatOffsets != null)
+                {
+                    foreach (var mod in part.equippedStatOffsets)
+                    {
+                        if (mod.stat == parentStat)
+                        {
+                            partOffset += mod.value;
+                        }
+                    }
+                }
+
+                if (partOffset != 0f)
+                {
+                    explanation?.AppendLine($"{part.label}: {partOffset:+0.##;-0.##} to {parentStat.label}");
+                    totalOffset += partOffset;
+                }
+            }
+
+            return totalOffset;
+        }
+
+        private List<HiltPartDef> GetRelevantHiltParts(Pawn pawn)
+        {
+            var primary = pawn.equipment.Primary;
+            var lightsaberComp = compCache.GetCachedComp(primary);
+
+            if (lightsaberComp?.parent.ParentHolder?.ParentHolder is not Pawn weaponWearer || weaponWearer != pawn)
+                return null;
+
+            var hiltParts = lightsaberComp.GetCurrentHiltParts();
+
+            if (category.HasValue)
+                return hiltParts.Where(part => part.category == category.Value).ToList();
+
+            return hiltParts;
         }
     }
 }
